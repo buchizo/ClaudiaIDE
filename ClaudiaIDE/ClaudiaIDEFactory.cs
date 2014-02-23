@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 
@@ -14,6 +15,9 @@ namespace ClaudiaIDE
 	[TextViewRole(PredefinedTextViewRoles.Document)]
 	internal sealed class ClaudiaIDEAdornmentFactory : IWpfTextViewCreationListener
 	{
+		[Import(typeof(SVsServiceProvider))]
+		internal System.IServiceProvider ServiceProvider { get; set; }
+		
 		/// <summary>
 		/// Defines the adornment layer for the scarlet adornment. This layer is ordered 
 		/// after the selection layer in the Z-order
@@ -29,7 +33,7 @@ namespace ClaudiaIDE
 		/// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
 		public void TextViewCreated(IWpfTextView textView)
 		{
-			new ClaudiaIDE(textView);
+			new ClaudiaIDE(textView, ServiceProvider);
 		}
 	}
 	

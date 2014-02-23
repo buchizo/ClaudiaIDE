@@ -3,12 +3,10 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
-## How to use (optional)  ##
-To change the background image is replaced with the following file with the same file name:
+## New! (ver 1.7) ##
+You can configure the settings in the Visual Studio option page.
 
-<user folder>AppData\Local\Microsoft\VisualStudio\11.0\Extensions\<this extension>\background.png
-
-## New! (ver 1.2) ##
+## ver 1.2 ##
 You can configure the background image path and opacity, image position!
 
 <user folder>AppData\Local\Microsoft\VisualStudio\11.0\Extensions\<this extension>\config.txt
