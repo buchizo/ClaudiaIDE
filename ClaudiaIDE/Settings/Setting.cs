@@ -72,7 +72,8 @@ namespace ClaudiaIDE.Settings
 	public enum PositionV
 	{
 		Top,
-		Bottom
+		Bottom,
+		Center
 	}
 
 	[CLSCompliant(false), ComVisible(true)]
@@ -80,6 +81,7 @@ namespace ClaudiaIDE.Settings
 	public enum PositionH
 	{
 		Left,
-		Right
+		Right,
+		Center
 	}
 }

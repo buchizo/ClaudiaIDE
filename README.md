@@ -3,7 +3,10 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
-## New! (ver 1.7) ##
+## New! (ver 1.9) ##
+Support any DPI image, jpeg format and center position.
+
+## ver 1.7 ##
 You can configure the settings in the Visual Studio option page.
 
 ## ver 1.2 ##

@@ -47,9 +47,13 @@ namespace ClaudiaIDE
 				_Config = GetConfigFromVisualStudioSettings();
 
 				_Image.Opacity = _Config.Opacity;
-
-				_Bitmap = new BitmapImage(new Uri(_Config.BackgroundImageAbsolutePath, UriKind.Absolute));
+				_Bitmap = new BitmapImage();
+				_Bitmap.BeginInit();
+				_Bitmap.UriSource = new Uri(_Config.BackgroundImageAbsolutePath, UriKind.Absolute);
+				_Bitmap.EndInit();
 				_Image.Source = _Bitmap;
+				_Image.Width = _Bitmap.PixelWidth;
+				_Image.Height = _Bitmap.PixelHeight;
 
 				this._AdornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
 				_View.ViewportHeightChanged += delegate { this.onSizeChange(); };
@@ -95,6 +99,9 @@ namespace ClaudiaIDE
 					case PositionH.Right:
 						Canvas.SetLeft(this._Image, this._View.ViewportRight - (double)_Bitmap.PixelWidth);
 						break;
+					case PositionH.Center:
+						Canvas.SetLeft(this._Image, (this._View.ViewportRight/2) - ((double)_Bitmap.PixelWidth/2));
+						break;
 				}
 				switch (_Config.PositionVertical)
 				{
@@ -103,6 +110,9 @@ namespace ClaudiaIDE
 						break;
 					case PositionV.Bottom:
 						Canvas.SetTop(this._Image, this._View.ViewportBottom - (double)_Bitmap.PixelHeight);
+						break;
+					case PositionV.Center:
+						Canvas.SetTop(this._Image, (this._View.ViewportBottom/2) - ((double)_Bitmap.PixelHeight/2));
 						break;
 				}
 
