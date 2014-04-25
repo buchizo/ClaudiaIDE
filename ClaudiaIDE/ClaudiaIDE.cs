@@ -94,7 +94,7 @@ namespace ClaudiaIDE
 				switch (_Config.PositionHorizon)
 				{
 					case PositionH.Left:
-						Canvas.SetLeft(this._Image, 0);
+						Canvas.SetLeft(this._Image, this._View.ViewportLeft);
 						break;
 					case PositionH.Right:
 						Canvas.SetLeft(this._Image, this._View.ViewportRight - (double)_Bitmap.PixelWidth);
@@ -106,7 +106,7 @@ namespace ClaudiaIDE
 				switch (_Config.PositionVertical)
 				{
 					case PositionV.Top:
-						Canvas.SetTop(this._Image, 0);
+						Canvas.SetTop(this._Image, this._View.ViewportTop);
 						break;
 					case PositionV.Bottom:
 						Canvas.SetTop(this._Image, this._View.ViewportBottom - (double)_Bitmap.PixelHeight);
