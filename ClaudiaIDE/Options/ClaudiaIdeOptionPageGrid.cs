@@ -4,6 +4,10 @@ using System.Globalization;
 using System.Runtime.InteropServices;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Shell;
+using System.Drawing.Design;
+using System.Windows.Forms.Design;
+using System.Windows.Forms;
+using System.IO;
 
 namespace ClaudiaIDE.Options
 {
@@ -23,6 +27,7 @@ namespace ClaudiaIDE.Options
 		[Category("Image")]
 		[DisplayName("File Path")]
 		[Description("Background image file path.")]
+        [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
 		public string BackgroundImageAbsolutePath { get; set; }
 
 		[Category("Image")]
@@ -143,4 +148,32 @@ namespace ClaudiaIDE.Options
 			return base.ConvertTo(context, culture, value, destinationType);
 		}
 	}
+
+    internal class BrowseFile : UITypeEditor
+    {
+        public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
+        {
+            return UITypeEditorEditStyle.Modal;
+        }
+        public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
+        {
+            IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            if (edSvc != null)
+            {
+                OpenFileDialog open = new OpenFileDialog();
+                open.FileName = Path.GetFileName((string)value);
+                open.InitialDirectory = Path.GetDirectoryName((string)value);
+                if (open.ShowDialog() == DialogResult.OK)
+                {
+                    return open.FileName;
+                }
+            }
+            return value;
+        }
+        public override bool GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext context)
+        {
+            return false;
+        }
+    }
+
 }
