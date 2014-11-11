@@ -3,7 +3,10 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
-## New! (ver 1.9) ##
+## New! (ver 1.11) ##
+Add OpenFileDialog for image file path.
+
+## ver 1.9 ##
 Support any DPI image, jpeg format and center position.
 
 ## ver 1.7 ##
