@@ -36,7 +36,7 @@ namespace ClaudiaIDE.Options
 		public double Opacity { get; set; }
 
 		[Category("Layout")]
-		[DisplayName("Horizonal Alignment")]
+        [DisplayName("Horizontal Alignment")]
 		[Description("Image position in horizon.")]
 		[PropertyPageTypeConverter(typeof(PositionHTypeConverter))]
 		[TypeConverter(typeof(PositionHTypeConverter))]
