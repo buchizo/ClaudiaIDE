@@ -54,6 +54,7 @@ namespace ClaudiaIDE
 				_Image.Source = _Bitmap;
 				_Image.Width = _Bitmap.PixelWidth;
 				_Image.Height = _Bitmap.PixelHeight;
+				_Image.IsHitTestVisible = false;
 
 				this._AdornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
 				_View.ViewportHeightChanged += delegate { this.onSizeChange(); };

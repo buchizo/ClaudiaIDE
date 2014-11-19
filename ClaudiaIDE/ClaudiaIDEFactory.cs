@@ -24,7 +24,7 @@ namespace ClaudiaIDE
 		/// </summary>
 		[Export(typeof(AdornmentLayerDefinition))]
 		[Name("ClaudiaIDE")]
-		[Order(After = PredefinedAdornmentLayers.CurrentLineHighlighter, Before = PredefinedAdornmentLayers.Outlining)]
+		[Order(After = PredefinedAdornmentLayers.DifferenceChanges)]
 		public AdornmentLayerDefinition EditorAdornmentLayer { get; set; }
 
 		/// <summary>
