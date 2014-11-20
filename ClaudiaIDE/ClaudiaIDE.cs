@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Windows;
@@ -101,7 +102,7 @@ namespace ClaudiaIDE
 						Canvas.SetLeft(this._Image, this._View.ViewportRight - (double)_Bitmap.PixelWidth);
 						break;
 					case PositionH.Center:
-						Canvas.SetLeft(this._Image, (this._View.ViewportRight/2) - ((double)_Bitmap.PixelWidth/2));
+						Canvas.SetLeft(this._Image, this._View.ViewportRight - this._View.ViewportWidth + ((this._View.ViewportWidth / 2) - ((double)_Bitmap.PixelWidth / 2)));
 						break;
 				}
 				switch (_Config.PositionVertical)
@@ -113,11 +114,10 @@ namespace ClaudiaIDE
 						Canvas.SetTop(this._Image, this._View.ViewportBottom - (double)_Bitmap.PixelHeight);
 						break;
 					case PositionV.Center:
-						Canvas.SetTop(this._Image, (this._View.ViewportBottom/2) - ((double)_Bitmap.PixelHeight/2));
+						Canvas.SetTop(this._Image, this._View.ViewportBottom - this._View.ViewportHeight + ((this._View.ViewportHeight / 2) - ((double)_Bitmap.PixelHeight / 2)));
 						break;
 				}
-
-				this._AdornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, 
+				this._AdornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
 					null,
 					null,
 					this._Image,
