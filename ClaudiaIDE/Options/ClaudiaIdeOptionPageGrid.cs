@@ -18,24 +18,38 @@ namespace ClaudiaIDE.Options
 	{
 		public ClaudiaIdeOptionPageGrid()
 		{
-			BackgroundImageAbsolutePath = "background.png";
+			BackgroundImageDirectoryAbsolutePath = "Images";
 			Opacity = 0.35;
 			PositionHorizon = PositionH.Right;
 			PositionVertical = PositionV.Bottom;
+		    UpdateImageInterval = TimeSpan.FromMinutes(1);
+		    Extensions = ".png, .jpg";
 		}
 
 		[Category("Image")]
-		[DisplayName("File Path")]
-		[Description("Background image file path.")]
-        [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
-		public string BackgroundImageAbsolutePath { get; set; }
+		[DisplayName("Directory Path")]
+		[Description("Background image directory path.")]
+        [EditorAttribute(typeof(BrowseDirectory), typeof(UITypeEditor))]
+		public string BackgroundImageDirectoryAbsolutePath { get; set; }
 
 		[Category("Image")]
 		[DisplayName("Opacity")]
 		[Description("Background image opacity. (value within the range of 0.00 <= 1.00)")]
 		public double Opacity { get; set; }
 
-		[Category("Layout")]
+        [Category("Image")]
+        [DisplayName("Update interval")]
+        [Description("Background image change interval. (value in format: HH:mm)")]
+        [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
+        [TypeConverter(typeof(TimeSpanConverter))]
+        public TimeSpan UpdateImageInterval { get; set; }
+
+        [Category("Image")]
+        [DisplayName("Image extensions")]
+        [Description("Only images with this extensions will be shown. (Comma separated)")]
+        public string Extensions { get; set; }
+
+        [Category("Layout")]
         [DisplayName("Horizontal Alignment")]
 		[Description("Image position in horizon.")]
 		[PropertyPageTypeConverter(typeof(PositionHTypeConverter))]
@@ -149,7 +163,7 @@ namespace ClaudiaIDE.Options
 		}
 	}
 
-    internal class BrowseFile : UITypeEditor
+    internal class BrowseDirectory : UITypeEditor
     {
         public override UITypeEditorEditStyle GetEditStyle(ITypeDescriptorContext context)
         {
@@ -160,12 +174,10 @@ namespace ClaudiaIDE.Options
             IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
-                OpenFileDialog open = new OpenFileDialog();
-                open.FileName = Path.GetFileName((string)value);
-                open.InitialDirectory = Path.GetDirectoryName((string)value);
+                var open = new FolderBrowserDialog();
                 if (open.ShowDialog() == DialogResult.OK)
                 {
-                    return open.FileName;
+                    return open.SelectedPath;
                 }
             }
             return value;

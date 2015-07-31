@@ -1,4 +1,8 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
+using ClaudiaIDE.Settings;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
@@ -33,9 +37,32 @@ namespace ClaudiaIDE
 		/// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
 		public void TextViewCreated(IWpfTextView textView)
 		{
-			new ClaudiaIDE(textView, ServiceProvider);
+			new ClaudiaIDE(textView, new ImageProvider(GetConfigFromVisualStudioSettings()));
 		}
-	}
+
+        private Setting GetConfigFromVisualStudioSettings()
+        {
+            try
+            {
+                var config = new Setting();
+
+                var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
+                var props = _DTE2.Properties["ClaudiaIDE", "General"];
+
+                config.BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
+                config.Opacity = props.Item("Opacity").Value;
+                config.PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
+                config.PositionVertical = (PositionV)props.Item("PositionVertical").Value;
+                config.UpdateImageInterval = (TimeSpan) props.Item("UpdateImageInterval").Value;
+                config.Extensions = (string)props.Item("Extensions").Value;
+                return config;
+            }
+            catch (Exception)
+            {
+                return Setting.Deserialize();
+            }
+        }
+    }
 	
 	#endregion //Adornment Factory
 }

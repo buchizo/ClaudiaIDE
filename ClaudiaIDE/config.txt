@@ -1,5 +1,5 @@
 {
-	"BackgroundImageAbsolutePath": "background.png",
+	"BackgroundImageAbsolutePath": "Images\background.png",
 	"Opacity":0.35,
 	"PositionHorizon":1,
 	"PositionVertical":1 

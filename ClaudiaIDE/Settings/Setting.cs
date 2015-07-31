@@ -19,14 +19,18 @@ namespace ClaudiaIDE.Settings
 			Opacity = 0.35;
 			PositionHorizon = PositionH.Right;
 			PositionVertical = PositionV.Bottom;
+		    UpdateImageInterval = TimeSpan.FromMinutes(1);
+		    Extensions = ".png, .jpg";
 		}
 
-		public double Opacity { get; set; }
+        public TimeSpan UpdateImageInterval { get; set; }
+        public double Opacity { get; set; }
 		public string BackgroundImageAbsolutePath { get; set; }
 		public PositionV PositionVertical { get; set; }
 		public PositionH PositionHorizon { get; set; }
+        public string Extensions { get; set; }
 
-		public void Serialize()
+        public void Serialize()
 		{
 			var config = JsonSerializer<Setting>.Serialize(this);
 
@@ -40,7 +44,7 @@ namespace ClaudiaIDE.Settings
 			}
 		}
 
-		public static Setting Desirialize()
+		public static Setting Deserialize()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
