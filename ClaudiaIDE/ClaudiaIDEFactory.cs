@@ -49,7 +49,7 @@ namespace ClaudiaIDE
                 var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
                 var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
-                config.BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
+                config.BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
                 config.Opacity = props.Item("Opacity").Value;
                 config.PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
                 config.PositionVertical = (PositionV)props.Item("PositionVertical").Value;

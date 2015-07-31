@@ -15,7 +15,7 @@ namespace ClaudiaIDE.Settings
 		public Setting()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "background.png");
+			BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "background.png");
 			Opacity = 0.35;
 			PositionHorizon = PositionH.Right;
 			PositionVertical = PositionV.Bottom;
@@ -25,7 +25,7 @@ namespace ClaudiaIDE.Settings
 
         public TimeSpan UpdateImageInterval { get; set; }
         public double Opacity { get; set; }
-		public string BackgroundImageAbsolutePath { get; set; }
+		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
 		public PositionV PositionVertical { get; set; }
 		public PositionH PositionHorizon { get; set; }
         public string Extensions { get; set; }
@@ -56,7 +56,7 @@ namespace ClaudiaIDE.Settings
 				s.Close();
 			}
 			var ret = JsonSerializer<Setting>.DeSerialize(config);
-			ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath);
+			ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath);
 			return ret;
 		}
 

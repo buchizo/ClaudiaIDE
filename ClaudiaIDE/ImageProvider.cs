@@ -44,7 +44,7 @@ namespace ClaudiaIDE
                 Opacity = setting.Opacity,
                 IsHitTestVisible = false
             };
-            CreateBitmaps(setting.BackgroundImageAbsolutePath);
+            CreateBitmaps(setting.BackgroundImagesDirectoryAbsolutePath);
             Timer.Elapsed += (o, e) =>
             {
                 if (DateTime.Now - _lastUpdateTime > _updateInterval)
