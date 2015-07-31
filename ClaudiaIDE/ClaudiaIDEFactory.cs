@@ -19,7 +19,9 @@ namespace ClaudiaIDE
 	[TextViewRole(PredefinedTextViewRoles.Document)]
 	internal sealed class ClaudiaIDEAdornmentFactory : IWpfTextViewCreationListener
 	{
-		[Import(typeof(SVsServiceProvider))]
+	    private ImageProvider _imageProvider;
+            
+        [Import(typeof(SVsServiceProvider))]
 		internal System.IServiceProvider ServiceProvider { get; set; }
 		
 		/// <summary>
@@ -37,10 +39,11 @@ namespace ClaudiaIDE
 		/// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
 		public void TextViewCreated(IWpfTextView textView)
 		{
-			new ClaudiaIDE(textView, new ImageProvider(GetConfigFromVisualStudioSettings()));
+		    var setting = GetConfigFromVisualStudioSettings();
+		    new ClaudiaIDE(textView, _imageProvider ??  (_imageProvider = new ImageProvider(setting)), setting);
 		}
 
-        private Setting GetConfigFromVisualStudioSettings()
+	    private Setting GetConfigFromVisualStudioSettings()
         {
             try
             {

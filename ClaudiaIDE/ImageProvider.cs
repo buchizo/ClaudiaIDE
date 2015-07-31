@@ -16,9 +16,6 @@ namespace ClaudiaIDE
         private readonly TimeSpan _updateInterval;
         private DateTime _lastUpdateTime;
         private readonly List<BitmapImage> _bitmaps = new List<BitmapImage>();
-        private readonly Image _image;
-        private readonly PositionH _positionHorizon;
-        private readonly PositionV _positionVertical;
         private readonly string[] _extensions;
         private int _currentImageIndex = 0;
 
@@ -36,14 +33,8 @@ namespace ClaudiaIDE
         {
             _updateInterval = setting.UpdateImageInterval;
             _lastUpdateTime = DateTime.Now;
-            _positionHorizon = setting.PositionHorizon;
-            _positionVertical = setting.PositionVertical;
             _extensions = setting.Extensions.Split(new[]{",", " "}, StringSplitOptions.RemoveEmptyEntries);
-            _image = new Image
-            {
-                Opacity = setting.Opacity,
-                IsHitTestVisible = false
-            };
+
             CreateBitmaps(setting.BackgroundImagesDirectoryAbsolutePath);
             Timer.Elapsed += (o, e) =>
             {
@@ -58,44 +49,9 @@ namespace ClaudiaIDE
 
         public event EventHandler NewImageAvaliable;
 
-        public Image GetImage(IWpfTextView provider)
+        public BitmapImage GetBitmap(IWpfTextView provider)
         {
-            var bitmap = GetCurrentBitmap();
-            if (bitmap != _image.Source)
-            {
-                _image.Source = bitmap;
-                _image.Width = bitmap.PixelWidth;
-                _image.Height = bitmap.PixelHeight;
-            }
-            switch (_positionHorizon)
-            {
-                case PositionH.Left:
-                    Canvas.SetLeft(_image, provider.ViewportLeft);
-                    break;
-                case PositionH.Right:
-                    Canvas.SetLeft(_image, provider.ViewportRight - (double)bitmap.PixelWidth);
-                    break;
-                case PositionH.Center:
-                    Canvas.SetLeft(_image,
-                        provider.ViewportRight - provider.ViewportWidth +
-                        ((provider.ViewportWidth / 2) - ((double)bitmap.PixelWidth / 2)));
-                    break;
-            }
-            switch (_positionVertical)
-            {
-                case PositionV.Top:
-                    Canvas.SetTop(_image, provider.ViewportTop);
-                    break;
-                case PositionV.Bottom:
-                    Canvas.SetTop(_image, provider.ViewportBottom - (double)bitmap.PixelHeight);
-                    break;
-                case PositionV.Center:
-                    Canvas.SetTop(_image,
-                        provider.ViewportBottom - provider.ViewportHeight +
-                        ((provider.ViewportHeight / 2) - ((double)bitmap.PixelHeight / 2)));
-                    break;
-            }        
-            return _image;
+            return _bitmaps[_currentImageIndex];
         }
 
         private void CreateBitmaps(string backgroundImageAbsolutePath)
@@ -126,11 +82,6 @@ namespace ClaudiaIDE
             bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
             bitmap.EndInit();
             return bitmap;
-        }
-
-        private BitmapImage GetCurrentBitmap()
-        {
-            return _bitmaps[_currentImageIndex];
         }
     }
 }
