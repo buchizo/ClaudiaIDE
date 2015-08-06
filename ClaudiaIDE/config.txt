@@ -1,8 +1,10 @@
 {
-	"BackgroundImagesDirectoryAbsolutePath": "Images",
+	"BackgroundImageAbsolutePath":"background.png",
+	"BackgroundImagesDirectoryAbsolutePath":"Images",
+	"Extensions":".png, .jpg",
+	"ImageBackgroundType":0,
 	"Opacity":0.35,
 	"PositionHorizon":1,
 	"PositionVertical":1,
-	"UpdateImageInterval":"00:01:00",
-	"Extensions":".png, .jpg"
+	"UpdateImageInterval":"01:00:00"
 }

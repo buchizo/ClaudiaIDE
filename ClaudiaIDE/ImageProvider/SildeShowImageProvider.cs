@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Timers;
-using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Text.Editor;
 
 namespace ClaudiaIDE
 {
-    public class ImageProvider : IImageProvider
+    public class SildeShowImageProvider : IImageProvider
     {
         private readonly static Timer Timer;
         private readonly TimeSpan _updateInterval;
@@ -19,7 +18,7 @@ namespace ClaudiaIDE
         private readonly string[] _extensions;
         private int _currentImageIndex = 0;
 
-        static ImageProvider()
+        static SildeShowImageProvider()
         {
             Timer = new Timer
             {
@@ -29,7 +28,7 @@ namespace ClaudiaIDE
             };
         }
 
-        public ImageProvider(Setting setting)
+        public SildeShowImageProvider(Setting setting)
         {
             _updateInterval = setting.UpdateImageInterval;
             _lastUpdateTime = DateTime.Now;

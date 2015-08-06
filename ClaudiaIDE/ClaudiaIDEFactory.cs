@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using ClaudiaIDE.ImageProvider;
 using ClaudiaIDE.Settings;
 using EnvDTE;
 using EnvDTE80;
@@ -19,7 +20,8 @@ namespace ClaudiaIDE
 	[TextViewRole(PredefinedTextViewRoles.Document)]
 	internal sealed class ClaudiaIDEAdornmentFactory : IWpfTextViewCreationListener
 	{
-	    private ImageProvider _imageProvider;
+	    private SildeShowImageProvider _sildeShowImageProvider;
+	    private SingleImageProvider _singleImageProvider;
             
         [Import(typeof(SVsServiceProvider))]
 		internal System.IServiceProvider ServiceProvider { get; set; }
@@ -39,9 +41,23 @@ namespace ClaudiaIDE
 		/// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
 		public void TextViewCreated(IWpfTextView textView)
 		{
-		    var setting = GetConfigFromVisualStudioSettings();
-		    new ClaudiaIDE(textView, _imageProvider ??  (_imageProvider = new ImageProvider(setting)), setting);
+		    var settings = GetConfigFromVisualStudioSettings();
+		    _sildeShowImageProvider = _sildeShowImageProvider ?? new SildeShowImageProvider(settings);
+		    _singleImageProvider = _singleImageProvider ?? new SingleImageProvider(settings);
+
+		    new ClaudiaIDE(textView, GetImageProvider(settings), settings);
 		}
+
+	    private IImageProvider GetImageProvider(Setting settings)
+	    {
+	        switch (settings.ImageBackgroundType)
+	        {
+	            case ImageBackgroundType.Slideshow:
+	                return _sildeShowImageProvider;
+                default:
+	                return _singleImageProvider;
+	        }
+	    }
 
 	    private Setting GetConfigFromVisualStudioSettings()
         {
@@ -53,11 +69,13 @@ namespace ClaudiaIDE
                 var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
                 config.BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
+                config.BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageAbsolutePath").Value);
                 config.Opacity = props.Item("Opacity").Value;
                 config.PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
                 config.PositionVertical = (PositionV)props.Item("PositionVertical").Value;
                 config.UpdateImageInterval = (TimeSpan) props.Item("UpdateImageInterval").Value;
                 config.Extensions = (string)props.Item("Extensions").Value;
+                config.ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
                 return config;
             }
             catch (Exception)
