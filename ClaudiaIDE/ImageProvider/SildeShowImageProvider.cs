@@ -70,7 +70,7 @@ namespace ClaudiaIDE
 
         private IEnumerable<string> GetAllImagesFromFolder(string backgroundImageAbsolutePath)
         {
-            return Directory.GetFiles(new FileInfo(backgroundImageAbsolutePath).Directory.FullName)
+            return Directory.GetFiles(new DirectoryInfo(backgroundImageAbsolutePath).FullName)
                 .Where(x => _extensions.Contains(Path.GetExtension(x)));
         }
 

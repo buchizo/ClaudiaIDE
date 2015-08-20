@@ -62,7 +62,8 @@ namespace ClaudiaIDE.Settings
 				s.Close();
 			}
 			var ret = JsonSerializer<Setting>.DeSerialize(config);
-			ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath);
+            ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath);
+            ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath);
 			return ret;
 		}
 

@@ -6,5 +6,5 @@
 	"Opacity":0.35,
 	"PositionHorizon":1,
 	"PositionVertical":1,
-	"UpdateImageInterval":"01:00:00"
+	"UpdateImageInterval":"PT30M"
 }
