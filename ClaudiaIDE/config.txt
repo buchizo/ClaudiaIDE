@@ -6,5 +6,6 @@
 	"Opacity":0.35,
 	"PositionHorizon":1,
 	"PositionVertical":1,
-	"UpdateImageInterval":"PT30M"
+	"UpdateImageInterval":"PT30M",
+	"ImageFadeAnimationInterval":"PT30S"
 }

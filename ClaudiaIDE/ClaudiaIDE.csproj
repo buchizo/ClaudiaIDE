@@ -131,6 +131,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="Helpers\ImageSourceAnimator.cs" />
     <Compile Include="IImageProvider.cs" />
     <Compile Include="ImageProvider\SildeShowImageProvider.cs" />

@@ -23,7 +23,8 @@ namespace ClaudiaIDE.Options
 			PositionHorizon = PositionH.Right;
 			PositionVertical = PositionV.Bottom;
 		    UpdateImageInterval = TimeSpan.FromMinutes(1);
-		    Extensions = ".png, .jpg";
+            ImageFadeAnimationInterval = TimeSpan.FromSeconds(5);
+            Extensions = ".png, .jpg";
 		}
 
         [Category("Image")]
@@ -60,10 +61,17 @@ namespace ClaudiaIDE.Options
 
         [Category("Slideshow")]
         [DisplayName("Update interval")]
-        [Description("Background image change interval. (value in format: HH:mm)")]
+        [Description("Background image change interval. (value in format: HH:mm:ss)")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan UpdateImageInterval { get; set; }
+
+        [Category("Slideshow")]
+        [DisplayName("Image animation interval")]
+        [Description("Background image fade animation interval. (value in format: HH:mm:ss)")]
+        [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
+        [TypeConverter(typeof(TimeSpanConverter))]
+        public TimeSpan ImageFadeAnimationInterval { get; set; }
 
         [Category("Slideshow")]
         [DisplayName("Image extensions")]
@@ -263,7 +271,15 @@ namespace ClaudiaIDE.Options
             {
                 OpenFileDialog open = new OpenFileDialog();
                 open.FileName = Path.GetFileName((string)value);
-                open.InitialDirectory = Path.GetDirectoryName((string)value);
+
+                try
+                {
+                    open.InitialDirectory = Path.GetDirectoryName((string)value);
+                }
+                catch (Exception)
+                {                    
+                }
+
                 if (open.ShowDialog() == DialogResult.OK)
                 {
                     return open.FileName;

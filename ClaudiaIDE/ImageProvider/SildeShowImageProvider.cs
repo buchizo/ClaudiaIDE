@@ -11,6 +11,7 @@ namespace ClaudiaIDE
 {
     public class SildeShowImageProvider : IImageProvider
     {
+        private readonly BitmapImage _emptyBitmap = new BitmapImage();
         private readonly static Timer Timer;
         private readonly TimeSpan _updateInterval;
         private DateTime _lastUpdateTime;
@@ -35,9 +36,13 @@ namespace ClaudiaIDE
             _extensions = setting.Extensions.Split(new[]{",", " "}, StringSplitOptions.RemoveEmptyEntries);
 
             CreateBitmaps(setting.BackgroundImagesDirectoryAbsolutePath);
+            if (!_bitmaps.Any())
+            {
+                return;
+            }
             Timer.Elapsed += (o, e) =>
             {
-                if (DateTime.Now - _lastUpdateTime > _updateInterval)
+                if (DateTime.Now - _lastUpdateTime >= _updateInterval)
                 {
                     _lastUpdateTime = DateTime.Now;
                     _currentImageIndex = (_currentImageIndex + 1) % _bitmaps.Count;
@@ -50,7 +55,7 @@ namespace ClaudiaIDE
 
         public BitmapImage GetBitmap(IWpfTextView provider)
         {
-            return _bitmaps[_currentImageIndex];
+            return _bitmaps.Any() ? _bitmaps[_currentImageIndex] : _emptyBitmap;
         }
 
         private void CreateBitmaps(string backgroundImageAbsolutePath)

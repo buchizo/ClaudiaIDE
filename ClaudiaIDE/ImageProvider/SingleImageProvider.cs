@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Text.Editor;
@@ -11,10 +12,15 @@ namespace ClaudiaIDE.ImageProvider
 
         public SingleImageProvider(Setting setting)
         {
+            var fileUri = new Uri(setting.BackgroundImageAbsolutePath, UriKind.Absolute);
+            var fileInfo = new FileInfo(fileUri.AbsolutePath);
             _bitmap = new BitmapImage();
-            _bitmap.BeginInit();
-            _bitmap.UriSource = new Uri(setting.BackgroundImageAbsolutePath, UriKind.Absolute);
-            _bitmap.EndInit();
+            if(fileInfo.Exists)
+            {
+                _bitmap.BeginInit();
+                _bitmap.UriSource = fileUri;
+                _bitmap.EndInit();
+            }
         }
 
         public BitmapImage GetBitmap(IWpfTextView provider)

@@ -20,8 +20,10 @@ namespace ClaudiaIDE
 	    private readonly Image _image;
 	    private readonly PositionV _positionVertical;
 	    private readonly PositionH _positionHorizon;
+	    private readonly double _imageOpacity;
+	    private readonly TimeSpan _fadeTime;
 
-        /// <summary>
+	    /// <summary>
         /// Creates a square image and attaches an event handler to the layout changed event that
         /// adds the the square in the upper right-hand corner of the TextView via the adornment layer
         /// </summary>
@@ -35,13 +37,15 @@ namespace ClaudiaIDE
 		        _dispacher = Dispatcher.CurrentDispatcher;
                 _imageProvider = imageProvider;
 				_view = view;
+                _positionHorizon = setting.PositionHorizon;
+                _positionVertical = setting.PositionVertical;
+		        _imageOpacity = setting.Opacity;
+		        _fadeTime = setting.ImageFadeAnimationInterval;
                 _image = new Image
                 {
                     Opacity = setting.Opacity,
                     IsHitTestVisible = false
                 };
-                _positionHorizon = setting.PositionHorizon;
-                _positionVertical = setting.PositionVertical;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
 				_view.ViewportHeightChanged += delegate { RepositionImage(); };
 				_view.ViewportWidthChanged += delegate { RepositionImage(); };     
@@ -59,11 +63,18 @@ namespace ClaudiaIDE
 			try
 			{
                 var bitmap = _imageProvider.GetBitmap(_view);
-                _image.AnimateImageSourceChange(bitmap, img =>
-                {
-                    SetImagePosition(img);
-                    ResizeImage(img);
-                });
+			    _image.AnimateImageSourceChange(
+			        bitmap,
+			        img =>
+			        {
+			            SetImagePosition(img);
+			            ResizeImage(img);
+			        },
+			        new AnimateImageChangeParams
+			        {
+			            TargetOpacity = _imageOpacity,
+			            FadeTime = _fadeTime
+			        });
                 RefreshAdornment();
             }
             catch (Exception)

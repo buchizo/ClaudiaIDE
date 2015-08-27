@@ -76,6 +76,7 @@ namespace ClaudiaIDE
                 config.UpdateImageInterval = (TimeSpan) props.Item("UpdateImageInterval").Value;
                 config.Extensions = (string)props.Item("Extensions").Value;
                 config.ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
+                config.ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
                 return config;
             }
             catch (Exception)

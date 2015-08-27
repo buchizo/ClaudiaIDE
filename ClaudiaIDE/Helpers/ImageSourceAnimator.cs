@@ -8,14 +8,14 @@ namespace ClaudiaIDE.Helpers
 {
     static class ImageSourceAnimator
     {
-        public static void AnimateImageSourceChange(this Image image, ImageSource bitmap, Action<Image> onShowImage)
+        public static void AnimateImageSourceChange(this Image image, ImageSource bitmap, Action<Image> onShowImage, AnimateImageChangeParams animateImageChangeParams = null)
         {
-            var fadeTime = TimeSpan.FromSeconds(3);
-            var fadeInAnimation = new DoubleAnimation(1d, fadeTime);
+            var animationParameters = animateImageChangeParams ?? new AnimateImageChangeParams();
+            var fadeInAnimation = new DoubleAnimation(animationParameters.TargetOpacity, animationParameters.FadeTime);
 
             if (image.Source != null)
             {
-                var fadeOutAnimation = new DoubleAnimation(0d, fadeTime);
+                var fadeOutAnimation = new DoubleAnimation(0d, animationParameters.FadeTime);
 
                 fadeOutAnimation.Completed += (o, e) =>
                 {

@@ -33,6 +33,7 @@ namespace ClaudiaIDE.Settings
 	    public string BackgroundImageAbsolutePath { get; set; }
 
         public TimeSpan UpdateImageInterval { get; set; }
+        public TimeSpan ImageFadeAnimationInterval { get; set; }
 		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
         public string Extensions { get; set; }
 
