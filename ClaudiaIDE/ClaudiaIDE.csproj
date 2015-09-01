@@ -167,6 +167,10 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="Resources\400.ico" />
+    <Content Include="Images\background2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="ss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
