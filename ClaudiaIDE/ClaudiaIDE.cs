@@ -1,21 +1,10 @@
 ﻿using System;
-using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using ClaudiaIDE.Options;
-using EnvDTE;
-using EnvDTE80;
-using Microsoft.VisualStudio.Settings;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Settings;
-using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Editor;
+using System.Windows.Threading;
+using ClaudiaIDE.Helpers;
 using ClaudiaIDE.Settings;
+using Microsoft.VisualStudio.Text.Editor;
 
 namespace ClaudiaIDE
 {
@@ -24,109 +13,137 @@ namespace ClaudiaIDE
 	/// </summary>
 	public class ClaudiaIDE
 	{
-		private Setting _Config;
-		private Image _Image;
-		private BitmapImage _Bitmap;
-		private IWpfTextView _View;
-		private IAdornmentLayer _AdornmentLayer;
+	    private readonly IImageProvider _imageProvider;
+		private readonly IWpfTextView _view;
+		private readonly IAdornmentLayer _adornmentLayer;
+	    private readonly Dispatcher _dispacher;
+	    private readonly Image _image;
+	    private readonly PositionV _positionVertical;
+	    private readonly PositionH _positionHorizon;
+	    private readonly double _imageOpacity;
+	    private readonly TimeSpan _fadeTime;
 
-		private IServiceProvider _ServiceProvider;
-		
-		/// <summary>
-		/// Creates a square image and attaches an event handler to the layout changed event that
-		/// adds the the square in the upper right-hand corner of the TextView via the adornment layer
-		/// </summary>
-		/// <param name="view">The <see cref="IWpfTextView"/> upon which the adornment will be drawn</param>
-		public ClaudiaIDE(IWpfTextView view, IServiceProvider sp)
+	    /// <summary>
+        /// Creates a square image and attaches an event handler to the layout changed event that
+        /// adds the the square in the upper right-hand corner of the TextView via the adornment layer
+        /// </summary>
+        /// <param name="view">The <see cref="IWpfTextView"/> upon which the adornment will be drawn</param>
+        /// <param name="imageProvider">The <see cref="IImageProvider"/> which provides bitmaps to draw</param>
+        /// <param name="setting">The <see cref="Setting"/> contains user image preferences</param>
+        public ClaudiaIDE(IWpfTextView view, IImageProvider imageProvider, Setting setting)
 		{
-			try
-			{
-				_ServiceProvider = sp;
-				_View = view;
-				_Image = new Image();
-
-				_Config = GetConfigFromVisualStudioSettings();
-
-				_Image.Opacity = _Config.Opacity;
-				_Bitmap = new BitmapImage();
-				_Bitmap.BeginInit();
-				_Bitmap.UriSource = new Uri(_Config.BackgroundImageAbsolutePath, UriKind.Absolute);
-				_Bitmap.EndInit();
-				_Image.Source = _Bitmap;
-				_Image.Width = _Bitmap.PixelWidth;
-				_Image.Height = _Bitmap.PixelHeight;
-				_Image.IsHitTestVisible = false;
-
-				this._AdornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
-				_View.ViewportHeightChanged += delegate { this.onSizeChange(); };
-				_View.ViewportWidthChanged += delegate { this.onSizeChange(); };
-			}
+		    try
+		    {
+		        _dispacher = Dispatcher.CurrentDispatcher;
+                _imageProvider = imageProvider;
+				_view = view;
+                _positionHorizon = setting.PositionHorizon;
+                _positionVertical = setting.PositionVertical;
+		        _imageOpacity = setting.Opacity;
+		        _fadeTime = setting.ImageFadeAnimationInterval;
+                _image = new Image
+                {
+                    Opacity = setting.Opacity,
+                    IsHitTestVisible = false
+                };
+                _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
+				_view.ViewportHeightChanged += delegate { RepositionImage(); };
+				_view.ViewportWidthChanged += delegate { RepositionImage(); };     
+                _view.ViewportLeftChanged += delegate { RepositionImage(); };
+                _imageProvider.NewImageAvaliable += delegate { _dispacher.Invoke(ChangeImage); };
+                ChangeImage();
+            }
 			catch (Exception)
 			{
 			}
 		}
 
-		private Setting GetConfigFromVisualStudioSettings()
+		private void ChangeImage()
 		{
 			try
 			{
-				var config = new Setting();
-
-				var _DTE2 = (DTE2)_ServiceProvider.GetService(typeof(DTE));
-				var props = _DTE2.Properties["ClaudiaIDE","General"];
-
-				config.BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageAbsolutePath").Value);
-				config.Opacity = props.Item("Opacity").Value;
-				config.PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
-				config.PositionVertical = (PositionV)props.Item("PositionVertical").Value;
-				return config;
-			}
-			catch (Exception)
-			{
-				return Setting.Desirialize();
-			}
-		}
-
-		public void onSizeChange()
-		{
-			try
-			{
-				this._AdornmentLayer.RemoveAllAdornments();
-
-				switch (_Config.PositionHorizon)
-				{
-					case PositionH.Left:
-						Canvas.SetLeft(this._Image, this._View.ViewportLeft);
-						break;
-					case PositionH.Right:
-						Canvas.SetLeft(this._Image, this._View.ViewportRight - (double)_Bitmap.PixelWidth);
-						break;
-					case PositionH.Center:
-						Canvas.SetLeft(this._Image, this._View.ViewportRight - this._View.ViewportWidth + ((this._View.ViewportWidth / 2) - ((double)_Bitmap.PixelWidth / 2)));
-						break;
-				}
-				switch (_Config.PositionVertical)
-				{
-					case PositionV.Top:
-						Canvas.SetTop(this._Image, this._View.ViewportTop);
-						break;
-					case PositionV.Bottom:
-						Canvas.SetTop(this._Image, this._View.ViewportBottom - (double)_Bitmap.PixelHeight);
-						break;
-					case PositionV.Center:
-						Canvas.SetTop(this._Image, this._View.ViewportBottom - this._View.ViewportHeight + ((this._View.ViewportHeight / 2) - ((double)_Bitmap.PixelHeight / 2)));
-						break;
-				}
-				this._AdornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
-					null,
-					null,
-					this._Image,
-					null);
-			}
-			catch (Exception)
+                var bitmap = _imageProvider.GetBitmap(_view);
+			    _image.AnimateImageSourceChange(
+			        bitmap,
+			        img =>
+			        {
+			            SetImagePosition(img);
+			            ResizeImage(img);
+			        },
+			        new AnimateImageChangeParams
+			        {
+			            TargetOpacity = _imageOpacity,
+			            FadeTime = _fadeTime
+			        });
+                RefreshAdornment();
+            }
+            catch (Exception)
 			{
 			
 			}
 		}
+
+	    private void RepositionImage()
+	    {
+            try
+            {
+                SetImagePosition(_image);
+                RefreshAdornment();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+	    private void RefreshAdornment()
+	    {
+	        _adornmentLayer.RemoveAllAdornments();
+	        _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
+	            null,
+	            null,
+	            _image,
+	            null);
+	    }
+
+	    private void SetImagePosition(Image image)
+	    {
+	        var bitmap = (BitmapImage)image.Source;
+            switch (_positionHorizon)
+	        {
+	            case PositionH.Left:
+	                Canvas.SetLeft(image, _view.ViewportLeft);
+	                break;
+	            case PositionH.Right:
+	                Canvas.SetLeft(image, _view.ViewportRight - (double) bitmap.PixelWidth);
+	                break;
+	            case PositionH.Center:
+	                Canvas.SetLeft(image,
+	                    _view.ViewportRight - _view.ViewportWidth +
+	                    ((_view.ViewportWidth/2) - ((double) bitmap.PixelWidth/2)));
+	                break;
+	        }
+	        switch (_positionVertical)
+	        {
+	            case PositionV.Top:
+	                Canvas.SetTop(image, _view.ViewportTop);
+	                break;
+	            case PositionV.Bottom:
+	                Canvas.SetTop(image, _view.ViewportBottom - (double) bitmap.PixelHeight);
+	                break;
+	            case PositionV.Center:
+	                Canvas.SetTop(image,
+	                    _view.ViewportBottom - _view.ViewportHeight +
+	                    ((_view.ViewportHeight/2) - ((double) bitmap.PixelHeight/2)));
+	                break;
+	        }
+	    }
+
+	    private void ResizeImage(Image image)
+	    {
+            var bitmap = (BitmapImage)image.Source;
+            image.Width = bitmap.PixelWidth;
+	        image.Height = bitmap.PixelHeight;
+	    }
 	}
 }

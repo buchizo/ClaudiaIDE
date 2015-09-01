@@ -15,18 +15,29 @@ namespace ClaudiaIDE.Settings
 		public Setting()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "background.png");
-			Opacity = 0.35;
+			BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "Images");
+            BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "background.png");
+            Opacity = 0.35;
 			PositionHorizon = PositionH.Right;
 			PositionVertical = PositionV.Bottom;
+		    UpdateImageInterval = TimeSpan.FromMinutes(30);
+		    Extensions = ".png, .jpg";
+            ImageBackgroundType = ImageBackgroundType.Single;
 		}
 
-		public double Opacity { get; set; }
-		public string BackgroundImageAbsolutePath { get; set; }
+        public ImageBackgroundType ImageBackgroundType { get; set; }
+        public double Opacity { get; set; }
 		public PositionV PositionVertical { get; set; }
 		public PositionH PositionHorizon { get; set; }
 
-		public void Serialize()
+	    public string BackgroundImageAbsolutePath { get; set; }
+
+        public TimeSpan UpdateImageInterval { get; set; }
+        public TimeSpan ImageFadeAnimationInterval { get; set; }
+		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
+        public string Extensions { get; set; }
+
+	    public void Serialize()
 		{
 			var config = JsonSerializer<Setting>.Serialize(this);
 
@@ -40,7 +51,7 @@ namespace ClaudiaIDE.Settings
 			}
 		}
 
-		public static Setting Desirialize()
+		public static Setting Deserialize()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
@@ -52,7 +63,8 @@ namespace ClaudiaIDE.Settings
 				s.Close();
 			}
 			var ret = JsonSerializer<Setting>.DeSerialize(config);
-			ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath);
+            ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath);
+            ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath);
 			return ret;
 		}
 
@@ -84,4 +96,12 @@ namespace ClaudiaIDE.Settings
 		Right,
 		Center
 	}
+
+    [CLSCompliant(false), ComVisible(true)]
+    [Guid("5C96CFAA-FE54-49A9-8AB7-E85B66731228")]
+    public enum ImageBackgroundType
+    {
+        Single = 0,
+        Slideshow = 1
+    }
 }
