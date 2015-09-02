@@ -1,7 +1,13 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
+using ClaudiaIDE.ImageProvider;
+using ClaudiaIDE.Settings;
+using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
+using System.Collections.Generic;
 
 namespace ClaudiaIDE
 {
@@ -15,7 +21,9 @@ namespace ClaudiaIDE
 	[TextViewRole(PredefinedTextViewRoles.Document)]
 	internal sealed class ClaudiaIDEAdornmentFactory : IWpfTextViewCreationListener
 	{
-		[Import(typeof(SVsServiceProvider))]
+        private List<IImageProvider> ImageProviders;
+          
+        [Import(typeof(SVsServiceProvider))]
 		internal System.IServiceProvider ServiceProvider { get; set; }
 		
 		/// <summary>
@@ -33,9 +41,19 @@ namespace ClaudiaIDE
 		/// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
 		public void TextViewCreated(IWpfTextView textView)
 		{
-			new ClaudiaIDE(textView, ServiceProvider);
+		    var settings = Setting.Initialize(ServiceProvider);
+            if(ImageProviders == null)
+            {
+                ImageProviders = new List<IImageProvider>
+                {
+                    new SildeShowImageProvider(settings),
+                    new SingleImageProvider(settings)
+                };
+            }
+
+		    new ClaudiaIDE(textView, ImageProviders, settings);
 		}
-	}
+    }
 	
 	#endregion //Adornment Factory
 }

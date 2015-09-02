@@ -1,6 +1,11 @@
 {
-	"BackgroundImageAbsolutePath": "background.png",
+	"BackgroundImageAbsolutePath":"background.png",
+	"BackgroundImagesDirectoryAbsolutePath":"Images",
+	"Extensions":".png, .jpg",
+	"ImageBackgroundType":0,
 	"Opacity":0.35,
 	"PositionHorizon":1,
-	"PositionVertical":1 
+	"PositionVertical":1,
+	"UpdateImageInterval":"PT30M",
+	"ImageFadeAnimationInterval":"PT30S"
 }
