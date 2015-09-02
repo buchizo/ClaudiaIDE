@@ -6,69 +6,47 @@ using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Text.Editor;
 using System.Threading;
+using System.Collections;
 
 namespace ClaudiaIDE
 {
     public class SildeShowImageProvider : IImageProvider
     {
-        private readonly BitmapImage _emptyBitmap = new BitmapImage();
         private readonly Timer _timer;
-        private readonly List<BitmapImage> _bitmaps = new List<BitmapImage>();
-        private readonly string[] _extensions;
-        private int _currentImageIndex = 0;
         private Setting _setting;
-
+        private ImageFiles _imageFiles;
+        private IEnumerator<string> _imageFilesPath;
 
         public SildeShowImageProvider(Setting setting)
         {
             _setting = setting;
+
+            _imageFiles = GetImagesFromDirectory();
+            _imageFilesPath = _imageFiles.GetEnumerator();
+            ChangeImage(null);
+
             _timer = new Timer(new TimerCallback(ChangeImage));
-            _timer.Change(0, (int)_setting.UpdateImageInterval.TotalMilliseconds);
-
-            _extensions = setting.Extensions.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
-
-            CreateBitmaps(setting.BackgroundImagesDirectoryAbsolutePath);
-            if (!_bitmaps.Any())
-            {
-                return;
-            }
+            _timer.Change((int)_setting.UpdateImageInterval.TotalMilliseconds, (int)_setting.UpdateImageInterval.TotalMilliseconds);
         }
 
         public event EventHandler NewImageAvaliable;
 
+        private ImageFiles GetImagesFromDirectory()
+        {
+            return new ImageFiles{ Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
+        }
+
         public BitmapImage GetBitmap(IWpfTextView provider)
         {
-            return _bitmaps.Any() ? _bitmaps[_currentImageIndex] : _emptyBitmap;
-        }
+            var current = _imageFilesPath.Current;
+            if (string.IsNullOrEmpty(current)) return null;
 
-        private void CreateBitmaps(string backgroundImageAbsolutePath)
-        {
-            try
-            {
-                var paths = GetAllImagesFromFolder(backgroundImageAbsolutePath);
-                _bitmaps.Clear();
-                foreach (var path in paths)
-                {
-                    _bitmaps.Add(CreateBitmap(path));
-                }
-            }
-            catch (Exception)
-            {
-            }
-        }
-
-        private IEnumerable<string> GetAllImagesFromFolder(string backgroundImageAbsolutePath)
-        {
-            return Directory.GetFiles(new DirectoryInfo(backgroundImageAbsolutePath).FullName)
-                .Where(x => _extensions.Contains(Path.GetExtension(x)));
-        }
-
-        private BitmapImage CreateBitmap(string imagePath)
-        {
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
-            bitmap.UriSource = new Uri(imagePath, UriKind.Absolute);
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
             bitmap.EndInit();
+            bitmap.Freeze();
             return bitmap;
         }
 
@@ -80,15 +58,19 @@ namespace ClaudiaIDE
             }
             else
             {
-                CreateBitmaps(_setting.BackgroundImagesDirectoryAbsolutePath);
+                _imageFiles = GetImagesFromDirectory();
+                _imageFilesPath = _imageFiles.GetEnumerator();
+                ChangeImage(null);
                 _timer.Change(0, (int)_setting.UpdateImageInterval.TotalMilliseconds);
             }
         }
 
         private void ChangeImage(object args)
         {
-            _currentImageIndex = (_currentImageIndex + 1) % _bitmaps.Count;
-            NewImageAvaliable?.Invoke(this, EventArgs.Empty);
+            if(_imageFilesPath.MoveNext())
+            {
+                NewImageAvaliable?.Invoke(this, EventArgs.Empty);
+            }
         }
 
         public ImageBackgroundType ProviderType
@@ -97,6 +79,45 @@ namespace ClaudiaIDE
             {
                 return ImageBackgroundType.Slideshow;
             }
+        }
+    }
+
+    public class ImageFiles : IEnumerable<string>
+    {
+        public string Extensions { get; set; }
+        public string ImageDirectoryPath { get; set; }
+
+        private List<string> ImageFilePaths;
+
+        public IEnumerator<string> GetEnumerator()
+        {
+            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath)) yield return "";
+
+            var extensions = Extensions.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+            ImageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
+                .Where(x => extensions.Contains(Path.GetExtension(x)))
+                .OrderBy(x => Guid.NewGuid())
+                .ToList();
+
+            if (!ImageFilePaths.Any())
+            {
+                yield return "";
+            }
+            else
+            {
+                while (true)
+                {
+                    foreach (var path in ImageFilePaths)
+                    {
+                        yield return path;
+                    }
+                }
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }

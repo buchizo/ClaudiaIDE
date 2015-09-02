@@ -55,7 +55,7 @@ namespace ClaudiaIDE
                 _view.ViewportLeftChanged += delegate { RepositionImage(); };
                 _setting.OnChanged += delegate { ReloadSettings(); };
 
-                _imageProviders.ForEach(x => x.NewImageAvaliable += delegate { _dispacher.Invoke(ChangeImage); });
+                _imageProviders.ForEach(x => x.NewImageAvaliable += delegate { InvokeChangeImage(); });
 
                 ChangeImage();
             }
@@ -74,11 +74,22 @@ namespace ClaudiaIDE
                     _view.ViewportWidthChanged -= delegate { RepositionImage(); };
                     _view.ViewportLeftChanged -= delegate { RepositionImage(); };
                 }
-                _imageProviders.ForEach(x => x.NewImageAvaliable -= delegate { _dispacher.Invoke(ChangeImage); });
+                _imageProviders.ForEach(x => x.NewImageAvaliable -= delegate { InvokeChangeImage(); });
                 if (_setting != null)
                 {
                     _setting.OnChanged -= delegate { ReloadSettings(); };
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        private void InvokeChangeImage()
+        {
+            try
+            {
+                _dispacher.Invoke(ChangeImage);
             }
             catch
             {

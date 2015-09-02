@@ -35,8 +35,10 @@ namespace ClaudiaIDE.ImageProvider
             if (fileInfo.Exists)
             {
                 _bitmap.BeginInit();
+                _bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 _bitmap.UriSource = fileUri;
                 _bitmap.EndInit();
+                _bitmap.Freeze();
             }
         }
 
