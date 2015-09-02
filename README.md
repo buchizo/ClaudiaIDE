@@ -3,29 +3,10 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
-## New! (ver 1.16) ##
-Re-Fixed issue #3
+## New! (ver 1.17) ##
 
-## ver 1.12 ##
-Support Visual Studio Community 2013 and Visual Studio 2015 Preview
-Fixed issue #2
-
-## ver 1.11 ##
-Add OpenFileDialog for image file path.
-
-## ver 1.9 ##
-Support any DPI image, jpeg format and center position.
-
-## ver 1.7 ##
-You can configure the settings in the Visual Studio option page.
-
-## ver 1.2 ##
-You can configure the background image path and opacity, image position!
-
-<user folder>AppData\Local\Microsoft\VisualStudio\11.0\Extensions\<this extension>\config.txt
-
-* background image path must escape '\' to '\\'
-* background image only support *.png
+* Add slideshow feature.
+* Support Visual Studio 2012/2013/2015
 
 Download:
 
