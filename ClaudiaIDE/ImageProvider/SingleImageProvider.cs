@@ -29,8 +29,8 @@ namespace ClaudiaIDE.ImageProvider
 
         private void LoadImage()
         {
-            var fileUri = new Uri(_setting.BackgroundImageAbsolutePath, UriKind.Absolute);
-            var fileInfo = new FileInfo(fileUri.AbsolutePath);
+            var fileUri = new Uri(_setting.BackgroundImageAbsolutePath, UriKind.RelativeOrAbsolute);
+            var fileInfo = new FileInfo(_setting.BackgroundImageAbsolutePath);
             _bitmap = new BitmapImage();
             if (fileInfo.Exists)
             {
