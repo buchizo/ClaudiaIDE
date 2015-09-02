@@ -6,21 +6,15 @@ using Microsoft.VisualStudio.Text.Editor;
 
 namespace ClaudiaIDE.ImageProvider
 {
-    class SingleImageProvider : IImageProvider
+    public class SingleImageProvider : IImageProvider
     {
-        private readonly BitmapImage _bitmap;
+        private BitmapImage _bitmap;
+        private Setting _setting;
 
         public SingleImageProvider(Setting setting)
         {
-            var fileUri = new Uri(setting.BackgroundImageAbsolutePath, UriKind.Absolute);
-            var fileInfo = new FileInfo(fileUri.AbsolutePath);
-            _bitmap = new BitmapImage();
-            if(fileInfo.Exists)
-            {
-                _bitmap.BeginInit();
-                _bitmap.UriSource = fileUri;
-                _bitmap.EndInit();
-            }
+            _setting = setting;
+            LoadImage();
         }
 
         public BitmapImage GetBitmap(IWpfTextView provider)
@@ -28,6 +22,32 @@ namespace ClaudiaIDE.ImageProvider
             return _bitmap;
         }
 
+        public void ReloadSettings()
+        {
+            LoadImage();
+        }
+
+        private void LoadImage()
+        {
+            var fileUri = new Uri(_setting.BackgroundImageAbsolutePath, UriKind.Absolute);
+            var fileInfo = new FileInfo(fileUri.AbsolutePath);
+            _bitmap = new BitmapImage();
+            if (fileInfo.Exists)
+            {
+                _bitmap.BeginInit();
+                _bitmap.UriSource = fileUri;
+                _bitmap.EndInit();
+            }
+        }
+
         public event EventHandler NewImageAvaliable;
+
+        public ImageBackgroundType ProviderType
+        {
+            get
+            {
+                return ImageBackgroundType.Single;
+            }
+        }
     }
 }

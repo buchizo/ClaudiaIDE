@@ -5,14 +5,29 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.VisualStudio.Shell;
+using EnvDTE;
+using EnvDTE80;
 
 namespace ClaudiaIDE.Settings
 {
 	public class Setting
 	{
-		private static readonly string CONFIGFILE = "config.txt";
+        private static readonly Setting instance = new Setting();
+        private static readonly string CONFIGFILE = "config.txt";
 
-		public Setting()
+        internal System.IServiceProvider ServiceProvider { get; set; }
+
+        public event EventHandler OnChanged;
+
+        public static Setting Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        public Setting()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "Images");
@@ -51,7 +66,47 @@ namespace ClaudiaIDE.Settings
 			}
 		}
 
-		public static Setting Deserialize()
+        public static Setting Initialize(IServiceProvider serviceProvider)
+        {
+            var settings = Setting.Instance;
+            if (settings.ServiceProvider != serviceProvider)
+            {
+                settings.ServiceProvider = serviceProvider;
+            }
+            try
+            {
+                settings.Load();
+            }
+            catch
+            {
+                return Setting.Deserialize();
+            }
+            return settings;
+        }
+
+        public void Load()
+        {
+            var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
+            var props = _DTE2.Properties["ClaudiaIDE", "General"];
+
+            BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
+            BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageAbsolutePath").Value);
+            Opacity = props.Item("Opacity").Value;
+            PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
+            PositionVertical = (PositionV)props.Item("PositionVertical").Value;
+            UpdateImageInterval = (TimeSpan)props.Item("UpdateImageInterval").Value;
+            Extensions = (string)props.Item("Extensions").Value;
+            ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
+            ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
+        }
+
+        public void OnApplyChanged()
+        {
+            Load();
+            OnChange(this);
+        }
+
+        public static Setting Deserialize()
 		{
 			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 			var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
@@ -77,6 +132,14 @@ namespace ClaudiaIDE.Settings
 			}
 			return path;
 		}
+
+        private void OnChange(object sender)
+        {
+            if(OnChanged != null)
+            {
+                OnChanged(sender, EventArgs.Empty);
+            }
+        }
 	}
 
 	[CLSCompliant(false), ComVisible(true)]
@@ -104,4 +167,5 @@ namespace ClaudiaIDE.Settings
         Single = 0,
         Slideshow = 1
     }
+
 }

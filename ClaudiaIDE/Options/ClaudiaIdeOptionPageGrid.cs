@@ -84,7 +84,18 @@ namespace ClaudiaIDE.Options
         [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
         public string BackgroundImageAbsolutePath { get; set; }
 
-	}
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            try
+            {
+                Setting.Instance.OnApplyChanged();
+            }
+            catch
+            {
+            }
+            base.OnApply(e);
+        }
+    }
 
     public class ImageBackgroundTypeConverter : EnumConverter
     {
