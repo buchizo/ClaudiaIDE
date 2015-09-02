@@ -18,6 +18,7 @@ namespace ClaudiaIDE.Options
 	{
 		public ClaudiaIdeOptionPageGrid()
 		{
+            BackgroundImageAbsolutePath = "Images\\background.png";
 			BackgroundImageDirectoryAbsolutePath = "Images";
 			Opacity = 0.35;
 			PositionHorizon = PositionH.Right;

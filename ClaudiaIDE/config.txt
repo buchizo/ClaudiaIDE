@@ -1,5 +1,5 @@
 {
-	"BackgroundImageAbsolutePath":"background.png",
+	"BackgroundImageAbsolutePath":"Images\\background.png",
 	"BackgroundImagesDirectoryAbsolutePath":"Images",
 	"Extensions":".png, .jpg",
 	"ImageBackgroundType":0,
