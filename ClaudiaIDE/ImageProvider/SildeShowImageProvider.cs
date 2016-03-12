@@ -71,6 +71,18 @@ namespace ClaudiaIDE
             {
                 NewImageAvaliable?.Invoke(this, EventArgs.Empty);
             }
+            else
+            {
+                // Reached the end of the images. Loop to beginning?
+                if (_setting.LoopSlideshow)
+                {
+                    _imageFilesPath.Reset();
+                    if (_imageFilesPath.MoveNext())
+                    {
+                        NewImageAvaliable?.Invoke(this, EventArgs.Empty);
+                    }
+                }
+            }
         }
 
         public ImageBackgroundType ProviderType
@@ -87,37 +99,72 @@ namespace ClaudiaIDE
         public string Extensions { get; set; }
         public string ImageDirectoryPath { get; set; }
 
-        private List<string> ImageFilePaths;
-
         public IEnumerator<string> GetEnumerator()
         {
-            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath)) yield return "";
+            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath))
+            {
+                return new ImageFilesEnumerator(new List<string>());
+            }
 
             var extensions = Extensions.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
-            ImageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
+            List<string> imageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
                 .Where(x => extensions.Contains(Path.GetExtension(x)))
                 .OrderBy(x => Guid.NewGuid())
                 .ToList();
 
-            if (!ImageFilePaths.Any())
+            if (!imageFilePaths.Any())
             {
-                yield return "";
+                return new ImageFilesEnumerator(new List<string>());
             }
             else
             {
-                while (true)
-                {
-                    foreach (var path in ImageFilePaths)
-                    {
-                        yield return path;
-                    }
-                }
+                return new ImageFilesEnumerator(imageFilePaths);
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
+        }
+    }
+
+    public class ImageFilesEnumerator : IEnumerator<string>
+    {
+        private int position;
+        private List<string> imageFilePaths;
+        public ImageFilesEnumerator(List<string> imageFilePaths)
+        {
+            this.imageFilePaths = imageFilePaths;
+            position = -1;
+        }
+
+        public string Current
+        {
+            get
+            {
+                return imageFilePaths[position];
+            }
+        }
+
+        object IEnumerator.Current
+        {
+            get
+            {
+                return Current;
+            }
+        }
+
+        public void Dispose() { }
+
+        public bool MoveNext()
+        {
+            position++;
+            return position < imageFilePaths.Count;
+        }
+
+        public void Reset()
+        {
+            position = -1;
         }
     }
 }

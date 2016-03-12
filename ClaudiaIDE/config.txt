@@ -7,5 +7,6 @@
 	"PositionHorizon":1,
 	"PositionVertical":1,
 	"UpdateImageInterval":"PT30M",
-	"ImageFadeAnimationInterval":"PT30S"
+	"ImageFadeAnimationInterval":"PT30S",
+	"LoopSlideshow":true
 }
