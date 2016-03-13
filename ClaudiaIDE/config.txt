@@ -8,5 +8,7 @@
 	"PositionVertical":1,
 	"UpdateImageInterval":"PT30M",
 	"ImageFadeAnimationInterval":"PT30S",
-	"LoopSlideshow":true
+	"LoopSlideshow":true,
+	"MaxWidth": 0,
+	"MaxHeight": 0
 }

@@ -45,6 +45,18 @@ namespace ClaudiaIDE
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
+
+            // Check the width and height of the image.
+            if(_setting.MaxWidth > 0)
+            {
+                bitmap.DecodePixelWidth = _setting.MaxWidth;
+            }
+
+            if(_setting.MaxHeight > 0)
+            {
+                bitmap.DecodePixelHeight = _setting.MaxHeight;
+            }
+
             bitmap.EndInit();
             bitmap.Freeze();
             return bitmap;
@@ -106,9 +118,11 @@ namespace ClaudiaIDE
                 return new ImageFilesEnumerator(new List<string>());
             }
 
-            var extensions = Extensions.Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries);
+            var extensions = Extensions
+                .Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => x.ToUpper());
             List<string> imageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
-                .Where(x => extensions.Contains(Path.GetExtension(x)))
+                .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper()))
                 .OrderBy(x => Guid.NewGuid())
                 .ToList();
 

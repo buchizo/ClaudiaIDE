@@ -37,6 +37,18 @@ namespace ClaudiaIDE.ImageProvider
                 _bitmap.BeginInit();
                 _bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 _bitmap.UriSource = fileUri;
+
+                // Check the width and height of the image.
+                if (_setting.MaxWidth > 0)
+                {
+                    _bitmap.DecodePixelWidth = _setting.MaxWidth;
+                }
+
+                if (_setting.MaxHeight > 0)
+                {
+                    _bitmap.DecodePixelHeight = _setting.MaxHeight;
+                }
+
                 _bitmap.EndInit();
                 _bitmap.Freeze();
             }
