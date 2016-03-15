@@ -9,10 +9,6 @@ namespace ClaudiaIDE.Helpers
 {
     static class Utils
     {
-        // Note: Currently in the event an image is too tall or too wide (but not both)
-        // and the image is decoded using only one of the size properties, for example DecodePixelHeight,
-        // the image seems to get rotated and surpasses one of the max values. As a quick fix for now if one of the "Max" properties is missing
-        // it is filled in with the original image size that corresponds to the missing "Max" property.
         public static BitmapImage EnsureMaxWidthHeight(BitmapImage original, int maxWidth, int maxHeight)
         {
             BitmapImage bitmap = null;
