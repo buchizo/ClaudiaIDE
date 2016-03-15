@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Text.Editor;
+using ClaudiaIDE.Helpers;
 
 namespace ClaudiaIDE.ImageProvider
 {
@@ -37,21 +38,11 @@ namespace ClaudiaIDE.ImageProvider
                 _bitmap.BeginInit();
                 _bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 _bitmap.UriSource = fileUri;
-
-                // Check the width and height of the image.
-                if (_setting.MaxWidth > 0)
-                {
-                    _bitmap.DecodePixelWidth = _setting.MaxWidth;
-                }
-
-                if (_setting.MaxHeight > 0)
-                {
-                    _bitmap.DecodePixelHeight = _setting.MaxHeight;
-                }
-
                 _bitmap.EndInit();
                 _bitmap.Freeze();
             }
+
+            _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, _setting.MaxWidth, _setting.MaxHeight);
         }
 
         public event EventHandler NewImageAvaliable;

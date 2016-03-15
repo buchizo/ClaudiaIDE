@@ -7,6 +7,7 @@ using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Text.Editor;
 using System.Threading;
 using System.Collections;
+using ClaudiaIDE.Helpers;
 
 namespace ClaudiaIDE
 {
@@ -45,21 +46,9 @@ namespace ClaudiaIDE
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
             bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
-
-            // Check the width and height of the image.
-            if(_setting.MaxWidth > 0)
-            {
-                bitmap.DecodePixelWidth = _setting.MaxWidth;
-            }
-
-            if(_setting.MaxHeight > 0)
-            {
-                bitmap.DecodePixelHeight = _setting.MaxHeight;
-            }
-
             bitmap.EndInit();
             bitmap.Freeze();
-            return bitmap;
+            return Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
         }
 
         public void ReloadSettings()
