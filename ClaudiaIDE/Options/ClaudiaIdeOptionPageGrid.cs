@@ -26,6 +26,9 @@ namespace ClaudiaIDE.Options
 		    UpdateImageInterval = TimeSpan.FromMinutes(1);
             ImageFadeAnimationInterval = TimeSpan.FromSeconds(5);
             Extensions = ".png, .jpg";
+            LoopSlideshow = true;
+            MaxWidth = 0;
+            MaxHeight = 0;
 		}
 
         [Category("Image")]
@@ -84,6 +87,21 @@ namespace ClaudiaIDE.Options
         [Description("Backgroud image file path.")]
         [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
         public string BackgroundImageAbsolutePath { get; set; }
+
+        [Category("Slideshow")]
+        [DisplayName("Loop Slideshow")]
+        [Description("This will cause the slideshow to loop back to the beginning after the last image has been shown.")]
+        public bool LoopSlideshow { get; set; }
+
+        [Category("Layout")]
+        [DisplayName("Max Width")]
+        [Description("Maximum width in pixels that the image can fill in the view.")]
+        public int MaxWidth { get; set; }
+
+        [Category("Layout")]
+        [DisplayName("Max Height")]
+        [Description("Maximum height in pixels that the image can fill in the view.")]
+        public int MaxHeight { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {

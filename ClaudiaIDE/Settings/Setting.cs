@@ -38,12 +38,17 @@ namespace ClaudiaIDE.Settings
 		    UpdateImageInterval = TimeSpan.FromMinutes(30);
 		    Extensions = ".png, .jpg";
             ImageBackgroundType = ImageBackgroundType.Single;
+            LoopSlideshow = true;
+            MaxWidth = 0;
+            MaxHeight = 0;
 		}
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
         public double Opacity { get; set; }
 		public PositionV PositionVertical { get; set; }
 		public PositionH PositionHorizon { get; set; }
+        public int MaxWidth { get; set; }
+        public int MaxHeight { get; set; }
 
 	    public string BackgroundImageAbsolutePath { get; set; }
 
@@ -51,8 +56,9 @@ namespace ClaudiaIDE.Settings
         public TimeSpan ImageFadeAnimationInterval { get; set; }
 		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
         public string Extensions { get; set; }
+        public bool LoopSlideshow { get; set; }
 
-	    public void Serialize()
+        public void Serialize()
 		{
 			var config = JsonSerializer<Setting>.Serialize(this);
 
@@ -98,6 +104,9 @@ namespace ClaudiaIDE.Settings
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
             ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
+            LoopSlideshow = props.Item("LoopSlideshow").Value;
+            MaxWidth = props.Item("MaxWidth").Value;
+            MaxHeight = props.Item("MaxHeight").Value;
         }
 
         public void OnApplyChanged()
@@ -167,5 +176,4 @@ namespace ClaudiaIDE.Settings
         Single = 0,
         Slideshow = 1
     }
-
 }
