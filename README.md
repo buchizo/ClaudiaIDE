@@ -3,7 +3,7 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
-## New! (ver 1.19) ##
+## ver 1.19 ##
 
 * Additional support Visual Studio "15" Preview
 * Can specifie max image size.
