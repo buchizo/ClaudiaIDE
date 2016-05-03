@@ -95,18 +95,18 @@ namespace ClaudiaIDE.Settings
             var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
             var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
-            BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageDirectoryAbsolutePath").Value);
-            BackgroundImageAbsolutePath = Setting.ToFullPath(props.Item("BackgroundImageAbsolutePath").Value);
-            Opacity = props.Item("Opacity").Value;
+            BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value);
+            BackgroundImageAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value);
+            Opacity = (double)props.Item("Opacity").Value;
             PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
             PositionVertical = (PositionV)props.Item("PositionVertical").Value;
             UpdateImageInterval = (TimeSpan)props.Item("UpdateImageInterval").Value;
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
             ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
-            LoopSlideshow = props.Item("LoopSlideshow").Value;
-            MaxWidth = props.Item("MaxWidth").Value;
-            MaxHeight = props.Item("MaxHeight").Value;
+            LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
+            MaxWidth = (int)props.Item("MaxWidth").Value;
+            MaxHeight = (int)props.Item("MaxHeight").Value;
         }
 
         public void OnApplyChanged()
