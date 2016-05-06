@@ -8,6 +8,7 @@ using System.Drawing.Design;
 using System.Windows.Forms.Design;
 using System.Windows.Forms;
 using System.IO;
+using ClaudiaIDE.Localized;
 
 namespace ClaudiaIDE.Options
 {
@@ -29,17 +30,22 @@ namespace ClaudiaIDE.Options
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
-		}
+        }
 
-        [Category("Image")]
-        [DisplayName("Image background type")]
-        [Description("Types of background image handling.")]
+        // TestCode
+        [LocalManager.LocalizedCategory("Image")]
+        [LocalManager.LocalizedDisplayName("BackgroundType")]
+        [LocalManager.LocalizedDescription("BackgroundTypeDes")]
+        // [Category("Image")]
+        // [DisplayName("Image background type")]
+        // [Description("Types of background image handling.")]
         [PropertyPageTypeConverter(typeof(ImageBackgroundTypeConverter))]
         [TypeConverter(typeof(ImageBackgroundTypeConverter))]
         public ImageBackgroundType ImageBackgroundType { get; set; }
 
-        [Category("Image")]
-		[DisplayName("Opacity")]
+        // [Category("Image")]
+        [LocalManager.LocalizedCategoryAttribute("Image")]
+        [DisplayName("Opacity")]
 		[Description("Background image opacity. (value within the range of 0.00 <= 1.00)")]
 		public double Opacity { get; set; }
 

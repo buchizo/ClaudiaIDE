@@ -190,8 +190,14 @@
     <Compile Include="IImageProvider.cs" />
     <Compile Include="ImageProvider\SildeShowImageProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
+    <Compile Include="Localized\Local.cs" />
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Localized\ResLocalized.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLocalized.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\JsonSerializer.cs" />
     <Compile Include="ClaudiaIDE.cs" />
@@ -238,6 +244,10 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Localized\ResLocalized.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>VSPackage.Designer.cs</LastGenOutput>
