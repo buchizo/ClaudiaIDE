@@ -190,7 +190,7 @@
     <Compile Include="IImageProvider.cs" />
     <Compile Include="ImageProvider\SildeShowImageProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
-    <Compile Include="Localized\Local.cs" />
+    <Compile Include="Localized\LocalManager.cs" />
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">
       <SubType>Component</SubType>
     </Compile>

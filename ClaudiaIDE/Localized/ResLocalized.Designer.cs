@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClaudiaIDE.LocalManager {
+namespace ClaudiaIDE.Localized {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace ClaudiaIDE.LocalManager {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClaudiaIDE.LocalManager.ResLocalized", typeof(ResLocalized).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ClaudiaIDE.Localized.ResLocalized", typeof(ResLocalized).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
