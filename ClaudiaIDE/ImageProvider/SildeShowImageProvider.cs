@@ -48,7 +48,7 @@ namespace ClaudiaIDE
             bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
             bitmap.EndInit();
             bitmap.Freeze();
-            return Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
+            return Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight, _setting.ImageZoomType);
         }
 
         public void ReloadSettings()

@@ -29,6 +29,7 @@ namespace ClaudiaIDE.Options
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
+			ImageZoomType = ZoomType.Zoom;
 		}
 
         [Category("Image")]
@@ -103,7 +104,13 @@ namespace ClaudiaIDE.Options
         [Description("Maximum height in pixels that the image can fill in the view.")]
         public int MaxHeight { get; set; }
 
-        protected override void OnApply(PageApplyEventArgs e)
+		[Category("Layout")]
+		[DisplayName("Image Zoom Type")]
+		[Description("Image ratio")]
+		public ZoomType ImageZoomType { get; set; }
+
+
+		protected override void OnApply(PageApplyEventArgs e)
         {
             try
             {
@@ -257,6 +264,53 @@ namespace ClaudiaIDE.Options
 				}
 
 				if (result != null) return result;
+			}
+
+			return base.ConvertTo(context, culture, value, destinationType);
+		}
+	}
+
+	public class ZoomTypeConverter : EnumConverter {
+		public ZoomTypeConverter()
+			: base(typeof(ZoomType))
+		{
+
+		}
+
+		public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+		{
+			if (sourceType == typeof(string)) return true;
+
+			return base.CanConvertFrom(context, sourceType);
+		}
+
+		public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+		{
+			string str = value as string;
+			if (str != null)
+			{
+				if (str == "Zoom") return ZoomType.Zoom;
+				if (str == "Stretch") return ZoomType.Stretch;
+			}
+			return base.ConvertFrom(context, culture, value);
+		}
+
+		public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+		{
+			if (destinationType == typeof(string))
+			{
+				string result = null;
+				if ((int)value == 0) 
+				{
+					result = "Zoom";
+				}
+				else if ((int)value == 1) 
+				{
+					result = "Stretch";
+				}
+
+				if (result != null)
+					return result;
 			}
 
 			return base.ConvertTo(context, culture, value, destinationType);

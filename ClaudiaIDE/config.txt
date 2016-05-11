@@ -10,5 +10,6 @@
 	"ImageFadeAnimationInterval":"PT30S",
 	"LoopSlideshow":true,
 	"MaxWidth": 0,
-	"MaxHeight": 0
+	"MaxHeight": 0,
+	"ImageZoomType": 0
 }

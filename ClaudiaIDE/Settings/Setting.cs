@@ -41,6 +41,7 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
+			ImageZoomType = ZoomType.Zoom;
 		}
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -49,8 +50,9 @@ namespace ClaudiaIDE.Settings
 		public PositionH PositionHorizon { get; set; }
         public int MaxWidth { get; set; }
         public int MaxHeight { get; set; }
+		public ZoomType ImageZoomType { get; set; }
 
-	    public string BackgroundImageAbsolutePath { get; set; }
+		public string BackgroundImageAbsolutePath { get; set; }
 
         public TimeSpan UpdateImageInterval { get; set; }
         public TimeSpan ImageFadeAnimationInterval { get; set; }
@@ -107,7 +109,8 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
-        }
+			ImageZoomType = (ZoomType)props.Item("ImageZoomType").Value;
+		}
 
         public void OnApplyChanged()
         {
@@ -176,4 +179,12 @@ namespace ClaudiaIDE.Settings
         Single = 0,
         Slideshow = 1
     }
+
+	[CLSCompliant(false), ComVisible(true)]
+	[Guid("67AD0862-C3A2-4280-B0C9-4F9B3306CCF8")]
+	public enum ZoomType 
+	{
+		Zoom = 0,
+		Stretch = 1
+	}
 }
