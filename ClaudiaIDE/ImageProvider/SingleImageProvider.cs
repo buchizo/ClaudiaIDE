@@ -42,7 +42,7 @@ namespace ClaudiaIDE.ImageProvider
                 _bitmap.Freeze();
             }
 
-            _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, _setting.MaxWidth, _setting.MaxHeight);
+            _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, _setting.MaxWidth, _setting.MaxHeight, _setting.ImageZoomType);
         }
 
         public event EventHandler NewImageAvaliable;
