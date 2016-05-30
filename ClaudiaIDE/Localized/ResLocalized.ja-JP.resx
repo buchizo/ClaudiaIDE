@@ -118,87 +118,87 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BackgroundType" xml:space="preserve">
-    <value>Image background type</value>
+    <value>背景の表示形式</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>Types of background image</value>
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
-    <value>Directory Path</value>
+    <value>フォルダーパス</value>
   </data>
   <data name="DirectoryPathTypeDes" xml:space="preserve">
-    <value>Background image directory path.</value>
+    <value>背景画像が含まれているフォルダーのパスを設定します。</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
-    <value>File Path</value>
+    <value>背景画像のファイルパス</value>
   </data>
   <data name="FilePathTypeDes" xml:space="preserve">
-    <value>Backgroud image file path.</value>
+    <value>背景画像のファイルパスを指定します。</value>
   </data>
   <data name="HorizontalAlignmentType" xml:space="preserve">
-    <value>Horizontal Alignment</value>
+    <value>水平方向の基準位置</value>
   </data>
   <data name="HorizontalAlignmentTypeDes" xml:space="preserve">
-    <value>Image position in horizon.</value>
+    <value>画像の水平方向の基準となる位置を設定します。 Left: 左端を基準とします Center: 中心を基準とします Right: 右端を基準とします</value>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>背景画像</value>
   </data>
   <data name="ImageAnimationIntervalType" xml:space="preserve">
-    <value>Image animation interval</value>
+    <value>フェードアニメーションの時間</value>
   </data>
   <data name="ImageAnimationIntervalTypeDes" xml:space="preserve">
-    <value>Background image fade animation interval. (value in format: HH:mm:ss)</value>
+    <value>背景画像切り替え時のフェードアニメーションの時間を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
   </data>
   <data name="ImageExtensionsType" xml:space="preserve">
-    <value>Image extensions</value>
+    <value>画像ファイルの拡張子</value>
   </data>
   <data name="ImageExtensionsTypeDes" xml:space="preserve">
-    <value>Only images with this extensions will be shown. (Comma separated)</value>
+    <value>表示させる画像ファイルの拡張子を指定します。 (複数指定する場合はカンマ区切り)</value>
   </data>
   <data name="Layout" xml:space="preserve">
-    <value>Layout</value>
+    <value>レイアウト</value>
   </data>
   <data name="LoopSlideshowType" xml:space="preserve">
-    <value>Loop Slideshow</value>
+    <value>スライドショーのループ</value>
   </data>
   <data name="LoopSlideshowTypeDes" xml:space="preserve">
-    <value>This will cause the slideshow to loop back to the beginning after the last image has been shown.</value>
+    <value>Trueの場合、フォルダー内に含まれる画像のスライドショーが終了してもループして再度表示します。</value>
   </data>
   <data name="MaxHeightType" xml:space="preserve">
-    <value>Max Height</value>
+    <value>最大縦幅</value>
   </data>
   <data name="MaxHeightTypeDes" xml:space="preserve">
-    <value>Maximum height in pixels that the image can fill in the view.</value>
+    <value>画像を表示する領域の最大縦幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。</value>
   </data>
   <data name="MaxWidthType" xml:space="preserve">
-    <value>Max Width</value>
+    <value>最大横幅</value>
   </data>
   <data name="MaxWidthTypeDes" xml:space="preserve">
-    <value>Maximum width in pixels that the image can fill in the view.</value>
+    <value>画像を表示する領域の最大横幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。</value>
   </data>
   <data name="OpacityType" xml:space="preserve">
-    <value>Opacity</value>
+    <value>透過率</value>
   </data>
   <data name="OpacityTypeDes" xml:space="preserve">
-    <value>Background image opacity. (value within the range of 0.00 &lt;= 1.00)</value>
+    <value>背景画像の透過率を設定します。 (設定可能な値は 0.00 &lt;= 1.00 の範囲内の数値です)</value>
   </data>
   <data name="SingleImage" xml:space="preserve">
-    <value>SingleImage</value>
+    <value>単一画像</value>
   </data>
   <data name="Slideshow" xml:space="preserve">
-    <value>SlideShow</value>
+    <value>スライドショー</value>
   </data>
   <data name="UpdateIntervalType" xml:space="preserve">
-    <value>Update interval</value>
+    <value>切り替え間隔</value>
   </data>
   <data name="UpdateIntervalTypeDes" xml:space="preserve">
-    <value>Background image change interval. (value in format: HH:mm:ss)</value>
+    <value>背景画像を切り替える間隔を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
   </data>
   <data name="VerticalAlignmentType" xml:space="preserve">
-    <value>Vertical Alignment</value>
+    <value>垂直方向の基準位置</value>
   </data>
   <data name="VerticalAlignmentTypeDes" xml:space="preserve">
-    <value>Image position in vertical.</value>
+    <value>画像の垂直方向の基準となる位置を設定します。 Bottom: 下端を基準とします Center: 中心を基準とします Top: 上端を基準とします</value>
   </data>
 </root>

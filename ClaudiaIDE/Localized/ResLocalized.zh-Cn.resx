@@ -118,10 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BackgroundType" xml:space="preserve">
-    <value>Image background type</value>
+    <value>背景图片展示方式类型</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>Types of background image</value>
+    <value>设置背景图片展示方式</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>Directory Path</value>
@@ -142,7 +142,7 @@
     <value>Image position in horizon.</value>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>图片</value>
   </data>
   <data name="ImageAnimationIntervalType" xml:space="preserve">
     <value>Image animation interval</value>

@@ -191,13 +191,23 @@
     <Compile Include="ImageProvider\SildeShowImageProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
     <Compile Include="Localized\LocalManager.cs" />
+    <Compile Include="Localized\ResLocalized.Designer.cs">
+      <DependentUpon>ResLocalized.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Localized\ResLocalized.ja-JP.Designer.cs">
+      <DependentUpon>ResLocalized.ja-JP.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Localized\ResLocalized.Designer.cs">
+    <Compile Include="Localized\ResLocalized.zh-CN1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ResLocalized.resx</DependentUpon>
+      <DependentUpon>ResLocalized.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="Settings\JsonSerializer.cs" />
     <Compile Include="ClaudiaIDE.cs" />
@@ -247,6 +257,14 @@
     <EmbeddedResource Include="Localized\ResLocalized.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localized\ResLocalized.ja-JP.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLocalized.ja-JP.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Localized\ResLocalized.zh-CN.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResLocalized.zh-CN1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <Generator>ResXFileCodeGenerator</Generator>

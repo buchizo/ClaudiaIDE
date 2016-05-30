@@ -32,81 +32,76 @@ namespace ClaudiaIDE.Options
             MaxHeight = 0;
         }
 
-        // TestCode
         [LocalManager.LocalizedCategory("Image")]
         [LocalManager.LocalizedDisplayName("BackgroundType")]
         [LocalManager.LocalizedDescription("BackgroundTypeDes")]
-        // [Category("Image")]
-        // [DisplayName("Image background type")]
-        // [Description("Types of background image handling.")]
         [PropertyPageTypeConverter(typeof(ImageBackgroundTypeConverter))]
         [TypeConverter(typeof(ImageBackgroundTypeConverter))]
         public ImageBackgroundType ImageBackgroundType { get; set; }
 
-        // [Category("Image")]
         [LocalManager.LocalizedCategoryAttribute("Image")]
-        [DisplayName("Opacity")]
-		[Description("Background image opacity. (value within the range of 0.00 <= 1.00)")]
+        [LocalManager.LocalizedDisplayName("OpacityType")]
+        [LocalManager.LocalizedDescription("OpacityTypeDes")]
 		public double Opacity { get; set; }
 
-        [Category("Layout")]
-        [DisplayName("Horizontal Alignment")]
-		[Description("Image position in horizon.")]
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("HorizontalAlignmentType")]
+        [LocalManager.LocalizedDescription("HorizontalAlignmentTypeDes")]
 		[PropertyPageTypeConverter(typeof(PositionHTypeConverter))]
 		[TypeConverter(typeof(PositionHTypeConverter))]
 		public PositionH PositionHorizon { get; set; }
 
-		[Category("Layout")]
-		[DisplayName("Vertical Alignment")]
-		[Description("Image position in vertical.")]
-		[PropertyPageTypeConverter(typeof(PositionVTypeConverter))]
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("VerticalAlignmentType")]
+        [LocalManager.LocalizedDescription("VerticalAlignmentTypeDes")]
+        [PropertyPageTypeConverter(typeof(PositionVTypeConverter))]
 		[TypeConverter(typeof(PositionVTypeConverter))]
 		public PositionV PositionVertical { get; set; }
 
-		[Category("Slideshow")]
-		[DisplayName("Directory Path")]
-		[Description("Background image directory path.")]
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("DirectoryPathType")]
+        [LocalManager.LocalizedDescription("DirectoryPathTypeDes")]
         [EditorAttribute(typeof(BrowseDirectory), typeof(UITypeEditor))]
 		public string BackgroundImageDirectoryAbsolutePath { get; set; }
 
-        [Category("Slideshow")]
-        [DisplayName("Update interval")]
-        [Description("Background image change interval. (value in format: HH:mm:ss)")]
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("UpdateIntervalType")]
+        [LocalManager.LocalizedDescription("UpdateIntervalTypeDes")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan UpdateImageInterval { get; set; }
 
-        [Category("Slideshow")]
-        [DisplayName("Image animation interval")]
-        [Description("Background image fade animation interval. (value in format: HH:mm:ss)")]
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("ImageAnimationIntervalType")]
+        [LocalManager.LocalizedDescription("ImageAnimationIntervalTypeDes")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan ImageFadeAnimationInterval { get; set; }
 
-        [Category("Slideshow")]
-        [DisplayName("Image extensions")]
-        [Description("Only images with this extensions will be shown. (Comma separated)")]
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("ImageExtensionsType")]
+        [LocalManager.LocalizedDescription("ImageExtensionsTypeDes")]
         public string Extensions { get; set; }
 
-        [Category("SingleImage")]
-        [DisplayName("File Path")]
-        [Description("Backgroud image file path.")]
+        [LocalManager.LocalizedCategoryAttribute("SingleImage")]
+        [LocalManager.LocalizedDisplayName("FilePathType")]
+        [LocalManager.LocalizedDescription("FilePathTypeDes")]
         [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
         public string BackgroundImageAbsolutePath { get; set; }
 
-        [Category("Slideshow")]
-        [DisplayName("Loop Slideshow")]
-        [Description("This will cause the slideshow to loop back to the beginning after the last image has been shown.")]
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("LoopSlideshowType")]
+        [LocalManager.LocalizedDescription("LoopSlideshowTypeDes")]
         public bool LoopSlideshow { get; set; }
 
-        [Category("Layout")]
-        [DisplayName("Max Width")]
-        [Description("Maximum width in pixels that the image can fill in the view.")]
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("MaxWidthType")]
+        [LocalManager.LocalizedDescription("MaxWidthTypeDes")]
         public int MaxWidth { get; set; }
 
-        [Category("Layout")]
-        [DisplayName("Max Height")]
-        [Description("Maximum height in pixels that the image can fill in the view.")]
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("MaxHeightType")]
+        [LocalManager.LocalizedDescription("MaxHeightTypeDes")]
         public int MaxHeight { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
