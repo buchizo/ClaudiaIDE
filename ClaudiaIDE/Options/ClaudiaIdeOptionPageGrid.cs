@@ -26,7 +26,7 @@ namespace ClaudiaIDE.Options
 			PositionVertical = PositionV.Bottom;
 		    UpdateImageInterval = TimeSpan.FromMinutes(1);
             ImageFadeAnimationInterval = TimeSpan.FromSeconds(5);
-            Extensions = ".png, .jpg";
+            Extensions = ".png, .jpg, .gif, .bmp";
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;

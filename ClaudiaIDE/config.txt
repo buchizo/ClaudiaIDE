@@ -1,7 +1,7 @@
 {
 	"BackgroundImageAbsolutePath":"Images\\background.png",
 	"BackgroundImagesDirectoryAbsolutePath":"Images",
-	"Extensions":".png, .jpg",
+	"Extensions":".png, .jpg, .gif, .bmp",
 	"ImageBackgroundType":0,
 	"Opacity":0.35,
 	"PositionHorizon":1,
