@@ -204,7 +204,7 @@
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Localized\ResLocalized.zh-CN1.Designer.cs">
+    <Compile Include="Localized\ResLocalized.zh-CN.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResLocalized.zh-CN.resx</DependentUpon>
@@ -264,7 +264,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Localized\ResLocalized.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ResLocalized.zh-CN1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
