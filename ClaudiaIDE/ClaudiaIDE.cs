@@ -53,6 +53,7 @@ namespace ClaudiaIDE
 				_view.ViewportHeightChanged += delegate { RepositionImage(); };
 				_view.ViewportWidthChanged += delegate { RepositionImage(); };     
                 _view.ViewportLeftChanged += delegate { RepositionImage(); };
+                _view.Closed += ClosedView;
                 _setting.OnChanged += delegate { ReloadSettings(); };
 
                 _imageProviders.ForEach(x => x.NewImageAvaliable += delegate { InvokeChangeImage(); });
@@ -64,7 +65,7 @@ namespace ClaudiaIDE
 			}
 		}
 
-        ~ClaudiaIDE()
+        private void ClosedView(object sender, EventArgs e)
         {
             try
             {
