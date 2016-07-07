@@ -156,6 +156,12 @@
   <data name="ImageExtensionsTypeDes" xml:space="preserve">
     <value>Only images with this extensions will be shown. (Comma separated)</value>
   </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>Image Stretch</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>A value that specifies how the content of this image stretches to fit the editor. The Image Stretch property accepts the following values: None, Uniform, UniformToFill, Fill</value>
+  </data>
   <data name="Layout" xml:space="preserve">
     <value>Layout</value>
   </data>

@@ -156,6 +156,12 @@
   <data name="ImageExtensionsTypeDes" xml:space="preserve">
     <value>表示させる画像ファイルの拡張子を指定します。 (複数指定する場合はカンマ区切り)</value>
   </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>画像のストレッチ</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>画像をエディタのサイズに合わせて伸縮させるかを次の値より指定します。: None, Uniform, UniformToFill, Fill</value>
+  </data>
   <data name="Layout" xml:space="preserve">
     <value>レイアウト</value>
   </data>

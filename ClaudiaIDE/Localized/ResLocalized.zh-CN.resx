@@ -156,6 +156,12 @@
   <data name="ImageExtensionsTypeDes" xml:space="preserve">
     <value>只有选定的这些扩展名会被显示.格式:.png,.jpg(使用半角逗号分隔)</value>
   </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>图像拉伸</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>指定此图像的内容如何拉伸以适应编辑器的值。图片拉伸属性接受以下值: None, Uniform, UniformToFill, Fill</value>
+  </data>
   <data name="Layout" xml:space="preserve">
     <value>布局</value>
   </data>

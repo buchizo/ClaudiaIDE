@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -8,30 +6,28 @@ namespace ClaudiaIDE.Helpers
 {
     static class ImageSourceAnimator
     {
-        public static void AnimateImageSourceChange(this Image image, ImageSource bitmap, Action<Image> onShowImage, AnimateImageChangeParams animateImageChangeParams = null)
+        public static void AnimateImageSourceChange(this Brush background, ImageBrush newImage, Action<ImageBrush> onChangeImage, AnimateImageChangeParams animateImageChangeParams = null)
         {
             var animationParameters = animateImageChangeParams ?? new AnimateImageChangeParams();
-            var fadeInAnimation = new DoubleAnimation(animationParameters.TargetOpacity, animationParameters.FadeTime);
 
-            if (image.Source != null)
+            if (background != null)
             {
-                var fadeOutAnimation = new DoubleAnimation(0d, animationParameters.FadeTime);
+                var fadeOutAnimation = new DoubleAnimation(0d, animationParameters.FadeTime) { AutoReverse = false };
+                var fadeInAnimation = new DoubleAnimation(0d, animationParameters.TargetOpacity, animationParameters.FadeTime) { AutoReverse = false };
 
                 fadeOutAnimation.Completed += (o, e) =>
                 {
-                    image.Source = bitmap;
-                    onShowImage(image);
-                    image.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                    newImage.Opacity = 0d;
+                    newImage.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
+                    onChangeImage(newImage);
                 };
 
-                image.BeginAnimation(UIElement.OpacityProperty, fadeOutAnimation);
+                background.BeginAnimation(Brush.OpacityProperty, fadeOutAnimation);
             }
             else
             {
-                image.Opacity = 0d;
-                image.Source = bitmap;
-                onShowImage(image);
-                image.BeginAnimation(UIElement.OpacityProperty, fadeInAnimation);
+                newImage.Opacity = animateImageChangeParams.TargetOpacity;
+                onChangeImage(newImage);
             }
         }
     }

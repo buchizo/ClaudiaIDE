@@ -30,6 +30,7 @@ namespace ClaudiaIDE.Options
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
+            ImageStretch = ImageStretch.None;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -103,6 +104,13 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayName("MaxHeightType")]
         [LocalManager.LocalizedDescription("MaxHeightTypeDes")]
         public int MaxHeight { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ImageStretchType")]
+        [LocalManager.LocalizedDescription("ImageStretchTypeDes")]
+        [PropertyPageTypeConverter(typeof(ImageStretchTypeConverter))]
+        [TypeConverter(typeof(ImageStretchTypeConverter))]
+        public ImageStretch ImageStretch { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
@@ -263,6 +271,65 @@ namespace ClaudiaIDE.Options
 			return base.ConvertTo(context, culture, value, destinationType);
 		}
 	}
+
+    public class ImageStretchTypeConverter : EnumConverter
+    {
+        public ImageStretchTypeConverter()
+            : base(typeof(ImageStretch))
+        {
+
+        }
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            if (sourceType == typeof(string)) return true;
+
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            string str = value as string;
+
+            if (str != null)
+            {
+                if (str == "None") return ImageStretch.None;
+                if (str == "Uniform") return ImageStretch.Uniform;
+                if (str == "UniformToFill") return ImageStretch.UniformToFill;
+                if (str == "Fill") return ImageStretch.Fill;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                string result = null;
+                if ((int)value == 0)
+                {
+                    result = "None";
+                }
+                else if ((int)value == 1)
+                {
+                    result = "Uniform";
+                }
+                else if ((int)value == 2)
+                {
+                    result = "UniformToFill";
+                }
+                else if ((int)value == 3)
+                {
+                    result = "Fill";
+                }
+
+                if (result != null) return result;
+            }
+
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
 
     internal class BrowseDirectory : UITypeEditor
     {

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows.Controls;
-using System.Windows.Media.Imaging;
+﻿using System.Windows.Controls;
 using System.Windows.Threading;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.Settings;
@@ -8,20 +6,21 @@ using Microsoft.VisualStudio.Text.Editor;
 using System.Collections.Generic;
 using System.Linq;
 using ClaudiaIDE.ImageProvider;
+using System.Windows.Media;
 
 namespace ClaudiaIDE
 {
-	/// <summary>
-	/// Adornment class that draws a square box in the top right hand corner of the viewport
-	/// </summary>
-	public class ClaudiaIDE
+    /// <summary>
+    /// Adornment class that draws a square box in the top right hand corner of the viewport
+    /// </summary>
+    public class ClaudiaIDE
 	{
         private readonly List<IImageProvider> _imageProviders;
         private readonly IWpfTextView _view;
 		private readonly IAdornmentLayer _adornmentLayer;
 	    private readonly Dispatcher _dispacher;
-	    private Image _image;
-        private Setting _setting;
+        private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
+        private Setting _setting = Setting.Instance;
         private IImageProvider _imageProvider;
 
         /// <summary>
@@ -31,60 +30,42 @@ namespace ClaudiaIDE
         /// <param name="view">The <see cref="IWpfTextView"/> upon which the adornment will be drawn</param>
         /// <param name="imageProvider">The <see cref="IImageProvider"/> which provides bitmaps to draw</param>
         /// <param name="setting">The <see cref="Setting"/> contains user image preferences</param>
-        public ClaudiaIDE(IWpfTextView view, List<IImageProvider> imageProvider, Setting setting)
+        public ClaudiaIDE(IWpfTextView view, List<IImageProvider> imageProvider)
 		{
 		    try
 		    {
-		        _dispacher = Dispatcher.CurrentDispatcher;
+                RenderOptions.SetBitmapScalingMode(_editorCanvas, BitmapScalingMode.Fant);
+
+                _dispacher = Dispatcher.CurrentDispatcher;
                 _imageProviders = imageProvider;
-                _imageProvider = imageProvider.FirstOrDefault(x=>x.ProviderType == setting.ImageBackgroundType);
-                _setting = setting;
+                _imageProvider = imageProvider.FirstOrDefault(x=>x.ProviderType == _setting.ImageBackgroundType);
+
                 if (_imageProvider == null)
                 {
                     _imageProvider = new SingleImageProvider(_setting);
                 }
                 _view = view;
-                _image = new Image
-                {
-                    Opacity = setting.Opacity,
-                    IsHitTestVisible = false
-                };
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
-				_view.ViewportHeightChanged += delegate { RepositionImage(); };
-				_view.ViewportWidthChanged += delegate { RepositionImage(); };     
-                _view.ViewportLeftChanged += delegate { RepositionImage(); };
-                _view.Closed += ClosedView;
+                _view.LayoutChanged += (s,e) => { RepositionImage(); };
+                _view.Closed += (s,e) =>
+                {
+                    _imageProviders.ForEach(x => x.NewImageAvaliable -= delegate { InvokeChangeImage(); });
+                    if (_setting != null)
+                    {
+                        _setting.OnChanged -= delegate { ReloadSettings(); };
+                    }
+                };
                 _setting.OnChanged += delegate { ReloadSettings(); };
 
                 _imageProviders.ForEach(x => x.NewImageAvaliable += delegate { InvokeChangeImage(); });
 
                 ChangeImage();
+                RefreshAdornment();
             }
-			catch
+            catch
 			{
 			}
 		}
-
-        private void ClosedView(object sender, EventArgs e)
-        {
-            try
-            {
-                if (_view != null)
-                {
-                    _view.ViewportHeightChanged -= delegate { RepositionImage(); };
-                    _view.ViewportWidthChanged -= delegate { RepositionImage(); };
-                    _view.ViewportLeftChanged -= delegate { RepositionImage(); };
-                }
-                _imageProviders.ForEach(x => x.NewImageAvaliable -= delegate { InvokeChangeImage(); });
-                if (_setting != null)
-                {
-                    _setting.OnChanged -= delegate { ReloadSettings(); };
-                }
-            }
-            catch
-            {
-            }
-        }
 
         private void InvokeChangeImage()
         {
@@ -108,35 +89,37 @@ namespace ClaudiaIDE
 		{
 			try
 			{
-                var bitmap = _imageProvider.GetBitmap(_view);
-                var fadetime = _setting.ImageFadeAnimationInterval;
                 if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
                 {
-                    _image = new Image
+                    _editorCanvas.Background = new ImageBrush
                     {
+                        ImageSource = _imageProvider.GetBitmap(_view),
                         Opacity = _setting.Opacity,
-                        IsHitTestVisible = false
+                        Stretch = _setting.ImageStretch.ConvertTo(),
+                        AlignmentX = _setting.PositionHorizon.ConvertTo(),
+                        AlignmentY = _setting.PositionVertical.ConvertTo()
                     };
-                    _image.Source = bitmap;
-                    SetImagePosition(_image);
-                    ResizeImage(_image);
                 }
                 else
                 {
-                    _image.AnimateImageSourceChange(
-                        bitmap,
-                        img =>
-                        {
-                            SetImagePosition(img);
-                            ResizeImage(img);
-                        },
-                        new AnimateImageChangeParams
-                        {
-                            TargetOpacity = _setting.Opacity,
-                            FadeTime = fadetime
-                        });
+                    _editorCanvas.Background
+                        .AnimateImageSourceChange(
+                            new ImageBrush
+                            {
+                                ImageSource = _imageProvider.GetBitmap(_view),
+                                Opacity = 0d,
+                                Stretch = _setting.ImageStretch.ConvertTo(),
+                                AlignmentX = _setting.PositionHorizon.ConvertTo(),
+                                AlignmentY = _setting.PositionVertical.ConvertTo()
+                            },
+                            (n) => { _editorCanvas.Background = n; },
+                            new AnimateImageChangeParams
+                            {
+                                FadeTime = _setting.ImageFadeAnimationInterval,
+                                TargetOpacity = _setting.Opacity
+                            }
+                        );
                 }
-                RefreshAdornment();
             }
             catch
 			{
@@ -147,8 +130,11 @@ namespace ClaudiaIDE
 	    {
             try
             {
-                SetImagePosition(_image);
-                RefreshAdornment();
+                Canvas.SetLeft(_editorCanvas, _view.ViewportLeft);
+                Canvas.SetTop(_editorCanvas, _view.ViewportTop);
+
+                _editorCanvas.Width = _view.ViewportWidth;
+                _editorCanvas.Height = _view.ViewportHeight;
             }
             catch
             {
@@ -158,51 +144,11 @@ namespace ClaudiaIDE
 	    private void RefreshAdornment()
 	    {
 	        _adornmentLayer.RemoveAllAdornments();
-	        _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
+            _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
 	            null,
 	            null,
-	            _image,
+                _editorCanvas,
 	            null);
 	    }
-
-	    private void SetImagePosition(Image image)
-	    {
-	        var bitmap = (BitmapImage)image.Source;
-            switch (_setting.PositionHorizon)
-	        {
-	            case PositionH.Left:
-	                Canvas.SetLeft(image, _view.ViewportLeft);
-	                break;
-	            case PositionH.Right:
-	                Canvas.SetLeft(image, _view.ViewportRight - (double) bitmap.PixelWidth);
-	                break;
-	            case PositionH.Center:
-	                Canvas.SetLeft(image,
-	                    _view.ViewportRight - _view.ViewportWidth +
-	                    ((_view.ViewportWidth/2) - ((double) bitmap.PixelWidth/2)));
-	                break;
-	        }
-	        switch (_setting.PositionVertical)
-	        {
-	            case PositionV.Top:
-	                Canvas.SetTop(image, _view.ViewportTop);
-	                break;
-	            case PositionV.Bottom:
-	                Canvas.SetTop(image, _view.ViewportBottom - (double) bitmap.PixelHeight);
-	                break;
-	            case PositionV.Center:
-	                Canvas.SetTop(image,
-	                    _view.ViewportBottom - _view.ViewportHeight +
-	                    ((_view.ViewportHeight/2) - ((double) bitmap.PixelHeight/2)));
-	                break;
-	        }
-	    }
-
-	    private void ResizeImage(Image image)
-	    {
-            var bitmap = (BitmapImage)image.Source;
-            image.Width = bitmap.PixelWidth;
-	        image.Height = bitmap.PixelHeight;
-	    }
-	}
+    }
 }

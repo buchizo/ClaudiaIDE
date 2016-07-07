@@ -178,6 +178,24 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
+        ///   Image Stretch に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ImageStretchType {
+            get {
+                return ResourceManager.GetString("ImageStretchType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   A value that specifies how the content of this image stretches to fit the editor. The Image Stretch property accepts the following values: None, Uniform, UniformToFill, Fill に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ImageStretchTypeDes {
+            get {
+                return ResourceManager.GetString("ImageStretchTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Layout に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string Layout {

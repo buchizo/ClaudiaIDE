@@ -48,7 +48,18 @@ namespace ClaudiaIDE.Helpers
                 bitmap.Freeze();
                 return bitmap;
             }
-
+            else
+            {
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.UriSource = original.UriSource;
+                bitmap.DecodePixelHeight = original.PixelHeight;
+                bitmap.DecodePixelWidth = original.PixelWidth;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
             return original;
         }
     }

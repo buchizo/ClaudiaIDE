@@ -51,7 +51,7 @@ namespace ClaudiaIDE
                 };
             }
 
-		    new ClaudiaIDE(textView, ImageProviders, settings);
+		    new ClaudiaIDE(textView, ImageProviders);
 		}
     }
 	

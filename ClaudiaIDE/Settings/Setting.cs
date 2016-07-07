@@ -1,17 +1,14 @@
 ﻿using System;
-using System.ComponentModel;
-using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using Microsoft.VisualStudio.Shell;
 using EnvDTE;
 using EnvDTE80;
 
 namespace ClaudiaIDE.Settings
 {
-	public class Setting
-	{
+    public class Setting
+    {
         private static readonly Setting instance = new Setting();
         private static readonly string CONFIGFILE = "config.txt";
 
@@ -28,49 +25,51 @@ namespace ClaudiaIDE.Settings
         }
 
         public Setting()
-		{
-			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "Images");
+        {
+            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "Images");
             BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, "background.png");
             Opacity = 0.35;
-			PositionHorizon = PositionH.Right;
-			PositionVertical = PositionV.Bottom;
-		    UpdateImageInterval = TimeSpan.FromMinutes(30);
-		    Extensions = ".png, .jpg";
+            PositionHorizon = PositionH.Right;
+            PositionVertical = PositionV.Bottom;
+            ImageStretch = ImageStretch.None;
+            UpdateImageInterval = TimeSpan.FromMinutes(30);
+            Extensions = ".png, .jpg";
             ImageBackgroundType = ImageBackgroundType.Single;
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
-		}
+        }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
         public double Opacity { get; set; }
-		public PositionV PositionVertical { get; set; }
-		public PositionH PositionHorizon { get; set; }
+        public PositionV PositionVertical { get; set; }
+        public PositionH PositionHorizon { get; set; }
         public int MaxWidth { get; set; }
         public int MaxHeight { get; set; }
 
-	    public string BackgroundImageAbsolutePath { get; set; }
+        public string BackgroundImageAbsolutePath { get; set; }
 
         public TimeSpan UpdateImageInterval { get; set; }
         public TimeSpan ImageFadeAnimationInterval { get; set; }
-		public string BackgroundImagesDirectoryAbsolutePath { get; set; }
+        public string BackgroundImagesDirectoryAbsolutePath { get; set; }
         public string Extensions { get; set; }
         public bool LoopSlideshow { get; set; }
+        public ImageStretch ImageStretch { get; set; }
 
         public void Serialize()
-		{
-			var config = JsonSerializer<Setting>.Serialize(this);
+        {
+            var config = JsonSerializer<Setting>.Serialize(this);
 
-			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
+            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
 
-			using (var s = new StreamWriter(configpath, false, Encoding.ASCII))
-			{
-				s.Write(config);
-				s.Close();
-			}
-		}
+            using (var s = new StreamWriter(configpath, false, Encoding.ASCII))
+            {
+                s.Write(config);
+                s.Close();
+            }
+        }
 
         public static Setting Initialize(IServiceProvider serviceProvider)
         {
@@ -100,6 +99,7 @@ namespace ClaudiaIDE.Settings
             Opacity = (double)props.Item("Opacity").Value;
             PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
             PositionVertical = (PositionV)props.Item("PositionVertical").Value;
+            ImageStretch = (ImageStretch)props.Item("ImageStretch").Value;
             UpdateImageInterval = (TimeSpan)props.Item("UpdateImageInterval").Value;
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
@@ -116,58 +116,58 @@ namespace ClaudiaIDE.Settings
         }
 
         public static Setting Deserialize()
-		{
-			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
-			string config = "";
+        {
+            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
+            string config = "";
 
-			using (var s = new StreamReader(configpath, Encoding.ASCII, false))
-			{
-				config = s.ReadToEnd();
-				s.Close();
-			}
-			var ret = JsonSerializer<Setting>.DeSerialize(config);
+            using (var s = new StreamReader(configpath, Encoding.ASCII, false))
+            {
+                config = s.ReadToEnd();
+                s.Close();
+            }
+            var ret = JsonSerializer<Setting>.DeSerialize(config);
             ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath);
             ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath);
-			return ret;
-		}
+            return ret;
+        }
 
-		public static string ToFullPath(string path)
-		{
-			var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-			if (!Path.IsPathRooted(path))
-			{
-				path = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, path);
-			}
-			return path;
-		}
+        public static string ToFullPath(string path)
+        {
+            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (!Path.IsPathRooted(path))
+            {
+                path = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, path);
+            }
+            return path;
+        }
 
         private void OnChange(object sender)
         {
-            if(OnChanged != null)
+            if (OnChanged != null)
             {
                 OnChanged(sender, EventArgs.Empty);
             }
         }
-	}
+    }
 
-	[CLSCompliant(false), ComVisible(true)]
-	[Guid("12d9a45f-ec0b-4a96-88dc-b0cba1f4789a")]
-	public enum PositionV
-	{
-		Top,
-		Bottom,
-		Center
-	}
+    [CLSCompliant(false), ComVisible(true)]
+    [Guid("12d9a45f-ec0b-4a96-88dc-b0cba1f4789a")]
+    public enum PositionV
+    {
+        Top,
+        Bottom,
+        Center
+    }
 
-	[CLSCompliant(false), ComVisible(true)]
-	[Guid("8b2e3ece-fbf7-43ba-b369-3463726b828d")]
-	public enum PositionH
-	{
-		Left,
-		Right,
-		Center
-	}
+    [CLSCompliant(false), ComVisible(true)]
+    [Guid("8b2e3ece-fbf7-43ba-b369-3463726b828d")]
+    public enum PositionH
+    {
+        Left,
+        Right,
+        Center
+    }
 
     [CLSCompliant(false), ComVisible(true)]
     [Guid("5C96CFAA-FE54-49A9-8AB7-E85B66731228")]
@@ -175,5 +175,68 @@ namespace ClaudiaIDE.Settings
     {
         Single = 0,
         Slideshow = 1
+    }
+
+    [CLSCompliant(false), ComVisible(true)]
+    [Guid("C89AFB79-39AF-4716-BB91-0F77323DD89B")]
+    public enum ImageStretch
+    {
+        None = 0,
+        Uniform = 1,
+        UniformToFill = 2,
+        Fill = 3
+    }
+
+    public static class ImageStretchConverter
+    {
+        public static System.Windows.Media.Stretch ConvertTo(this ImageStretch source)
+        {
+            switch(source)
+            {
+                case ImageStretch.Fill:
+                    return System.Windows.Media.Stretch.Fill;
+                case ImageStretch.None:
+                    return System.Windows.Media.Stretch.None;
+                case ImageStretch.Uniform:
+                    return System.Windows.Media.Stretch.Uniform;
+                case ImageStretch.UniformToFill:
+                    return System.Windows.Media.Stretch.UniformToFill;
+            }
+            return System.Windows.Media.Stretch.None;
+        }
+    }
+
+    public static class PositionVConverter
+    {
+        public static System.Windows.Media.AlignmentY ConvertTo(this PositionV source)
+        {
+            switch (source)
+            {
+                case PositionV.Bottom:
+                    return System.Windows.Media.AlignmentY.Bottom;
+                case PositionV.Center:
+                    return System.Windows.Media.AlignmentY.Center;
+                case PositionV.Top:
+                    return System.Windows.Media.AlignmentY.Top;
+            }
+            return System.Windows.Media.AlignmentY.Bottom;
+        }
+    }
+
+    public static class PositionXConverter
+    {
+        public static System.Windows.Media.AlignmentX ConvertTo(this PositionH source)
+        {
+            switch (source)
+            {
+                case PositionH.Left:
+                    return System.Windows.Media.AlignmentX.Left;
+                case PositionH.Center:
+                    return System.Windows.Media.AlignmentX.Center;
+                case PositionH.Right:
+                    return System.Windows.Media.AlignmentX.Right;
+            }
+            return System.Windows.Media.AlignmentX.Right;
+        }
     }
 }

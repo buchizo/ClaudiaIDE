@@ -4,6 +4,7 @@
 	"Extensions":".png, .jpg, .gif, .bmp",
 	"ImageBackgroundType":0,
 	"Opacity":0.35,
+	"ImageStretch":0,
 	"PositionHorizon":1,
 	"PositionVertical":1,
 	"UpdateImageInterval":"PT30M",
