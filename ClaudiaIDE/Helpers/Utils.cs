@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ClaudiaIDE.Helpers
@@ -50,17 +46,21 @@ namespace ClaudiaIDE.Helpers
             }
             else
             {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.UriSource = original.UriSource;
-                bitmap.DecodePixelHeight = original.PixelHeight;
-                bitmap.DecodePixelWidth = original.PixelWidth;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                return bitmap;
+                return original;
             }
-            return original;
+        }
+
+        public static BitmapSource ConvertToDpi96(BitmapImage source)
+        {
+            var dpi = 96;
+            var width = source.PixelWidth;
+            var height = source.PixelHeight;
+
+            var stride = width * 4;
+            var pixelData = new byte[stride * height];
+            source.CopyPixels(pixelData, stride, 0);
+
+            return BitmapSource.Create(width, height, dpi, dpi, PixelFormats.Bgra32, null, pixelData, stride);
         }
     }
 }

@@ -92,9 +92,8 @@ namespace ClaudiaIDE
                 var newimage = _imageProvider.GetBitmap(_view);
                 if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
                 {
-                    _editorCanvas.Background = new ImageBrush
+                    _editorCanvas.Background = new ImageBrush(newimage)
                     {
-                        ImageSource = newimage,
                         Opacity = _setting.Opacity,
                         Stretch = _setting.ImageStretch.ConvertTo(),
                         AlignmentX = _setting.PositionHorizon.ConvertTo(),
@@ -105,9 +104,8 @@ namespace ClaudiaIDE
                 {
                     _editorCanvas.Background
                         .AnimateImageSourceChange(
-                            new ImageBrush
+                            new ImageBrush(newimage)
                             {
-                                ImageSource = newimage,
                                 Opacity = 0d,
                                 Stretch = _setting.ImageStretch.ConvertTo(),
                                 AlignmentX = _setting.PositionHorizon.ConvertTo(),

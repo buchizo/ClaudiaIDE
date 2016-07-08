@@ -38,7 +38,7 @@ namespace ClaudiaIDE
             return new ImageFiles{ Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
         }
 
-        public BitmapImage GetBitmap(IWpfTextView provider)
+        public BitmapSource GetBitmap(IWpfTextView provider)
         {
             var current = _imageFilesPath.Current;
             if (string.IsNullOrEmpty(current)) return null;
@@ -52,6 +52,10 @@ namespace ClaudiaIDE
             if (_setting.ImageStretch == ImageStretch.None)
             {
                 bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
+                if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                {
+                    return Utils.ConvertToDpi96(bitmap);
+                }
             }
             return bitmap;
         }
