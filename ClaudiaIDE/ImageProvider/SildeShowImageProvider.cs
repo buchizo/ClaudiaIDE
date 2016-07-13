@@ -22,13 +22,8 @@ namespace ClaudiaIDE
         public SildeShowImageProvider(Setting setting)
         {
             _setting = setting;
-
-            _imageFiles = GetImagesFromDirectory();
-            _imageFilesPath = _imageFiles.GetEnumerator();
-            ChangeImage(null);
-
             _timer = new Timer(new TimerCallback(ChangeImage));
-            _timer.Change((int)_setting.UpdateImageInterval.TotalMilliseconds, (int)_setting.UpdateImageInterval.TotalMilliseconds);
+            ReloadSettings();
         }
 
         public event EventHandler NewImageAvaliable;
