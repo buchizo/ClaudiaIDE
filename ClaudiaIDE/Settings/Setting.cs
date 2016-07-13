@@ -14,7 +14,7 @@ namespace ClaudiaIDE.Settings
 
         internal System.IServiceProvider ServiceProvider { get; set; }
 
-        public event EventHandler OnChanged;
+        public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
 
         public static Setting Instance
         {
@@ -111,8 +111,15 @@ namespace ClaudiaIDE.Settings
 
         public void OnApplyChanged()
         {
-            Load();
-            OnChange(this);
+            try
+            {
+                Load();
+                OnChanged?.RaiseEvent(this, EventArgs.Empty);
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public static Setting Deserialize()
@@ -142,13 +149,6 @@ namespace ClaudiaIDE.Settings
             return path;
         }
 
-        private void OnChange(object sender)
-        {
-            if (OnChanged != null)
-            {
-                OnChanged(sender, EventArgs.Empty);
-            }
-        }
     }
 
     [CLSCompliant(false), ComVisible(true)]

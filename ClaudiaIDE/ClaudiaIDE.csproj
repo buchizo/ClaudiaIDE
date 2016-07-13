@@ -214,6 +214,7 @@
     <Compile Include="ClaudiaIDEFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Setting.cs" />
+    <Compile Include="Settings\WeakEvent.cs" />
     <Compile Include="VSPackage.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

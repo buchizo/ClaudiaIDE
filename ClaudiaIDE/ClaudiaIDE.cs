@@ -49,15 +49,15 @@ namespace ClaudiaIDE
                 _view.LayoutChanged += (s,e) => { RepositionImage(); };
                 _view.Closed += (s,e) =>
                 {
-                    _imageProviders.ForEach(x => x.NewImageAvaliable -= delegate { InvokeChangeImage(); });
+                    _imageProviders.ForEach(x => x.NewImageAvaliable -= InvokeChangeImage);
                     if (_setting != null)
                     {
-                        _setting.OnChanged -= delegate { ReloadSettings(); };
+                        _setting.OnChanged.RemoveEventHandler(ReloadSettings);
                     }
                 };
-                _setting.OnChanged += delegate { ReloadSettings(); };
+                _setting.OnChanged.AddEventHandler(ReloadSettings);
 
-                _imageProviders.ForEach(x => x.NewImageAvaliable += delegate { InvokeChangeImage(); });
+                _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
 
                 ChangeImage();
                 RefreshAdornment();
@@ -67,7 +67,7 @@ namespace ClaudiaIDE
 			}
 		}
 
-        private void InvokeChangeImage()
+        private void InvokeChangeImage(object sender, System.EventArgs e)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace ClaudiaIDE
             }
         }
 
-        private void ReloadSettings()
+        private void ReloadSettings(object sender, System.EventArgs e)
         {
             _imageProviders.ForEach(x => x.ReloadSettings());
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
