@@ -33,7 +33,7 @@ namespace ClaudiaIDE
             return new ImageFiles{ Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
         }
 
-        public BitmapSource GetBitmap(IWpfTextView provider)
+        public BitmapSource GetBitmap()
         {
             var current = _imageFilesPath.Current;
             if (string.IsNullOrEmpty(current)) return null;

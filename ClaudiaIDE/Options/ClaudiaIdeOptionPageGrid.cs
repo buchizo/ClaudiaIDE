@@ -31,6 +31,7 @@ namespace ClaudiaIDE.Options
             MaxWidth = 0;
             MaxHeight = 0;
             ImageStretch = ImageStretch.None;
+            ExpandToIDE = false;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -96,6 +97,11 @@ namespace ClaudiaIDE.Options
         public bool LoopSlideshow { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ExpandToIDEType")]
+        [LocalManager.LocalizedDescription("ExpandToIDETypeDes")]
+        public bool ExpandToIDE { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayName("MaxWidthType")]
         [LocalManager.LocalizedDescription("MaxWidthTypeDes")]
         public int MaxWidth { get; set; }
@@ -147,7 +153,8 @@ namespace ClaudiaIDE.Options
             if (str != null)
             {
                 if (str == "Single") return ImageBackgroundType.Single;
-                if (str == "Slideshow") return ImageBackgroundType.Slideshow;
+                else if (str == "Slideshow") return ImageBackgroundType.Slideshow;
+                else return ImageBackgroundType.Single;
             }
 
             return base.ConvertFrom(context, culture, value);

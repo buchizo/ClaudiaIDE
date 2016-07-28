@@ -39,6 +39,7 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
+            ExpandToIDE = false;
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -56,6 +57,7 @@ namespace ClaudiaIDE.Settings
         public string Extensions { get; set; }
         public bool LoopSlideshow { get; set; }
         public ImageStretch ImageStretch { get; set; }
+        public bool ExpandToIDE { get; set; }
 
         public void Serialize()
         {
@@ -107,6 +109,7 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
+            ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
         }
 
         public void OnApplyChanged()
@@ -206,7 +209,7 @@ namespace ClaudiaIDE.Settings
         }
     }
 
-    public static class PositionVConverter
+    public static class PositionConverter
     {
         public static System.Windows.Media.AlignmentY ConvertTo(this PositionV source)
         {
@@ -221,10 +224,21 @@ namespace ClaudiaIDE.Settings
             }
             return System.Windows.Media.AlignmentY.Bottom;
         }
-    }
 
-    public static class PositionXConverter
-    {
+        public static System.Windows.VerticalAlignment ConvertToVerticalAlignment(this PositionV source)
+        {
+            switch (source)
+            {
+                case PositionV.Bottom:
+                    return System.Windows.VerticalAlignment.Bottom;
+                case PositionV.Center:
+                    return System.Windows.VerticalAlignment.Center;
+                case PositionV.Top:
+                    return System.Windows.VerticalAlignment.Top;
+            }
+            return System.Windows.VerticalAlignment.Bottom;
+        }
+
         public static System.Windows.Media.AlignmentX ConvertTo(this PositionH source)
         {
             switch (source)
@@ -237,6 +251,20 @@ namespace ClaudiaIDE.Settings
                     return System.Windows.Media.AlignmentX.Right;
             }
             return System.Windows.Media.AlignmentX.Right;
+        }
+
+        public static System.Windows.HorizontalAlignment ConvertToHorizontalAlignment(this PositionH source)
+        {
+            switch (source)
+            {
+                case PositionH.Left:
+                    return System.Windows.HorizontalAlignment.Left;
+                case PositionH.Center:
+                    return System.Windows.HorizontalAlignment.Center;
+                case PositionH.Right:
+                    return System.Windows.HorizontalAlignment.Right;
+            }
+            return System.Windows.HorizontalAlignment.Right;
         }
     }
 }

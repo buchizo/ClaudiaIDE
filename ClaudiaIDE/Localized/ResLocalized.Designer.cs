@@ -70,7 +70,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Types of background image に類似しているローカライズされた文字列を検索します。
+        ///   Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string BackgroundTypeDes {
             get {
@@ -93,6 +93,24 @@ namespace ClaudiaIDE.Localized {
         internal static string DirectoryPathTypeDes {
             get {
                 return ResourceManager.GetString("DirectoryPathTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Expand to IDE に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ExpandToIDEType {
+            get {
+                return ResourceManager.GetString("ExpandToIDEType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   If true, background image expand to IDE. If false, background image set to text editor background. (false is default value) に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ExpandToIDETypeDes {
+            get {
+                return ResourceManager.GetString("ExpandToIDETypeDes", resourceCulture);
             }
         }
         

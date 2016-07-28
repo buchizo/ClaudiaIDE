@@ -30,5 +30,36 @@ namespace ClaudiaIDE.Helpers
                 onChangeImage(newImage);
             }
         }
+
+        public static void AnimateImageSourceChange(this System.Windows.Controls.Image image,
+                                ImageSource newImage, 
+                                Action<System.Windows.Controls.Image> onChangeImage, 
+                                AnimateImageChangeParams animateImageChangeParams = null)
+        {
+            var animationParameters = animateImageChangeParams ?? new AnimateImageChangeParams();
+
+            if (image != null)
+            {
+                var fadeOutAnimation = new DoubleAnimation(0d, animationParameters.FadeTime) { AutoReverse = false };
+                var fadeInAnimation = new DoubleAnimation(0d, animationParameters.TargetOpacity, animationParameters.FadeTime) { AutoReverse = false };
+
+                fadeOutAnimation.Completed += (o, e) =>
+                {
+                    onChangeImage(image);
+                    image.Source = newImage;
+                    RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.Fant);
+                    image.Opacity = animationParameters.TargetOpacity;
+                    image.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
+                };
+
+                image.BeginAnimation(Brush.OpacityProperty, fadeOutAnimation);
+            }
+            else
+            {
+                image.Opacity = animateImageChangeParams.TargetOpacity;
+                image.Source = newImage;
+                onChangeImage(image);
+            }
+        }
     }
 }

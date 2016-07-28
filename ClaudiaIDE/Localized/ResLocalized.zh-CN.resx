@@ -121,13 +121,20 @@
     <value>背景图片展示方式类型</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>设置背景图片展示方式</value>
+    <value>设置背景图片展示方式 
+Single: 显示指定图像 SlideShow: 将指定文件夹中要显示的图像幻灯片</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>幻灯片路径</value>
   </data>
   <data name="DirectoryPathTypeDes" xml:space="preserve">
     <value>设置幻灯片图片路径</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>扩展到IDE</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>如果为true，背景图片展开隐藏。如果为false，背景图片设置为文本编辑器背景。</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>图片路径</value>

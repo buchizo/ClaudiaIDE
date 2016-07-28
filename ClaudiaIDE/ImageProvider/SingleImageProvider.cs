@@ -19,7 +19,7 @@ namespace ClaudiaIDE.ImageProvider
             LoadImage();
         }
 
-        public BitmapSource GetBitmap(IWpfTextView provider)
+        public BitmapSource GetBitmap()
         {
             if (_setting.ImageStretch == ImageStretch.None && 
                     (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)

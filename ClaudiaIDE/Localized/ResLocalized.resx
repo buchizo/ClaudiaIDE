@@ -121,13 +121,19 @@
     <value>Image background type</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>Types of background image</value>
+    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow.</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>Directory Path</value>
   </data>
   <data name="DirectoryPathTypeDes" xml:space="preserve">
     <value>Background image directory path.</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>Expand to IDE</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>If true, background image expand to IDE. If false, background image set to text editor background. (false is default value)</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>File Path</value>

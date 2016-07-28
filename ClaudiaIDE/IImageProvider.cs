@@ -7,7 +7,7 @@ namespace ClaudiaIDE
 {
     public interface IImageProvider
     {
-        BitmapSource GetBitmap(IWpfTextView provider);
+        BitmapSource GetBitmap();
         event EventHandler NewImageAvaliable;
         ImageBackgroundType ProviderType { get; }
         void ReloadSettings();

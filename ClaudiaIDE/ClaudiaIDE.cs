@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using ClaudiaIDE.ImageProvider;
 using System.Windows.Media;
+using Microsoft.VisualStudio.PlatformUI;
+using System;
 
 namespace ClaudiaIDE
 {
@@ -55,6 +57,10 @@ namespace ClaudiaIDE
                         _setting.OnChanged.RemoveEventHandler(ReloadSettings);
                     }
                 };
+                _view.BackgroundBrushChanged += (s, e) =>
+                {
+                    SetCanvasBackground(_setting.ExpandToIDE);
+                };
                 _setting.OnChanged.AddEventHandler(ReloadSettings);
 
                 _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
@@ -89,12 +95,16 @@ namespace ClaudiaIDE
 		{
 			try
 			{
-                var newimage = _imageProvider.GetBitmap(_view);
+                SetCanvasBackground(_setting.ExpandToIDE);
+
+                var newimage = _imageProvider.GetBitmap();
+                var opacity = _setting.ExpandToIDE ? 0.0 : _setting.Opacity;
+
                 if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
                 {
                     _editorCanvas.Background = new ImageBrush(newimage)
                     {
-                        Opacity = _setting.Opacity,
+                        Opacity = opacity,
                         Stretch = _setting.ImageStretch.ConvertTo(),
                         AlignmentX = _setting.PositionHorizon.ConvertTo(),
                         AlignmentY = _setting.PositionVertical.ConvertTo()
@@ -115,7 +125,7 @@ namespace ClaudiaIDE
                             new AnimateImageChangeParams
                             {
                                 FadeTime = _setting.ImageFadeAnimationInterval,
-                                TargetOpacity = _setting.Opacity
+                                TargetOpacity = opacity
                             }
                         );
                 }
@@ -142,12 +152,52 @@ namespace ClaudiaIDE
 
 	    private void RefreshAdornment()
 	    {
-	        _adornmentLayer.RemoveAllAdornments();
+	        _adornmentLayer.RemoveAdornmentsByTag("ClaudiaIDE");
             _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
 	            null,
-	            null,
+	            "ClaudiaIDE",
                 _editorCanvas,
 	            null);
 	    }
+
+        private void SetCanvasBackground(bool isTransparent)
+        {
+            var control = (ContentControl)_view;
+            var parent = (Grid)control.Parent;
+            var viewstack = (Canvas)control.Content;
+
+            if (isTransparent)
+            {
+                _dispacher.Invoke(() =>
+                {
+                    try
+                    {
+                        viewstack.Background = Brushes.Transparent;
+                        _view.Background = Brushes.Transparent;
+                        parent.ClearValue(Grid.BackgroundProperty);
+                    }
+                    catch
+                    {
+                    }
+                });
+            }
+            else
+            {
+                _dispacher.Invoke(() =>
+                {
+                    try
+                    {
+                        var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
+                        var newbackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
+                        viewstack.Background = newbackground;
+                        _view.Background = newbackground;
+                        parent.ClearValue(Grid.BackgroundProperty);
+                    }
+                    catch
+                    {
+                    }
+                });
+            }
+        }
     }
 }

@@ -121,13 +121,19 @@
     <value>背景の表示形式</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。</value>
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 </value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>フォルダーパス</value>
   </data>
   <data name="DirectoryPathTypeDes" xml:space="preserve">
     <value>背景画像が含まれているフォルダーのパスを設定します。</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>背景画像をIDEに拡張</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>Trueの場合、背景画像をIDE全体に設定します。Falseの場合、背景画像はテキストエディターのみになります（既定）</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>背景画像のファイルパス</value>
