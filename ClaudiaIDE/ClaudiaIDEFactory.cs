@@ -46,11 +46,14 @@ namespace ClaudiaIDE
 		    var settings = Setting.Initialize(ServiceProvider);
             if(ImageProviders == null)
             {
-                ProvidersHolder.Initialize(settings, new List<IImageProvider>
+                if (ProvidersHolder.Instance.Providers == null)
                 {
-                    new SildeShowImageProvider(settings),
-                    new SingleImageProvider(settings)
-                });
+                    ProvidersHolder.Initialize(settings, new List<IImageProvider>
+                    {
+                        new SildeShowImageProvider(settings),
+                        new SingleImageProvider(settings)
+                    });
+                }
                 ImageProviders = ProvidersHolder.Instance.Providers;
             }
 

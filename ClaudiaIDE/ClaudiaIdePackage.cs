@@ -45,11 +45,14 @@ namespace ClaudiaIDE
                 _mainWindow = (System.Windows.Window)s;
                 _settings = Setting.Initialize(this);
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
-                ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                if (ProvidersHolder.Instance.Providers == null)
                 {
-                    new SildeShowImageProvider(_settings),
-                    new SingleImageProvider(_settings)
-                });
+                    ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                    {
+                        new SildeShowImageProvider(_settings),
+                        new SingleImageProvider(_settings)
+                    });
+                }
                 _imageProviders = ProvidersHolder.Instance.Providers;
                 _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                 _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
