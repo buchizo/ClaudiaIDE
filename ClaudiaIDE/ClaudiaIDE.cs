@@ -24,6 +24,7 @@ namespace ClaudiaIDE
         private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
         private Setting _setting = Setting.Instance;
         private IImageProvider _imageProvider;
+        private SolidColorBrush _themeBackground;
 
         /// <summary>
         /// Creates a square image and attaches an event handler to the layout changed event that
@@ -37,6 +38,9 @@ namespace ClaudiaIDE
 		    try
 		    {
                 RenderOptions.SetBitmapScalingMode(_editorCanvas, BitmapScalingMode.Fant);
+
+                var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
+                _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
 
                 _dispacher = Dispatcher.CurrentDispatcher;
                 _imageProviders = imageProvider;
@@ -78,6 +82,7 @@ namespace ClaudiaIDE
             try
             {
                 _dispacher.Invoke(ChangeImage);
+                GC.Collect();
             }
             catch
             {
@@ -88,6 +93,8 @@ namespace ClaudiaIDE
         {
             _imageProviders.ForEach(x => x.ReloadSettings());
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
+            var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
+            _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
             _dispacher.Invoke(ChangeImage);
         }
 
@@ -187,10 +194,8 @@ namespace ClaudiaIDE
                 {
                     try
                     {
-                        var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
-                        var newbackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
-                        viewstack.Background = newbackground;
-                        _view.Background = newbackground;
+                        viewstack.Background = _themeBackground;
+                        _view.Background = _themeBackground;
                         parent.ClearValue(Grid.BackgroundProperty);
                     }
                     catch

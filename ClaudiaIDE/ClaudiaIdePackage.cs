@@ -72,6 +72,7 @@ namespace ClaudiaIDE
             try
             {
                 _dispacher.Invoke(ChangeImage);
+                GC.Collect();
             }
             catch
             {

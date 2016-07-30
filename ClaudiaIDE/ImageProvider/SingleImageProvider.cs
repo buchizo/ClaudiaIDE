@@ -2,9 +2,7 @@
 using System.IO;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
-using Microsoft.VisualStudio.Text.Editor;
 using ClaudiaIDE.Helpers;
-using System.Windows.Threading;
 
 namespace ClaudiaIDE.ImageProvider
 {
@@ -47,6 +45,7 @@ namespace ClaudiaIDE.ImageProvider
             {
                 _bitmap.BeginInit();
                 _bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                _bitmap.CreateOptions = BitmapCreateOptions.None;
                 _bitmap.UriSource = fileUri;
                 _bitmap.EndInit();
                 _bitmap.Freeze();

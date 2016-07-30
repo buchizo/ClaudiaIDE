@@ -4,11 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
-using Microsoft.VisualStudio.Text.Editor;
 using System.Threading;
 using System.Collections;
 using ClaudiaIDE.Helpers;
-using System.Windows.Threading;
 
 namespace ClaudiaIDE
 {
@@ -41,6 +39,7 @@ namespace ClaudiaIDE
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.CreateOptions = BitmapCreateOptions.None;
             bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
             bitmap.EndInit();
             bitmap.Freeze();
