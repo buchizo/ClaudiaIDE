@@ -25,6 +25,7 @@ namespace ClaudiaIDE
         private Setting _setting = Setting.Instance;
         private IImageProvider _imageProvider;
         private SolidColorBrush _themeBackground;
+        private bool _isMainWindow;
 
         /// <summary>
         /// Creates a square image and attaches an event handler to the layout changed event that
@@ -52,7 +53,11 @@ namespace ClaudiaIDE
                 }
                 _view = view;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
-                _view.LayoutChanged += (s,e) => { RepositionImage(); };
+                _view.LayoutChanged += (s,e) => {
+                    RepositionImage();
+                    _isMainWindow = IsRootWindow();
+                    SetCanvasBackground(_setting.ExpandToIDE);
+                };
                 _view.Closed += (s,e) =>
                 {
                     _imageProviders.ForEach(x => x.NewImageAvaliable -= InvokeChangeImage);
@@ -63,6 +68,7 @@ namespace ClaudiaIDE
                 };
                 _view.BackgroundBrushChanged += (s, e) =>
                 {
+                    _isMainWindow = IsRootWindow();
                     SetCanvasBackground(_setting.ExpandToIDE);
                 };
                 _setting.OnChanged.AddEventHandler(ReloadSettings);
@@ -95,6 +101,7 @@ namespace ClaudiaIDE
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
             var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
             _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
+            _isMainWindow = IsRootWindow();
             _dispacher.Invoke(ChangeImage);
         }
 
@@ -105,7 +112,7 @@ namespace ClaudiaIDE
                 SetCanvasBackground(_setting.ExpandToIDE);
 
                 var newimage = _imageProvider.GetBitmap();
-                var opacity = _setting.ExpandToIDE ? 0.0 : _setting.Opacity;
+                var opacity = _setting.ExpandToIDE && _isMainWindow ? 0.0 : _setting.Opacity;
 
                 if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
                 {
@@ -172,8 +179,9 @@ namespace ClaudiaIDE
             var control = (ContentControl)_view;
             var parent = (Grid)control.Parent;
             var viewstack = (Canvas)control.Content;
+            var opacity = isTransparent && _isMainWindow ? 0.0 : _setting.Opacity;
 
-            if (isTransparent)
+            if (isTransparent && _isMainWindow)
             {
                 _dispacher.Invoke(() =>
                 {
@@ -181,6 +189,7 @@ namespace ClaudiaIDE
                     {
                         viewstack.Background = Brushes.Transparent;
                         _view.Background = Brushes.Transparent;
+                        _editorCanvas.Background.Opacity = opacity;
                         parent.ClearValue(Grid.BackgroundProperty);
                     }
                     catch
@@ -196,12 +205,39 @@ namespace ClaudiaIDE
                     {
                         viewstack.Background = _themeBackground;
                         _view.Background = _themeBackground;
+                        _editorCanvas.Background.Opacity = opacity;
                         parent.ClearValue(Grid.BackgroundProperty);
                     }
                     catch
                     {
                     }
                 });
+            }
+        }
+
+        private bool IsRootWindow()
+        {
+            var root = FindUI(_view as System.Windows.DependencyObject);
+            if (root.GetType().FullName.Equals("Microsoft.VisualStudio.PlatformUI.MainWindow", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private System.Windows.DependencyObject FindUI(System.Windows.DependencyObject d)
+        {
+            var p = VisualTreeHelper.GetParent(d);
+            if( p == null)
+            {
+                // is root
+                return d;
+            }
+            else {
+                return FindUI(p);
             }
         }
     }
