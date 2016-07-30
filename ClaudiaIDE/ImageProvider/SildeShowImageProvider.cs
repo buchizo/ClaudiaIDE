@@ -20,8 +20,17 @@ namespace ClaudiaIDE
         public SildeShowImageProvider(Setting setting)
         {
             _setting = setting;
+            _setting.OnChanged.AddEventHandler(ReloadSettings);
             _timer = new Timer(new TimerCallback(ChangeImage));
-            ReloadSettings();
+            ReloadSettings(null, null);
+        }
+
+        ~SildeShowImageProvider()
+        {
+            if (_setting != null)
+            {
+                _setting.OnChanged.RemoveEventHandler(ReloadSettings);
+            }
         }
 
         public event EventHandler NewImageAvaliable;
@@ -54,7 +63,7 @@ namespace ClaudiaIDE
             return bitmap;
         }
 
-        public void ReloadSettings()
+        private void ReloadSettings(object sender, System.EventArgs e)
         {
             if( _setting.ImageBackgroundType == ImageBackgroundType.Single)
             {

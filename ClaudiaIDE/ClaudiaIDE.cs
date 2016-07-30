@@ -97,7 +97,6 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, System.EventArgs e)
         {
-            _imageProviders.ForEach(x => x.ReloadSettings());
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
             var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
             _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));

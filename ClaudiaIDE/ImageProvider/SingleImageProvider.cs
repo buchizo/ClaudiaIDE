@@ -14,8 +14,24 @@ namespace ClaudiaIDE.ImageProvider
         public SingleImageProvider(Setting setting)
         {
             _setting = setting;
+            _setting.OnChanged.AddEventHandler(ReloadSettings);
+
             LoadImage();
         }
+
+        ~SingleImageProvider()
+        {
+            if(_setting != null)
+            {
+                _setting.OnChanged.RemoveEventHandler(ReloadSettings);
+            }
+        }
+
+        private void ReloadSettings(object sender, System.EventArgs e)
+        {
+            LoadImage();
+        }
+
 
         public BitmapSource GetBitmap()
         {
@@ -29,11 +45,6 @@ namespace ClaudiaIDE.ImageProvider
             {
                 return _bitmap;
             }
-        }
-
-        public void ReloadSettings()
-        {
-            LoadImage();
         }
 
         private void LoadImage()
