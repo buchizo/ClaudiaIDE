@@ -48,11 +48,9 @@ namespace ClaudiaIDE.Helpers
                     onChangeImage(image);
                     image.Source = newImage;
                     RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.Fant);
-                    image.Opacity = animationParameters.TargetOpacity;
-                    image.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
+                    image.BeginAnimation(System.Windows.UIElement.OpacityProperty, fadeInAnimation);
                 };
-
-                image.BeginAnimation(Brush.OpacityProperty, fadeOutAnimation);
+                image.BeginAnimation(System.Windows.UIElement.OpacityProperty, fadeOutAnimation);
             }
             else
             {
