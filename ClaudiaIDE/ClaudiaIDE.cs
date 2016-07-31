@@ -129,7 +129,6 @@ namespace ClaudiaIDE
                         .AnimateImageSourceChange(
                             new ImageBrush(newimage)
                             {
-                                Opacity = 0d,
                                 Stretch = _setting.ImageStretch.ConvertTo(),
                                 AlignmentX = _setting.PositionHorizon.ConvertTo(),
                                 AlignmentY = _setting.PositionVertical.ConvertTo()
@@ -188,7 +187,9 @@ namespace ClaudiaIDE
                     {
                         viewstack.Background = Brushes.Transparent;
                         _view.Background = Brushes.Transparent;
-                        _editorCanvas.Background.Opacity = opacity;
+                        var b = _editorCanvas.Background;
+                        b.Opacity = opacity;
+                        _editorCanvas.Background = b;
                         parent.ClearValue(Grid.BackgroundProperty);
                     }
                     catch
@@ -204,7 +205,9 @@ namespace ClaudiaIDE
                     {
                         viewstack.Background = _themeBackground;
                         _view.Background = _themeBackground;
-                        _editorCanvas.Background.Opacity = opacity;
+                        var b = _editorCanvas.Background;
+                        b.Opacity = opacity;
+                        _editorCanvas.Background = b;
                         parent.ClearValue(Grid.BackgroundProperty);
                     }
                     catch

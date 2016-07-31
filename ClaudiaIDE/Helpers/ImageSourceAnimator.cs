@@ -18,8 +18,9 @@ namespace ClaudiaIDE.Helpers
                 fadeOutAnimation.Completed += (o, e) =>
                 {
                     newImage.Opacity = 0d;
-                    newImage.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
                     onChangeImage(newImage);
+                    background.Opacity = animationParameters.TargetOpacity;
+                    newImage.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
                 };
 
                 background.BeginAnimation(Brush.OpacityProperty, fadeOutAnimation);
