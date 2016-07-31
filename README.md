@@ -13,16 +13,16 @@ This extension change the background image of editor.
 1. Open option menu in Visual Studio (Tools -> Options)
 2. Expand to IDE property set to True in ClaudiaIDE option page.
 
-    ![copy theme](images/howto01.png)
+    ![copy theme](Images/howto01.png)
 
 3. Customise Visual Studio theme using color theme editor (E.g. [Visual Studio 2015 Color Theme Editor](https://visualstudiogallery.msdn.microsoft.com/6f4b51b6-5c6b-4a81-9cb5-f2daa560430b))
 4. Click "Create Copy of Theme" button, And "Edit Theme"
 
-    ![copy theme](images/howto02.png) ![Edit theme](images/howto03.png)
+    ![copy theme](Images/howto02.png) ![Edit theme](Images/howto03.png)
 
 5. Customise some colors opacity as follows (your own risk) :
 
-    ![Edit opacity](images/howto04.png)
+    ![Edit opacity](Images/howto04.png)
 
 * Solution Explorer
   * TreeView -> Background
@@ -52,7 +52,7 @@ This extension change the background image of editor.
 
 * Example:
 
-    ![sample](images/example01.png)
+    ![sample](Images/example01.png)
 
 ## ver 1.23 ##
 
