@@ -3,6 +3,57 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
+## ver 1.24 ##
+
+* Add feature (beta) : background image expand to IDE.
+  * Known issue: If background image expand to IDE, editor background does not show when editor was moved to floating window with slideshow until next image.
+
+### How to expand to IDE ###
+
+1. Open option menu in Visual Studio (Tools -> Options)
+2. Expand to IDE property set to True in ClaudiaIDE option page.
+
+    ![copy theme](images/howto01.png)
+
+3. Customise Visual Studio theme using color theme editor (E.g. [Visual Studio 2015 Color Theme Editor](https://visualstudiogallery.msdn.microsoft.com/6f4b51b6-5c6b-4a81-9cb5-f2daa560430b))
+4. Click "Create Copy of Theme" button, And "Edit Theme"
+
+    ![copy theme](images/howto02.png) ![Edit theme](images/howto03.png)
+
+5. Customise some colors opacity as follows (your own risk) :
+
+    ![Edit opacity](images/howto04.png)
+
+* Solution Explorer
+  * TreeView -> Background
+* IDE and text editor
+  * Environment -> Window
+  * Environment -> EnvironmentBackground
+  * Environment -> EnvironmentBackgroundGradientBegin
+  * Environment -> EnvironmentBackgroundGradientEnd
+  * Environment -> EnvironmentBackgroundGradientMiddle1
+  * Environment -> EnvironmentBackgroundGradientMiddle2
+  * Environment -> ToolboxBackground
+  * Environment -> ToolWindowBackground
+* Window Title
+  * Environment -> MainWindowActiveCaption
+  * Environment -> MainWindowInactiveCaption
+* Command Bar
+  * Environment -> CommandShelfBackgroundGradientBegin
+  * Environment -> CommandShelfBackgroundGradientEnd
+  * Environment -> CommandShelfBackgroundGradientMiddle
+  * Environment -> CommandShelfHighlightGradientBegin
+  * Environment -> CommandShelfHighlightGradientEnd
+  * Environment -> CommandShelfHighlightGradientMiddle
+  * Environment -> CommandBarGradientBegin
+  * Environment -> CommandBarGradientEnd
+  * Environment -> CommandBarGradientMiddle
+  * Environment -> CommandBarToolBarBorder
+
+* Example:
+
+    ![sample](images/example01.png)
+
 ## ver 1.23 ##
 
 * Add image stretch feature and improve performance
