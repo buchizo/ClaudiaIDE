@@ -33,8 +33,6 @@ This extension change the background image of editor.
   * Environment -> EnvironmentBackgroundGradientEnd
   * Environment -> EnvironmentBackgroundGradientMiddle1
   * Environment -> EnvironmentBackgroundGradientMiddle2
-  * Environment -> ToolboxBackground
-  * Environment -> ToolWindowBackground
 * Window Title
   * Environment -> MainWindowActiveCaption
   * Environment -> MainWindowInactiveCaption

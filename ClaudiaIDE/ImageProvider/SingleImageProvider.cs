@@ -30,6 +30,7 @@ namespace ClaudiaIDE.ImageProvider
         private void ReloadSettings(object sender, System.EventArgs e)
         {
             LoadImage();
+            NewImageAvaliable?.Invoke(this, EventArgs.Empty);
         }
 
 
