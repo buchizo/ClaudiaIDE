@@ -24,7 +24,8 @@ namespace ClaudiaIDE
         private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
         private Setting _setting = Setting.Instance;
         private IImageProvider _imageProvider;
-        private SolidColorBrush _themeBackground;
+        private Brush _themeViewBackground = null;
+        private Brush _themeViewStackBackground = null;
         private bool _isMainWindow;
 
         /// <summary>
@@ -40,9 +41,6 @@ namespace ClaudiaIDE
 		    {
                 RenderOptions.SetBitmapScalingMode(_editorCanvas, BitmapScalingMode.Fant);
 
-                var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
-                _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
-
                 _dispacher = Dispatcher.CurrentDispatcher;
                 _imageProviders = imageProvider;
                 _imageProvider = imageProvider.FirstOrDefault(x=>x.ProviderType == _setting.ImageBackgroundType);
@@ -52,6 +50,7 @@ namespace ClaudiaIDE
                     _imageProvider = new SingleImageProvider(_setting);
                 }
                 _view = view;
+                _themeViewBackground = _view.Background;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
                 _view.LayoutChanged += (s,e) => {
                     RepositionImage();
@@ -98,8 +97,6 @@ namespace ClaudiaIDE
         private void ReloadSettings(object sender, System.EventArgs e)
         {
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
-            var themeColor = VSColorTheme.GetThemedColor(TreeViewColors.BackgroundColorKey);
-            _themeBackground = new SolidColorBrush(Color.FromArgb(themeColor.A, themeColor.R, themeColor.G, themeColor.B));
             _isMainWindow = IsRootWindow();
             _dispacher.Invoke(ChangeImage);
         }
@@ -178,6 +175,14 @@ namespace ClaudiaIDE
             var parent = (Grid)control.Parent;
             var viewstack = (Canvas)control.Content;
             var opacity = isTransparent && _isMainWindow ? 0.0 : _setting.Opacity;
+            if (_themeViewBackground == null)
+            {
+                _themeViewBackground = _view.Background;
+            }
+            if (_themeViewStackBackground == null)
+            {
+                _themeViewStackBackground = viewstack.Background;
+            }
 
             if (isTransparent && _isMainWindow)
             {
@@ -188,9 +193,12 @@ namespace ClaudiaIDE
                         viewstack.Background = Brushes.Transparent;
                         _view.Background = Brushes.Transparent;
                         var b = _editorCanvas.Background;
-                        b.Opacity = opacity;
-                        _editorCanvas.Background = b;
-                        parent.ClearValue(Grid.BackgroundProperty);
+                        if (b != null)
+                        {
+                            b.Opacity = opacity;
+                            _editorCanvas.Background = b;
+                        }
+                        parent?.ClearValue(Grid.BackgroundProperty);
                     }
                     catch
                     {
@@ -203,12 +211,14 @@ namespace ClaudiaIDE
                 {
                     try
                     {
-                        viewstack.Background = _themeBackground;
-                        _view.Background = _themeBackground;
+                        viewstack.Background = _themeViewStackBackground;
+                        _view.Background = _themeViewBackground;
                         var b = _editorCanvas.Background;
-                        b.Opacity = opacity;
-                        _editorCanvas.Background = b;
-                        parent.ClearValue(Grid.BackgroundProperty);
+                        if (b != null)
+                        {
+                            b.Opacity = opacity;
+                            _editorCanvas.Background = b;
+                        }
                     }
                     catch
                     {
