@@ -114,7 +114,7 @@ namespace ClaudiaIDE
 
         public IEnumerator<string> GetEnumerator()
         {
-            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath))
+            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath) || !Directory.Exists(ImageDirectoryPath))
             {
                 return new ImageFilesEnumerator(new List<string>());
             }
