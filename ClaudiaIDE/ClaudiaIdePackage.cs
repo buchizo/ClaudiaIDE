@@ -19,7 +19,7 @@ using ClaudiaIDE.Helpers;
 namespace ClaudiaIDE
 {
 	[PackageRegistration(UseManagedResourcesOnly = true)]
-	[InstalledProductRegistration("#110", "#112", "1.26", IconResourceID = 400)]
+	[InstalledProductRegistration("#110", "#112", "1.27", IconResourceID = 400)]
 	[ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
 	[Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad(UIContextGuids.NoSolution)]

@@ -46,18 +46,22 @@ namespace ClaudiaIDE
             if (string.IsNullOrEmpty(current)) return null;
 
             var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad;
-            bitmap.CreateOptions = BitmapCreateOptions.None;
-            bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
-            bitmap.EndInit();
-            bitmap.Freeze();
-            if (_setting.ImageStretch == ImageStretch.None)
+            var fileInfo = new FileInfo(current);
+            if (fileInfo.Exists)
             {
-                bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
-                if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.CreateOptions = BitmapCreateOptions.None;
+                bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
+                bitmap.EndInit();
+                bitmap.Freeze();
+                if (_setting.ImageStretch == ImageStretch.None)
                 {
-                    return Utils.ConvertToDpi96(bitmap);
+                    bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
+                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                    {
+                        return Utils.ConvertToDpi96(bitmap);
+                    }
                 }
             }
             return bitmap;
