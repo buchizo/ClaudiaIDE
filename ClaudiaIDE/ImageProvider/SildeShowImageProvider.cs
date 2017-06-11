@@ -7,6 +7,7 @@ using ClaudiaIDE.Settings;
 using System.Threading;
 using System.Collections;
 using ClaudiaIDE.Helpers;
+using System.Threading.Tasks;
 
 namespace ClaudiaIDE
 {
@@ -40,31 +41,36 @@ namespace ClaudiaIDE
             return new ImageFiles{ Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
         }
 
-        public BitmapSource GetBitmap()
+        public async Task<BitmapSource> GetBitmap()
         {
             var current = _imageFilesPath.Current;
             if (string.IsNullOrEmpty(current)) return null;
 
-            var bitmap = new BitmapImage();
-            var fileInfo = new FileInfo(current);
-            if (fileInfo.Exists)
-            {
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
-                bitmap.EndInit();
-                bitmap.Freeze();
-                if (_setting.ImageStretch == ImageStretch.None)
+            BitmapSource bitmapSource = null;
+            await Task.Factory.StartNew(() => {
+                var bitmap = new BitmapImage();
+                var fileInfo = new FileInfo(current);
+                if (fileInfo.Exists)
                 {
-                    bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
-                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.None;
+                    bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                    if (_setting.ImageStretch == ImageStretch.None)
                     {
-                        return Utils.ConvertToDpi96(bitmap);
+                        bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
+                        if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                        {
+                            bitmapSource = Utils.ConvertToDpi96(bitmap);
+                            return;
+                        }
                     }
+                    bitmapSource = bitmap;
                 }
-            }
-            return bitmap;
+            });
+            return bitmapSource;
         }
 
         private void ReloadSettings(object sender, System.EventArgs e)

@@ -2,12 +2,13 @@
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ClaudiaIDE
 {
     public interface IImageProvider
     {
-        BitmapSource GetBitmap();
+        Task<BitmapSource> GetBitmap();
         event EventHandler NewImageAvaliable;
         ImageBackgroundType ProviderType { get; }
     }
