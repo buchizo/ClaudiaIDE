@@ -9,6 +9,7 @@ using ClaudiaIDE.ImageProvider;
 using System.Windows.Media;
 using Microsoft.VisualStudio.PlatformUI;
 using System;
+using System.Threading.Tasks;
 
 namespace ClaudiaIDE
 {
@@ -87,7 +88,7 @@ namespace ClaudiaIDE
             try
             {
                 _dispacher.Invoke(ChangeImage);
-                GC.Collect();
+                //GC.Collect();
             }
             catch
             {
@@ -101,13 +102,13 @@ namespace ClaudiaIDE
             _dispacher.Invoke(ChangeImage);
         }
 
-        private void ChangeImage()
+        private async void ChangeImage()
 		{
 			try
 			{
                 SetCanvasBackground(_setting.ExpandToIDE);
 
-                var newimage = _imageProvider.GetBitmap();
+                var newimage = await _imageProvider.GetBitmap();
                 var opacity = _setting.ExpandToIDE && _isMainWindow ? 0.0 : _setting.Opacity;
 
                 if (_setting.ImageBackgroundType == ImageBackgroundType.Single)

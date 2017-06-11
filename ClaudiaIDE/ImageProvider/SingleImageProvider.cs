@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using ClaudiaIDE.Helpers;
+using System.Threading.Tasks;
 
 namespace ClaudiaIDE.ImageProvider
 {
@@ -34,18 +35,20 @@ namespace ClaudiaIDE.ImageProvider
         }
 
 
-        public BitmapSource GetBitmap()
+        public async Task<BitmapSource> GetBitmap()
         {
-            if (_setting.ImageStretch == ImageStretch.None && 
+            return await Task.Factory.StartNew(() => {
+                if (_setting.ImageStretch == ImageStretch.None &&
                     (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
                 )
-            {
-                return Utils.ConvertToDpi96(_bitmap);
-            }
-            else
-            {
-                return _bitmap;
-            }
+                {
+                    return Utils.ConvertToDpi96(_bitmap);
+                }
+                else
+                {
+                    return _bitmap;
+                }
+            });
         }
 
         private void LoadImage()

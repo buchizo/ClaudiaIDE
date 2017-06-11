@@ -76,19 +76,19 @@ namespace ClaudiaIDE
             try
             {
                 _dispacher.Invoke(ChangeImage);
-                GC.Collect();
+                //GC.Collect();
             }
             catch
             {
             }
         }
 
-        private void ChangeImage()
+        private async void ChangeImage()
         {
             try
             {
                 var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
-                var newimage = _imageProvider.GetBitmap();
+                var newimage = await _imageProvider.GetBitmap();
 
                 foreach (UIElement el in rRootGrid.Children)
                 {
