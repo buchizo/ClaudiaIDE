@@ -171,9 +171,9 @@ namespace ClaudiaIDE
 
         private void SetCanvasBackground(bool isTransparent)
         {
-            var control = (ContentControl)_view;
-            var parent = (Grid)control.Parent;
-            var viewstack = (Canvas)control.Content;
+            var control = _view as ContentControl;
+            var parent = control?.Parent as Grid;
+            var viewstack = control?.Content as Canvas;
             var opacity = isTransparent && _isMainWindow ? 0.0 : _setting.Opacity;
             if (_themeViewBackground == null)
             {
@@ -181,7 +181,7 @@ namespace ClaudiaIDE
             }
             if (_themeViewStackBackground == null)
             {
-                _themeViewStackBackground = viewstack.Background;
+                _themeViewStackBackground = viewstack?.Background;
             }
 
             if (isTransparent && _isMainWindow)
@@ -190,7 +190,10 @@ namespace ClaudiaIDE
                 {
                     try
                     {
-                        viewstack.Background = Brushes.Transparent;
+                        if(viewstack != null)
+                        {
+                            viewstack.Background = Brushes.Transparent;
+                        }
                         _view.Background = Brushes.Transparent;
                         var b = _editorCanvas.Background;
                         if (b != null)
