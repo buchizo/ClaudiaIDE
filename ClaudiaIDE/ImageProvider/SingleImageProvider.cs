@@ -36,7 +36,7 @@ namespace ClaudiaIDE.ImageProvider
 
         public BitmapSource GetBitmap()
         {
-            if (_setting.ImageStretch == ImageStretch.None && 
+            if (_setting.ImageStretch == ImageStretch.None &&
                     (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
                 )
             {
@@ -52,9 +52,10 @@ namespace ClaudiaIDE.ImageProvider
         {
             var fileUri = new Uri(_setting.BackgroundImageAbsolutePath, UriKind.RelativeOrAbsolute);
             var fileInfo = new FileInfo(_setting.BackgroundImageAbsolutePath);
-            _bitmap = new BitmapImage();
+
             if (fileInfo.Exists)
             {
+                _bitmap = new BitmapImage();
                 _bitmap.BeginInit();
                 _bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 _bitmap.CreateOptions = BitmapCreateOptions.None;
@@ -66,6 +67,10 @@ namespace ClaudiaIDE.ImageProvider
                 {
                     _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, _setting.MaxWidth, _setting.MaxHeight);
                 }
+            }
+            else
+            {
+                _bitmap = null;
             }
         }
 

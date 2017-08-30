@@ -122,6 +122,7 @@ namespace ClaudiaIDE.Options
         {
             try
             {
+                //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
                 Setting.Instance.OnApplyChanged();
             }
             catch
@@ -382,7 +383,7 @@ namespace ClaudiaIDE.Options
                     open.InitialDirectory = Path.GetDirectoryName((string)value);
                 }
                 catch (Exception)
-                {                    
+                {
                 }
 
                 if (open.ShowDialog() == DialogResult.OK)
