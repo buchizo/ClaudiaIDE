@@ -121,7 +121,7 @@ namespace ClaudiaIDE.Settings
                 Load();
                 OnChanged?.RaiseEvent(this, EventArgs.Empty);
             }
-            catch (Exception ex)
+            catch
             {
 
             }

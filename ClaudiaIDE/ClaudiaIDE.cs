@@ -86,8 +86,12 @@ namespace ClaudiaIDE
         {
             try
             {
-                _dispacher.Invoke(ChangeImage);
-                GC.Collect();
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                {
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    ChangeImage();
+                    GC.Collect();
+                });
             }
             catch
             {
@@ -98,7 +102,11 @@ namespace ClaudiaIDE
         {
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
             _isMainWindow = IsRootWindow();
-            _dispacher.Invoke(ChangeImage);
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+            {
+                await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                ChangeImage();
+            });
         }
 
         private void ChangeImage()
@@ -186,11 +194,12 @@ namespace ClaudiaIDE
 
             if (isTransparent && _isMainWindow)
             {
-                _dispacher.Invoke(() =>
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
-                        if(viewstack != null)
+                        if (viewstack != null)
                         {
                             viewstack.Background = Brushes.Transparent;
                         }
@@ -210,8 +219,9 @@ namespace ClaudiaIDE
             }
             else
             {
-                _dispacher.Invoke(() =>
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
                         viewstack.Background = _themeViewStackBackground;

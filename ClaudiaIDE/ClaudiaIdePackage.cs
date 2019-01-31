@@ -15,16 +15,17 @@ using System.Windows.Threading;
 using ClaudiaIDE.ImageProvider;
 using System.Linq;
 using ClaudiaIDE.Helpers;
+using Task = System.Threading.Tasks.Task;
 
 namespace ClaudiaIDE
 {
-	[PackageRegistration(UseManagedResourcesOnly = true)]
-	[InstalledProductRegistration("#110", "#112", "1.28.6", IconResourceID = 400)]
+	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+	[InstalledProductRegistration("#110", "#112", "2.0.0", IconResourceID = 400)]
 	[ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
 	[Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
-    [ProvideAutoLoad(UIContextGuids.NoSolution)]
-    [ProvideAutoLoad(UIContextGuids.SolutionExists)]
-    public sealed class ClaudiaIdePackage : Package
+    [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    public sealed class ClaudiaIdePackage : AsyncPackage
 	{
         private Setting _settings;
         private System.Windows.Window _mainWindow;
@@ -38,9 +39,10 @@ namespace ClaudiaIDE
             _dispacher = Dispatcher.CurrentDispatcher;
         }
 
-        protected override void Initialize()
-		{
-            Application.Current.MainWindow.Loaded += (s,e) =>
+        protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        {
+            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            Application.Current.MainWindow.Loaded += (s, e) =>
             {
                 _mainWindow = (System.Windows.Window)s;
                 _settings = Setting.Initialize(this);
@@ -67,16 +69,18 @@ namespace ClaudiaIDE
                     _settings.OnChanged.RemoveEventHandler(ReloadSettings);
                 }
             };
-
-            base.Initialize();
-		}
+        }
 
         private void InvokeChangeImage(object sender, System.EventArgs e)
         {
             try
             {
-                _dispacher.Invoke(ChangeImage);
-                GC.Collect();
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                {
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    ChangeImage();
+                    GC.Collect();
+                });
             }
             catch
             {
@@ -145,7 +149,11 @@ namespace ClaudiaIDE
         private void ReloadSettings(object sender, System.EventArgs e)
         {
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
-            _dispacher.Invoke(ChangeImage);
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+            {
+                await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                ChangeImage();
+            });
         }
 
     }

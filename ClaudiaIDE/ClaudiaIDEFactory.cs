@@ -25,9 +25,6 @@ namespace ClaudiaIDE
         [Import(typeof(SVsServiceProvider))]
 		internal System.IServiceProvider ServiceProvider { get; set; }
 
-        [Import]
-        IEditorFormatMapService EditorFormatMapService = null;
-
         /// <summary>
         /// Defines the adornment layer for the scarlet adornment. This layer is ordered 
         /// after the selection layer in the Z-order
