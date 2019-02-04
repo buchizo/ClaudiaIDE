@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading.Tasks;
 using EnvDTE;
 using EnvDTE80;
 
@@ -93,11 +94,35 @@ namespace ClaudiaIDE.Settings
             return settings;
         }
 
-        public void Load()
+        public static async Task<Setting> InitializeAsync(IServiceProvider serviceProvider)
         {
-            var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
-            var props = _DTE2.Properties["ClaudiaIDE", "General"];
+            var settings = Setting.Instance;
+            if (settings.ServiceProvider != serviceProvider)
+            {
+                settings.ServiceProvider = serviceProvider;
+            }
+            try
+            {
+                await settings.LoadAsync();
+            }
+            catch
+            {
+                return Setting.Deserialize();
+            }
+            return settings;
+        }
 
+        public async Task LoadAsync()
+        {
+            Microsoft.VisualStudio.Shell.IAsyncServiceProvider asyncServiceProvider = await ((Microsoft.VisualStudio.Shell.AsyncPackage)ServiceProvider).GetServiceAsync(typeof(Microsoft.VisualStudio.Shell.Interop.SAsyncServiceProvider)) as Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
+            var testService = await asyncServiceProvider.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            var props = testService.Properties["ClaudiaIDE", "General"];
+
+            Load(props);
+        }
+
+        private void Load(Properties props)
+        {
             BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
             BackgroundImageAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value, DefaultBackgroundImage);
             Opacity = (double)props.Item("Opacity").Value;
@@ -112,6 +137,14 @@ namespace ClaudiaIDE.Settings
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
+        }
+
+        public void Load()
+        {
+            var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
+            var props = _DTE2.Properties["ClaudiaIDE", "General"];
+
+            Load(props);
         }
 
         public void OnApplyChanged()
