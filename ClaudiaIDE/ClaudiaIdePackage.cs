@@ -1,17 +1,13 @@
-﻿using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using ClaudiaIDE.Options;
 using Microsoft.VisualStudio.Shell;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Shell.Interop;
 using ClaudiaIDE.Settings;
 using System.Collections.Generic;
-using System.Windows.Threading;
 using ClaudiaIDE.ImageProvider;
 using System.Linq;
 using ClaudiaIDE.Helpers;
@@ -19,10 +15,11 @@ using Task = System.Threading.Tasks.Task;
 
 namespace ClaudiaIDE
 {
-	[PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-	[InstalledProductRegistration("#110", "#112", "2.0.0", IconResourceID = 400)]
+    [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
+	[InstalledProductRegistration("#110", "#112", "2.0.1", IconResourceID = 400)]
 	[ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
 	[Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
+    [ProvideAutoLoad(UIContextGuids.EmptySolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class ClaudiaIdePackage : AsyncPackage
@@ -31,13 +28,7 @@ namespace ClaudiaIDE
         private System.Windows.Window _mainWindow;
         private List<IImageProvider> _imageProviders;
         private IImageProvider _imageProvider;
-        private readonly Dispatcher _dispacher;
         private Image _current = null;
-
-        public ClaudiaIdePackage()
-		{
-            _dispacher = Dispatcher.CurrentDispatcher;
-        }
 
         protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
@@ -69,6 +60,33 @@ namespace ClaudiaIDE
                     _settings.OnChanged.RemoveEventHandler(ReloadSettings);
                 }
             };
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            {
+                try
+                {
+                    await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+                    _settings = await Setting.InitializeAsync(this);
+                    if (_settings == null) return;
+                    _mainWindow = (System.Windows.Window)Application.Current.MainWindow;
+                    _settings.OnChanged.AddEventHandler(ReloadSettings);
+                    if (ProvidersHolder.Instance.Providers == null)
+                    {
+                        ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                    {
+                        new SildeShowImageProvider(_settings),
+                        new SingleImageProvider(_settings)
+                    });
+                    }
+                    _imageProviders = ProvidersHolder.Instance.Providers;
+                    _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
+                    _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
+
+                    ReloadSettings(null, null);
+                }
+                catch
+                {
+                }
+            }).FileAndForget("claudiaide/initializeasync");
         }
 
         private void InvokeChangeImage(object sender, System.EventArgs e)
