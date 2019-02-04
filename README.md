@@ -7,7 +7,6 @@ This extension change the background image of editor.
 
 Support versions changed as follows:
 
-* Visual Studio 2015
 * Visual Studio 2017
 * Visual Studio 2019 (preview)
 
@@ -15,7 +14,9 @@ Support versions changed as follows:
 
 Visual Studio 2019 (16.1) extensions can support AsyncPackage only. ClaudiaIDE's this version change to AsyncPackage.
 
-AsyncPackage can support Visual Studio 2015 or later. I decided move to forward and I don't support old Visual Studio versions. If you want to use this extension on old Visual Studio versions, you can use [1.28.6](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release1.28.6).
+AsyncPackage can support Visual Studio 2015 or later. I decided move to forward and I don't support old Visual Studio versions (2015 or earlier). If you want to use this extension on old Visual Studio versions (2015 or earlier), you can use [1.28.6](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release1.28.6). 
+
+* If you already install 2.0.0 or 2.0.1 to Visual Studio 2015, you will uninstall 2.0.x and re-install 1.28.6 ClaudiaIDE.vsix.
 
 ## ver 1.28.6 ##
 
