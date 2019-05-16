@@ -9,7 +9,7 @@ namespace ClaudiaIDE.Helpers
         {
             BitmapImage bitmap = null;
 
-            if(maxWidth > 0 && maxHeight > 0
+            if (maxWidth > 0 && maxHeight > 0
                 && original.PixelWidth > maxWidth && original.PixelHeight > maxHeight)
             {
                 bitmap = new BitmapImage();
@@ -23,7 +23,7 @@ namespace ClaudiaIDE.Helpers
                 bitmap.Freeze();
                 return bitmap;
             }
-            else if(maxWidth > 0 && original.PixelWidth > maxWidth)
+            else if (maxWidth > 0 && original.PixelWidth > maxWidth)
             {
                 bitmap = new BitmapImage();
                 bitmap.BeginInit();
@@ -35,7 +35,7 @@ namespace ClaudiaIDE.Helpers
                 bitmap.Freeze();
                 return bitmap;
             }
-            else if(maxHeight > 0 && original.PixelHeight > maxHeight)
+            else if (maxHeight > 0 && original.PixelHeight > maxHeight)
             {
                 bitmap = new BitmapImage();
                 bitmap.BeginInit();

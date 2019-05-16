@@ -21,7 +21,7 @@ namespace ClaudiaIDE.ImageProvider
 
         ~SingleImageProvider()
         {
-            if(_setting != null)
+            if (_setting != null)
             {
                 _setting.OnChanged.RemoveEventHandler(ReloadSettings);
             }
