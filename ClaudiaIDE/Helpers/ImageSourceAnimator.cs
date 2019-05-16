@@ -33,8 +33,8 @@ namespace ClaudiaIDE.Helpers
         }
 
         public static void AnimateImageSourceChange(this System.Windows.Controls.Image image,
-                                ImageSource newImage, 
-                                Action<System.Windows.Controls.Image> onChangeImage, 
+                                ImageSource newImage,
+                                Action<System.Windows.Controls.Image> onChangeImage,
                                 AnimateImageChangeParams animateImageChangeParams = null)
         {
             var animationParameters = animateImageChangeParams ?? new AnimateImageChangeParams();

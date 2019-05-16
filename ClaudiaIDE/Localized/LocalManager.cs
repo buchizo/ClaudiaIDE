@@ -58,9 +58,9 @@ namespace ClaudiaIDE.Localized
             }
         }
 
-        [AttributeUsage(AttributeTargets.Class | 
-                        AttributeTargets.Method | 
-                        AttributeTargets.Property | 
+        [AttributeUsage(AttributeTargets.Class |
+                        AttributeTargets.Method |
+                        AttributeTargets.Property |
                         AttributeTargets.Event)]
         internal class LocalizedDisplayNameAttribute : DisplayNameAttribute
         {

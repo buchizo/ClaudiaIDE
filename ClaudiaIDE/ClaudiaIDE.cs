@@ -16,11 +16,11 @@ namespace ClaudiaIDE
     /// Adornment class that draws a square box in the top right hand corner of the viewport
     /// </summary>
     public class ClaudiaIDE
-	{
+    {
         private readonly List<IImageProvider> _imageProviders;
         private readonly IWpfTextView _view;
-		private readonly IAdornmentLayer _adornmentLayer;
-	    private readonly Dispatcher _dispacher;
+        private readonly IAdornmentLayer _adornmentLayer;
+        private readonly Dispatcher _dispacher;
         private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
         private Setting _setting = Setting.Instance;
         private IImageProvider _imageProvider;
@@ -36,14 +36,14 @@ namespace ClaudiaIDE
         /// <param name="imageProvider">The <see cref="IImageProvider"/> which provides bitmaps to draw</param>
         /// <param name="setting">The <see cref="Setting"/> contains user image preferences</param>
         public ClaudiaIDE(IWpfTextView view, List<IImageProvider> imageProvider)
-		{
-		    try
-		    {
+        {
+            try
+            {
                 RenderOptions.SetBitmapScalingMode(_editorCanvas, BitmapScalingMode.Fant);
 
                 _dispacher = Dispatcher.CurrentDispatcher;
                 _imageProviders = imageProvider;
-                _imageProvider = imageProvider.FirstOrDefault(x=>x.ProviderType == _setting.ImageBackgroundType);
+                _imageProvider = imageProvider.FirstOrDefault(x => x.ProviderType == _setting.ImageBackgroundType);
 
                 if (_imageProvider == null)
                 {
@@ -52,12 +52,13 @@ namespace ClaudiaIDE
                 _view = view;
                 _themeViewBackground = _view.Background;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
-                _view.LayoutChanged += (s,e) => {
+                _view.LayoutChanged += (s, e) =>
+                {
                     RepositionImage();
                     _isMainWindow = IsRootWindow();
                     SetCanvasBackground(_setting.ExpandToIDE);
                 };
-                _view.Closed += (s,e) =>
+                _view.Closed += (s, e) =>
                 {
                     _imageProviders.ForEach(x => x.NewImageAvaliable -= InvokeChangeImage);
                     if (_setting != null)
@@ -78,9 +79,9 @@ namespace ClaudiaIDE
                 RefreshAdornment();
             }
             catch
-			{
-			}
-		}
+            {
+            }
+        }
 
         private void InvokeChangeImage(object sender, System.EventArgs e)
         {
@@ -110,9 +111,9 @@ namespace ClaudiaIDE
         }
 
         private void ChangeImage()
-		{
-			try
-			{
+        {
+            try
+            {
                 SetCanvasBackground(_setting.ExpandToIDE);
 
                 var newimage = _imageProvider.GetBitmap();
@@ -148,12 +149,12 @@ namespace ClaudiaIDE
                 }
             }
             catch
-			{
-			}
-		}
+            {
+            }
+        }
 
-	    private void RepositionImage()
-	    {
+        private void RepositionImage()
+        {
             try
             {
                 Canvas.SetLeft(_editorCanvas, _view.ViewportLeft);
@@ -167,15 +168,15 @@ namespace ClaudiaIDE
             }
         }
 
-	    private void RefreshAdornment()
-	    {
-	        _adornmentLayer.RemoveAdornmentsByTag("ClaudiaIDE");
+        private void RefreshAdornment()
+        {
+            _adornmentLayer.RemoveAdornmentsByTag("ClaudiaIDE");
             _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative,
-	            null,
-	            "ClaudiaIDE",
+                null,
+                "ClaudiaIDE",
                 _editorCanvas,
-	            null);
-	    }
+                null);
+        }
 
         private void SetCanvasBackground(bool isTransparent)
         {
@@ -256,12 +257,13 @@ namespace ClaudiaIDE
         private System.Windows.DependencyObject FindUI(System.Windows.DependencyObject d)
         {
             var p = VisualTreeHelper.GetParent(d);
-            if( p == null)
+            if (p == null)
             {
                 // is root
                 return d;
             }
-            else {
+            else
+            {
                 return FindUI(p);
             }
         }

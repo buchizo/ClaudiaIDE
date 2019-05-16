@@ -37,7 +37,7 @@ namespace ClaudiaIDE
 
         private ImageFiles GetImagesFromDirectory()
         {
-            return new ImageFiles{ Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
+            return new ImageFiles { Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
         }
 
         public BitmapSource GetBitmap()
@@ -69,7 +69,7 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, System.EventArgs e)
         {
-            if( _setting.ImageBackgroundType == ImageBackgroundType.Single)
+            if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
@@ -84,7 +84,7 @@ namespace ClaudiaIDE
 
         private void ChangeImage(object args)
         {
-            if(_imageFilesPath.MoveNext())
+            if (_imageFilesPath.MoveNext())
             {
                 NewImageAvaliable?.Invoke(this, EventArgs.Empty);
             }

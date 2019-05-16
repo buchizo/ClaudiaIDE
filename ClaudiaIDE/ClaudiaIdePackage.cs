@@ -16,14 +16,14 @@ using Task = System.Threading.Tasks.Task;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-	[InstalledProductRegistration("#110", "#112", "2.1.0", IconResourceID = 400)]
-	[ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
-	[Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
+    [InstalledProductRegistration("#110", "#112", "2.1.0", IconResourceID = 400)]
+    [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
+    [Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad(UIContextGuids.EmptySolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
     public sealed class ClaudiaIdePackage : AsyncPackage
-	{
+    {
         private Setting _settings;
         private System.Windows.Window _mainWindow;
         private List<IImageProvider> _imageProviders;
@@ -146,7 +146,8 @@ namespace ClaudiaIDE
                 {
                     _current.AnimateImageSourceChange(
                             newimage,
-                            (n) => {
+                            (n) =>
+                            {
                                 n.Stretch = _settings.ImageStretch.ConvertTo();
                                 n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
                                 n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
