@@ -3,12 +3,16 @@ ClaudiaIDE
 
 This extension change the background image of editor.
 
+## ver 2.2.0 ##
+
+Current version decrease flickering, maybe. However Image fade interval option doesn't support in slideshow because  sequelae by this update. And if you want to expand image to IDE, ClaudiaIDE is not require theme editor. ClaudiaIDE automaticaly set to transparent some backgrounds (e.g. text editor) when "expand to IDE" option is true. if you want to transparent in solution explorer and other some windows, you should use theme editor as yet.
+
 ## ver 2.1.0 ##
 
 Support versions changed as follows:
 
 * Visual Studio 2017 (15.8 or later)
-* Visual Studio 2019 (preview)
+* Visual Studio 2019 (preview or RTM)
 
 ### Braking Changes ###
 
