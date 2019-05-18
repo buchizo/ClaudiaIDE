@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -37,6 +37,7 @@ namespace ClaudiaIDE.Settings
             PositionVertical = PositionV.Bottom;
             ImageStretch = ImageStretch.None;
             UpdateImageInterval = TimeSpan.FromMinutes(30);
+            ImageFadeAnimationInterval = TimeSpan.FromSeconds(0);
             Extensions = ".png, .jpg";
             ImageBackgroundType = ImageBackgroundType.Single;
             LoopSlideshow = true;
@@ -132,7 +133,6 @@ namespace ClaudiaIDE.Settings
             UpdateImageInterval = (TimeSpan)props.Item("UpdateImageInterval").Value;
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
-            ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
