@@ -21,13 +21,13 @@ namespace ClaudiaIDE
         private readonly List<IImageProvider> _imageProviders;
         private readonly IWpfTextView _view;
         private readonly IAdornmentLayer _adornmentLayer;
-        private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false, Background = Brushes.Transparent };
+        private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
         private Setting _settings = Setting.Instance;
         private IImageProvider _imageProvider;
-        private Brush _themeViewBackground = null;
         private bool _isMainWindow;
         private System.Windows.DependencyObject _wpfTextViewHost = null;
         private Dictionary<int, System.Windows.DependencyObject> _defaultThemeColor = new Dictionary<int, DependencyObject>();
+        private bool _hasImage = false;
 
         /// <summary>
         /// Creates a square image and attaches an event handler to the layout changed event that
@@ -48,11 +48,17 @@ namespace ClaudiaIDE
                     _imageProvider = new SingleImageProvider(_settings);
                 }
                 _view = view;
-                _themeViewBackground = _view.Background;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
                 _view.LayoutChanged += (s, e) =>
                 {
-                    ChangeImage();
+                    if (!_hasImage)
+                    {
+                        ChangeImage();
+                    }
+                    else
+                    {
+                        RefreshBackground();
+                    }
                 };
                 _view.Closed += (s, e) =>
                 {
@@ -64,6 +70,7 @@ namespace ClaudiaIDE
                 };
                 _view.BackgroundBrushChanged += (s, e) =>
                 {
+                    _hasImage = false;
                     SetCanvasBackground();
                 };
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
@@ -98,6 +105,7 @@ namespace ClaudiaIDE
         private void ReloadSettings(object sender, System.EventArgs e)
         {
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
+            _hasImage = false;
             ChangeImage();
         }
 
@@ -106,77 +114,62 @@ namespace ClaudiaIDE
             try
             {
                 SetCanvasBackground();
-
-                if (_wpfTextViewHost == null)
-                {
-                    _wpfTextViewHost = FindWpfTextView(_editorCanvas as System.Windows.DependencyObject);
-                    Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
-                    {
-                        await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                        try
-                        {
-                            RenderOptions.SetBitmapScalingMode(_wpfTextViewHost, BitmapScalingMode.Fant);
-                        }
-                        catch
-                        {
-                        }
-                    });
-                }
+                FindWpfTextView(_editorCanvas as System.Windows.DependencyObject);
 
                 var newimage = _imageProvider.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
 
-                if (_settings.ImageBackgroundType == ImageBackgroundType.Single)
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
-                    Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    try
                     {
-                        await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                        try
+                        (_wpfTextViewHost as System.Windows.Controls.Panel).Background = new ImageBrush(newimage)
                         {
-                            (_wpfTextViewHost as System.Windows.Controls.Panel).Background = new ImageBrush(newimage)
-                            {
-                                Opacity = opacity,
-                                Stretch = _settings.ImageStretch.ConvertTo(),
-                                AlignmentX = _settings.PositionHorizon.ConvertTo(),
-                                AlignmentY = _settings.PositionVertical.ConvertTo()
-                            };
-                        }
-                        catch
-                        {
-                        }
-                    });
-                }
-                else
-                {
-                    Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                            Opacity = opacity,
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            AlignmentX = _settings.PositionHorizon.ConvertTo(),
+                            AlignmentY = _settings.PositionVertical.ConvertTo()
+                        };
+                        _hasImage = true;
+                    }
+                    catch
                     {
-                        await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                        try
-                        {
-                            (_wpfTextViewHost as System.Windows.Controls.Panel).Background.AnimateImageSourceChange(
-                                new ImageBrush(newimage)
-                                {
-                                    Stretch = _settings.ImageStretch.ConvertTo(),
-                                    AlignmentX = _settings.PositionHorizon.ConvertTo(),
-                                    AlignmentY = _settings.PositionVertical.ConvertTo()
-                                },
-                                (n) => { (_wpfTextViewHost as System.Windows.Controls.Panel).Background = n; },
-                                new AnimateImageChangeParams
-                                {
-                                    FadeTime = _settings.ImageFadeAnimationInterval,
-                                    TargetOpacity = opacity
-                                }
-                            );
-                        }
-                        catch
-                        {
-                        }
-                    });
-                }
+                    }
+                });
             }
             catch
             {
             }
+        }
+
+        private void RefreshBackground()
+        {
+            SetCanvasBackground();
+            FindWpfTextView(_editorCanvas as System.Windows.DependencyObject);
+            var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
+
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+            {
+                await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                try
+                {
+                    var background = (_wpfTextViewHost as System.Windows.Controls.Panel).Background;
+                    if (opacity < 0.01)
+                    {
+                        background.Opacity = 0.01;
+                        background.Opacity = opacity;
+                    }
+                    else
+                    {
+                        background.Opacity = opacity - 0.01;
+                        background.Opacity = opacity;
+                    }
+                }
+                catch
+                {
+                }
+            });
         }
 
         private void RefreshAdornment()
@@ -218,9 +211,23 @@ namespace ClaudiaIDE
             }
         }
 
-        private System.Windows.DependencyObject FindWpfTextView(System.Windows.DependencyObject d)
+        private void FindWpfTextView(System.Windows.DependencyObject d)
         {
-            return FindUI(d, "Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost");
+            if (_wpfTextViewHost == null)
+            {
+                _wpfTextViewHost = FindUI(d, "Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost");
+                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                {
+                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    try
+                    {
+                        RenderOptions.SetBitmapScalingMode(_wpfTextViewHost, BitmapScalingMode.NearestNeighbor);
+                    }
+                    catch
+                    {
+                    }
+                });
+            }
         }
 
         private System.Windows.DependencyObject FindUI(System.Windows.DependencyObject d, string name)
