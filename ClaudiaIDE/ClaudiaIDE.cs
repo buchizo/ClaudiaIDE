@@ -115,6 +115,7 @@ namespace ClaudiaIDE
             {
                 SetCanvasBackground();
                 FindWpfTextView(_editorCanvas as System.Windows.DependencyObject);
+                if (_wpfTextViewHost == null) return;
 
                 var newimage = _imageProvider.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
@@ -124,13 +125,14 @@ namespace ClaudiaIDE
                     await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
-                        (_wpfTextViewHost as System.Windows.Controls.Panel).Background = new ImageBrush(newimage)
+                        var nib = new ImageBrush(newimage)
                         {
-                            Opacity = opacity,
                             Stretch = _settings.ImageStretch.ConvertTo(),
                             AlignmentX = _settings.PositionHorizon.ConvertTo(),
-                            AlignmentY = _settings.PositionVertical.ConvertTo()
+                            AlignmentY = _settings.PositionVertical.ConvertTo(),
+                            Opacity = _settings.Opacity
                         };
+                        _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
                         _hasImage = true;
                     }
                     catch
@@ -147,6 +149,7 @@ namespace ClaudiaIDE
         {
             SetCanvasBackground();
             FindWpfTextView(_editorCanvas as System.Windows.DependencyObject);
+            if (_wpfTextViewHost == null) return;
             var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
 
             Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
@@ -221,7 +224,8 @@ namespace ClaudiaIDE
                     await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     try
                     {
-                        RenderOptions.SetBitmapScalingMode(_wpfTextViewHost, BitmapScalingMode.NearestNeighbor);
+                        if (_wpfTextViewHost == null) return;
+                        RenderOptions.SetBitmapScalingMode(_wpfTextViewHost, BitmapScalingMode.Fant);
                     }
                     catch
                     {
@@ -249,68 +253,47 @@ namespace ClaudiaIDE
 
         private void SetBackgroundBrush(System.Windows.DependencyObject d, bool isTransparent = true, bool untilRoot = false)
         {
+            var refd = d.GetType();
             if (untilRoot)
             {
-                if (d.GetType().FullName.Equals("Microsoft.VisualStudio.PlatformUI.MainWindow", StringComparison.OrdinalIgnoreCase))
+                if (refd.FullName.Equals("Microsoft.VisualStudio.PlatformUI.MainWindow", StringComparison.OrdinalIgnoreCase))
                 {
                     return;
                 }
             }
             else
             {
-                if (d.GetType().FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase))
+                if (refd.FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase))
                 {
                     untilRoot = true;
                     isTransparent = _settings.ExpandToIDE && _isMainWindow;
-                    var p1 = VisualTreeHelper.GetParent(d);
-                    if (p1 == null) return;
-                    SetBackgroundBrush(p1, isTransparent, untilRoot);
+                    var p2 = VisualTreeHelper.GetParent(d);
+                    if (p2 == null) return;
+                    SetBackgroundBrush(p2, isTransparent, untilRoot);
                     return;
                 }
             }
-            var t = d as System.Windows.Controls.Panel;
-            var t2 = d as System.Windows.Controls.Control;
+            var property = refd.GetProperty("Background");
+            var t = property?.GetValue(d) as Brush;
             if (t != null)
             {
-                if (t.Background != null)
+                if (isTransparent)
                 {
-                    if (isTransparent)
+                    if (t as SolidColorBrush != null)
                     {
-                        if (!_defaultThemeColor.Any(x => x.Key == t.GetHashCode()))
+                        if (!_defaultThemeColor.Any(x => x.Key == d.GetHashCode()))
                         {
-                            _defaultThemeColor[t.GetHashCode()] = t.Background;
+                            _defaultThemeColor[d.GetHashCode()] = t as DependencyObject;
                         }
-                        t.Background = Brushes.Transparent;
-                    }
-                    else
-                    {
-                        var d1 = _defaultThemeColor.FirstOrDefault(x => x.Key == t.GetHashCode());
-                        if (d1.Value != null)
-                        {
-                            t.Background = (Brush)d1.Value;
-                        }
+                        property.SetValue(d, (Brush)Brushes.Transparent);
                     }
                 }
-            }
-            else if (t2 != null)
-            {
-                if (t2.Background != null)
+                else
                 {
-                    if (isTransparent)
+                    var d1 = _defaultThemeColor.FirstOrDefault(x => x.Key == t.GetHashCode());
+                    if (d1.Value != null)
                     {
-                        if (!_defaultThemeColor.Any(x => x.Key == t2.GetHashCode()))
-                        {
-                            _defaultThemeColor[t2.GetHashCode()] = t2.Background;
-                        }
-                        t2.Background = Brushes.Transparent;
-                    }
-                    else
-                    {
-                        var d2 = _defaultThemeColor.FirstOrDefault(x => x.Key == t2.GetHashCode());
-                        if (d2.Value != null)
-                        {
-                            t2.Background = (Brush)d2.Value;
-                        }
+                        property.SetValue(d, (Brush)d1.Value);
                     }
                 }
             }
