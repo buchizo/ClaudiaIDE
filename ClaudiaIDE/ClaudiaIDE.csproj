@@ -236,6 +236,7 @@
     </Compile>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\AnimateImageChangeParams.cs" />
+    <Compile Include="Helpers\DependencyObjectExtensions.cs" />
     <Compile Include="Helpers\ImageSourceAnimator.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="IImageProvider.cs" />
