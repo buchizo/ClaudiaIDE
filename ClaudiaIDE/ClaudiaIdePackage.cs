@@ -16,7 +16,7 @@ using Task = System.Threading.Tasks.Task;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "2.2.3", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "2.2.4", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad(UIContextGuids.EmptySolution, PackageAutoLoadFlags.BackgroundLoad)]
