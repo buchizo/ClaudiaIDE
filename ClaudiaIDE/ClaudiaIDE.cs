@@ -300,9 +300,10 @@ namespace ClaudiaIDE
                 }
             }
 
-            if (result.GetType().FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase))
+            if (result.GetType().FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase) ||
+                result.GetType().FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextViewHost", StringComparison.OrdinalIgnoreCase))
             {
-                // maybe editor with designer area
+                // maybe editor with designer area or other view window
                 _isRootWindow = true;
             }
 
