@@ -264,6 +264,14 @@ namespace ClaudiaIDE
                 {
                     isTransparent = _settings.ExpandToIDE && _isMainWindow;
                 }
+                else if (refd.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView", StringComparison.OrdinalIgnoreCase))
+                {
+                    // for visualize history(using Gource)
+                    if (FindUI(current, "Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost") == null)
+                    {
+                        return;
+                    }
+                }
                 else
                 {
                     SetBackgroundToTransparent(current, isTransparent);
