@@ -213,4 +213,10 @@
   <data name="VerticalAlignmentTypeDes" xml:space="preserve">
     <value>画像の垂直方向の基準となる位置を設定します。 Bottom: 下端を基準とします Center: 中心を基準とします Top: 上端を基準とします</value>
   </data>
+  <data name="ViewBoxPointX" xml:space="preserve">
+    <value>画像の水平位置</value>
+  </data>
+  <data name="ViewBoxPointXDes" xml:space="preserve">
+    <value>このプロパティは画像のWPFのViewBoxにおける水平位置をdouble型で指定できます。</value>
+  </data>
 </root>

@@ -31,6 +31,7 @@ namespace ClaudiaIDE.Options
             MaxHeight = 0;
             ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
+            ViewBoxPointX = 0;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -109,6 +110,12 @@ namespace ClaudiaIDE.Options
         [PropertyPageTypeConverter(typeof(ImageStretchTypeConverter))]
         [TypeConverter(typeof(ImageStretchTypeConverter))]
         public ImageStretch ImageStretch { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewBoxPointX")]
+        [LocalManager.LocalizedDescription("ViewBoxPointXDes")]
+        public double ViewBoxPointX { get; set; }
+
 
         protected override void OnApply(PageApplyEventArgs e)
         {

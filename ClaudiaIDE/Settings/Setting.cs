@@ -44,6 +44,7 @@ namespace ClaudiaIDE.Settings
             MaxWidth = 0;
             MaxHeight = 0;
             ExpandToIDE = false;
+            ViewBoxPointX = 0;
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -62,6 +63,7 @@ namespace ClaudiaIDE.Settings
         public bool LoopSlideshow { get; set; }
         public ImageStretch ImageStretch { get; set; }
         public bool ExpandToIDE { get; set; }
+        public double ViewBoxPointX { get; set; }
 
         public void Serialize()
         {
@@ -137,6 +139,7 @@ namespace ClaudiaIDE.Settings
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
+            ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
         }
 
         public void Load()

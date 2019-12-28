@@ -12,5 +12,6 @@
 	"LoopSlideshow":true,
 	"MaxWidth": 0,
 	"MaxHeight": 0,
-	"ExpandToIDE": false
+	"ExpandToIDE": false,
+	"ViewBoxPointX": 0
 }
