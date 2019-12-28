@@ -169,7 +169,8 @@ namespace ClaudiaIDE
                                 Stretch = _settings.ImageStretch.ConvertTo(),
                                 AlignmentX = _settings.PositionHorizon.ConvertTo(),
                                 AlignmentY = _settings.PositionVertical.ConvertTo(),
-                                Opacity = opacity
+                                Opacity = opacity,
+                                Viewbox = new Rect(new Point(_settings.ViewBoxPointX, 0), new Size(1,1))
                             };
                             _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
                         }

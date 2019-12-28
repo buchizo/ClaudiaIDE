@@ -347,5 +347,23 @@ namespace ClaudiaIDE.Localized {
                 return ResourceManager.GetString("VerticalAlignmentTypeDes", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Image horizon point in ViewBox に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ViewBoxPointX {
+            get {
+                return ResourceManager.GetString("ViewBoxPointX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   This property can set double value about Image horizontal position in WPF ViewBox. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string ViewBoxPointXDes {
+            get {
+                return ResourceManager.GetString("ViewBoxPointXDes", resourceCulture);
+            }
+        }
     }
 }

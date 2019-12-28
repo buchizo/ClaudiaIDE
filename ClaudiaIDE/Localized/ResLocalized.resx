@@ -213,4 +213,10 @@
   <data name="VerticalAlignmentTypeDes" xml:space="preserve">
     <value>Image position in vertical.</value>
   </data>
+  <data name="ViewBoxPointX" xml:space="preserve">
+    <value>Image horizon point in ViewBox</value>
+  </data>
+  <data name="ViewBoxPointXDes" xml:space="preserve">
+    <value>This property can set double value about Image horizontal position in WPF ViewBox.</value>
+  </data>
 </root>
