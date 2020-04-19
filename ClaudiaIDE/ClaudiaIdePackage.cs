@@ -42,7 +42,7 @@ namespace ClaudiaIDE
                 {
                     ProvidersHolder.Initialize(_settings, new List<IImageProvider>
                     {
-                        new SildeShowImageProvider(_settings),
+                        new SlideShowImageProvider(_settings),
                         new SingleImageProvider(_settings)
                     });
                 }
@@ -73,7 +73,7 @@ namespace ClaudiaIDE
                     {
                         ProvidersHolder.Initialize(_settings, new List<IImageProvider>
                         {
-                            new SildeShowImageProvider(_settings),
+                            new SlideShowImageProvider(_settings),
                             new SingleImageProvider(_settings)
                         });
                     }
@@ -110,76 +110,78 @@ namespace ClaudiaIDE
             try
             {
                 var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
-                var newimage = _imageProvider.GetBitmap();
-
-                foreach (UIElement el in rRootGrid.Children)
+                if (rRootGrid != null)
                 {
-                    if (el.GetType() != typeof(Image)) continue;
-                    if (_current == null) _current = el as Image;
-                    if (_settings.ImageBackgroundType == ImageBackgroundType.Single || !_settings.ExpandToIDE)
+                    foreach (UIElement el in rRootGrid.Children)
                     {
-                        rRootGrid.Children.Remove(el);
-                        _current = null;
-                    }
-                    break;
-                }
-
-                if (!_settings.ExpandToIDE) return;
-
-                if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
-                {
-                    var rImageControl = new Image()
-                    {
-                        Source = newimage,
-                        Stretch = _settings.ImageStretch.ConvertTo(),
-                        HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
-                        VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                        Opacity = _settings.Opacity
-                    };
-
-                    Grid.SetRowSpan(rImageControl, 4);
-                    RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
-
-                    rRootGrid.Children.Insert(0, rImageControl);
-
-                    // mainwindow background set to transparent
-                    var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x=>x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-                    foreach(var docktarget in docktargets)
-                    {
-                        var grids = docktarget?.Descendants<Grid>();
-                        foreach(var g in grids)
+                        if (el.GetType() != typeof(Image)) continue;
+                        if (_current == null) _current = el as Image;
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single || !_settings.ExpandToIDE)
                         {
-                            if (g == null) continue;
-                            var prop = g.GetType().GetProperty("Background");
-                            var bg = prop.GetValue(g) as SolidColorBrush;
-                            if (bg == null || bg.Color.A == 0x00) continue;
+                            rRootGrid.Children.Remove(el);
+                            _current = null;
+                        }
+                        break;
+                    }
 
-                            prop.SetValue(g, new SolidColorBrush(new Color()
+                    if (!_settings.ExpandToIDE) return;
+
+                    var newimage = _imageProvider.GetBitmap();
+                    if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
+                    {
+                        var rImageControl = new Image()
+                        {
+                            Source = newimage,
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
+                            VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                            Opacity = _settings.Opacity
+                        };
+
+                        Grid.SetRowSpan(rImageControl, 4);
+                        RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
+
+                        rRootGrid.Children.Insert(0, rImageControl);
+
+                        // mainwindow background set to transparent
+                        var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x=>x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
+                        foreach(var docktarget in docktargets)
+                        {
+                            var grids = docktarget?.Descendants<Grid>();
+                            foreach(var g in grids)
                             {
-                                A = 0x00,
-                                B = bg.Color.B,
-                                G = bg.Color.G,
-                                R = bg.Color.R
-                            }));
+                                if (g == null) continue;
+                                var prop = g.GetType().GetProperty("Background");
+                                var bg = prop.GetValue(g) as SolidColorBrush;
+                                if (bg == null || bg.Color.A == 0x00) continue;
+
+                                prop.SetValue(g, new SolidColorBrush(new Color()
+                                {
+                                    A = 0x00,
+                                    B = bg.Color.B,
+                                    G = bg.Color.G,
+                                    R = bg.Color.R
+                                }));
+                            }
                         }
                     }
-                }
-                else
-                {
-                    _current.AnimateImageSourceChange(
-                            newimage,
-                            (n) =>
-                            {
-                                n.Stretch = _settings.ImageStretch.ConvertTo();
-                                n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
-                                n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
-                            },
-                            new Helpers.AnimateImageChangeParams
-                            {
-                                FadeTime = _settings.ImageFadeAnimationInterval,
-                                TargetOpacity = _settings.Opacity
-                            }
-                        );
+                    else
+                    {
+                        _current.AnimateImageSourceChange(
+                                newimage,
+                                (n) =>
+                                {
+                                    n.Stretch = _settings.ImageStretch.ConvertTo();
+                                    n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
+                                    n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
+                                },
+                                new Helpers.AnimateImageChangeParams
+                                {
+                                    FadeTime = _settings.ImageFadeAnimationInterval,
+                                    TargetOpacity = _settings.Opacity
+                                }
+                            );
+                    }
                 }
             }
             catch

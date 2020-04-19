@@ -47,7 +47,7 @@ namespace ClaudiaIDE
                 {
                     ProvidersHolder.Initialize(settings, new List<IImageProvider>
                     {
-                        new SildeShowImageProvider(settings),
+                        new SlideShowImageProvider(settings),
                         new SingleImageProvider(settings)
                     });
                 }
