@@ -240,8 +240,8 @@
     <Compile Include="Helpers\ImageSourceAnimator.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="IImageProvider.cs" />
-    <Compile Include="ImageProvider\SildeShowImageProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
+    <Compile Include="ImageProvider\SlideShowImageProvider.cs" />
     <Compile Include="Localized\LocalManager.cs" />
     <Compile Include="Localized\ResLocalized.Designer.cs">
       <DependentUpon>ResLocalized.resx</DependentUpon>
