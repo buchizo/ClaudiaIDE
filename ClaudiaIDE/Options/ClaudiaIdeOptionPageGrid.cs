@@ -32,6 +32,7 @@ namespace ClaudiaIDE.Options
             ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
+            ViewBoxPointY = 0;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -116,6 +117,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescription("ViewBoxPointXDes")]
         public double ViewBoxPointX { get; set; }
 
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewBoxPointY")]
+        [LocalManager.LocalizedDescription("ViewBoxPointYDes")]
+        public double ViewBoxPointY { get; set; }
+
 
         protected override void OnApply(PageApplyEventArgs e)
         {
@@ -154,6 +160,7 @@ namespace ClaudiaIDE.Options
             {
                 if (str == "Single") return ImageBackgroundType.Single;
                 else if (str == "Slideshow") return ImageBackgroundType.Slideshow;
+                else if (str == "SingleEach") return ImageBackgroundType.SingleEach;
                 else return ImageBackgroundType.Single;
             }
 
@@ -172,6 +179,10 @@ namespace ClaudiaIDE.Options
                 else if ((int)value == 1)
                 {
                     result = "Slideshow";
+                }
+                else if ((int)value == 2)
+                {
+                    result = "SingleEach";
                 }
 
                 if (result != null) return result;

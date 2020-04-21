@@ -170,11 +170,13 @@ namespace ClaudiaIDE
                                 AlignmentX = _settings.PositionHorizon.ConvertTo(),
                                 AlignmentY = _settings.PositionVertical.ConvertTo(),
                                 Opacity = opacity,
-                                Viewbox = new Rect(new Point(_settings.ViewBoxPointX, 0), new Size(1,1))
+                                Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY), new Size(1,1))
                             };
                             _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
                         }
                         _hasImage = true;
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.SingleEach)
+                            ((SingleImageEachProvider)_imageProvider).NextImage();
                     }
                     catch
                     {

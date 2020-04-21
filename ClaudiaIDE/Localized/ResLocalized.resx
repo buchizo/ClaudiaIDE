@@ -121,7 +121,7 @@
     <value>Image background type</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow.</value>
+    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab.</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>Directory Path</value>
@@ -201,6 +201,9 @@
   <data name="Slideshow" xml:space="preserve">
     <value>SlideShow</value>
   </data>
+  <data name="SingleEach" xml:space="preserve">
+    <value>SingleEach</value>
+  </data>
   <data name="UpdateIntervalType" xml:space="preserve">
     <value>Update interval</value>
   </data>
@@ -214,9 +217,15 @@
     <value>Image position in vertical.</value>
   </data>
   <data name="ViewBoxPointX" xml:space="preserve">
-    <value>Image horizon point in ViewBox</value>
+    <value>Image horizontal position in ViewBox</value>
   </data>
   <data name="ViewBoxPointXDes" xml:space="preserve">
-    <value>This property can set double value about Image horizontal position in WPF ViewBox.</value>
+    <value>This property can set a double value for the Image horizontal position in WPF ViewBox.</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>Image vertical position in ViewBox</value>
+  </data>
+  <data name="ViewBoxPointYDes" xml:space="preserve">
+    <value>This property can set double value about Image vertical position in WPF ViewBox.</value>
   </data>
 </root>

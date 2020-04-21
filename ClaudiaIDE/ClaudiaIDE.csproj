@@ -240,6 +240,7 @@
     <Compile Include="Helpers\ImageSourceAnimator.cs" />
     <Compile Include="Helpers\Utils.cs" />
     <Compile Include="IImageProvider.cs" />
+    <Compile Include="ImageProvider\SingleImageEachProvider.cs" />
     <Compile Include="ImageProvider\SingleImageProvider.cs" />
     <Compile Include="ImageProvider\SlideShowImageProvider.cs" />
     <Compile Include="Localized\LocalManager.cs" />
@@ -311,14 +312,17 @@
     <EmbeddedResource Include="Localized\ResLocalized.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localized\ResLocalized.ja-JP.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLocalized.ja-JP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localized\ResLocalized.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <Generator>ResXFileCodeGenerator</Generator>
