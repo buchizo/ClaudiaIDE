@@ -121,8 +121,7 @@
     <value>背景图片展示方式类型</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>设置背景图片展示方式 
-Single: 显示指定图像 SlideShow: 将指定文件夹中要显示的图像幻灯片 SingleEach: 表示されイメージが異なる指定されたフォルダ毎に開設。</value>
+    <value>选择背景显示格式。Single：显示指定的图像。SlideShow：将指定文件夹中的图像显示为幻灯片。 SingleEach：为每个编辑器窗口显示指定文件夹的图像。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>幻灯片路径</value>
@@ -203,7 +202,7 @@ Single: 显示指定图像 SlideShow: 将指定文件夹中要显示的图像幻
     <value>幻灯片播放</value>
   </data>
   <data name="SingleEach" xml:space="preserve">
-    <value>単一の各タブ</value>
+    <value>每个编辑器窗口单张图像</value>
   </data>
   <data name="UpdateIntervalType" xml:space="preserve">
     <value>图片更换间隔</value>
@@ -218,15 +217,15 @@ Single: 显示指定图像 SlideShow: 将指定文件夹中要显示的图像幻
     <value>图片在纵向相对位置</value>
   </data>
   <data name="ViewBoxPointX" xml:space="preserve">
-    <value>ViewBox中的图像视点</value>
+    <value>图像在ViewBox中的水平位置</value>
   </data>
   <data name="ViewBoxPointY" xml:space="preserve">
-    <value>ViewBox中的图像视点</value>
+    <value>图像在ViewBox中的垂直位置</value>
   </data>
   <data name="ViewBoxPointXDes" xml:space="preserve">
     <value>此属性可以为WPF ViewBox中的图像水平位置设置双精度值。</value>
   </data>
   <data name="ViewBoxPointYDes" xml:space="preserve">
-    <value>此属性为WPF视图框中图像的垂直位置设置double值。</value>
+    <value>此属性可以为WPF ViewBox中的图像垂直位置设置双精度值。</value>
   </data>
 </root>

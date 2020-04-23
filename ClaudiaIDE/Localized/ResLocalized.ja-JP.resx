@@ -121,7 +121,7 @@
     <value>背景の表示形式</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: 表示されイメージが異なる指定されたフォルダ毎に開設。 </value>
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。 </value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>フォルダーパス</value>
@@ -202,7 +202,7 @@
     <value>スライドショー</value>
   </data>
   <data name="SingleEach" xml:space="preserve">
-    <value>単一の各タブ</value>
+    <value>エディタウィンドウ毎に単一画像</value>
   </data>
   <data name="UpdateIntervalType" xml:space="preserve">
     <value>切り替え間隔</value>
@@ -226,6 +226,6 @@
     <value>このプロパティは画像のWPFのViewBoxにおける水平位置をdouble型で指定できます。</value>
   </data>
   <data name="ViewBoxPointYDes" xml:space="preserve">
-    <value>このプロパティは、wpf ViewBox内のイメージの垂直方向の位置を指定します。</value>
+    <value>このプロパティは画像のWPFのViewBoxにおける垂直位置をdouble型で指定できます。</value>
   </data>
 </root>
