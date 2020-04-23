@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.Composition;
+using System.ComponentModel.Composition;
 using ClaudiaIDE.ImageProvider;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Shell;
@@ -47,6 +47,7 @@ namespace ClaudiaIDE
                 {
                     ProvidersHolder.Initialize(settings, new List<IImageProvider>
                     {
+                        new SingleImageEachProvider(settings),
                         new SlideShowImageProvider(settings),
                         new SingleImageProvider(settings)
                     });

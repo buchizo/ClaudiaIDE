@@ -74,7 +74,7 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, System.EventArgs e)
         {
-            if (_setting.ImageBackgroundType == ImageBackgroundType.Single)
+            if (_setting.ImageBackgroundType == ImageBackgroundType.Single || _setting.ImageBackgroundType == ImageBackgroundType.SingleEach)
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
@@ -87,7 +87,7 @@ namespace ClaudiaIDE
             }
         }
 
-        private void ChangeImage(object args)
+        protected void ChangeImage(object args)
         {
             if (_imageFilesPath.MoveNext())
             {
