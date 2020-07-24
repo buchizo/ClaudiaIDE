@@ -1,7 +1,7 @@
 ClaudiaIDE
 ==========
 
-This is a Visual Studio extenstion that lets you set a custom background image or slideshow.
+This is a Visual Studio extension that lets you set a custom background image or slideshow.
 
 ## ver 2.2.x ##
 
