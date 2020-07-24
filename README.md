@@ -1,11 +1,11 @@
 ClaudiaIDE
 ==========
 
-Visual Studio extenstion that lets you set a custom background image or slideshow.
+This is a Visual Studio extenstion that lets you set a custom background image or slideshow.
 
 ## ver 2.2.x ##
 
-Flickering has maybe been decreased, however the image fade interval option isn't supported for slideshows because sequelae by this update. If you want to expand the image to the full IDE window ("expand to IDE" option), ClaudiaIDE does not require theme editor. ClaudiaIDE automaticaly makes some backgrounds transparent (e.g. the text editor). However, for now, some windows, such as the solution explorer, still need to be made transaperent with theme editor.
+Flickering has maybe been decreased, however the image fade interval option isn't supported for slideshows because problem effect by this update. If you want to expand the image to the full IDE window ("expand to IDE" option), ClaudiaIDE does not require theme editor. ClaudiaIDE automaticaly makes some backgrounds transparent (e.g. the text editor). However, for now, some windows, such as the solution explorer, still need to be made transaperent with theme editor, like as [Color Theme Editor for Visual Studio 2019](https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.VisualStudio2019ColorThemeEditor).
 
 Enabling the option "User hardware graphics acceleration if available" will reduce flickering.
 
