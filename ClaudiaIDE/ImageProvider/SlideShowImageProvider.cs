@@ -72,13 +72,13 @@ namespace ClaudiaIDE
                     ret_bitmap = Utils.ConvertToDpi96(bitmap);
                 }
             }
-
+            
             if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
-			{
+            {
                 ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
-			}
-
-			return ret_bitmap;
+            }
+            
+            return ret_bitmap;
         }
 
         private void ReloadSettings(object sender, System.EventArgs e)

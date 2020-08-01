@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
@@ -43,14 +43,13 @@ namespace ClaudiaIDE.ImageProvider
             {
 				ret_bitmap = Utils.ConvertToDpi96(_bitmap);
             }
+            
+            if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
+            {
+                ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
+            }
 
-			if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
-			{
-				ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
-			}
-
-
-			return ret_bitmap;
+            return ret_bitmap;
 		}
 
         private void LoadImage()
