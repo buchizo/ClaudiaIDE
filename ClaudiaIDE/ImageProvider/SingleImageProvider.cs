@@ -36,17 +36,22 @@ namespace ClaudiaIDE.ImageProvider
 
         public BitmapSource GetBitmap()
         {
-            if (_setting.ImageStretch == ImageStretch.None &&
+			BitmapSource ret_bitmap = _bitmap;
+			if (_setting.ImageStretch == ImageStretch.None &&
                     (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
                 )
             {
-                return Utils.ConvertToDpi96(_bitmap);
+				ret_bitmap = Utils.ConvertToDpi96(_bitmap);
             }
-            else
-            {
-                return _bitmap;
-            }
-        }
+
+			if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
+			{
+				ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
+			}
+
+
+			return ret_bitmap;
+		}
 
         private void LoadImage()
         {

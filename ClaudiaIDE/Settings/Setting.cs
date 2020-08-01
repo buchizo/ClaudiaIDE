@@ -43,7 +43,9 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
-            ExpandToIDE = false;
+			SoftEdgeX = 0;
+			SoftEdgeY = 0;
+			ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
         }
@@ -54,6 +56,8 @@ namespace ClaudiaIDE.Settings
         public PositionH PositionHorizon { get; set; }
         public int MaxWidth { get; set; }
         public int MaxHeight { get; set; }
+		public int SoftEdgeX { get; set; }
+		public int SoftEdgeY { get; set; }
 
         public string BackgroundImageAbsolutePath { get; set; }
 
@@ -140,6 +144,8 @@ namespace ClaudiaIDE.Settings
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
+			SoftEdgeX = (int)props.Item("SoftEdgeX").Value;
+			SoftEdgeY = (int)props.Item("SoftEdgeY").Value;
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
             ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
             ViewBoxPointY = (double)props.Item("ViewBoxPointY").Value;

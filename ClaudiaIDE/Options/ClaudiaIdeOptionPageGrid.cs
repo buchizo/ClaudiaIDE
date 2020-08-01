@@ -29,7 +29,9 @@ namespace ClaudiaIDE.Options
             LoopSlideshow = true;
             MaxWidth = 0;
             MaxHeight = 0;
-            ImageStretch = ImageStretch.None;
+			SoftEdgeX = 0;
+			SoftEdgeY = 0;
+			ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
@@ -105,7 +107,17 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescription("MaxHeightTypeDes")]
         public int MaxHeight { get; set; }
 
-        [LocalManager.LocalizedCategoryAttribute("Layout")]
+		[LocalManager.LocalizedCategoryAttribute("Layout")]
+		[LocalManager.LocalizedDisplayName("SoftEdgeX")]
+		[LocalManager.LocalizedDescription("SoftEdgeDes")]
+		public int SoftEdgeX { get; set; }
+
+		[LocalManager.LocalizedCategoryAttribute("Layout")]
+		[LocalManager.LocalizedDisplayName("SoftEdgeY")]
+		[LocalManager.LocalizedDescription("SoftEdgeDes")]
+		public int SoftEdgeY { get; set; }
+
+		[LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayName("ImageStretchType")]
         [LocalManager.LocalizedDescription("ImageStretchTypeDes")]
         [PropertyPageTypeConverter(typeof(ImageStretchTypeConverter))]

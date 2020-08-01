@@ -322,6 +322,34 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
+
+        /// </summary>
+        internal static string SoftEdgeDes {
+            get {
+                return ResourceManager.GetString("SoftEdgeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+
+        /// </summary>
+        internal static string SoftEdgeX {
+            get {
+                return ResourceManager.GetString("SoftEdgeX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+
+        /// </summary>
+        internal static string SoftEdgeY {
+            get {
+                return ResourceManager.GetString("SoftEdgeY", resourceCulture);
+            }
+        }
+        
+		
+        /// <summary>
         ///   Looks up a localized string similar to Update interval.
         /// </summary>
         internal static string UpdateIntervalType {

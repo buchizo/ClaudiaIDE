@@ -189,6 +189,15 @@
   <data name="MaxWidthTypeDes" xml:space="preserve">
     <value>图片可以填充的最大宽度(0为不限制)</value>
   </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>图片边界羽化宽度X</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>图片边界羽化宽度Y</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>图片边界羽化宽度(0为不限制)</value>
+  </data>
   <data name="OpacityType" xml:space="preserve">
     <value>透明度</value>
   </data>

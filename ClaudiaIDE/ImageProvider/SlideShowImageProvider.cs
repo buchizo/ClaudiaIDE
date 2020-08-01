@@ -55,21 +55,30 @@ namespace ClaudiaIDE
                 bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
                 bitmap.EndInit();
                 bitmap.Freeze();
-                if (_setting.ImageStretch == ImageStretch.None)
-                {
-                    bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
-                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
-                    {
-                        return Utils.ConvertToDpi96(bitmap);
-                    }
-                }
             }
             else
             {
               ReloadSettings(null, null);
               return GetBitmap();
             }
-            return bitmap;
+
+
+            BitmapSource ret_bitmap = bitmap;
+            if (_setting.ImageStretch == ImageStretch.None)
+            {
+                bitmap = Utils.EnsureMaxWidthHeight(bitmap, _setting.MaxWidth, _setting.MaxHeight);
+                if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                {
+                    ret_bitmap = Utils.ConvertToDpi96(bitmap);
+                }
+            }
+
+            if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
+			{
+                ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
+			}
+
+			return ret_bitmap;
         }
 
         private void ReloadSettings(object sender, System.EventArgs e)
