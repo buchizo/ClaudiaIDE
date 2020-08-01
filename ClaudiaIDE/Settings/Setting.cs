@@ -45,7 +45,7 @@ namespace ClaudiaIDE.Settings
             MaxHeight = 0;
             SoftEdgeX = 0;
             SoftEdgeY = 0;
-			ExpandToIDE = false;
+            ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
         }
@@ -58,7 +58,7 @@ namespace ClaudiaIDE.Settings
         public int MaxHeight { get; set; }
         public int SoftEdgeX { get; set; }
         public int SoftEdgeY { get; set; }
-
+        
         public string BackgroundImageAbsolutePath { get; set; }
 
         public TimeSpan UpdateImageInterval { get; set; }
