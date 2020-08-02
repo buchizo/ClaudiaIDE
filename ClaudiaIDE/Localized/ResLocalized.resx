@@ -189,6 +189,15 @@
   <data name="MaxWidthTypeDes" xml:space="preserve">
     <value>Maximum width in pixels that the image can fill in the view.</value>
   </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>SoftEdge Width (X axis)</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>SoftEdge Width (Y axis)</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>How much soft edge applied to background image.</value>
+  </data>
   <data name="OpacityType" xml:space="preserve">
     <value>Opacity</value>
   </data>

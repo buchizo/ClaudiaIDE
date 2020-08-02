@@ -189,6 +189,15 @@
   <data name="MaxWidthTypeDes" xml:space="preserve">
     <value>画像を表示する領域の最大横幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。</value>
   </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>ぼかし幅 (X軸)</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>ぼかし幅 (Y軸)</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>背景画像のぼかし処理の幅を指定します。0の場合ぼかし処理は行いません。</value>
+  </data>
   <data name="OpacityType" xml:space="preserve">
     <value>透過率</value>
   </data>
