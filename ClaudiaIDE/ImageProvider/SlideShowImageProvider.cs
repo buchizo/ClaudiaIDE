@@ -37,7 +37,8 @@ namespace ClaudiaIDE
 
         private ImageFiles GetImagesFromDirectory()
         {
-            return new ImageFiles { Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
+            return new ImageFiles
+                {Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath, Shuffle = _setting.ShuffleSlideshow};
         }
 
         public BitmapSource GetBitmap()
@@ -58,8 +59,8 @@ namespace ClaudiaIDE
             }
             else
             {
-              ReloadSettings(null, null);
-              return GetBitmap();
+                ReloadSettings(null, null);
+                return GetBitmap();
             }
 
 
@@ -72,18 +73,19 @@ namespace ClaudiaIDE
                     ret_bitmap = Utils.ConvertToDpi96(bitmap);
                 }
             }
-            
+
             if (_setting.SoftEdgeX > 0 || _setting.SoftEdgeY > 0)
             {
                 ret_bitmap = Utils.SoftenEdges(ret_bitmap, _setting.SoftEdgeX, _setting.SoftEdgeY);
             }
-            
+
             return ret_bitmap;
         }
 
         private void ReloadSettings(object sender, System.EventArgs e)
         {
-            if (_setting.ImageBackgroundType == ImageBackgroundType.Single || _setting.ImageBackgroundType == ImageBackgroundType.SingleEach)
+            if (_setting.ImageBackgroundType == ImageBackgroundType.Single ||
+                _setting.ImageBackgroundType == ImageBackgroundType.SingleEach)
             {
                 _timer.Change(Timeout.Infinite, Timeout.Infinite);
             }
@@ -92,7 +94,7 @@ namespace ClaudiaIDE
                 _imageFiles = GetImagesFromDirectory();
                 _imageFilesPath = _imageFiles.GetEnumerator();
                 ChangeImage(null);
-                _timer.Change(0, (int)_setting.UpdateImageInterval.TotalMilliseconds);
+                _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
             }
         }
 
@@ -118,10 +120,7 @@ namespace ClaudiaIDE
 
         public ImageBackgroundType ProviderType
         {
-            get
-            {
-                return ImageBackgroundType.Slideshow;
-            }
+            get { return ImageBackgroundType.Slideshow; }
         }
     }
 
@@ -129,22 +128,22 @@ namespace ClaudiaIDE
     {
         public string Extensions { get; set; }
         public string ImageDirectoryPath { get; set; }
+        public bool Shuffle { get; set; }
 
         public IEnumerator<string> GetEnumerator()
         {
-            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath) || !Directory.Exists(ImageDirectoryPath))
+            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath) ||
+                !Directory.Exists(ImageDirectoryPath))
             {
                 return new ImageFilesEnumerator(new List<string>());
             }
 
             var extensions = Extensions
-                .Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Split(new[] {",", " "}, StringSplitOptions.RemoveEmptyEntries)
                 .Select(x => x.ToUpper());
             List<string> imageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
-                .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper()))
-                .OrderBy(x => Guid.NewGuid())
-                .ToList();
-
+                .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper())).OrderBy(x => x).ToList();
+            if(Shuffle) imageFilePaths.Shuffle();
             if (!imageFilePaths.Any())
             {
                 return new ImageFilesEnumerator(new List<string>());
@@ -165,6 +164,7 @@ namespace ClaudiaIDE
     {
         private int position;
         private List<string> imageFilePaths;
+
         public ImageFilesEnumerator(List<string> imageFilePaths)
         {
             this.imageFilePaths = imageFilePaths;
@@ -173,18 +173,12 @@ namespace ClaudiaIDE
 
         public string Current
         {
-            get
-            {
-                return imageFilePaths[position];
-            }
+            get { return imageFilePaths[position]; }
         }
 
         object IEnumerator.Current
         {
-            get
-            {
-                return Current;
-            }
+            get { return Current; }
         }
 
         public void Dispose() { }
