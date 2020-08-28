@@ -22,6 +22,7 @@ namespace ClaudiaIDE
     [ProvideAutoLoad(UIContextGuids.EmptySolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.NoSolution, PackageAutoLoadFlags.BackgroundLoad)]
     [ProvideAutoLoad(UIContextGuids.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class ClaudiaIdePackage : AsyncPackage
     {
         private Setting _settings;
@@ -30,13 +31,15 @@ namespace ClaudiaIDE
         private IImageProvider _imageProvider;
         private Image _current = null;
 
-        protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
+        protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken,
+            IProgress<ServiceProgressData> progress)
         {
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             Application.Current.MainWindow.Loaded += (s, e) =>
             {
-                _mainWindow = (System.Windows.Window)s;
+                _mainWindow = (System.Windows.Window) s;
                 _settings = Setting.Initialize(this);
+                NextImage.InitializeAsync(this, _settings).FileAndForget("claudiaide/nextimage/initializeasync");
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
                 if (ProvidersHolder.Instance.Providers == null)
                 {
@@ -47,6 +50,7 @@ namespace ClaudiaIDE
                         new SingleImageProvider(_settings)
                     });
                 }
+
                 _imageProviders = ProvidersHolder.Instance.Providers;
                 _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                 _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
@@ -68,7 +72,7 @@ namespace ClaudiaIDE
                     await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
                     _settings = await Setting.InitializeAsync(this);
                     if (_settings == null) return;
-                    _mainWindow = (System.Windows.Window)Application.Current.MainWindow;
+                    _mainWindow = (System.Windows.Window) Application.Current.MainWindow;
                     _settings.OnChanged.AddEventHandler(ReloadSettings);
                     if (ProvidersHolder.Instance.Providers == null)
                     {
@@ -79,15 +83,15 @@ namespace ClaudiaIDE
                             new SingleImageProvider(_settings)
                         });
                     }
+
                     _imageProviders = ProvidersHolder.Instance.Providers;
-                    _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
+                    _imageProvider =
+                        _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                     _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
 
                     ReloadSettings(null, null);
                 }
-                catch
-                {
-                }
+                catch { }
             }).FileAndForget("claudiaide/initializeasync");
         }
 
@@ -102,16 +106,14 @@ namespace ClaudiaIDE
                     GC.Collect();
                 });
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private void ChangeImage()
         {
             try
             {
-                var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
+                var rRootGrid = (Grid) _mainWindow.Template.FindName("RootGrid", _mainWindow);
                 if (rRootGrid != null)
                 {
                     foreach (UIElement el in rRootGrid.Children)
@@ -123,6 +125,7 @@ namespace ClaudiaIDE
                             rRootGrid.Children.Remove(el);
                             _current = null;
                         }
+
                         break;
                     }
 
@@ -146,11 +149,12 @@ namespace ClaudiaIDE
                         rRootGrid.Children.Insert(0, rImageControl);
 
                         // mainwindow background set to transparent
-                        var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x=>x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-                        foreach(var docktarget in docktargets)
+                        var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
+                            x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
+                        foreach (var docktarget in docktargets)
                         {
                             var grids = docktarget?.Descendants<Grid>();
-                            foreach(var g in grids)
+                            foreach (var g in grids)
                             {
                                 if (g == null) continue;
                                 var prop = g.GetType().GetProperty("Background");
@@ -170,25 +174,23 @@ namespace ClaudiaIDE
                     else
                     {
                         _current.AnimateImageSourceChange(
-                                newimage,
-                                (n) =>
-                                {
-                                    n.Stretch = _settings.ImageStretch.ConvertTo();
-                                    n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
-                                    n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
-                                },
-                                new Helpers.AnimateImageChangeParams
-                                {
-                                    FadeTime = _settings.ImageFadeAnimationInterval,
-                                    TargetOpacity = _settings.Opacity
-                                }
-                            );
+                            newimage,
+                            (n) =>
+                            {
+                                n.Stretch = _settings.ImageStretch.ConvertTo();
+                                n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
+                                n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
+                            },
+                            new Helpers.AnimateImageChangeParams
+                            {
+                                FadeTime = _settings.ImageFadeAnimationInterval,
+                                TargetOpacity = _settings.Opacity
+                            }
+                        );
                     }
                 }
             }
-            catch
-            {
-            }
+            catch { }
         }
 
         private void ReloadSettings(object sender, System.EventArgs e)
@@ -200,6 +202,5 @@ namespace ClaudiaIDE
                 ChangeImage();
             });
         }
-
     }
 }

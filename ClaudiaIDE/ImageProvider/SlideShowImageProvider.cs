@@ -17,6 +17,7 @@ namespace ClaudiaIDE
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
+
         public SlideShowImageProvider(Setting setting)
         {
             _setting = setting;
@@ -38,7 +39,10 @@ namespace ClaudiaIDE
         private ImageFiles GetImagesFromDirectory()
         {
             return new ImageFiles
-                {Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath, Shuffle = _setting.ShuffleSlideshow};
+            {
+                Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath,
+                Shuffle = _setting.ShuffleSlideshow
+            };
         }
 
         public BitmapSource GetBitmap()
@@ -97,6 +101,12 @@ namespace ClaudiaIDE
                 _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
             }
         }
+        public void NextImage()
+        {
+            if (_setting.ImageBackgroundType != ImageBackgroundType.Slideshow) return;
+            ChangeImage(null);
+            _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
+        }
 
         protected void ChangeImage(object args)
         {
@@ -143,7 +153,7 @@ namespace ClaudiaIDE
                 .Select(x => x.ToUpper());
             List<string> imageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
                 .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper())).OrderBy(x => x).ToList();
-            if(Shuffle) imageFilePaths.Shuffle();
+            if (Shuffle) imageFilePaths.Shuffle();
             if (!imageFilePaths.Any())
             {
                 return new ImageFilesEnumerator(new List<string>());
