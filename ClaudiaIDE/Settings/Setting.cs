@@ -41,6 +41,7 @@ namespace ClaudiaIDE.Settings
             Extensions = ".png, .jpg";
             ImageBackgroundType = ImageBackgroundType.Single;
             LoopSlideshow = true;
+            ShuffleSlideshow = false;
             MaxWidth = 0;
             MaxHeight = 0;
             SoftEdgeX = 0;
@@ -66,6 +67,7 @@ namespace ClaudiaIDE.Settings
         public string BackgroundImagesDirectoryAbsolutePath { get; set; }
         public string Extensions { get; set; }
         public bool LoopSlideshow { get; set; }
+        public bool ShuffleSlideshow { get; set; }
         public ImageStretch ImageStretch { get; set; }
         public bool ExpandToIDE { get; set; }
         public double ViewBoxPointX { get; set; }
@@ -142,6 +144,7 @@ namespace ClaudiaIDE.Settings
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
+            ShuffleSlideshow = (bool)props.Item("ShuffleSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
             SoftEdgeX = (int)props.Item("SoftEdgeX").Value;
