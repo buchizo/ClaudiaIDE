@@ -264,6 +264,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResLocalized.zh-CN.resx</DependentUpon>
     </Compile>
+    <Compile Include="PauseSlideshow.cs" />
     <Compile Include="Settings\JsonSerializer.cs" />
     <Compile Include="ClaudiaIDE.cs" />
     <Compile Include="ClaudiaIDEFactory.cs" />
@@ -302,6 +303,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\NextImage.png" />
+    <Content Include="Resources\PauseSlideshow.png" />
     <Content Include="ss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

@@ -31,8 +31,8 @@ namespace ClaudiaIDE
         /// </summary>
         private readonly AsyncPackage package;
 
-        private Setting _setting;
-        private MenuCommand _menuItem;
+        private readonly Setting _setting;
+        private readonly MenuCommand _menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NextImage"/> class.
@@ -49,6 +49,7 @@ namespace ClaudiaIDE
             var menuCommandID = new CommandID(CommandSet, CommandId);
             _menuItem = new MenuCommand(this.Execute, menuCommandID);
             commandService.AddCommand(_menuItem);
+            ReloadSettings(null, EventArgs.Empty);
         }
 
         public void ReloadSettings(object sender, EventArgs args)

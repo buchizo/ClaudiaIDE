@@ -17,12 +17,16 @@ namespace ClaudiaIDE
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
+        public bool Pause { get; set; } = false;
 
         public SlideShowImageProvider(Setting setting)
         {
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
-            _timer = new Timer(new TimerCallback(ChangeImage));
+            _timer = new Timer(state =>
+            {
+                if (!Pause) ChangeImage();
+            });
             ReloadSettings(null, null);
         }
 
@@ -97,18 +101,20 @@ namespace ClaudiaIDE
             {
                 _imageFiles = GetImagesFromDirectory();
                 _imageFilesPath = _imageFiles.GetEnumerator();
-                ChangeImage(null);
                 _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
             }
         }
+
+
         public void NextImage()
         {
             if (_setting.ImageBackgroundType != ImageBackgroundType.Slideshow) return;
-            ChangeImage(null);
-            _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
+            if (!Pause)
+                _timer.Change(0, (int) _setting.UpdateImageInterval.TotalMilliseconds);
+            else ChangeImage();
         }
 
-        protected void ChangeImage(object args)
+        protected void ChangeImage()
         {
             if (_imageFilesPath.MoveNext())
             {

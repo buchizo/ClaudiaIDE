@@ -10,6 +10,7 @@ using ClaudiaIDE.Settings;
 using System.Collections.Generic;
 using ClaudiaIDE.ImageProvider;
 using System.Linq;
+using System.Threading.Tasks;
 using ClaudiaIDE.Helpers;
 using Task = System.Threading.Tasks.Task;
 
@@ -39,7 +40,10 @@ namespace ClaudiaIDE
             {
                 _mainWindow = (System.Windows.Window) s;
                 _settings = Setting.Initialize(this);
-                NextImage.InitializeAsync(this, _settings).FileAndForget("claudiaide/nextimage/initializeasync");
+                NextImage.InitializeAsync(this, _settings).ContinueWith(async t =>
+                            await PauseSlideshow.InitializeAsync(this, _settings), cancellationToken,
+                        TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default)
+                    .FileAndForget("claudiaide/nextimage/initializeasync");
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
                 if (ProvidersHolder.Instance.Providers == null)
                 {
