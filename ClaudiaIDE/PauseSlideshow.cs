@@ -19,9 +19,7 @@ namespace ClaudiaIDE
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int PauseCommandId = 0x0110;
-
-        public const int PlayCommandId = 0x0120;
+        public const int CommandId = 0x0110;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -34,8 +32,7 @@ namespace ClaudiaIDE
         private readonly AsyncPackage package;
 
         private readonly Setting _setting;
-        private readonly MenuCommand _pauseMenuItem;
-        private readonly MenuCommand _playMenuItem;
+        private readonly OleMenuCommand _menuItem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PauseSlideshow"/> class.
@@ -50,14 +47,12 @@ namespace ClaudiaIDE
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
 
-            var pauseCommandID = new CommandID(CommandSet, PauseCommandId);
-            var playCommandID = new CommandID(CommandSet, PlayCommandId);
-            _pauseMenuItem = new MenuCommand(this.Execute, pauseCommandID);
-            _playMenuItem = new MenuCommand(this.Execute, playCommandID);
-            commandService.AddCommand(_pauseMenuItem);
-            commandService.AddCommand(_playMenuItem);
+            var pauseCommandID = new CommandID(CommandSet, CommandId);
+            _menuItem = new OleMenuCommand(this.Execute, pauseCommandID);
+            commandService.AddCommand(_menuItem);
             ReloadSettings(null, EventArgs.Empty);
         }
+
 
         private SlideShowImageProvider GetSlideshow()
         {
@@ -70,17 +65,13 @@ namespace ClaudiaIDE
             GetSlideshow().Pause = false;
             if (_setting.ImageBackgroundType != ImageBackgroundType.Slideshow)
             {
-                _pauseMenuItem.Enabled = false;
-                _pauseMenuItem.Visible = true;
-                _playMenuItem.Enabled = false;
-                _playMenuItem.Visible = false;
+                _menuItem.Enabled = false;
+                _menuItem.Visible = true;
             }
             else
             {
-                _pauseMenuItem.Enabled = true;
-                _pauseMenuItem.Visible = true;
-                _playMenuItem.Enabled = false;
-                _playMenuItem.Visible = false;
+                _menuItem.Enabled = true;
+                _menuItem.Visible = true;
             }
         }
 
@@ -132,18 +123,12 @@ namespace ClaudiaIDE
             if (slideshow.Pause)
             {
                 slideshow.Pause = false;
-                _pauseMenuItem.Enabled = true;
-                _pauseMenuItem.Visible = true;
-                _playMenuItem.Enabled = false;
-                _playMenuItem.Visible = false;
+                _menuItem.Text = "Pause Slideshow";
             }
             else
             {
                 slideshow.Pause = true;
-                _pauseMenuItem.Enabled = false;
-                _pauseMenuItem.Visible = false;
-                _playMenuItem.Enabled = true;
-                _playMenuItem.Visible = true;
+                _menuItem.Text = "Resume Slideshow";
             }
         }
     }

@@ -86,18 +86,9 @@
                     type="Button">
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="MyMenuGroup" />
+                <CommandFlag>TextChanges</CommandFlag>
                 <Strings>
                     <ButtonText>Pause Slideshow</ButtonText>
-                </Strings>
-            </Button>
-            <Button guid="guidClaudiaIdePackageCmdSet"
-                    id="PlaySlideshowId"
-                    priority="0x0100"
-                    type="Button">
-                <Parent guid="guidClaudiaIdePackageCmdSet"
-                        id="MyMenuGroup" />
-                <Strings>
-                    <ButtonText>Play Slideshow</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
@@ -139,8 +130,6 @@
                       value="0x0100" />
             <IDSymbol name="PauseSlideshowId"
                       value="0x0110" />
-            <IDSymbol name="PlaySlideshowId"
-                      value="0x0120" />
         </GuidSymbol>
 
         <GuidSymbol name="guidImages"
