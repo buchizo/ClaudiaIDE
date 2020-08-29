@@ -40,10 +40,6 @@ namespace ClaudiaIDE
             {
                 _mainWindow = (System.Windows.Window) s;
                 _settings = Setting.Initialize(this);
-                NextImage.InitializeAsync(this, _settings).ContinueWith(async t =>
-                            await PauseSlideshow.InitializeAsync(this, _settings), cancellationToken,
-                        TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default)
-                    .FileAndForget("claudiaide/nextimage/initializeasync");
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
                 if (ProvidersHolder.Instance.Providers == null)
                 {
@@ -58,7 +54,10 @@ namespace ClaudiaIDE
                 _imageProviders = ProvidersHolder.Instance.Providers;
                 _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                 _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
-
+                
+                NextImage.InitializeAsync(this, _settings)
+                    .FileAndForget("claudiaide/nextimage/initializeasync");
+                PauseSlideshow.InitializeAsync(this, _settings).FileAndForget("claudiaide/pauseslideshow/initializeasync");
                 ReloadSettings(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
@@ -92,7 +91,9 @@ namespace ClaudiaIDE
                     _imageProvider =
                         _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                     _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
-
+                    
+                    await NextImage.InitializeAsync(this, _settings);
+                    await PauseSlideshow.InitializeAsync(this, _settings);
                     ReloadSettings(null, null);
                 }
                 catch { }

@@ -76,7 +76,8 @@
                     type="Button">
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="MyMenuGroup" />
-                <Icon guid="guidImages" id="bmpNext"/>
+                <Icon guid="guidImages"
+                      id="bmpNext" />
                 <Strings>
                     <ButtonText>Next Background Image</ButtonText>
                 </Strings>
@@ -87,9 +88,26 @@
                     type="Button">
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="MyMenuGroup" />
-                <CommandFlag>TextChanges</CommandFlag>
+                <Icon guid="guidImages"
+                      id="bmpPause" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>Pause Slideshow</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="ResumeSlideshowId"
+                    priority="0x0100"
+                    type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="MyMenuGroup" />
+                <Icon guid="guidImages"
+                      id="bmpPlay" />
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <CommandFlag>DefaultDisabled</CommandFlag>
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <ButtonText>Resume Slideshow</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
@@ -131,6 +149,8 @@
                       value="0x0100" />
             <IDSymbol name="PauseSlideshowId"
                       value="0x0110" />
+            <IDSymbol name="ResumeSlideshowId"
+                      value="0x0120" />
         </GuidSymbol>
 
         <GuidSymbol name="guidImages"
