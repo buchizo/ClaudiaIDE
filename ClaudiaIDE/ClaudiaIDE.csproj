@@ -302,8 +302,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\NextImage.png" />
-    <Content Include="Resources\PauseSlideshow.png" />
+    <Content Include="Resources\ClaudiaIDEMenu.png" />
     <Content Include="ss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
