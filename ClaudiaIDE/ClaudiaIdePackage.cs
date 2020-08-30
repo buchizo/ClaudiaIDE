@@ -13,6 +13,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ClaudiaIDE.Helpers;
 using Task = System.Threading.Tasks.Task;
+using ClaudiaIDE.MenuCommands;
 
 namespace ClaudiaIDE
 {

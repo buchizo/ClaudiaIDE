@@ -9,17 +9,19 @@ using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
 
-namespace ClaudiaIDE
+namespace ClaudiaIDE.MenuCommands
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class NextImage
+    internal sealed class PauseSlideshow
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int PauseCommandId = 0x0110;
+
+        public const int ResumeCommandId = 0x0120;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -32,35 +34,72 @@ namespace ClaudiaIDE
         private readonly AsyncPackage package;
 
         private readonly Setting _setting;
-        private readonly MenuCommand _menuItem;
+        private bool _paused;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="NextImage"/> class.
+        /// Initializes a new instance of the <see cref="PauseSlideshow"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private NextImage(AsyncPackage package, OleMenuCommandService commandService, Setting setting)
+        private PauseSlideshow(AsyncPackage package, OleMenuCommandService commandService, Setting setting)
         {
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
+            ReloadSettings(null, EventArgs.Empty);
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            _menuItem = new MenuCommand(this.Execute, menuCommandID);
-            commandService.AddCommand(_menuItem);
-            ReloadSettings(null, EventArgs.Empty);
+
+            var pauseCommandID = new CommandID(CommandSet, PauseCommandId);
+            var resumeCommandID = new CommandID(CommandSet, ResumeCommandId);
+            var pauseMenuItem = new OleMenuCommand(this.Execute, pauseCommandID);
+            var resumeMenuItem = new OleMenuCommand(this.Execute, resumeCommandID);
+            UpdatePauseVisibility(pauseMenuItem);
+            UpdateResumeVisibility(resumeMenuItem);
+            pauseMenuItem.BeforeQueryStatus += (sender, args) =>
+            {
+                if (!(sender is OleMenuCommand cmd)) return;
+                UpdatePauseVisibility(cmd);
+            };
+            resumeMenuItem.BeforeQueryStatus += (sender, args) =>
+            {
+                if (!(sender is OleMenuCommand cmd)) return;
+                UpdateResumeVisibility(cmd);
+            };
+            commandService.AddCommand(pauseMenuItem);
+            commandService.AddCommand(resumeMenuItem);
         }
 
-        public void ReloadSettings(object sender, EventArgs args)
+        private void UpdatePauseVisibility(OleMenuCommand cmd)
         {
-            _menuItem.Enabled = _setting.ImageBackgroundType == ImageBackgroundType.Slideshow;
+            cmd.Enabled = _setting.ImageBackgroundType == ImageBackgroundType.Slideshow && !_paused;
+            cmd.Visible = !_paused;
+        }
+
+        private void UpdateResumeVisibility(OleMenuCommand cmd)
+        {
+            cmd.Enabled = _paused;
+            cmd.Visible = _paused;
+        }
+
+
+        private SlideShowImageProvider GetSlideshow()
+        {
+            return (SlideShowImageProvider) ProvidersHolder.Instance.Providers.First(p =>
+                p.ProviderType == ImageBackgroundType.Slideshow);
+        }
+
+
+        private void ReloadSettings(object sender, EventArgs args)
+        {
+            GetSlideshow().Pause = false;
+            _paused = false;
         }
 
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static NextImage Instance { get; private set; }
+        public static PauseSlideshow Instance { get; private set; }
 
         /// <summary>
         /// Gets the service provider from the owner package.
@@ -76,17 +115,13 @@ namespace ClaudiaIDE
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package, Setting setting)
         {
-            // Switch to the main thread - the call to AddCommand in NextImage's constructor requires
+            // Switch to the main thread - the call to AddCommand in PauseSlideshow's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
+
             OleMenuCommandService commandService =
                 await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new NextImage(package, commandService, setting);
-        }
-
-        ~NextImage()
-        {
-            _setting.OnChanged.RemoveEventHandler(ReloadSettings);
+            Instance = new PauseSlideshow(package, commandService, setting);
         }
 
         /// <summary>
@@ -99,9 +134,17 @@ namespace ClaudiaIDE
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var slideshow =
-                (SlideShowImageProvider) ProvidersHolder.Instance.Providers.First(p => p.ProviderType == ImageBackgroundType.Slideshow);
-            slideshow.NextImage();
+            var slideshow = GetSlideshow();
+            if (slideshow.Pause)
+            {
+                slideshow.Pause = false;
+                _paused = false;
+            }
+            else
+            {
+                slideshow.Pause = true;
+                _paused = true;
+            }
         }
     }
 }
