@@ -286,7 +286,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="ClaudiaIdePackage.vsct">
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
     <Content Include="Images\background.png">

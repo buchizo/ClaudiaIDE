@@ -120,8 +120,8 @@
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
             <Bitmap guid="guidImages"
-                    href="Resources\ClaudiaIDEMenu.png"
-                    usedList="bmpNext, bmpPlay, bmpPause, bmpPicX, bmpPicArrows, bmpPicStrikethrough" />
+                    href=".\ClaudiaIDEMenu.png"
+                    usedList="bmpNext, bmpPlay, bmpPause" />
         </Bitmaps>
     </Commands>
 
@@ -161,12 +161,6 @@
                       value="2" />
             <IDSymbol name="bmpPause"
                       value="3" />
-            <IDSymbol name="bmpPicX"
-                      value="4" />
-            <IDSymbol name="bmpPicArrows"
-                      value="5" />
-            <IDSymbol name="bmpPicStrikethrough"
-                      value="6" />
         </GuidSymbol>
     </Symbols>
 </CommandTable>
