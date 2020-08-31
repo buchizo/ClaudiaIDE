@@ -237,4 +237,10 @@
   <data name="ViewBoxPointYDes" xml:space="preserve">
     <value>このプロパティは画像のWPFのViewBoxにおける垂直位置をdouble型で指定できます。</value>
   </data>
+  <data name="ShuffleSlideshowType" xml:space="preserve">
+    <value>スライドショーをランダム再生</value>
+  </data>
+  <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
+    <value>スライドショーをランダム再生します。</value>
+  </data>
 </root>

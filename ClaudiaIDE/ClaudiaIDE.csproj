@@ -234,6 +234,7 @@
     <Compile Include="ClaudiaIdePackage.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Extensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="Helpers\DependencyObjectExtensions.cs" />
@@ -254,6 +255,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="MenuCommands\NextImage.cs" />
     <Compile Include="Options\ClaudiaIdeOptionPageGrid.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -262,6 +264,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResLocalized.zh-CN.resx</DependentUpon>
     </Compile>
+    <Compile Include="MenuCommands\PauseSlideshow.cs" />
     <Compile Include="Settings\JsonSerializer.cs" />
     <Compile Include="ClaudiaIDE.cs" />
     <Compile Include="ClaudiaIDEFactory.cs" />
@@ -283,6 +286,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
     <Content Include="Images\background.png">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -296,6 +302,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="Resources\ClaudiaIDEMenu.png" />
     <Content Include="ss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>

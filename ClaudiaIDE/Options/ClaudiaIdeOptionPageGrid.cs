@@ -92,6 +92,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescription("LoopSlideshowTypeDes")]
         public bool LoopSlideshow { get; set; }
 
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("ShuffleSlideshowType")]
+        [LocalManager.LocalizedDescription("ShuffleSlideshowTypeDes")]
+        public bool ShuffleSlideshow { get; set; }
+
         [LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayName("ExpandToIDEType")]
         [LocalManager.LocalizedDescription("ExpandToIDETypeDes")]

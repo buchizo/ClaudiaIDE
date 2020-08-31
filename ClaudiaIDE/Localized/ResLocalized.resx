@@ -237,4 +237,10 @@
   <data name="ViewBoxPointYDes" xml:space="preserve">
     <value>This property can set double value about Image vertical position in WPF ViewBox.</value>
   </data>
+  <data name="ShuffleSlideshowType" xml:space="preserve">
+    <value>Shuffle Slideshow</value>
+  </data>
+  <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
+    <value>Randomize the slideshow order.</value>
+  </data>
 </root>
