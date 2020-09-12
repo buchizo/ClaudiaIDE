@@ -35,7 +35,7 @@ namespace ClaudiaIDE
 
         private ImageFiles GetImagesFromDirectory()
         {
-            return new ImageFiles { Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath };
+            return new ImageFiles { Extensions = _setting.Extensions, ImageDirectoryPath = _setting.BackgroundImagesDirectoryAbsolutePath, Shuffle = _setting.ShuffleSlideshow };
         }
 
         public BitmapSource GetBitmap()
