@@ -79,7 +79,7 @@
                 <Icon guid="guidImages"
                       id="bmpNext" />
                 <Strings>
-                    <ButtonText>Next Background Image</ButtonText>
+                    <ButtonText>下一个背景图片</ButtonText>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -92,7 +92,7 @@
                       id="bmpPause" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
-                    <ButtonText>Pause Slideshow</ButtonText>
+                    <ButtonText>暂停幻灯片放映</ButtonText>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -107,7 +107,7 @@
                 <CommandFlag>DefaultDisabled</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
-                    <ButtonText>Resume Slideshow</ButtonText>
+                    <ButtonText>恢复幻灯片放映</ButtonText>
                 </Strings>
             </Button>
         </Buttons>

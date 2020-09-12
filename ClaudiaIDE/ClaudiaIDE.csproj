@@ -286,9 +286,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <VSCTCompile Include="Resources\ClaudiaIdePackage.vsct">
-      <ResourceName>Menus.ctmenu</ResourceName>
-    </VSCTCompile>
+    <None Include="Resources\ClaudiaIdePackage.vsct">
+      <Generator>VsctGenerator</Generator>
+      <LastGenOutput>ClaudiaIdePackageVsct.cs</LastGenOutput>
+    </None>
     <Content Include="Images\background.png">
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -303,6 +304,15 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\ClaudiaIDEMenu.png" />
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.en-US.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.ja-JP.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.zh-CN.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+    </VSCTCompile>
     <Content Include="ss.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -317,17 +327,22 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Localized\ResLocalized.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <MergeWithCTO>true</MergeWithCTO>
       <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Localized\ResLocalized.ja-JP.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <MergeWithCTO>true</MergeWithCTO>
       <LastGenOutput>ResLocalized.ja-JP.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Localized\ResLocalized.en-US.resx">
+      <MergeWithCTO>true</MergeWithCTO>
+      <LastGenOutput>ResLocalized.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Localized\ResLocalized.zh-CN.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <MergeWithCTO>true</MergeWithCTO>
       <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>

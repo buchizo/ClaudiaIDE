@@ -79,7 +79,7 @@
                 <Icon guid="guidImages"
                       id="bmpNext" />
                 <Strings>
-                    <ButtonText>Next Background Image</ButtonText>
+                    <ButtonText>次の背景画像</ButtonText>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -92,7 +92,7 @@
                       id="bmpPause" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
-                    <ButtonText>Pause Slideshow</ButtonText>
+                    <ButtonText>スライドショーの一時停止</ButtonText>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -107,7 +107,7 @@
                 <CommandFlag>DefaultDisabled</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
-                    <ButtonText>Resume Slideshow</ButtonText>
+                    <ButtonText>スライドショーの再開</ButtonText>
                 </Strings>
             </Button>
         </Buttons>
