@@ -13,7 +13,9 @@
     "ShuffleSlideshow":false,
 	"MaxWidth": 0,
 	"MaxHeight": 0,
+	"SoftEdgeX": 0,
+	"SoftEdgeY": 0,
 	"ExpandToIDE": false,
-	"ViewBoxPointX": 0
+	"ViewBoxPointX": 0,
 	"ViewBoxPointY": 0
 }
