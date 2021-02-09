@@ -109,7 +109,6 @@ namespace ClaudiaIDE
                 {
                     await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     ChangeImage();
-                    GC.Collect();
                 });
             }
             catch { }
