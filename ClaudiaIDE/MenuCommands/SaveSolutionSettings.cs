@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel.Design;
-using System.Linq;
+using System.IO;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Shell;
 using Task = System.Threading.Tasks.Task;
@@ -10,12 +10,12 @@ namespace ClaudiaIDE.MenuCommands
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class NextImage
+    internal sealed class SaveSolutionSettings
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int CommandId = 0x0130;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -27,34 +27,24 @@ namespace ClaudiaIDE.MenuCommands
         /// </summary>
         private readonly AsyncPackage package;
 
+        private readonly Setting _setting;
         private readonly MenuCommand _menuItem;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="NextImage"/> class.
-        /// Adds our command handlers for menu (commands must exist in the command table file)
-        /// </summary>
-        /// <param name="package">Owner package, not null.</param>
-        /// <param name="commandService">Command service to add command to, not null.</param>
-        private NextImage(AsyncPackage package, OleMenuCommandService commandService)
+        private SaveSolutionSettings(AsyncPackage package, OleMenuCommandService commandService, Setting setting)
         {
-            Setting.Instance.OnChanged.AddEventHandler(ReloadSettings);
+            _setting = setting;
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
             _menuItem = new MenuCommand(this.Execute, menuCommandID);
+            _menuItem.Enabled = true;
             commandService.AddCommand(_menuItem);
-            ReloadSettings(null, EventArgs.Empty);
-        }
-
-        public void ReloadSettings(object sender, EventArgs args)
-        {
-            _menuItem.Enabled = Setting.Instance.ImageBackgroundType == ImageBackgroundType.Slideshow;
         }
 
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static NextImage Instance { get; private set; }
+        public static SaveSolutionSettings Instance { get; private set; }
 
         /// <summary>
         /// Gets the service provider from the owner package.
@@ -68,19 +58,14 @@ namespace ClaudiaIDE.MenuCommands
         /// Initializes the singleton instance of the command.
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
-        public static async Task InitializeAsync(AsyncPackage package)
+        public static async Task InitializeAsync(AsyncPackage package, Setting setting)
         {
             // Switch to the main thread - the call to AddCommand in NextImage's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
             OleMenuCommandService commandService =
                 await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new NextImage(package, commandService);
-        }
-
-        ~NextImage()
-        {
-            Setting.Instance.OnChanged.RemoveEventHandler(ReloadSettings);
+            Instance = new SaveSolutionSettings(package, commandService, setting);
         }
 
         /// <summary>
@@ -93,10 +78,11 @@ namespace ClaudiaIDE.MenuCommands
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            var solconf = VisualStudioUtility.GetSolutionSettingsFileFullPath();
-            var slideshow =
-                (SlideShowImageProvider) ProvidersHolder.Instance.Providers.FirstOrDefault(p => p.SolutionConfigFile == solconf && p.ProviderType == ImageBackgroundType.Slideshow);
-            slideshow?.NextImage();
+            var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath(false);
+            if (!string.IsNullOrWhiteSpace(solution))
+            {
+                _setting.Serialize(solution);
+            }
         }
     }
 }

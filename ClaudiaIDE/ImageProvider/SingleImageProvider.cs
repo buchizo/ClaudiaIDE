@@ -11,8 +11,9 @@ namespace ClaudiaIDE.ImageProvider
         private BitmapImage _bitmap;
         private Setting _setting;
 
-        public SingleImageProvider(Setting setting)
+        public SingleImageProvider(Setting setting, string solutionfile = null)
         {
+            SolutionConfigFile = solutionfile;
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
 
@@ -87,5 +88,7 @@ namespace ClaudiaIDE.ImageProvider
                 return ImageBackgroundType.Single;
             }
         }
+
+        public string SolutionConfigFile { get; private set; }
     }
 }

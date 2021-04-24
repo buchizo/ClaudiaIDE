@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ namespace ClaudiaIDE
         BitmapSource GetBitmap();
         event EventHandler NewImageAvaliable;
         ImageBackgroundType ProviderType { get; }
+        string SolutionConfigFile { get; }
     }
 
     public class ProvidersHolder

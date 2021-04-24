@@ -145,7 +145,7 @@ namespace ClaudiaIDE.Options
             try
             {
                 //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
-                Setting.Instance.OnApplyChanged();
+                Setting.DefaultInstance.OnApplyChanged();
             }
             catch
             {

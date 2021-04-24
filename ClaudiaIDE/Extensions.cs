@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,30 @@ namespace ClaudiaIDE
                 list[k] = list[n];  
                 list[n] = value;  
             }  
+        }
+    }
+
+    public static class VisualStudioUtility
+    {
+
+        public static string GetSolutionSettingsFileFullPath(bool checkExists = true)
+        {
+            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+            var path = dte.Solution.FileName;
+            if (string.IsNullOrEmpty(path)) return null;
+
+            var dir = System.IO.Directory.GetParent(path);
+            if (string.IsNullOrEmpty(dir?.FullName)) return null;
+
+            var configpath = Path.Combine(dir.FullName, ".claudiaideconfig");
+            if (checkExists)
+            {
+                return File.Exists(configpath) ? configpath : null;
+            }
+            else
+            {
+                return configpath;
+            }
         }
     }
 }

@@ -1,6 +1,9 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using EnvDTE;
@@ -10,22 +13,49 @@ namespace ClaudiaIDE.Settings
 {
     public class Setting
     {
-        private static readonly Setting instance = new Setting();
+        private static List<Setting> _instance = new List<Setting>();
         private static readonly string CONFIGFILE = "config.txt";
         private const string DefaultBackgroundImage = "Images\\background.png";
         private const string DefaultBackgroundFolder = "Images";
 
         internal System.IServiceProvider ServiceProvider { get; set; }
 
+        [IgnoreDataMember]
         public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
+
+        [IgnoreDataMember]
+        public string SolutionConfigFilePath { get; set; }
 
         public static Setting Instance
         {
             get
             {
-                return instance;
+                var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == solfile);
+                if (i == null)
+                {
+                    i = new Setting();
+                    i.SolutionConfigFilePath = solfile;
+                    _instance.Add(i);
+                }
+                return  i;
             }
         }
+
+        public static Setting DefaultInstance
+        {
+            get
+            {
+                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == null);
+                if (i == null)
+                {
+                    i = new Setting();
+                    _instance.Add(i);
+                }
+                return i;
+            }
+        }
+
 
         public Setting()
         {
@@ -80,7 +110,18 @@ namespace ClaudiaIDE.Settings
             var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
 
-            using (var s = new StreamWriter(configpath, false, Encoding.ASCII))
+            using (var s = new StreamWriter(configpath, false, Encoding.UTF8))
+            {
+                s.Write(config);
+                s.Close();
+            }
+        }
+
+        public void Serialize(string solutionConfigPath)
+        {
+            var config = JsonSerializer<Setting>.Serialize(this);
+
+            using (var s = new StreamWriter(solutionConfigPath, false, Encoding.UTF8))
             {
                 s.Write(config);
                 s.Close();
@@ -90,13 +131,41 @@ namespace ClaudiaIDE.Settings
         public static Setting Initialize(IServiceProvider serviceProvider)
         {
             var settings = Setting.Instance;
-            if (settings.ServiceProvider != serviceProvider)
+            if (settings.ServiceProvider == null || settings.ServiceProvider != serviceProvider)
             {
                 settings.ServiceProvider = serviceProvider;
             }
             try
             {
-                settings.Load();
+                var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+                if (!string.IsNullOrWhiteSpace(solfile))
+                {
+                    var solconf = Deserialize(solfile);
+                    settings.BackgroundImageAbsolutePath = solconf.BackgroundImageAbsolutePath;
+                    settings.BackgroundImagesDirectoryAbsolutePath = solconf.BackgroundImagesDirectoryAbsolutePath;
+                    settings.ExpandToIDE = solconf.ExpandToIDE;
+                    settings.Extensions = solconf.Extensions;
+                    settings.ImageBackgroundType = solconf.ImageBackgroundType;
+                    settings.ImageFadeAnimationInterval = solconf.ImageFadeAnimationInterval;
+                    settings.ImageStretch = solconf.ImageStretch;
+                    settings.LoopSlideshow = solconf.LoopSlideshow;
+                    settings.MaxHeight = solconf.MaxHeight;
+                    settings.MaxWidth = solconf.MaxWidth;
+                    settings.Opacity = solconf.Opacity;
+                    settings.PositionHorizon = solconf.PositionHorizon;
+                    settings.PositionVertical = solconf.PositionVertical;
+                    settings.ShuffleSlideshow = solconf.ShuffleSlideshow;
+                    settings.SoftEdgeX = solconf.SoftEdgeX;
+                    settings.SoftEdgeY = solconf.SoftEdgeY;
+                    settings.UpdateImageInterval = solconf.UpdateImageInterval;
+                    settings.ViewBoxPointX = solconf.ViewBoxPointX;
+                    settings.ViewBoxPointY = solconf.ViewBoxPointY;
+                    settings.SolutionConfigFilePath = solfile;
+                }
+                else
+                {
+                    settings.Load();
+                }
             }
             catch
             {
@@ -162,12 +231,48 @@ namespace ClaudiaIDE.Settings
             Load(props);
         }
 
+        public void Load(string solutionConfigFile)
+        {
+            if (string.IsNullOrEmpty(solutionConfigFile))
+            {
+                Load();
+                return;
+            }
+            else
+            {
+                var solconf = Deserialize(solutionConfigFile);
+                BackgroundImageAbsolutePath = solconf.BackgroundImageAbsolutePath;
+                BackgroundImagesDirectoryAbsolutePath = solconf.BackgroundImagesDirectoryAbsolutePath;
+                ExpandToIDE = solconf.ExpandToIDE;
+                Extensions = solconf.Extensions;
+                ImageBackgroundType = solconf.ImageBackgroundType;
+                ImageFadeAnimationInterval = solconf.ImageFadeAnimationInterval;
+                ImageStretch = solconf.ImageStretch;
+                LoopSlideshow = solconf.LoopSlideshow;
+                MaxHeight = solconf.MaxHeight;
+                MaxWidth = solconf.MaxWidth;
+                Opacity = solconf.Opacity;
+                PositionHorizon = solconf.PositionHorizon;
+                PositionVertical = solconf.PositionVertical;
+                ShuffleSlideshow = solconf.ShuffleSlideshow;
+                SoftEdgeX = solconf.SoftEdgeX;
+                SoftEdgeY = solconf.SoftEdgeY;
+                UpdateImageInterval = solconf.UpdateImageInterval;
+                ViewBoxPointX = solconf.ViewBoxPointX;
+                ViewBoxPointY = solconf.ViewBoxPointY;
+            }
+        }
+
         public void OnApplyChanged()
         {
             try
             {
-                Load();
-                OnChanged?.RaiseEvent(this, EventArgs.Empty);
+                Load(this.SolutionConfigFilePath);
+                if (string.IsNullOrEmpty(this.SolutionConfigFilePath))
+                {
+                    Load();
+                    OnChanged?.RaiseEvent(this, EventArgs.Empty);
+                }
             }
             catch
             {
@@ -181,7 +286,22 @@ namespace ClaudiaIDE.Settings
             var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
             string config = "";
 
-            using (var s = new StreamReader(configpath, Encoding.ASCII, false))
+            using (var s = new StreamReader(configpath, Encoding.UTF8, false))
+            {
+                config = s.ReadToEnd();
+                s.Close();
+            }
+            var ret = JsonSerializer<Setting>.DeSerialize(config);
+            ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath, DefaultBackgroundImage);
+            ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
+            return ret;
+        }
+
+        public static Setting Deserialize(string solutionConfigFilePath)
+        {
+            string config = "";
+
+            using (var s = new StreamReader(solutionConfigFilePath, Encoding.UTF8, false))
             {
                 config = s.ReadToEnd();
                 s.Close();
