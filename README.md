@@ -3,6 +3,18 @@ ClaudiaIDE
 
 This is a Visual Studio extension that lets you set a custom background image or slideshow.
 
+## What's new
+
+Ver 2.2.16 or later can support configuration per solution.
+
+![Save setings for solution](Images/config-per-solution.png)
+
+After save, this extension create .claudiaideconfig file in solution directory from current settings in option dialog. If you want to modify settings, you can modify this file (JSON format) or override via that menu.
+
+#### Limitation
+
+- Current feature of solution settings require restart Visual Studio after changed configfile.
+
 ## ver 2.2.x ##
 
 Flickering has maybe been decreased, however the image fade interval option isn't supported for slideshows because problem effect by this update. If you want to expand the image to the full IDE window ("expand to IDE" option), ClaudiaIDE does not require theme editor. ClaudiaIDE automaticaly makes some backgrounds transparent (e.g. the text editor). However, for now, some windows, such as the solution explorer, still need to be made transaperent with theme editor, like as [Color Theme Editor for Visual Studio 2019](https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.VisualStudio2019ColorThemeEditor).
@@ -101,7 +113,7 @@ Download:
 
 [ClaudiaIDE (Visual Studio Gallery)](http://visualstudiogallery.msdn.microsoft.com/9ba50f8d-f30c-4e33-ab19-bfd9f56eb817 "ClaudiaIDE (Visual Studio Gallery)") 
 
-# ライセンス #
+# License #
 
 ## Microsoft Public License (Ms-PL) ##
 
