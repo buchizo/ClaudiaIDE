@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
+using System.IO;
 
 namespace ClaudiaIDE
 {
@@ -43,12 +44,7 @@ namespace ClaudiaIDE
             try
             {
                 _imageProviders = imageProvider;
-                _imageProvider = imageProvider.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
-
-                if (_imageProvider == null)
-                {
-                    _imageProvider = new SingleImageProvider(_settings);
-                }
+                _imageProvider = GetImageProvider();
                 _view = view;
                 _adornmentLayer = view.GetAdornmentLayer("ClaudiaIDE");
                 _view.LayoutChanged += (s, e) =>
@@ -103,9 +99,35 @@ namespace ClaudiaIDE
             }
         }
 
+        private IImageProvider GetImageProvider()
+        {
+            var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+            var ret = _imageProviders.FirstOrDefault(x => x.SolutionConfigFile == solution && x.ProviderType == _settings.ImageBackgroundType);
+
+            if (!string.IsNullOrEmpty(solution))
+            {
+                ret = _imageProviders.FirstOrDefault(x => x.SolutionConfigFile == solution);
+                if (ret == null)
+                {
+                    ret = _imageProviders.FirstOrDefault(x => x.SolutionConfigFile == null && x.ProviderType == _settings.ImageBackgroundType);
+                }
+            }
+            else
+            {
+                ret = _imageProviders.FirstOrDefault(x => x.SolutionConfigFile == null && x.ProviderType == _settings.ImageBackgroundType);
+            }
+
+            if (ret == null)
+            {
+                ret = new SingleImageProvider(Setting.Instance);
+            }
+
+            return ret;
+        }
+
         private void ReloadSettings(object sender, System.EventArgs e)
         {
-            _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
+            _imageProvider = GetImageProvider();
             _hasImage = false;
             ChangeImage();
         }

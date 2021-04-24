@@ -110,6 +110,17 @@
                     <ButtonText>Resume Slideshow</ButtonText>
                 </Strings>
             </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="SaveSolutionSettingsId"
+                    priority="0x0100"
+                    type="Button">
+              <Parent guid="guidClaudiaIdePackageCmdSet"
+                      id="ClaudiaIdeMenuGroup" />
+              <CommandFlag>DynamicVisibility</CommandFlag>
+              <Strings>
+                <ButtonText>Save settings for solution</ButtonText>
+              </Strings>
+          </Button>
         </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -151,6 +162,8 @@
                       value="0x0110" />
             <IDSymbol name="ResumeSlideshowId"
                       value="0x0120" />
+            <IDSymbol name="SaveSolutionSettingsId"
+                      value="0x0130" />
         </GuidSymbol>
 
         <GuidSymbol name="guidImages"

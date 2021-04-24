@@ -1,4 +1,4 @@
-﻿using System.IO;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Text;
@@ -11,8 +11,10 @@ namespace ClaudiaIDE.Settings
         {
             var serializer = new DataContractJsonSerializer(typeof(TType));
             using (var stream = new MemoryStream())
+            using (var writer = JsonReaderWriterFactory.CreateJsonWriter(stream, Encoding.UTF8, true, true))
             {
-                serializer.WriteObject(stream, instance);
+                serializer.WriteObject(writer, instance);
+                writer.Flush();
                 return Encoding.UTF8.GetString(stream.ToArray(), 0, stream.ToArray().Count());
             }
         }

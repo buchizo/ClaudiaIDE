@@ -18,7 +18,7 @@ using ClaudiaIDE.MenuCommands;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "2.2.15", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "2.2.16", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad(UIContextGuids.EmptySolution, PackageAutoLoadFlags.BackgroundLoad)]
@@ -56,9 +56,10 @@ namespace ClaudiaIDE
                 _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                 _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
                 
-                NextImage.InitializeAsync(this, _settings)
+                NextImage.InitializeAsync(this)
                     .FileAndForget("claudiaide/nextimage/initializeasync");
-                PauseSlideshow.InitializeAsync(this, _settings).FileAndForget("claudiaide/pauseslideshow/initializeasync");
+                PauseSlideshow.InitializeAsync(this).FileAndForget("claudiaide/pauseslideshow/initializeasync");
+                SaveSolutionSettings.InitializeAsync(this, _settings).FileAndForget("claudiaide/saveSolutionSettings/initializeasync"); ;
                 ReloadSettings(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
@@ -93,8 +94,9 @@ namespace ClaudiaIDE
                         _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
                     _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
                     
-                    await NextImage.InitializeAsync(this, _settings);
-                    await PauseSlideshow.InitializeAsync(this, _settings);
+                    await NextImage.InitializeAsync(this);
+                    await PauseSlideshow.InitializeAsync(this);
+                    await SaveSolutionSettings.InitializeAsync(this, _settings);
                     ReloadSettings(null, null);
                 }
                 catch { }

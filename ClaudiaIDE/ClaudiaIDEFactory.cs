@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.Text.Classification;
+using System.Linq;
 
 namespace ClaudiaIDE
 {
@@ -41,18 +42,64 @@ namespace ClaudiaIDE
         public void TextViewCreated(IWpfTextView textView)
         {
             var settings = Setting.Initialize(ServiceProvider);
+            var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+
             if (ImageProviders == null)
             {
                 if (ProvidersHolder.Instance.Providers == null)
                 {
-                    ProvidersHolder.Initialize(settings, new List<IImageProvider>
+                    if (string.IsNullOrEmpty(solution))
                     {
-                        new SingleImageEachProvider(settings),
-                        new SlideShowImageProvider(settings),
-                        new SingleImageProvider(settings)
-                    });
+                        ProvidersHolder.Initialize(settings, new List<IImageProvider>
+                        {
+                            new SingleImageEachProvider(settings),
+                            new SlideShowImageProvider(settings),
+                            new SingleImageProvider(settings)
+                        });
+                    }
+                    else
+                    {
+                        ProvidersHolder.Initialize(settings, new List<IImageProvider>());
+                        switch (settings.ImageBackgroundType)
+                        {
+                            case ImageBackgroundType.Single:
+                                ProvidersHolder.Instance.Providers.Add(new SingleImageProvider(settings, solution));
+                                break;
+                            case ImageBackgroundType.SingleEach:
+                                ProvidersHolder.Instance.Providers.Add(new SingleImageEachProvider(settings, solution));
+                                break;
+                            case ImageBackgroundType.Slideshow:
+                                ProvidersHolder.Instance.Providers.Add(new SlideShowImageProvider(settings, solution));
+                                break;
+                            default:
+                                ProvidersHolder.Instance.Providers.Add(new SingleImageEachProvider(settings, solution));
+                                break;
+                        }
+                    }
                 }
                 ImageProviders = ProvidersHolder.Instance.Providers;
+            }
+
+            if (!string.IsNullOrEmpty(solution))
+            {
+                if (!ImageProviders.Any(x => x.SolutionConfigFile == solution))
+                {
+                    switch (settings.ImageBackgroundType)
+                    {
+                        case ImageBackgroundType.Single:
+                            ImageProviders.Add(new SingleImageProvider(settings, solution));
+                            break;
+                        case ImageBackgroundType.SingleEach:
+                            ImageProviders.Add(new SingleImageEachProvider(settings, solution));
+                            break;
+                        case ImageBackgroundType.Slideshow:
+                            ImageProviders.Add(new SlideShowImageProvider(settings, solution));
+                            break;
+                        default:
+                            ImageProviders.Add(new SingleImageEachProvider(settings, solution));
+                            break;
+                    }
+                }
             }
 
             new ClaudiaIDE(textView, ImageProviders);

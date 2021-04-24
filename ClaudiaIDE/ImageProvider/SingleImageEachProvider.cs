@@ -16,8 +16,9 @@ namespace ClaudiaIDE
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
-        public SingleImageEachProvider(Setting setting)
+        public SingleImageEachProvider(Setting setting, string solutionfile = null)
         {
+            SolutionConfigFile = solutionfile;
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
             ReloadSettings(null, null);
@@ -94,5 +95,7 @@ namespace ClaudiaIDE
                 return ImageBackgroundType.SingleEach;
             }
         }
+
+        public string SolutionConfigFile { get; private set; }
     }
 }

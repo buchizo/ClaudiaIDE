@@ -19,8 +19,9 @@ namespace ClaudiaIDE
 
         public bool Pause { get; set; } = false;
 
-        public SlideShowImageProvider(Setting setting)
+        public SlideShowImageProvider(Setting setting, string solutionfile = null)
         {
+            SolutionConfigFile = solutionfile;
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
             _timer = new Timer(state =>
@@ -138,6 +139,7 @@ namespace ClaudiaIDE
         {
             get { return ImageBackgroundType.Slideshow; }
         }
+        public string SolutionConfigFile { get; private set; }
     }
 
     public class ImageFiles : IEnumerable<string>
