@@ -28,21 +28,28 @@ namespace ClaudiaIDE
 
         public static string GetSolutionSettingsFileFullPath(bool checkExists = true)
         {
-            var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
-            var path = dte.Solution.FileName;
-            if (string.IsNullOrEmpty(path)) return null;
-
-            var dir = System.IO.Directory.GetParent(path);
-            if (string.IsNullOrEmpty(dir?.FullName)) return null;
-
-            var configpath = Path.Combine(dir.FullName, ".claudiaideconfig");
-            if (checkExists)
+            try
             {
-                return File.Exists(configpath) ? configpath : null;
+                var dte = Microsoft.VisualStudio.Shell.Package.GetGlobalService(typeof(EnvDTE.DTE)) as EnvDTE80.DTE2;
+                var path = dte?.Solution?.FileName;
+                if (string.IsNullOrEmpty(path)) return null;
+
+                var dir = System.IO.Directory.GetParent(path);
+                if (string.IsNullOrEmpty(dir?.FullName)) return null;
+
+                var configpath = Path.Combine(dir.FullName, ".claudiaideconfig");
+                if (checkExists)
+                {
+                    return File.Exists(configpath) ? configpath : null;
+                }
+                else
+                {
+                    return configpath;
+                }
             }
-            else
+            catch
             {
-                return configpath;
+                return null;
             }
         }
     }
