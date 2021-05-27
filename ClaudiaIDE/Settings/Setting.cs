@@ -79,6 +79,7 @@ namespace ClaudiaIDE.Settings
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
+            IsLimitToMainlyEditorWindow = false;
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -102,6 +103,7 @@ namespace ClaudiaIDE.Settings
         public bool ExpandToIDE { get; set; }
         public double ViewBoxPointX { get; set; }
         public double ViewBoxPointY { get; set; }
+        public bool IsLimitToMainlyEditorWindow { get; set; }
 
         public void Serialize()
         {
@@ -161,6 +163,7 @@ namespace ClaudiaIDE.Settings
                     settings.ViewBoxPointX = solconf.ViewBoxPointX;
                     settings.ViewBoxPointY = solconf.ViewBoxPointY;
                     settings.SolutionConfigFilePath = solfile;
+                    settings.IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
                 }
                 else
                 {
@@ -221,6 +224,7 @@ namespace ClaudiaIDE.Settings
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
             ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
             ViewBoxPointY = (double)props.Item("ViewBoxPointY").Value;
+            IsLimitToMainlyEditorWindow = (bool)props.Item("IsLimitToMainlyEditorWindow").Value;
         }
 
         public void Load()
@@ -260,6 +264,7 @@ namespace ClaudiaIDE.Settings
                 UpdateImageInterval = solconf.UpdateImageInterval;
                 ViewBoxPointX = solconf.ViewBoxPointX;
                 ViewBoxPointY = solconf.ViewBoxPointY;
+                IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
             }
         }
 

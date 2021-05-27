@@ -17,5 +17,6 @@
 	"SoftEdgeY": 0,
 	"ExpandToIDE": false,
 	"ViewBoxPointX": 0,
-	"ViewBoxPointY": 0
+	"ViewBoxPointY": 0,
+	"IsLimitToMainlyEditorWindow": false
 }

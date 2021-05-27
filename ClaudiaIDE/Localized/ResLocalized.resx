@@ -243,4 +243,10 @@
   <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
     <value>Randomize the slideshow order.</value>
   </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>Background image limit to only editor window</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>If this option is True, background image limit to only editor window.</value>
+  </data>
 </root>

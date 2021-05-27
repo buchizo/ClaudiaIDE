@@ -35,6 +35,7 @@ namespace ClaudiaIDE.Options
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
+            IsLimitToMainlyEditorWindow = false;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -139,6 +140,10 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescription("ViewBoxPointYDes")]
         public double ViewBoxPointY { get; set; }
 
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("IsLimitToMainlyEditorWindow")]
+        [LocalManager.LocalizedDescription("IsLimitToMainlyEditorWindowDes")]
+        public bool IsLimitToMainlyEditorWindow { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
