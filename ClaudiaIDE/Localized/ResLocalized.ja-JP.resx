@@ -243,4 +243,10 @@
   <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
     <value>スライドショーをランダム再生します。</value>
   </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>背景画像をエディタウィンドウのみに制限する</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>もしこのオプションがTrueの場合、背景画像の表示をエディタウィンドウのみに制限します。</value>
+  </data>
 </root>

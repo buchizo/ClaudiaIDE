@@ -243,4 +243,10 @@
   <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
     <value>随机化幻灯片顺序。</value>
   </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>背景图像限制为仅编辑器窗口</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>如果此选项为True，则背景图片仅限于编辑器窗口。</value>
+  </data>
 </root>

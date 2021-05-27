@@ -31,6 +31,7 @@ namespace ClaudiaIDE
         private Dictionary<int, DependencyObject> _defaultThemeColor = new Dictionary<int, DependencyObject>();
         private bool _hasImage = false;
         private bool _isRootWindow = false;
+        private bool _isTargetWindow = false;
 
         /// <summary>
         /// Creates a square image and attaches an event handler to the layout changed event that
@@ -139,6 +140,7 @@ namespace ClaudiaIDE
                 SetCanvasBackground();
                 FindWpfTextView(_editorCanvas as DependencyObject);
                 if (_wpfTextViewHost == null) return;
+                if (!_isTargetWindow) return;
 
                 var newimage = _imageProvider.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
@@ -264,7 +266,9 @@ namespace ClaudiaIDE
 
         private void SetCanvasBackground()
         {
-            _isMainWindow = IsMainWindow();
+            (_isMainWindow, _isTargetWindow)= IsMainWindow();
+            if (!_isTargetWindow) return;
+
             var isTransparent = true;
             var current = _editorCanvas as DependencyObject;
 
@@ -313,7 +317,7 @@ namespace ClaudiaIDE
             }
         }
 
-        private bool IsMainWindow()
+        private (bool isMainWindow, bool isTargetWindow) IsMainWindow()
         {
             var initial = _view as DependencyObject;
             var current = initial;
@@ -332,20 +336,29 @@ namespace ClaudiaIDE
                 }
             }
 
-            if (result.GetType().FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase) ||
-                result.GetType().FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextViewHost", StringComparison.OrdinalIgnoreCase))
+            var fullName = result.GetType().FullName;
+
+            if (fullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost", StringComparison.OrdinalIgnoreCase) ||
+                fullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextViewHost", StringComparison.OrdinalIgnoreCase))
             {
                 // maybe editor with designer area or other view window
                 _isRootWindow = true;
             }
 
-            if (result.GetType().FullName.Equals("Microsoft.VisualStudio.PlatformUI.MainWindow", StringComparison.OrdinalIgnoreCase))
+            if (fullName.Equals("Microsoft.VisualStudio.PlatformUI.MainWindow", StringComparison.OrdinalIgnoreCase))
             {
-                return true;
+                return (true, true);
+            }
+            else if (
+                !fullName.Equals("Microsoft.VisualStudio.PlatformUI.Shell.Controls.FloatingWindow", StringComparison.OrdinalIgnoreCase)
+                && !fullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView", StringComparison.OrdinalIgnoreCase)
+                )
+            {
+                return (false, !(_settings.IsLimitToMainlyEditorWindow));
             }
             else
             {
-                return false;
+                return (false, true);
             }
         }
 
