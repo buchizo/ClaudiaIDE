@@ -211,9 +211,6 @@
     <PackageReference Include="Microsoft.VisualStudio.SDK">
       <Version>16.10.31321.278</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
-      <Version>16.10.31321.278</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Text.Data">
       <Version>16.10.230</Version>
     </PackageReference>

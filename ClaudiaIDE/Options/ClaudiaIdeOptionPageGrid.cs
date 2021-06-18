@@ -147,9 +147,9 @@ namespace ClaudiaIDE.Options
 
         protected override void OnApply(PageApplyEventArgs e)
         {
+            ThreadHelper.ThrowIfNotOnUIThread();
             try
             {
-                //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
                 Setting.DefaultInstance.OnApplyChanged();
             }
             catch
