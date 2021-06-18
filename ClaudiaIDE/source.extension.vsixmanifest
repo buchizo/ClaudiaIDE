@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="2.3.3" Language="en-US" Publisher="buchizo" />
+    <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.0.0.1" Language="en-US" Publisher="buchizo" />
     <DisplayName>ClaudiaIDE</DisplayName>
     <Description xml:space="preserve">This extension change the background image of editor.</Description>
     <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
@@ -12,28 +12,16 @@
     <Preview>true</Preview>
   </Metadata>
   <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[15.0.28010, 17.0)" Id="Microsoft.VisualStudio.Community">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[15.0.28010, 17.0)" Id="Microsoft.VisualStudio.Pro">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[15.0.28010, 17.0)" Id="Microsoft.VisualStudio.Enterprise">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[15.0.28010, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Community">
+    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Community">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Pro">
+    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Pro">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Enterprise">
+    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Enterprise">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, )">
+    <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, 18.0)">
       <ProductArchitecture>amd64</ProductArchitecture>
     </InstallationTarget>
   </Installation>
@@ -45,6 +33,6 @@
     <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
   </Assets>
   <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0.28010,18.0)" DisplayName="Visual Studio Core Editor" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0, 18.0)" DisplayName="Visual Studio Core Editor" />
   </Prerequisites>
 </PackageManifest>
