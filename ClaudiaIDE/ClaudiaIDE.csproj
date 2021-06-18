@@ -208,9 +208,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="EnvDTE80">
-      <Version>16.10.31320.204</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
       <Version>16.10.31321.278</Version>
     </PackageReference>
@@ -230,18 +227,6 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="StreamJsonRpc">
-      <Version>2.8.21</Version>
-    </PackageReference>
-    <PackageReference Include="System.Net.Http">
-      <Version>4.3.4</Version>
-    </PackageReference>
-    <PackageReference Include="System.Security.Cryptography.Algorithms">
-      <Version>4.3.1</Version>
-    </PackageReference>
-    <PackageReference Include="System.Security.Cryptography.X509Certificates">
-      <Version>4.3.2</Version>
     </PackageReference>
   </ItemGroup>
   <PropertyGroup>
