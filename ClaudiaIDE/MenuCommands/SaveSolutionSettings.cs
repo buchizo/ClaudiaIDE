@@ -22,22 +22,18 @@ namespace ClaudiaIDE.MenuCommands
         /// </summary>
         public static readonly Guid CommandSet = new Guid("f0ffaf7c-8feb-40d2-b898-1acfe50e1d6b");
 
-        /// <summary>
-        /// VS Package that provides this command, not null.
-        /// </summary>
-        private readonly AsyncPackage package;
-
         private readonly Setting _setting;
         private readonly MenuCommand _menuItem;
 
         private SaveSolutionSettings(AsyncPackage package, OleMenuCommandService commandService, Setting setting)
         {
             _setting = setting;
-            this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            _menuItem = new MenuCommand(this.Execute, menuCommandID);
-            _menuItem.Enabled = true;
+            _menuItem = new MenuCommand(this.Execute, menuCommandID)
+            {
+                Enabled = true
+            };
             commandService.AddCommand(_menuItem);
         }
 
@@ -45,14 +41,6 @@ namespace ClaudiaIDE.MenuCommands
         /// Gets the instance of the command.
         /// </summary>
         public static SaveSolutionSettings Instance { get; private set; }
-
-        /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
-        {
-            get { return this.package; }
-        }
 
         /// <summary>
         /// Initializes the singleton instance of the command.
