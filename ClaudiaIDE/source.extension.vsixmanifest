@@ -1,38 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
-  <Metadata>
-    <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.0.0.1" Language="en-US" Publisher="buchizo" />
-    <DisplayName>ClaudiaIDE</DisplayName>
-    <Description xml:space="preserve">This extension change the background image of editor.</Description>
-    <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
-    <ReleaseNotes>https://github.com/buchizo/ClaudiaIDE/wiki/Release-notes</ReleaseNotes>
-    <Icon>vsixicon.png</Icon>
-    <PreviewImage>ss.png</PreviewImage>
-    <Tags>theme, Text Editor, 痛IDE拡張, Background, Claudia</Tags>
-    <Preview>true</Preview>
-  </Metadata>
-  <Installation InstalledByMsi="false">
-    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Community">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Pro">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Enterprise">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, 18.0)">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-  </Installation>
-  <Dependencies>
-    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
-  </Dependencies>
-  <Assets>
-    <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
-    <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
-  </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0, 18.0)" DisplayName="Visual Studio Core Editor" />
-  </Prerequisites>
+    <Metadata>
+        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3.v17" Version="3.0.0.1" Language="en-US" Publisher="k.buchi" />
+        <DisplayName>ClaudiaIDE 2022</DisplayName>
+        <Description xml:space="preserve">This extension change the background image of editor.</Description>
+        <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
+        <ReleaseNotes>https://github.com/buchizo/ClaudiaIDE/wiki/Release-notes</ReleaseNotes>
+        <Icon>vsixicon.png</Icon>
+        <PreviewImage>ss.png</PreviewImage>
+        <Tags>theme, Text Editor, 痛IDE拡張, Background, Claudia</Tags>
+        <Preview>true</Preview>
+    </Metadata>
+    <Installation InstalledByMsi="false">
+        <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Pro">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, 18.0)" Id="Microsoft.VisualStudio.Enterprise">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, 18.0)">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+    </Installation>
+    <Dependencies>
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
+    </Dependencies>
+    <Assets>
+        <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
+        <Asset Type="Microsoft.VisualStudio.MefComponent" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" />
+    </Assets>
+    <Prerequisites>
+        <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[17.0, 18.0)" DisplayName="Visual Studio Core Editor" />
+    </Prerequisites>
 </PackageManifest>
