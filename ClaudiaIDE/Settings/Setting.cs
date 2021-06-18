@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft;
 
 namespace ClaudiaIDE.Settings
 {
@@ -197,8 +198,11 @@ namespace ClaudiaIDE.Settings
 
         public async Task LoadAsync()
         {
+            await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             Microsoft.VisualStudio.Shell.IAsyncServiceProvider asyncServiceProvider = await ((Microsoft.VisualStudio.Shell.AsyncPackage)ServiceProvider).GetServiceAsync(typeof(Microsoft.VisualStudio.Shell.Interop.SAsyncServiceProvider)) as Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
+            Assumes.Present(asyncServiceProvider);
             var testService = await asyncServiceProvider.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
+            Assumes.Present(testService);
             var props = testService.Properties["ClaudiaIDE", "General"];
 
             Load(props);
@@ -206,6 +210,7 @@ namespace ClaudiaIDE.Settings
 
         private void Load(Properties props)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
             BackgroundImageAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value, DefaultBackgroundImage);
             Opacity = (double)props.Item("Opacity").Value;
@@ -230,6 +235,7 @@ namespace ClaudiaIDE.Settings
         public void Load()
         {
             var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
+            Assumes.Present(_DTE2);
             var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
             Load(props);
