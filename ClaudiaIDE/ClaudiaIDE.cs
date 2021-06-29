@@ -159,16 +159,15 @@ namespace ClaudiaIDE
                                 VerticalAlignment = VerticalAlignment.Stretch,
                                 IsHitTestVisible = false
                             };
-                            var ni = new Image()
+                            var nib = new ImageBrush(newimage)
                             {
-                                Source = newimage,
                                 Stretch = _settings.ImageStretch.ConvertTo(),
-                                HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
-                                VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                                AlignmentX = _settings.PositionHorizon.ConvertTo(),
+                                AlignmentY = _settings.PositionVertical.ConvertTo(),
                                 Opacity = opacity,
-                                IsHitTestVisible = false
+                                Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY), new Size(1, 1))
                             };
-                            grid.Children.Insert(0, ni);
+                            grid.Background = nib;
                             Grid.SetRowSpan(grid, 3);
                             Grid.SetColumnSpan(grid, 3);
                             var p = VisualTreeHelper.GetParent(_wpfTextViewHost) as Grid;
@@ -184,7 +183,7 @@ namespace ClaudiaIDE
                                 }
                                 p.Children.Insert(0, grid);
                             }
-                       }
+                        }
                         else
                         {
                             var nib = new ImageBrush(newimage)
