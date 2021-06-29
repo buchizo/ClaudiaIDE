@@ -13,12 +13,12 @@ namespace ClaudiaIDE.Settings
 {
     public class Setting
     {
-        private static List<Setting> _instance = new List<Setting>();
+        private static readonly List<Setting> _instance = new List<Setting>();
         private static readonly string CONFIGFILE = "config.txt";
         private const string DefaultBackgroundImage = "Images\\background.png";
         private const string DefaultBackgroundFolder = "Images";
 
-        internal System.IServiceProvider ServiceProvider { get; set; }
+        internal DTE ServiceProvider { get; set; }
 
         [IgnoreDataMember]
         public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
@@ -34,8 +34,10 @@ namespace ClaudiaIDE.Settings
                 var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == solfile);
                 if (i == null)
                 {
-                    i = new Setting();
-                    i.SolutionConfigFilePath = solfile;
+                    i = new Setting
+                    {
+                        SolutionConfigFilePath = solfile
+                    };
                     _instance.Add(i);
                 }
                 return  i;
@@ -130,7 +132,7 @@ namespace ClaudiaIDE.Settings
             }
         }
 
-        public static Setting Initialize(IServiceProvider serviceProvider)
+        public static Setting Initialize(DTE serviceProvider)
         {
             var settings = Setting.Instance;
             if (settings.ServiceProvider == null || settings.ServiceProvider != serviceProvider)
@@ -177,35 +179,9 @@ namespace ClaudiaIDE.Settings
             return settings;
         }
 
-        public static async Task<Setting> InitializeAsync(IServiceProvider serviceProvider)
-        {
-            var settings = Setting.Instance;
-            if (settings.ServiceProvider != serviceProvider)
-            {
-                settings.ServiceProvider = serviceProvider;
-            }
-            try
-            {
-                await settings.LoadAsync();
-            }
-            catch
-            {
-                return Setting.Deserialize();
-            }
-            return settings;
-        }
-
-        public async Task LoadAsync()
-        {
-            Microsoft.VisualStudio.Shell.IAsyncServiceProvider asyncServiceProvider = await ((Microsoft.VisualStudio.Shell.AsyncPackage)ServiceProvider).GetServiceAsync(typeof(Microsoft.VisualStudio.Shell.Interop.SAsyncServiceProvider)) as Microsoft.VisualStudio.Shell.IAsyncServiceProvider;
-            var testService = await asyncServiceProvider.GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
-            var props = testService.Properties["ClaudiaIDE", "General"];
-
-            Load(props);
-        }
-
         private void Load(Properties props)
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
             BackgroundImageAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value, DefaultBackgroundImage);
             Opacity = (double)props.Item("Opacity").Value;
@@ -229,7 +205,7 @@ namespace ClaudiaIDE.Settings
 
         public void Load()
         {
-            var _DTE2 = (DTE2)ServiceProvider.GetService(typeof(DTE));
+            var _DTE2 = (DTE2)ServiceProvider;
             var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
             Load(props);

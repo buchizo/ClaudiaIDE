@@ -176,9 +176,7 @@ namespace ClaudiaIDE.Options
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string str = value as string;
-
-            if (str != null)
+            if (value is string str)
             {
                 if (str == "Single") return ImageBackgroundType.Single;
                 else if (str == "Slideshow") return ImageBackgroundType.Slideshow;
@@ -231,9 +229,7 @@ namespace ClaudiaIDE.Options
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string str = value as string;
-
-            if (str != null)
+            if (value is string str)
             {
                 if (str == "Right") return PositionH.Right;
                 if (str == "Left") return PositionH.Left;
@@ -280,9 +276,7 @@ namespace ClaudiaIDE.Options
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string str = value as string;
-
-            if (str != null)
+            if (value is string str)
             {
                 if (str == "Top") return PositionV.Top;
                 if (str == "Bottom") return PositionV.Bottom;
@@ -329,9 +323,7 @@ namespace ClaudiaIDE.Options
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string str = value as string;
-
-            if (str != null)
+            if (value is string str)
             {
                 if (str == "None") return ImageStretch.None;
                 if (str == "Uniform") return ImageStretch.Uniform;
@@ -407,8 +399,10 @@ namespace ClaudiaIDE.Options
             IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
-                OpenFileDialog open = new OpenFileDialog();
-                open.FileName = Path.GetFileName((string)value);
+                OpenFileDialog open = new OpenFileDialog
+                {
+                    FileName = Path.GetFileName((string)value)
+                };
 
                 try
                 {

@@ -41,7 +41,8 @@ namespace ClaudiaIDE
         /// <param name="textView">The <see cref="IWpfTextView"/> upon which the adornment should be placed</param>
         public void TextViewCreated(IWpfTextView textView)
         {
-            var settings = Setting.Initialize(ServiceProvider);
+            ThreadHelper.ThrowIfNotOnUIThread();
+            var settings = Setting.Initialize((EnvDTE.DTE)ServiceProvider.GetService(typeof(EnvDTE.DTE)));
             var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath();
 
             if (ImageProviders == null)

@@ -12,7 +12,7 @@ namespace ClaudiaIDE
 {
     public class SingleImageEachProvider : IImageProvider
     {
-        private Setting _setting;
+        private readonly Setting _setting;
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
