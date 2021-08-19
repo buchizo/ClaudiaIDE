@@ -17,7 +17,7 @@ using EnvDTE;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.0.0.8", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.0.0.9", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}", PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.EmptySolution
@@ -70,6 +70,37 @@ namespace ClaudiaIDE
                     _settings.OnChanged.RemoveEventHandler(ReloadSettings);
                 }
             };
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.StartOnIdle(async () =>
+            {
+                try
+                {
+                    await this.JoinableTaskFactory.SwitchToMainThreadAsync(default);
+                    _settings = Setting.Initialize((DTE)await this.GetServiceAsync(typeof(DTE)));
+                    if (_settings == null) return;
+                    _mainWindow = (System.Windows.Window)Application.Current.MainWindow;
+                    _settings.OnChanged.AddEventHandler(ReloadSettings);
+                    if (ProvidersHolder.Instance.Providers == null)
+                    {
+                        ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                        {
+                            new SingleImageEachProvider(_settings),
+                            new SlideShowImageProvider(_settings),
+                            new SingleImageProvider(_settings)
+                        });
+                    }
+
+                    _imageProviders = ProvidersHolder.Instance.Providers;
+                    _imageProvider =
+                        _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
+                    _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
+
+                    await NextImage.InitializeAsync(this);
+                    await PauseSlideshow.InitializeAsync(this);
+                    await SaveSolutionSettings.InitializeAsync(this, _settings);
+                    ReloadSettings(null, null);
+                }
+                catch { }
+            }).FileAndForget("claudiaide/initializeasync");
         }
 
         private void InvokeChangeImage(object sender, System.EventArgs e)
