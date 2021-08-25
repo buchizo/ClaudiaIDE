@@ -17,7 +17,7 @@ using EnvDTE;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.0.0.9", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.0.0.10", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid("7442ac19-889b-4699-a817-e6e054877ee3")]
     [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}", PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.EmptySolution
@@ -70,11 +70,11 @@ namespace ClaudiaIDE
                     _settings.OnChanged.RemoveEventHandler(ReloadSettings);
                 }
             };
-            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.StartOnIdle(async () =>
+            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 try
                 {
-                    await this.JoinableTaskFactory.SwitchToMainThreadAsync(default);
+                    await this.JoinableTaskFactory.SwitchToMainThreadAsync(true, cancellationToken);
                     _settings = Setting.Initialize((DTE)await this.GetServiceAsync(typeof(DTE)));
                     if (_settings == null) return;
                     _mainWindow = (System.Windows.Window)Application.Current.MainWindow;
