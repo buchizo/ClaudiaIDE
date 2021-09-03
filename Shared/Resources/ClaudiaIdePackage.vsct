@@ -116,7 +116,6 @@
                     type="Button">
               <Parent guid="guidClaudiaIdePackageCmdSet"
                       id="ClaudiaIdeMenuGroup" />
-              <CommandFlag>DynamicVisibility</CommandFlag>
               <Strings>
                 <ButtonText>Save settings for solution</ButtonText>
               </Strings>

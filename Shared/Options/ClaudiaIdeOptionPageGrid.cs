@@ -13,7 +13,7 @@ using ClaudiaIDE.Localized;
 namespace ClaudiaIDE.Options
 {
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [Guid("441f0a76-1771-41c2-817c-81b8b03fb0e8")]
     public class ClaudiaIdeOptionPageGrid : DialogPage
     {
