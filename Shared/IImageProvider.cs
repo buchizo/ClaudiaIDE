@@ -16,7 +16,7 @@ namespace ClaudiaIDE
     public class ProvidersHolder
     {
         private ProvidersHolder() { }
-        private static Lazy<ProvidersHolder> _instance = new Lazy<ProvidersHolder>(() => new ProvidersHolder());
+        private static readonly Lazy<ProvidersHolder> _instance = new Lazy<ProvidersHolder>(() => new ProvidersHolder());
 
         public static ProvidersHolder Instance
         {

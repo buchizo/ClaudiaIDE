@@ -59,7 +59,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CreateVsixContainer>True</CreateVsixContainer>
-    <DeployExtension>True</DeployExtension>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -91,6 +91,24 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\ClaudiaIdePackage.cs">
+      <Link>ClaudiaIdePackage.cs</Link>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="..\Shared\Localized\ResLocalized.Designer.cs">
+      <Link>Localized\ResLocalized.Designer.cs</Link>
+    </Compile>
+    <Compile Include="..\Shared\Options\ClaudiaIdeOptionPageGrid.cs">
+      <Link>ClaudiaIdeOptionPageGrid.cs</Link>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="..\Shared\VSPackage.Designer.cs">
+      <Link>VSPackage.Designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VSPackage.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GuidList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -99,14 +117,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>16.0.206</Version>
+      <Version>17.0.0-previews-3-31605-261</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>16.0.2284</Version>
+      <Version>17.0.4201-preview4</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -114,7 +129,94 @@
       <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.en-US.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <DependentUpon>ClaudiaIdePackage.vsct</DependentUpon>
+    </VSCTCompile>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.ja-JP.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <DependentUpon>ClaudiaIdePackage.vsct</DependentUpon>
+    </VSCTCompile>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.vsct">
+      <LastGenOutput>ClaudiaIdePackageVsct.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </VSCTCompile>
+    <VSCTCompile Include="Resources\ClaudiaIdePackage.zh-CN.vsct">
+      <ResourceName>Menus.ctmenu</ResourceName>
+      <DependentUpon>ClaudiaIdePackage.vsct</DependentUpon>
+    </VSCTCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Shared\config.txt">
+      <Link>config.txt</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\Shared\Images\background.png">
+      <Link>Images\background.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="..\Shared\Images\background2.png">
+      <Link>Images\background2.png</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <None Include="..\Shared\Resources\400.ico">
+      <Link>Resources\400.ico</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Content Include="..\Shared\Resources\ss.png">
+      <Link>Resources\ss.png</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Shared\Resources\vsixicon.png">
+      <Link>Resources\vsixicon.png</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\ClaudiaIDEMenu.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="..\Shared\Localized\ResLocalized.en-US.resx">
+      <Link>Localized\ResLocalized.en-US.resx</Link>
+      <MergeWithCTO>true</MergeWithCTO>
+      <LastGenOutput>ResLocalized.en-US.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Shared\Localized\ResLocalized.ja-JP.resx">
+      <Link>Localized\ResLocalized.ja-JP.resx</Link>
+      <MergeWithCTO>true</MergeWithCTO>
+      <LastGenOutput>ResLocalized.ja-JP.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Shared\Localized\ResLocalized.resx">
+      <Link>Localized\ResLocalized.resx</Link>
+      <MergeWithCTO>true</MergeWithCTO>
+      <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Shared\Localized\ResLocalized.zh-CN.resx">
+      <Link>Localized\ResLocalized.zh-CN.resx</Link>
+      <MergeWithCTO>true</MergeWithCTO>
+      <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="..\Shared\VSPackage.resx">
+      <Link>VSPackage.resx</Link>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>VSPackage.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
+  <PropertyGroup>
+    <UseCodebase>true</UseCodebase>
+  </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

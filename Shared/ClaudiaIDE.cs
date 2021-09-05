@@ -23,12 +23,12 @@ namespace ClaudiaIDE
         private readonly List<IImageProvider> _imageProviders;
         private readonly IWpfTextView _view;
         private readonly IAdornmentLayer _adornmentLayer;
-        private Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
-        private Setting _settings = Setting.Instance;
+        private readonly Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
+        private readonly Setting _settings = Setting.Instance;
         private IImageProvider _imageProvider;
         private bool _isMainWindow;
         private DependencyObject _wpfTextViewHost = null;
-        private Dictionary<int, DependencyObject> _defaultThemeColor = new Dictionary<int, DependencyObject>();
+        private readonly Dictionary<int, DependencyObject> _defaultThemeColor = new Dictionary<int, DependencyObject>();
         private bool _hasImage = false;
         private bool _isRootWindow = false;
         private bool _isTargetWindow = false;
@@ -170,8 +170,7 @@ namespace ClaudiaIDE
                             grid.Background = nib;
                             Grid.SetRowSpan(grid, 3);
                             Grid.SetColumnSpan(grid, 3);
-                            var p = VisualTreeHelper.GetParent(_wpfTextViewHost) as Grid;
-                            if(p != null)
+                            if (VisualTreeHelper.GetParent(_wpfTextViewHost) is Grid p)
                             {
                                 foreach (var c in p.Children)
                                 {
@@ -413,8 +412,7 @@ namespace ClaudiaIDE
         private void SetBackgroundToTransparent(DependencyObject d, bool isTransparent)
         {
             var property = d.GetType().GetProperty("Background");
-            var current = property?.GetValue(d) as Brush;
-            if (current == null) return;
+            if (!(property?.GetValue(d) is Brush current)) return;
 
             Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
             {

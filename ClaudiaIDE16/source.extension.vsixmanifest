@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.0.1" Language="en-US" Publisher="buchizo" />
-        <DisplayName>ClaudiaIDE</DisplayName>
+        <Identity Id="ClaudiaIDE..9ab800ef-0cff-4893-bf16-57d58ff53456" Version="3.0.1" Language="en-US" Publisher="buchizo" />
+        <DisplayName>ClaudiaIDE 2019</DisplayName>
         <Description xml:space="preserve">This extension change the background image of editor.</Description>
         <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
         <ReleaseNotes>https://github.com/buchizo/ClaudiaIDE/wiki/Release-notes</ReleaseNotes>
@@ -11,18 +11,10 @@
         <Tags>theme, Text Editor, 痛IDE拡張, Background, Claudia</Tags>
     </Metadata>
     <Installation InstalledByMsi="false">
-        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Community">
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
-        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Pro" >
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
-        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Enterprise" >
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
-        <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, )" >
-            <ProductArchitecture>amd64</ProductArchitecture>
-        </InstallationTarget>
+        <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Community" />
+        <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Pro" />
+        <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Enterprise" />
+        <InstallationTarget Version="[16.0,17.0)" Id="Microsoft.VisualStudio.Ultimate" />
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />

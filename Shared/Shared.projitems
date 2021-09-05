@@ -11,9 +11,6 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDEFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIdePackage.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
@@ -25,75 +22,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SlideShowImageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Localized\LocalManager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Localized\ResLocalized.Designer.cs">
-      <DependentUpon>ResLocalized.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\NextImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\PauseSlideshow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\SaveSolutionSettings.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Options\ClaudiaIdeOptionPageGrid.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Settings\JsonSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\WeakEvent.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)VSPackage.Designer.cs">
-      <DependentUpon>VSPackage.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)config.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <Content Include="$(MSBuildThisFileDirectory)Images\background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="$(MSBuildThisFileDirectory)Images\background2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="$(MSBuildThisFileDirectory)Resources\ClaudiaIDEMenu.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Resources\ss.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Resources\vsixicon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localized\ResLocalized.en-US.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>ResLocalized.en-US.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localized\ResLocalized.ja-JP.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>ResLocalized.ja-JP.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localized\ResLocalized.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Localized\ResLocalized.zh-CN.resx">
-      <SubType>Designer</SubType>
-      <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)VSPackage.resx">
-      <LastGenOutput>VSPackage.Designer.cs</LastGenOutput>
-      <Generator>ResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)Resources\400.ico">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="$(MSBuildThisFileDirectory)Resources\ClaudiaIdePackage.en-US.vsct" />
-    <None Include="$(MSBuildThisFileDirectory)Resources\ClaudiaIdePackage.ja-JP.vsct" />
-    <None Include="$(MSBuildThisFileDirectory)Resources\ClaudiaIdePackage.vsct" />
-    <None Include="$(MSBuildThisFileDirectory)Resources\ClaudiaIdePackage.zh-CN.vsct" />
   </ItemGroup>
 </Project>

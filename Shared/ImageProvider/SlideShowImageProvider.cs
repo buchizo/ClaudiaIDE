@@ -13,7 +13,7 @@ namespace ClaudiaIDE
     public class SlideShowImageProvider : IImageProvider
     {
         private readonly Timer _timer;
-        private Setting _setting;
+        private readonly Setting _setting;
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
@@ -52,7 +52,7 @@ namespace ClaudiaIDE
 
         public BitmapSource GetBitmap()
         {
-            var current = _imageFilesPath.Current;
+            var current = _imageFilesPath?.Current;
             if (string.IsNullOrEmpty(current)) return null;
 
             var bitmap = new BitmapImage();
@@ -181,7 +181,7 @@ namespace ClaudiaIDE
     public class ImageFilesEnumerator : IEnumerator<string>
     {
         private int position;
-        private List<string> imageFilePaths;
+        private readonly List<string> imageFilePaths;
 
         public ImageFilesEnumerator(List<string> imageFilePaths)
         {
