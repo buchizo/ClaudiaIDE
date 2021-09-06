@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
-<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable"
-              xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <!--  This is the file that defines the actual layout and type of the commands.
         It is divided in different sections (e.g. command definition, command
@@ -38,21 +37,14 @@
          group as the part of a menu contained between two lines. The parent of a group
          must be a menu. -->
         <Groups>
-            <Group guid="guidClaudiaIdePackageCmdSet"
-                   id="ClaudiaIdeMenuGroup"
-                   priority="0x0600">
-                <Parent guid="guidClaudiaIdePackageCmdSet"
-                        id="ClaudiaIdeMenu" />
+            <Group guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenuGroup" priority="0x0600">
+                <Parent guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenu" />
             </Group>
-        </Groups>
+    </Groups>
 
         <Menus>
-            <Menu guid="guidClaudiaIdePackageCmdSet"
-                  id="ClaudiaIdeMenu"
-                  priority="0x700"
-                  type="Menu">
-                <Parent guid="guidSHLMainMenu"
-                        id="IDG_VS_MM_TOOLSADDINS" />
+            <Menu guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenu" priority="0x700" type="Menu">
+                <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
                 <Strings>
                     <ButtonText>ClaudiaIDE</ButtonText>
                     <CommandName>ClaudiaIDE</CommandName>
@@ -70,39 +62,24 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-            <Button guid="guidClaudiaIdePackageCmdSet"
-                    id="NextImageId"
-                    priority="0x0100"
-                    type="Button">
-                <Parent guid="guidClaudiaIdePackageCmdSet"
-                        id="ClaudiaIdeMenuGroup" />
-                <Icon guid="guidImages"
-                      id="bmpNext" />
+            <Button guid="guidClaudiaIdePackageCmdSet" id="NextImageId" priority="0x0100" type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenuGroup" />
+                <Icon guid="guidImages" id="bmpNext" />
                 <Strings>
                     <ButtonText>Next Background Image</ButtonText>
                 </Strings>
             </Button>
-            <Button guid="guidClaudiaIdePackageCmdSet"
-                    id="PauseSlideshowId"
-                    priority="0x0100"
-                    type="Button">
-                <Parent guid="guidClaudiaIdePackageCmdSet"
-                        id="ClaudiaIdeMenuGroup" />
-                <Icon guid="guidImages"
-                      id="bmpPause" />
+            <Button guid="guidClaudiaIdePackageCmdSet" id="PauseSlideshowId" priority="0x0100" type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenuGroup" />
+                <Icon guid="guidImages" id="bmpPause" />
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>Pause Slideshow</ButtonText>
                 </Strings>
             </Button>
-            <Button guid="guidClaudiaIdePackageCmdSet"
-                    id="ResumeSlideshowId"
-                    priority="0x0100"
-                    type="Button">
-                <Parent guid="guidClaudiaIdePackageCmdSet"
-                        id="ClaudiaIdeMenuGroup" />
-                <Icon guid="guidImages"
-                      id="bmpPlay" />
+            <Button guid="guidClaudiaIdePackageCmdSet" id="ResumeSlideshowId" priority="0x0100" type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenuGroup" />
+                <Icon guid="guidImages" id="bmpPlay" />
                 <CommandFlag>DefaultInvisible</CommandFlag>
                 <CommandFlag>DefaultDisabled</CommandFlag>
                 <CommandFlag>DynamicVisibility</CommandFlag>
@@ -110,17 +87,13 @@
                     <ButtonText>Resume Slideshow</ButtonText>
                 </Strings>
             </Button>
-            <Button guid="guidClaudiaIdePackageCmdSet"
-                    id="SaveSolutionSettingsId"
-                    priority="0x0100"
-                    type="Button">
-              <Parent guid="guidClaudiaIdePackageCmdSet"
-                      id="ClaudiaIdeMenuGroup" />
+            <Button guid="guidClaudiaIdePackageCmdSet" id="SaveSolutionSettingsId" priority="0x0100" type="Button">
+              <Parent guid="guidClaudiaIdePackageCmdSet" id="ClaudiaIdeMenuGroup" />
               <Strings>
                 <ButtonText>Save settings for solution</ButtonText>
               </Strings>
             </Button>
-        </Buttons>
+    </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
         <Bitmaps>
@@ -129,50 +102,32 @@
             bitmap strip containing the bitmaps and then there are the numeric ids of the elements used
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-            <Bitmap guid="guidImages"
-                    href=".\ClaudiaIDEMenu.png"
-                    usedList="bmpNext, bmpPlay, bmpPause" />
-        </Bitmaps>
+            <Bitmap guid="guidImages" href=".\ClaudiaIDEMenu.png" usedList="bmpNext, bmpPlay, bmpPause" />
+    </Bitmaps>
     </Commands>
 
     <KeyBindings>
-        <KeyBinding guid="guidClaudiaIdePackageCmdSet"
-                    id="NextImageId"
-                    editor="guidVSStd97"
-                    key1="I"
-                    key2="N"
-                    mod1="Control" />
+        <KeyBinding guid="guidClaudiaIdePackageCmdSet" id="NextImageId" editor="guidVSStd97" key1="I" key2="N" mod1="Control" />
     </KeyBindings>
     <Symbols>
         <!-- This is the package guid. -->
-        <GuidSymbol name="guidClaudiaIdePackage"
-                    value="{7442ac19-889b-4699-a817-e6e054877ee3}" />
+        <GuidSymbol name="guidClaudiaIdePackage" value="{7442ac19-889b-4699-a817-e6e054877ee3}" />
 
         <!-- This is the guid used to group the menu commands together -->
-        <GuidSymbol name="guidClaudiaIdePackageCmdSet"
-                    value="{f0ffaf7c-8feb-40d2-b898-1acfe50e1d6b}">
-            <IDSymbol name="ClaudiaIdeMenu"
-                      value="0x1021" />
-            <IDSymbol name="ClaudiaIdeMenuGroup"
-                      value="0x1020" />
-            <IDSymbol name="NextImageId"
-                      value="0x0100" />
-            <IDSymbol name="PauseSlideshowId"
-                      value="0x0110" />
-            <IDSymbol name="ResumeSlideshowId"
-                      value="0x0120" />
-            <IDSymbol name="SaveSolutionSettingsId"
-                      value="0x0130" />
+        <GuidSymbol name="guidClaudiaIdePackageCmdSet" value="{f0ffaf7c-8feb-40d2-b898-1acfe50e1d6b}">
+            <IDSymbol name="ClaudiaIdeMenu" value="0x1021" />
+            <IDSymbol name="ClaudiaIdeMenuGroup" value="0x1020" />
+            <IDSymbol name="NextImageId" value="0x0100" />
+            <IDSymbol name="PauseSlideshowId" value="0x0110" />
+            <IDSymbol name="ResumeSlideshowId" value="0x0120" />
+            <IDSymbol name="SaveSolutionSettingsId" value="0x0130" />
         </GuidSymbol>
 
-        <GuidSymbol name="guidImages"
-                    value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">
-            <IDSymbol name="bmpNext"
-                      value="1" />
-            <IDSymbol name="bmpPlay"
-                      value="2" />
-            <IDSymbol name="bmpPause"
-                      value="3" />
+        <GuidSymbol name="guidImages" value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">
+            <IDSymbol name="bmpNext" value="1" />
+            <IDSymbol name="bmpPlay" value="2" />
+            <IDSymbol name="bmpPause" value="3" />
         </GuidSymbol>
-    </Symbols>
+    
+  </Symbols>
 </CommandTable>
