@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
-    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <MinimumVisualStudioVersion>16.0</MinimumVisualStudioVersion>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">16.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -58,7 +58,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CreateVsixContainer>True</CreateVsixContainer>
+    <CreateVsixContainer>False</CreateVsixContainer>
     <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -68,6 +68,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DeployExtension>False</DeployExtension>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
@@ -91,16 +92,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Shared\ClaudiaIdePackage.cs">
-      <Link>ClaudiaIdePackage.cs</Link>
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="..\Shared\Localized\ResLocalized.Designer.cs">
       <Link>Localized\ResLocalized.Designer.cs</Link>
-    </Compile>
-    <Compile Include="..\Shared\Options\ClaudiaIdeOptionPageGrid.cs">
-      <Link>ClaudiaIdeOptionPageGrid.cs</Link>
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="..\Shared\VSPackage.Designer.cs">
       <Link>VSPackage.Designer.cs</Link>
@@ -140,7 +133,6 @@
     </VSCTCompile>
     <VSCTCompile Include="Resources\ClaudiaIdePackage.vsct">
       <LastGenOutput>ClaudiaIdePackageVsct.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </VSCTCompile>
     <VSCTCompile Include="Resources\ClaudiaIdePackage.zh-CN.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
@@ -167,6 +159,11 @@
       <Link>Resources\400.ico</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="..\Shared\Resources\ClaudiaIDEMenu.png">
+      <Link>Resources\ClaudiaIDEMenu.png</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Shared\Resources\ss.png">
       <Link>Resources\ss.png</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
@@ -176,10 +173,6 @@
       <Link>Resources\vsixicon.png</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\ClaudiaIDEMenu.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
   <ItemGroup>

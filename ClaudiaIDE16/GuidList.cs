@@ -3,7 +3,7 @@ namespace ClaudiaIDE
     public static class GuidList
     {
         public const string PackageId = "9ab800ef-0cff-4893-bf16-57d58ff53456";
-        public const string OptionPageId = "f4e4ec65-b776-445f-b574-c7d4d3162a9a";
-        public const string MenuId = "b9ff21ee-20c4-46bb-80e5-6bd18bb17edf";
+        public const string OptionPageId = "595e3c9f-2648-4225-99cb-7e6ed3b5c354";
+        public const string MenuSetId = "74c31f05-fe81-450e-912d-da9fc31105ac";
     }
 }

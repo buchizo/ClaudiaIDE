@@ -130,7 +130,7 @@
             inside a button definition. An important aspect of this declaration is that the element id
             must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
             <Bitmap guid="guidImages"
-                    href=".\ClaudiaIDEMenu.png"
+                    href="..\..\Shared\Resources\ClaudiaIdeMenu.png"
                     usedList="bmpNext, bmpPlay, bmpPause" />
         </Bitmaps>
     </Commands>
@@ -150,11 +150,11 @@
 
         <!-- This is the guid used to group the menu commands together -->
         <GuidSymbol name="guidClaudiaIdePackageCmdSet"
-                    value="{b9ff21ee-20c4-46bb-80e5-6bd18bb17edf}">
+                    value="{74c31f05-fe81-450e-912d-da9fc31105ac}">
             <IDSymbol name="ClaudiaIdeMenu"
-                      value="0x1031" />
+                      value="0x1021" />
             <IDSymbol name="ClaudiaIdeMenuGroup"
-                      value="0x1030" />
+                      value="0x1020" />
             <IDSymbol name="NextImageId"
                       value="0x0100" />
             <IDSymbol name="PauseSlideshowId"
@@ -166,7 +166,7 @@
         </GuidSymbol>
 
         <GuidSymbol name="guidImages"
-                    value="{1f3a64a3-d6b9-41a0-8c4d-c643342e3beb}">
+                    value="{4c2bdd23-a166-4248-894a-f7195a9d1681}">
             <IDSymbol name="bmpNext"
                       value="1" />
             <IDSymbol name="bmpPlay"

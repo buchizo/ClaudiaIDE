@@ -22,7 +22,7 @@ namespace ClaudiaIDE.MenuCommands
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid(GuidList.MenuId);
+        public static readonly Guid CommandSet = new Guid(GuidList.MenuSetId);
 
         private bool _paused;
 

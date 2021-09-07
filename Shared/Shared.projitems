@@ -11,6 +11,7 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDE.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDEFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIdePackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
@@ -25,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\NextImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\PauseSlideshow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\SaveSolutionSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ClaudiaIdeOptionPageGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\JsonSerializer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\Setting.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\WeakEvent.cs" />
