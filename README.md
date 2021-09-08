@@ -17,6 +17,19 @@ After save, this extension create .claudiaideconfig file in solution directory f
 
 - Current feature of solution settings require restart Visual Studio after changed configfile.
 
+## Versions
+
+- This extension support some multiple versions Visual Studio, but it is not single VSIX/assembly file.
+
+Visual Studio | support ClaudiaIDE
+--|--
+Visual Studio 2012 ~ 2015 | [1.28.6](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release1.28.6)
+Visual Studio 2017 | [2.2.19](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release2.2.19)
+Visual Studio 2019 | [2.2.19](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release2.2.19) or [3.0.0.11](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release3.0.0.11) or [3.0.1](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release3.0.1)
+Visual Studio 2022 | [3.0.1](https://github.com/buchizo/ClaudiaIDE/releases/tag/Release3.0.1)
+
+- After ver 3.0.1, I will single code maintenance that target to multiple Visual Studio versions. This mean build to some VSIX files as follows ClaudiaIDE.vsix (for VS2022) and ClaudiaIDE.16.vsix (for VS2019). If new Visual Studio major version (e.g. 18.x) release,  I'll add ClaudiaIDE17 (for VS2022). And ClaudiaIDE support version slide to new Visual Studio. (ClaudiaIDE's csproj support to always on latest Visual Studio)
+
 ## ver 2.2.x ##
 
 Flickering has maybe been decreased, however the image fade interval option isn't supported for slideshows because problem effect by this update. If you want to expand the image to the full IDE window ("expand to IDE" option), ClaudiaIDE does not require theme editor. ClaudiaIDE automaticaly makes some backgrounds transparent (e.g. the text editor). However, for now, some windows, such as the solution explorer, still need to be made transaperent with theme editor, like as [Color Theme Editor for Visual Studio 2019](https://marketplace.visualstudio.com/items?itemName=VisualStudioPlatformTeam.VisualStudio2019ColorThemeEditor).
