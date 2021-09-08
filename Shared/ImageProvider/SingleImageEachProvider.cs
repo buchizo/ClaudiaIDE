@@ -41,7 +41,7 @@ namespace ClaudiaIDE
 
         public BitmapSource GetBitmap()
         {
-            var current = _imageFilesPath.Current;
+            var current = _imageFilesPath?.Current;
             if (string.IsNullOrEmpty(current)) return null;
 
             var bitmap = new BitmapImage();

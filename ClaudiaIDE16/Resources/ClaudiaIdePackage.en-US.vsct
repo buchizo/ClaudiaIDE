@@ -119,7 +119,7 @@
               <Strings>
                 <ButtonText>Save settings for solution</ButtonText>
               </Strings>
-          </Button>
+            </Button>
         </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
@@ -146,11 +146,11 @@
     <Symbols>
         <!-- This is the package guid. -->
         <GuidSymbol name="guidClaudiaIdePackage"
-                    value="{7442ac19-889b-4699-a817-e6e054877ee3}" />
+                    value="{9ab800ef-0cff-4893-bf16-57d58ff53456}" />
 
         <!-- This is the guid used to group the menu commands together -->
         <GuidSymbol name="guidClaudiaIdePackageCmdSet"
-                    value="{f0ffaf7c-8feb-40d2-b898-1acfe50e1d6b}">
+                    value="{74c31f05-fe81-450e-912d-da9fc31105ac}">
             <IDSymbol name="ClaudiaIdeMenu"
                       value="0x1021" />
             <IDSymbol name="ClaudiaIdeMenuGroup"
@@ -166,7 +166,7 @@
         </GuidSymbol>
 
         <GuidSymbol name="guidImages"
-                    value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">
+                    value="{4c2bdd23-a166-4248-894a-f7195a9d1681}">
             <IDSymbol name="bmpNext"
                       value="1" />
             <IDSymbol name="bmpPlay"

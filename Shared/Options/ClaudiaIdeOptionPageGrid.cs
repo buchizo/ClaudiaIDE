@@ -13,8 +13,8 @@ using ClaudiaIDE.Localized;
 namespace ClaudiaIDE.Options
 {
     [ClassInterface(ClassInterfaceType.AutoDual)]
-    [CLSCompliant(false), ComVisible(true)]
-    [Guid("441f0a76-1771-41c2-817c-81b8b03fb0e8")]
+    [ComVisible(true)]
+    [Guid(GuidList.OptionPageId)]
     public class ClaudiaIdeOptionPageGrid : DialogPage
     {
         public ClaudiaIdeOptionPageGrid()
@@ -150,6 +150,7 @@ namespace ClaudiaIDE.Options
             try
             {
                 //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
+                Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
                 Setting.DefaultInstance.OnApplyChanged();
             }
             catch

@@ -309,7 +309,7 @@ namespace ClaudiaIDE.Settings
 
     }
 
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [Guid("12d9a45f-ec0b-4a96-88dc-b0cba1f4789a")]
     public enum PositionV
     {
@@ -318,7 +318,7 @@ namespace ClaudiaIDE.Settings
         Center
     }
 
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [Guid("8b2e3ece-fbf7-43ba-b369-3463726b828d")]
     public enum PositionH
     {
@@ -327,7 +327,7 @@ namespace ClaudiaIDE.Settings
         Center
     }
 
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [Guid("5C96CFAA-FE54-49A9-8AB7-E85B66731228")]
     public enum ImageBackgroundType
     {
@@ -336,7 +336,7 @@ namespace ClaudiaIDE.Settings
         SingleEach = 2
     }
 
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [Guid("C89AFB79-39AF-4716-BB91-0F77323DD89B")]
     public enum ImageStretch
     {
