@@ -181,13 +181,13 @@
     <value>最大縦幅</value>
   </data>
   <data name="MaxHeightTypeDes" xml:space="preserve">
-    <value>画像を表示する領域の最大縦幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。</value>
+    <value>画像を表示する領域の最大縦幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。画像のストレッチ プロパティが None の場合のみ適用されます。</value>
   </data>
   <data name="MaxWidthType" xml:space="preserve">
     <value>最大横幅</value>
   </data>
   <data name="MaxWidthTypeDes" xml:space="preserve">
-    <value>画像を表示する領域の最大横幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。</value>
+    <value>画像を表示する領域の最大横幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。画像のストレッチ プロパティが None の場合のみ適用されます。</value>
   </data>
   <data name="SoftEdgeX" xml:space="preserve">
     <value>ぼかし幅 (X軸)</value>
