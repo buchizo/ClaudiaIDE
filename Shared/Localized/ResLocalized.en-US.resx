@@ -181,13 +181,13 @@
     <value>Max Height</value>
   </data>
   <data name="MaxHeightTypeDes" xml:space="preserve">
-    <value>Maximum height in pixels that the image can fill in the view.</value>
+    <value>Maximum height in pixels that the image can fill in the view. Applies only if the image stretch property is None.</value>
   </data>
   <data name="MaxWidthType" xml:space="preserve">
     <value>Max Width</value>
   </data>
   <data name="MaxWidthTypeDes" xml:space="preserve">
-    <value>Maximum width in pixels that the image can fill in the view.</value>
+    <value>Maximum width in pixels that the image can fill in the view. Applies only if the image stretch property is None.</value>
   </data>
   <data name="SoftEdgeX" xml:space="preserve">
     <value>SoftEdge Width (X axis)</value>
