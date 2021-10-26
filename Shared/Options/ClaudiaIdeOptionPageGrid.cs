@@ -36,6 +36,9 @@ namespace ClaudiaIDE.Options
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
             IsLimitToMainlyEditorWindow = false;
+            ViewPortHeight = 1;
+            ViewPortWidth = 1;
+            TileMode = TileMode.None;
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -144,6 +147,23 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayName("IsLimitToMainlyEditorWindow")]
         [LocalManager.LocalizedDescription("IsLimitToMainlyEditorWindowDes")]
         public bool IsLimitToMainlyEditorWindow { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewPortWidth")]
+        [LocalManager.LocalizedDescription("ViewPortWidthDes")]
+        public double ViewPortWidth { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewPortHeight")]
+        [LocalManager.LocalizedDescription("ViewPortHeightDes")]
+        public double ViewPortHeight { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("TileMode")]
+        [LocalManager.LocalizedDescription("TileModeDes")]
+        [PropertyPageTypeConverter(typeof(TileModeConverter))]
+        [TypeConverter(typeof(TileModeConverter))]
+        public TileMode TileMode { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
@@ -355,6 +375,69 @@ namespace ClaudiaIDE.Options
                 else if ((int)value == 3)
                 {
                     result = "Fill";
+                }
+
+                if (result != null) return result;
+            }
+
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+
+    public class TileModeConverter : EnumConverter
+    {
+        public TileModeConverter()
+            : base(typeof(TileMode))
+        {
+
+        }
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            if (sourceType == typeof(string)) return true;
+
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            if (value is string str)
+            {
+                if (str == "None") return TileMode.None;
+                else if (str == "Tile") return TileMode.Tile;
+                else if (str == "FlipX") return TileMode.FlipX;
+                else if (str == "FlipY") return TileMode.FlipY;
+                else if (str == "FlipXY") return TileMode.FlipXY;
+                else return TileMode.None;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                string result = null;
+                if ((int)value == 0)
+                {
+                    result = "None";
+                }
+                else if ((int)value == 1)
+                {
+                    result = "FlipX";
+                }
+                else if ((int)value == 2)
+                {
+                    result = "FlipY";
+                }
+                else if ((int)value == 3)
+                {
+                    result = "FlipXY";
+                }
+                else if ((int)value == 4)
+                {
+                    result = "Tile";
                 }
 
                 if (result != null) return result;

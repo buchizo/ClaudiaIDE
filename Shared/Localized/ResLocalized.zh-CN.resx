@@ -249,4 +249,22 @@
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
     <value>如果此选项为True，则背景图片仅限于编辑器窗口。</value>
   </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>图像平铺模式</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>指定图像如何填充编辑器窗口。 无：不重复。 平铺：通过重复填充。 FlipX：水平翻转。 FlipY：垂直翻转。 FlipXY：FlipX 和 FlipY 的组合。 此属性不影响 IDE 的背景图像。 如果此属性不是 None，则应更改为非零的 ViewPortWidth 和 ViewPortHeight 属性。</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>图像相对高度</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>编辑器窗口中的图像相对高度。 （0.00 &lt;= 1.00 范围内的值） 此属性不影响 IDE 的背景图像。</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>图像相对宽度</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>编辑器窗口中的图像相对宽度。 （0.00 &lt;= 1.00 范围内的值） 此属性不影响 IDE 的背景图像。</value>
+  </data>
 </root>

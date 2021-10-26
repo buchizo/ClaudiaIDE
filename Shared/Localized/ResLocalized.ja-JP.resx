@@ -249,4 +249,22 @@
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
     <value>もしこのオプションがTrueの場合、背景画像の表示をエディタウィンドウのみに制限します。</value>
   </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>画像のタイル表示</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>画像がエディターウィンドウにどのように表示されるかを指定します。 None: 繰り返されません。 Tile: 画像を繰り返して塗りつぶします。 FlipX: 水平方向に反転しながら塗りつぶします。 FlipY: 垂直方向に反転しながら塗りつぶします。 FlipXY: FlipXとFlipYの組み合わせ。 このプロパティは、IDEの背景画像には影響しません。 このプロパティがNoneではない場合は、画像の相対的な横幅プロパティと画像の相対的な縦幅プロパティを0以外に変更する必要があります。</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>画像の相対的な縦幅</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>エディターウィンドウ内における画像の相対的な縦幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>画像の相対的な横幅</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>エディターウィンドウ内における画像の相対的な横幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+  </data>
 </root>

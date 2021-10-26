@@ -82,6 +82,9 @@ namespace ClaudiaIDE.Settings
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
             IsLimitToMainlyEditorWindow = false;
+            ViewPortHeight = 1;
+            ViewPortWidth = 1;
+            TileMode = TileMode.None;
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -106,6 +109,9 @@ namespace ClaudiaIDE.Settings
         public double ViewBoxPointX { get; set; }
         public double ViewBoxPointY { get; set; }
         public bool IsLimitToMainlyEditorWindow { get; set; }
+        public double ViewPortWidth { get; set; }
+        public double ViewPortHeight { get; set; }
+        public TileMode TileMode { get; set; }
 
         public void Serialize()
         {
@@ -166,6 +172,9 @@ namespace ClaudiaIDE.Settings
                     settings.ViewBoxPointY = solconf.ViewBoxPointY;
                     settings.SolutionConfigFilePath = solfile;
                     settings.IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
+                    settings.TileMode = solconf.TileMode;
+                    settings.ViewPortHeight = solconf.ViewPortHeight;
+                    settings.ViewPortWidth = solconf.ViewPortWidth;
                 }
                 else
                 {
@@ -201,6 +210,9 @@ namespace ClaudiaIDE.Settings
             ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
             ViewBoxPointY = (double)props.Item("ViewBoxPointY").Value;
             IsLimitToMainlyEditorWindow = (bool)props.Item("IsLimitToMainlyEditorWindow").Value;
+            TileMode = (TileMode)props.Item("TileMode").Value;
+            ViewPortHeight = (double)props.Item("ViewPortHeight").Value;
+            ViewPortWidth = (double)props.Item("ViewPortWidth").Value;
         }
 
         public void Load()
@@ -241,6 +253,9 @@ namespace ClaudiaIDE.Settings
                 ViewBoxPointX = solconf.ViewBoxPointX;
                 ViewBoxPointY = solconf.ViewBoxPointY;
                 IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
+                TileMode = solconf.TileMode;
+                ViewPortHeight = solconf.ViewPortHeight;
+                ViewPortWidth = solconf.ViewPortWidth;
             }
         }
 
@@ -346,6 +361,17 @@ namespace ClaudiaIDE.Settings
         Fill = 3
     }
 
+    [ComVisible(true)]
+    [Guid("0165FD2A-029F-4C3F-A30E-011A19C9E88D")]
+    public enum TileMode
+    {
+        None = 0,
+        FlipX = 1,
+        FlipY = 2,
+        FlipXY = 3,
+        Tile = 4
+    }
+
     public static class ImageStretchConverter
     {
         public static System.Windows.Media.Stretch ConvertTo(this ImageStretch source)
@@ -421,6 +447,14 @@ namespace ClaudiaIDE.Settings
                     return System.Windows.HorizontalAlignment.Right;
             }
             return System.Windows.HorizontalAlignment.Right;
+        }
+    }
+
+    public static class TileModeConverter
+    {
+        public static System.Windows.Media.TileMode ConvertTo(this TileMode source)
+        {
+            return (System.Windows.Media.TileMode)source;
         }
     }
 }

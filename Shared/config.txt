@@ -18,5 +18,8 @@
 	"ExpandToIDE": false,
 	"ViewBoxPointX": 0,
 	"ViewBoxPointY": 0,
-	"IsLimitToMainlyEditorWindow": false
+	"IsLimitToMainlyEditorWindow": false,
+	"ViewPortWidth": 1,
+	"ViewPortHeight": 1,
+	"TileMode": 0
 }
