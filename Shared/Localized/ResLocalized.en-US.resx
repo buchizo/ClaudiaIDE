@@ -249,4 +249,22 @@
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
     <value>If this option is True, background image limit to only editor window.</value>
   </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>Image tile mode</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>Specifies how an image fills the editor window. None: not repeated. Tile:  filled by repeating. FlipX: flipped horizontally. FlipY: flipped vertically. FlipXY: The combination of FlipX and FlipY. This property not affects background image of IDE. If this property other than None, should change to other than zero ViewPortWidth and ViewPortHeight properties.</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>Image relative height</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>Image relative height in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>Image relative width</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>Image relative width in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+  </data>
 </root>
