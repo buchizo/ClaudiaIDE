@@ -38,6 +38,8 @@ namespace ClaudiaIDE.Options
             IsLimitToMainlyEditorWindow = false;
             ViewPortHeight = 1;
             ViewPortWidth = 1;
+            ViewPortPointX = 0;
+            ViewPortPointY = 0;
             TileMode = TileMode.None;
         }
 
@@ -157,6 +159,16 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayName("ViewPortHeight")]
         [LocalManager.LocalizedDescription("ViewPortHeightDes")]
         public double ViewPortHeight { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewPortPointX")]
+        [LocalManager.LocalizedDescription("ViewPortPointXDes")]
+        public double ViewPortPointX { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayName("ViewPortPointY")]
+        [LocalManager.LocalizedDescription("ViewPortPointYDes")]
+        public double ViewPortPointY { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayName("TileMode")]

@@ -267,4 +267,16 @@
   <data name="ViewPortWidthDes" xml:space="preserve">
     <value>编辑器窗口中的图像相对宽度。 （0.00 &lt;= 1.00 范围内的值） 此属性不影响 IDE 的背景图像。</value>
   </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>ViewPort 中的基本平铺图像水平位置</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>此属性可以为 WPF ViewPort 中的基础平铺图像水平位置设置双精度值。</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>ViewPort 中的基本平铺图像垂直位置</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>此属性可以设置关于 WPF ViewPort 中基本平铺图像垂直位置的双值。</value>
+  </data>
 </root>

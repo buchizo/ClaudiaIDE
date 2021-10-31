@@ -167,7 +167,7 @@ namespace ClaudiaIDE
                                 Opacity = opacity,
                                 Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY), new Size(1, 1)),
                                 TileMode = _settings.TileMode.ConvertTo(),
-                                Viewport = new Rect(0, 0, _settings.ViewPortWidth, _settings.ViewPortHeight)
+                                Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY, _settings.ViewPortWidth, _settings.ViewPortHeight)
                             };
                             grid.Background = nib;
                             Grid.SetRowSpan(grid, 3);
@@ -195,7 +195,7 @@ namespace ClaudiaIDE
                                 Opacity = opacity,
                                 Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY), new Size(1, 1)),
                                 TileMode = _settings.TileMode.ConvertTo(),
-                                Viewport = new Rect(0, 0, _settings.ViewPortWidth, _settings.ViewPortHeight)
+                                Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY, _settings.ViewPortWidth, _settings.ViewPortHeight)
                             };
                             _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
                         }

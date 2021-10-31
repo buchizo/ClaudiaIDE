@@ -21,5 +21,7 @@
 	"IsLimitToMainlyEditorWindow": false,
 	"ViewPortWidth": 1,
 	"ViewPortHeight": 1,
+	"ViewPortPointX": 0,
+	"ViewPortPointY": 0,
 	"TileMode": 0
 }

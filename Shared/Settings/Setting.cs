@@ -5,7 +5,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 using EnvDTE;
 using EnvDTE80;
 
@@ -84,6 +83,8 @@ namespace ClaudiaIDE.Settings
             IsLimitToMainlyEditorWindow = false;
             ViewPortHeight = 1;
             ViewPortWidth = 1;
+            ViewPortPointX = 0;
+            ViewPortPointY = 0;
             TileMode = TileMode.None;
         }
 
@@ -111,6 +112,8 @@ namespace ClaudiaIDE.Settings
         public bool IsLimitToMainlyEditorWindow { get; set; }
         public double ViewPortWidth { get; set; }
         public double ViewPortHeight { get; set; }
+        public double ViewPortPointX { get; set; }
+        public double ViewPortPointY { get; set; }
         public TileMode TileMode { get; set; }
 
         public void Serialize()
@@ -175,6 +178,8 @@ namespace ClaudiaIDE.Settings
                     settings.TileMode = solconf.TileMode;
                     settings.ViewPortHeight = solconf.ViewPortHeight;
                     settings.ViewPortWidth = solconf.ViewPortWidth;
+                    settings.ViewPortPointX = solconf.ViewPortPointX;
+                    settings.ViewPortPointY = solconf.ViewPortPointY;
                 }
                 else
                 {
@@ -213,6 +218,8 @@ namespace ClaudiaIDE.Settings
             TileMode = (TileMode)props.Item("TileMode").Value;
             ViewPortHeight = (double)props.Item("ViewPortHeight").Value;
             ViewPortWidth = (double)props.Item("ViewPortWidth").Value;
+            ViewPortPointX = (double)props.Item("ViewPortPointX").Value;
+            ViewPortPointY = (double)props.Item("ViewPortPointY").Value;
         }
 
         public void Load()
@@ -256,6 +263,8 @@ namespace ClaudiaIDE.Settings
                 TileMode = solconf.TileMode;
                 ViewPortHeight = solconf.ViewPortHeight;
                 ViewPortWidth = solconf.ViewPortWidth;
+                ViewPortHeight = solconf.ViewPortPointX;
+                ViewPortWidth = solconf.ViewPortPointY;
             }
         }
 
