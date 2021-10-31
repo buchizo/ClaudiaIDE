@@ -226,10 +226,10 @@
     <value>画像の垂直方向の基準となる位置を設定します。 Bottom: 下端を基準とします Center: 中心を基準とします Top: 上端を基準とします</value>
   </data>
   <data name="ViewBoxPointX" xml:space="preserve">
-    <value>画像の水平位置</value>
+    <value>エディター領域における画像の水平位置 (ViewBox)</value>
   </data>
   <data name="ViewBoxPointY" xml:space="preserve">
-    <value>画像の垂直位置</value>
+    <value>エディター領域における画像の垂直位置 (ViewBox)</value>
   </data>
   <data name="ViewBoxPointXDes" xml:space="preserve">
     <value>このプロパティは画像のWPFのViewBoxにおける水平位置をdouble型で指定できます。</value>
@@ -256,15 +256,27 @@
     <value>画像がエディターウィンドウにどのように表示されるかを指定します。 None: 繰り返されません。 Tile: 画像を繰り返して塗りつぶします。 FlipX: 水平方向に反転しながら塗りつぶします。 FlipY: 垂直方向に反転しながら塗りつぶします。 FlipXY: FlipXとFlipYの組み合わせ。 このプロパティは、IDEの背景画像には影響しません。 このプロパティがNoneではない場合は、画像の相対的な横幅プロパティと画像の相対的な縦幅プロパティを0以外に変更する必要があります。</value>
   </data>
   <data name="ViewPortHeight" xml:space="preserve">
-    <value>画像の相対的な縦幅</value>
+    <value>基本タイル画像の相対的な縦幅</value>
   </data>
   <data name="ViewPortHeightDes" xml:space="preserve">
-    <value>エディターウィンドウ内における画像の相対的な縦幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+    <value>エディターウィンドウ内における基本タイル画像の相対的な縦幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
   </data>
   <data name="ViewPortWidth" xml:space="preserve">
-    <value>画像の相対的な横幅</value>
+    <value>基本タイル画像の相対的な横幅</value>
   </data>
   <data name="ViewPortWidthDes" xml:space="preserve">
-    <value>エディターウィンドウ内における画像の相対的な横幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+    <value>エディターウィンドウ内における基本タイル画像の相対的な横幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+  </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>基本タイル画像の水平位置 (ViewPort)</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>このプロパティは基本タイル画像のWPFのViewPortにおける水平位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>基本タイル画像の垂直位置 (ViewPort)</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>このプロパティは基本タイル画像のWPFのViewPortにおける垂直位置をdouble型で指定できます。</value>
   </data>
 </root>

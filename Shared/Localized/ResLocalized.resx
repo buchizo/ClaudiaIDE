@@ -256,15 +256,27 @@
     <value>Specifies how an image fills the editor window. None: not repeated. Tile:  filled by repeating. FlipX: flipped horizontally. FlipY: flipped vertically. FlipXY: The combination of FlipX and FlipY. This property not affects background image of IDE. If this property other than None, should change to other than zero ViewPortWidth and ViewPortHeight properties.</value>
   </data>
   <data name="ViewPortHeight" xml:space="preserve">
-    <value>Image relative height</value>
+    <value>Base tile image relative height</value>
   </data>
   <data name="ViewPortHeightDes" xml:space="preserve">
-    <value>Image relative height in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+    <value>Base tile image relative height in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
   </data>
   <data name="ViewPortWidth" xml:space="preserve">
-    <value>Image relative width</value>
+    <value>Base tile image relative width</value>
   </data>
   <data name="ViewPortWidthDes" xml:space="preserve">
-    <value>Image relative width in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+    <value>Base tile image relative width in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+  </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>Base tile image horizontal position in ViewPort</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>This property can set a double value for the base tile image horizontal position in WPF ViewPort.</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>Base tile image vertical position in ViewPort</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>This property can set double value about base tile image vertical position in WPF ViewPort.</value>
   </data>
 </root>
