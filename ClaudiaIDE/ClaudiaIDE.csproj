@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK">
-      <Version>17.0.0-previews-4-31709-430</Version>
+      <Version>17.0.31902.203</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
       <Version>17.0.5232</Version>
