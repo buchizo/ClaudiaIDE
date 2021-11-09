@@ -224,6 +224,7 @@ namespace ClaudiaIDE.Settings
 
         public void Load()
         {
+            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
             var _DTE2 = (DTE2)ServiceProvider;
             var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
