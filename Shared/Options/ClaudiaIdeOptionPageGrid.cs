@@ -9,6 +9,7 @@ using System.Windows.Forms.Design;
 using System.Windows.Forms;
 using System.IO;
 using ClaudiaIDE.Localized;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ClaudiaIDE.Options
 {
@@ -470,10 +471,10 @@ namespace ClaudiaIDE.Options
             IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
-                var open = new FolderBrowserDialog();
-                if (open.ShowDialog() == DialogResult.OK)
+                var open = new CommonOpenFileDialog { IsFolderPicker = true };
+                if (open.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    return open.SelectedPath;
+                    return open.FileName;
                 }
             }
             return value;
