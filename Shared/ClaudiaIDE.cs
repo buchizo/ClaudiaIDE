@@ -197,7 +197,22 @@ namespace ClaudiaIDE
                                 TileMode = _settings.TileMode.ConvertTo(),
                                 Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY, _settings.ViewPortWidth, _settings.ViewPortHeight)
                             };
-                            _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
+                            if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow)
+                            {
+                                (_wpfTextViewHost as System.Windows.Controls.Panel).Background.AnimateImageSourceChange(
+                                        nib,
+                                        (n) => { (_wpfTextViewHost as System.Windows.Controls.Panel).Background = n; },
+                                        new AnimateImageChangeParams
+                                        {
+                                            FadeTime = _settings.ImageFadeAnimationInterval,
+                                            TargetOpacity = opacity
+                                        }
+                                    );
+                            }
+                            else
+                            {
+                                _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
+                            }
                         }
                         _hasImage = true;
                         if (_settings.ImageBackgroundType == ImageBackgroundType.SingleEach)

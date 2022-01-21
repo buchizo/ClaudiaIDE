@@ -205,6 +205,7 @@ namespace ClaudiaIDE.Settings
             UpdateImageInterval = (TimeSpan)props.Item("UpdateImageInterval").Value;
             Extensions = (string)props.Item("Extensions").Value;
             ImageBackgroundType = (ImageBackgroundType)props.Item("ImageBackgroundType").Value;
+            ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             ShuffleSlideshow = (bool)props.Item("ShuffleSlideshow").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
