@@ -26,6 +26,7 @@ namespace ClaudiaIDE.Options
             PositionHorizon = PositionH.Right;
             PositionVertical = PositionV.Bottom;
             UpdateImageInterval = TimeSpan.FromMinutes(1);
+            ImageFadeAnimationInterval = TimeSpan.FromSeconds(5);
             Extensions = ".png, .jpg, .gif, .bmp";
             LoopSlideshow = true;
             MaxWidth = 0;
@@ -82,6 +83,13 @@ namespace ClaudiaIDE.Options
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan UpdateImageInterval { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayName("ImageAnimationIntervalType")]
+        [LocalManager.LocalizedDescription("ImageAnimationIntervalTypeDes")]
+        [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
+        [TypeConverter(typeof(TimeSpanConverter))]
+        public TimeSpan ImageFadeAnimationInterval { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
         [LocalManager.LocalizedDisplayName("ImageExtensionsType")]
