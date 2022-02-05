@@ -1,0 +1,8 @@
+root = true
+
+[*.cs]
+charset = utf-8
+end_of_line = crlf
+indent_style = space
+trim_trailing_whitespace = true
+csharp_new_line_before_open_brace = all

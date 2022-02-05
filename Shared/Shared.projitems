@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6d268f80-dd38-48bb-81e2-51805e5a4e17</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDE.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDEFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIdePackage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\DependencyObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageSourceAnimator.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IImageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageEachProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SlideShowImageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Localized\LocalManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\NextImage.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\PauseSlideshow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\SaveSolutionSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Options\ClaudiaIdeOptionPageGrid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\JsonSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\Setting.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Settings\WeakEvent.cs" />
+  </ItemGroup>
+</Project>
