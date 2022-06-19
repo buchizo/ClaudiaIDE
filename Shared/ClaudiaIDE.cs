@@ -366,6 +366,11 @@ namespace ClaudiaIDE
             {
                 return (true, true);
             }
+            else if (fullName.Equals("Microsoft.VisualStudio.Platform.WindowManagement.WindowFrame+ContentHostingPanel", StringComparison.OrdinalIgnoreCase))
+            {
+                // Mainwindows and non-active tab
+                return (true, true);
+            }
             else if (
                 !fullName.Equals("Microsoft.VisualStudio.PlatformUI.Shell.Controls.FloatingWindow", StringComparison.OrdinalIgnoreCase)
                 && !fullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView", StringComparison.OrdinalIgnoreCase)
