@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.0.8" Language="en-US" Publisher="buchizo" />
+        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.0.9" Language="en-US" Publisher="buchizo" />
         <DisplayName>ClaudiaIDE</DisplayName>
         <Description xml:space="preserve">This extension change the background image of editor.</Description>
         <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
