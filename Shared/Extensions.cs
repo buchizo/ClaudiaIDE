@@ -34,10 +34,11 @@ namespace ClaudiaIDE
                 var path = dte?.Solution?.FileName;
                 if (string.IsNullOrEmpty(path)) return null;
 
-                var dir = System.IO.Directory.GetParent(path);
-                if (string.IsNullOrEmpty(dir?.FullName)) return null;
+                // CMake or other directory project (not .sln) `path` is directory
+                var dir = File.GetAttributes(path).HasFlag(FileAttributes.Directory) ? path : Path.GetDirectoryName(path);
+                if (string.IsNullOrEmpty(dir)) return null;
 
-                var configpath = Path.Combine(dir.FullName, ".claudiaideconfig");
+                var configpath = Path.Combine(dir, ".claudiaideconfig");
                 if (checkExists)
                 {
                     return File.Exists(configpath) ? configpath : null;
