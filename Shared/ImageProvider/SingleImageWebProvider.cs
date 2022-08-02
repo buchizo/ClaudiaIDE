@@ -19,8 +19,14 @@ namespace ClaudiaIDE.ImageProvider
 
         public SingleImageWebProvider(Setting setting, string solutionfile = null)
         {
+            SolutionConfigFile = solutionfile;
             _setting = setting;
             _setting.OnChanged.AddEventHandler(ReloadSettings);
+        }
+
+        ~SingleImageWebProvider()
+        {
+            _setting.OnChanged.RemoveEventHandler(ReloadSettings);
         }
 
         private void ReloadSettings(object sender, EventArgs e)
@@ -38,7 +44,7 @@ namespace ClaudiaIDE.ImageProvider
         {
             if(_image != null) return _image;
             var image = ImageDownloader.LoadImage(_setting.WebSingleUrl, _setting.ImageStretch, _setting.MaxWidth, _setting.MaxHeight);
-            image.ContinueWith(OnDownloadComplete, TaskContinuationOptions.OnlyOnRanToCompletion);
+            _ = image.ContinueWith(OnDownloadComplete, System.Threading.CancellationToken.None, TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
          
             return null;
         }
