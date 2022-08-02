@@ -18,7 +18,8 @@ namespace ClaudiaIDE.Helpers
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = original.UriSource;
+                bitmap.UriSource = original.UriSource;  
+                bitmap.StreamSource = original.StreamSource;
                 bitmap.DecodePixelWidth = maxWidth;
                 bitmap.DecodePixelHeight = maxHeight;
                 bitmap.EndInit();
@@ -32,6 +33,7 @@ namespace ClaudiaIDE.Helpers
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.CreateOptions = BitmapCreateOptions.None;
                 bitmap.UriSource = original.UriSource;
+                bitmap.StreamSource = original.StreamSource;
                 bitmap.DecodePixelWidth = maxWidth;
                 bitmap.EndInit();
                 bitmap.Freeze();
@@ -44,6 +46,7 @@ namespace ClaudiaIDE.Helpers
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.CreateOptions = BitmapCreateOptions.None;
                 bitmap.UriSource = original.UriSource;
+                bitmap.StreamSource = original.StreamSource;
                 bitmap.DecodePixelHeight = maxHeight;
                 bitmap.EndInit();
                 bitmap.Freeze();

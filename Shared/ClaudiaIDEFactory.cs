@@ -55,7 +55,8 @@ namespace ClaudiaIDE
                         {
                             new SingleImageEachProvider(settings),
                             new SlideShowImageProvider(settings),
-                            new SingleImageProvider(settings)
+                            new SingleImageProvider(settings),
+                            new SingleImageWebProvider(settings),
                         });
                     }
                     else
@@ -71,6 +72,9 @@ namespace ClaudiaIDE
                                 break;
                             case ImageBackgroundType.Slideshow:
                                 ProvidersHolder.Instance.Providers.Add(new SlideShowImageProvider(settings, solution));
+                                break;
+                                case ImageBackgroundType.WebSingle:
+                                    ProvidersHolder.Instance.Providers.Add(new SingleImageWebProvider(settings, solution));
                                 break;
                             default:
                                 ProvidersHolder.Instance.Providers.Add(new SingleImageEachProvider(settings, solution));
@@ -95,6 +99,9 @@ namespace ClaudiaIDE
                             break;
                         case ImageBackgroundType.Slideshow:
                             ImageProviders.Add(new SlideShowImageProvider(settings, solution));
+                            break;
+                        case ImageBackgroundType.WebSingle:
+                            ImageProviders.Add(new SingleImageWebProvider(settings, solution));
                             break;
                         default:
                             ImageProviders.Add(new SingleImageEachProvider(settings, solution));

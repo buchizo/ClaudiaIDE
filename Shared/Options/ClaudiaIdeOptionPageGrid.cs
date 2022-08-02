@@ -43,6 +43,7 @@ namespace ClaudiaIDE.Options
             ViewPortPointX = 0;
             ViewPortPointY = 0;
             TileMode = TileMode.None;
+            SingleWebUrl ="";
         }
 
         [LocalManager.LocalizedCategory("Image")]
@@ -186,6 +187,11 @@ namespace ClaudiaIDE.Options
         [TypeConverter(typeof(TileModeConverter))]
         public TileMode TileMode { get; set; }
 
+        [LocalManager.LocalizedCategoryAttribute("WebImage")]
+        [LocalManager.LocalizedDisplayName("Url")]
+        [LocalManager.LocalizedDescription("UrlDescription")]
+        public string SingleWebUrl { get; set; }
+
         protected override void OnApply(PageApplyEventArgs e)
         {
             try
@@ -223,6 +229,7 @@ namespace ClaudiaIDE.Options
                 if (str == "Single") return ImageBackgroundType.Single;
                 else if (str == "Slideshow") return ImageBackgroundType.Slideshow;
                 else if (str == "SingleEach") return ImageBackgroundType.SingleEach;
+                else if (str == "SingleWeb") return ImageBackgroundType.WebSingle;
                 else return ImageBackgroundType.Single;
             }
 
@@ -246,7 +253,10 @@ namespace ClaudiaIDE.Options
                 {
                     result = "SingleEach";
                 }
-
+                else if((int)value == 3)
+                {
+                    result = "SingleWeb";
+                }
                 if (result != null) return result;
             }
 

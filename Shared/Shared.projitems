@@ -16,9 +16,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DependencyObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageSourceAnimator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Utils.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)IImageProvider.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageWebProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageEachProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SingleImageProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ImageProvider\SlideShowImageProvider.cs" />

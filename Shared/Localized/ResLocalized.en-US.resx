@@ -279,4 +279,13 @@
   <data name="ViewPortPointYDes" xml:space="preserve">
     <value>This property can set double value about base tile image vertical position in WPF ViewPort.</value>
   </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>The Url pointing to the image to show</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>WebImage</value>
+  </data>
 </root>

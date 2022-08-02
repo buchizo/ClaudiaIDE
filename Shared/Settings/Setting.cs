@@ -86,6 +86,7 @@ namespace ClaudiaIDE.Settings
             ViewPortPointX = 0;
             ViewPortPointY = 0;
             TileMode = TileMode.None;
+            WebSingleUrl = "";
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -115,6 +116,7 @@ namespace ClaudiaIDE.Settings
         public double ViewPortPointX { get; set; }
         public double ViewPortPointY { get; set; }
         public TileMode TileMode { get; set; }
+        public string WebSingleUrl {get;set;}
 
         public void Serialize()
         {
@@ -180,6 +182,7 @@ namespace ClaudiaIDE.Settings
                     settings.ViewPortWidth = solconf.ViewPortWidth;
                     settings.ViewPortPointX = solconf.ViewPortPointX;
                     settings.ViewPortPointY = solconf.ViewPortPointY;
+                    settings.WebSingleUrl = solconf.WebSingleUrl;
                 }
                 else
                 {
@@ -221,6 +224,7 @@ namespace ClaudiaIDE.Settings
             ViewPortWidth = (double)props.Item("ViewPortWidth").Value;
             ViewPortPointX = (double)props.Item("ViewPortPointX").Value;
             ViewPortPointY = (double)props.Item("ViewPortPointY").Value;
+            WebSingleUrl = (string)props.Item("SingleWebUrl").Value;
         }
 
         public void Load()
@@ -267,6 +271,7 @@ namespace ClaudiaIDE.Settings
                 ViewPortWidth = solconf.ViewPortWidth;
                 ViewPortHeight = solconf.ViewPortPointX;
                 ViewPortWidth = solconf.ViewPortPointY;
+                WebSingleUrl = solconf.WebSingleUrl;
             }
         }
 
@@ -359,7 +364,8 @@ namespace ClaudiaIDE.Settings
     {
         Single = 0,
         Slideshow = 1,
-        SingleEach = 2
+        SingleEach = 2,
+        WebSingle = 3,
     }
 
     [ComVisible(true)]

@@ -49,7 +49,8 @@ namespace ClaudiaIDE
                     {
                         new SingleImageEachProvider(_settings),
                         new SlideShowImageProvider(_settings),
-                        new SingleImageProvider(_settings)
+                        new SingleImageProvider(_settings),
+                        new SingleImageWebProvider(_settings)
                     });
                 }
 
@@ -86,7 +87,8 @@ namespace ClaudiaIDE
                         {
                             new SingleImageEachProvider(_settings),
                             new SlideShowImageProvider(_settings),
-                            new SingleImageProvider(_settings)
+                            new SingleImageProvider(_settings),
+                            new SingleImageWebProvider(_settings),
                         });
                     }
 
