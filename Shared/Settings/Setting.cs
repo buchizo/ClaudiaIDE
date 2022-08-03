@@ -2,67 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Windows;
+using System.Windows.Media;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.VisualStudio.Shell;
 
 namespace ClaudiaIDE.Settings
 {
     public class Setting
     {
-        private static readonly List<Setting> _instance = new List<Setting>();
-        private static readonly string CONFIGFILE = "config.txt";
         private const string DefaultBackgroundImage = "Images\\background.png";
         private const string DefaultBackgroundFolder = "Images";
+        private static readonly List<Setting> _instance = new List<Setting>();
+        private static readonly string CONFIGFILE = "config.txt";
 
-        internal DTE ServiceProvider { get; set; }
-
-        [IgnoreDataMember]
-        public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
-
-        [IgnoreDataMember]
-        public string SolutionConfigFilePath { get; set; }
-
-        public static Setting Instance
-        {
-            get
-            {
-                var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
-                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == solfile);
-                if (i == null)
-                {
-                    i = new Setting
-                    {
-                        SolutionConfigFilePath = solfile
-                    };
-                    _instance.Add(i);
-                }
-                return  i;
-            }
-        }
-
-        public static Setting DefaultInstance
-        {
-            get
-            {
-                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == null);
-                if (i == null)
-                {
-                    i = new Setting();
-                    _instance.Add(i);
-                }
-                return i;
-            }
-        }
+        [IgnoreDataMember] public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
 
 
         public Setting()
         {
-            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            BackgroundImagesDirectoryAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, DefaultBackgroundFolder);
-            BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, DefaultBackgroundImage);
+            var assemblylocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            BackgroundImagesDirectoryAbsolutePath =
+                Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, DefaultBackgroundFolder);
+            BackgroundImageAbsolutePath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation,
+                DefaultBackgroundImage);
             Opacity = 0.35;
             PositionHorizon = PositionH.Right;
             PositionVertical = PositionV.Bottom;
@@ -87,6 +55,47 @@ namespace ClaudiaIDE.Settings
             ViewPortPointY = 0;
             TileMode = TileMode.None;
             WebSingleUrl = "";
+            WebApiEndpoint = "";
+            WebApiJsonKey = "";
+            WebApiDownloadInterval = TimeSpan.FromMinutes(5);
+        }
+
+        internal DTE ServiceProvider { get; set; }
+
+        [IgnoreDataMember] public string SolutionConfigFilePath { get; set; }
+
+        public static Setting Instance
+        {
+            get
+            {
+                var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == solfile);
+                if (i == null)
+                {
+                    i = new Setting
+                    {
+                        SolutionConfigFilePath = solfile
+                    };
+                    _instance.Add(i);
+                }
+
+                return i;
+            }
+        }
+
+        public static Setting DefaultInstance
+        {
+            get
+            {
+                var i = _instance?.FirstOrDefault(x => x.SolutionConfigFilePath == null);
+                if (i == null)
+                {
+                    i = new Setting();
+                    _instance.Add(i);
+                }
+
+                return i;
+            }
         }
 
         public ImageBackgroundType ImageBackgroundType { get; set; }
@@ -97,7 +106,7 @@ namespace ClaudiaIDE.Settings
         public int MaxHeight { get; set; }
         public int SoftEdgeX { get; set; }
         public int SoftEdgeY { get; set; }
-        
+
         public string BackgroundImageAbsolutePath { get; set; }
 
         public TimeSpan UpdateImageInterval { get; set; }
@@ -116,13 +125,16 @@ namespace ClaudiaIDE.Settings
         public double ViewPortPointX { get; set; }
         public double ViewPortPointY { get; set; }
         public TileMode TileMode { get; set; }
-        public string WebSingleUrl {get;set;}
+        public string WebSingleUrl { get; set; }
+        public string WebApiEndpoint { get; set; }
+        public string WebApiJsonKey { get; set; }
+        public TimeSpan WebApiDownloadInterval { get; set; }
 
         public void Serialize()
         {
             var config = JsonSerializer<Setting>.Serialize(this);
 
-            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var assemblylocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
 
             using (var s = new StreamWriter(configpath, false, Encoding.UTF8))
@@ -145,11 +157,9 @@ namespace ClaudiaIDE.Settings
 
         public static Setting Initialize(DTE serviceProvider)
         {
-            var settings = Setting.Instance;
+            var settings = Instance;
             if (settings.ServiceProvider == null || settings.ServiceProvider != serviceProvider)
-            {
                 settings.ServiceProvider = serviceProvider;
-            }
             try
             {
                 var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
@@ -183,6 +193,9 @@ namespace ClaudiaIDE.Settings
                     settings.ViewPortPointX = solconf.ViewPortPointX;
                     settings.ViewPortPointY = solconf.ViewPortPointY;
                     settings.WebSingleUrl = solconf.WebSingleUrl;
+                    settings.WebApiEndpoint = solconf.WebApiEndpoint;
+                    settings.WebApiJsonKey = solconf.WebApiJsonKey;
+                    settings.WebApiDownloadInterval = solconf.WebApiDownloadInterval;
                 }
                 else
                 {
@@ -191,16 +204,19 @@ namespace ClaudiaIDE.Settings
             }
             catch
             {
-                return Setting.Deserialize();
+                return Deserialize();
             }
+
             return settings;
         }
 
         private void Load(Properties props)
         {
-            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-            BackgroundImagesDirectoryAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
-            BackgroundImageAbsolutePath = Setting.ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value, DefaultBackgroundImage);
+            ThreadHelper.ThrowIfNotOnUIThread();
+            BackgroundImagesDirectoryAbsolutePath =
+                ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
+            BackgroundImageAbsolutePath = ToFullPath((string)props.Item("BackgroundImageAbsolutePath").Value,
+                DefaultBackgroundImage);
             Opacity = (double)props.Item("Opacity").Value;
             PositionHorizon = (PositionH)props.Item("PositionHorizon").Value;
             PositionVertical = (PositionV)props.Item("PositionVertical").Value;
@@ -225,11 +241,14 @@ namespace ClaudiaIDE.Settings
             ViewPortPointX = (double)props.Item("ViewPortPointX").Value;
             ViewPortPointY = (double)props.Item("ViewPortPointY").Value;
             WebSingleUrl = (string)props.Item("SingleWebUrl").Value;
+            WebApiEndpoint = (string)props.Item("WebApiApiEndpoint").Value;
+            WebApiJsonKey = (string)props.Item("WebApiJsonKey").Value;
+            WebApiDownloadInterval = (TimeSpan)props.Item("WebApiDownloadInterval").Value;
         }
 
         public void Load()
         {
-            Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+            ThreadHelper.ThrowIfNotOnUIThread();
             var _DTE2 = (DTE2)ServiceProvider;
             var props = _DTE2.Properties["ClaudiaIDE", "General"];
 
@@ -243,44 +262,45 @@ namespace ClaudiaIDE.Settings
                 Load();
                 return;
             }
-            else
-            {
-                var solconf = Deserialize(solutionConfigFile);
-                BackgroundImageAbsolutePath = solconf.BackgroundImageAbsolutePath;
-                BackgroundImagesDirectoryAbsolutePath = solconf.BackgroundImagesDirectoryAbsolutePath;
-                ExpandToIDE = solconf.ExpandToIDE;
-                Extensions = solconf.Extensions;
-                ImageBackgroundType = solconf.ImageBackgroundType;
-                ImageFadeAnimationInterval = solconf.ImageFadeAnimationInterval;
-                ImageStretch = solconf.ImageStretch;
-                LoopSlideshow = solconf.LoopSlideshow;
-                MaxHeight = solconf.MaxHeight;
-                MaxWidth = solconf.MaxWidth;
-                Opacity = solconf.Opacity;
-                PositionHorizon = solconf.PositionHorizon;
-                PositionVertical = solconf.PositionVertical;
-                ShuffleSlideshow = solconf.ShuffleSlideshow;
-                SoftEdgeX = solconf.SoftEdgeX;
-                SoftEdgeY = solconf.SoftEdgeY;
-                UpdateImageInterval = solconf.UpdateImageInterval;
-                ViewBoxPointX = solconf.ViewBoxPointX;
-                ViewBoxPointY = solconf.ViewBoxPointY;
-                IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
-                TileMode = solconf.TileMode;
-                ViewPortHeight = solconf.ViewPortHeight;
-                ViewPortWidth = solconf.ViewPortWidth;
-                ViewPortHeight = solconf.ViewPortPointX;
-                ViewPortWidth = solconf.ViewPortPointY;
-                WebSingleUrl = solconf.WebSingleUrl;
-            }
+
+            var solconf = Deserialize(solutionConfigFile);
+            BackgroundImageAbsolutePath = solconf.BackgroundImageAbsolutePath;
+            BackgroundImagesDirectoryAbsolutePath = solconf.BackgroundImagesDirectoryAbsolutePath;
+            ExpandToIDE = solconf.ExpandToIDE;
+            Extensions = solconf.Extensions;
+            ImageBackgroundType = solconf.ImageBackgroundType;
+            ImageFadeAnimationInterval = solconf.ImageFadeAnimationInterval;
+            ImageStretch = solconf.ImageStretch;
+            LoopSlideshow = solconf.LoopSlideshow;
+            MaxHeight = solconf.MaxHeight;
+            MaxWidth = solconf.MaxWidth;
+            Opacity = solconf.Opacity;
+            PositionHorizon = solconf.PositionHorizon;
+            PositionVertical = solconf.PositionVertical;
+            ShuffleSlideshow = solconf.ShuffleSlideshow;
+            SoftEdgeX = solconf.SoftEdgeX;
+            SoftEdgeY = solconf.SoftEdgeY;
+            UpdateImageInterval = solconf.UpdateImageInterval;
+            ViewBoxPointX = solconf.ViewBoxPointX;
+            ViewBoxPointY = solconf.ViewBoxPointY;
+            IsLimitToMainlyEditorWindow = solconf.IsLimitToMainlyEditorWindow;
+            TileMode = solconf.TileMode;
+            ViewPortHeight = solconf.ViewPortHeight;
+            ViewPortWidth = solconf.ViewPortWidth;
+            ViewPortHeight = solconf.ViewPortPointX;
+            ViewPortWidth = solconf.ViewPortPointY;
+            WebSingleUrl = solconf.WebSingleUrl;
+            WebApiEndpoint = solconf.WebApiEndpoint;
+            WebApiJsonKey = solconf.WebApiJsonKey;
+            WebApiDownloadInterval = solconf.WebApiDownloadInterval;
         }
 
         public void OnApplyChanged()
         {
             try
             {
-                Load(this.SolutionConfigFilePath);
-                if (string.IsNullOrEmpty(this.SolutionConfigFilePath))
+                Load(SolutionConfigFilePath);
+                if (string.IsNullOrEmpty(SolutionConfigFilePath))
                 {
                     Load();
                     OnChanged?.RaiseEvent(this, EventArgs.Empty);
@@ -288,56 +308,53 @@ namespace ClaudiaIDE.Settings
             }
             catch
             {
-
             }
         }
 
         public static Setting Deserialize()
         {
-            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            var assemblylocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var configpath = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, CONFIGFILE);
-            string config = "";
+            var config = "";
 
             using (var s = new StreamReader(configpath, Encoding.UTF8, false))
             {
                 config = s.ReadToEnd();
                 s.Close();
             }
+
             var ret = JsonSerializer<Setting>.DeSerialize(config);
             ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath, DefaultBackgroundImage);
-            ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
+            ret.BackgroundImagesDirectoryAbsolutePath =
+                ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
             return ret;
         }
 
         public static Setting Deserialize(string solutionConfigFilePath)
         {
-            string config = "";
+            var config = "";
 
             using (var s = new StreamReader(solutionConfigFilePath, Encoding.UTF8, false))
             {
                 config = s.ReadToEnd();
                 s.Close();
             }
+
             var ret = JsonSerializer<Setting>.DeSerialize(config);
             ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath, DefaultBackgroundImage);
-            ret.BackgroundImagesDirectoryAbsolutePath = ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
+            ret.BackgroundImagesDirectoryAbsolutePath =
+                ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
             return ret;
         }
 
         public static string ToFullPath(string path, string defaultPath)
         {
-            if (string.IsNullOrWhiteSpace(path))
-            {
-                path = defaultPath;
-            }
-            var assemblylocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            if (string.IsNullOrWhiteSpace(path)) path = defaultPath;
+            var assemblylocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             if (!Path.IsPathRooted(path))
-            {
                 path = Path.Combine(string.IsNullOrEmpty(assemblylocation) ? "" : assemblylocation, path);
-            }
             return path;
         }
-
     }
 
     [ComVisible(true)]
@@ -366,6 +383,7 @@ namespace ClaudiaIDE.Settings
         Slideshow = 1,
         SingleEach = 2,
         WebSingle = 3,
+        WebApi = 4
     }
 
     [ComVisible(true)]
@@ -391,79 +409,84 @@ namespace ClaudiaIDE.Settings
 
     public static class ImageStretchConverter
     {
-        public static System.Windows.Media.Stretch ConvertTo(this ImageStretch source)
+        public static Stretch ConvertTo(this ImageStretch source)
         {
-            switch(source)
+            switch (source)
             {
                 case ImageStretch.Fill:
-                    return System.Windows.Media.Stretch.Fill;
+                    return Stretch.Fill;
                 case ImageStretch.None:
-                    return System.Windows.Media.Stretch.None;
+                    return Stretch.None;
                 case ImageStretch.Uniform:
-                    return System.Windows.Media.Stretch.Uniform;
+                    return Stretch.Uniform;
                 case ImageStretch.UniformToFill:
-                    return System.Windows.Media.Stretch.UniformToFill;
+                    return Stretch.UniformToFill;
             }
-            return System.Windows.Media.Stretch.None;
+
+            return Stretch.None;
         }
     }
 
     public static class PositionConverter
     {
-        public static System.Windows.Media.AlignmentY ConvertTo(this PositionV source)
+        public static AlignmentY ConvertTo(this PositionV source)
         {
             switch (source)
             {
                 case PositionV.Bottom:
-                    return System.Windows.Media.AlignmentY.Bottom;
+                    return AlignmentY.Bottom;
                 case PositionV.Center:
-                    return System.Windows.Media.AlignmentY.Center;
+                    return AlignmentY.Center;
                 case PositionV.Top:
-                    return System.Windows.Media.AlignmentY.Top;
+                    return AlignmentY.Top;
             }
-            return System.Windows.Media.AlignmentY.Bottom;
+
+            return AlignmentY.Bottom;
         }
 
-        public static System.Windows.VerticalAlignment ConvertToVerticalAlignment(this PositionV source)
+        public static VerticalAlignment ConvertToVerticalAlignment(this PositionV source)
         {
             switch (source)
             {
                 case PositionV.Bottom:
-                    return System.Windows.VerticalAlignment.Bottom;
+                    return VerticalAlignment.Bottom;
                 case PositionV.Center:
-                    return System.Windows.VerticalAlignment.Center;
+                    return VerticalAlignment.Center;
                 case PositionV.Top:
-                    return System.Windows.VerticalAlignment.Top;
+                    return VerticalAlignment.Top;
             }
-            return System.Windows.VerticalAlignment.Bottom;
+
+            return VerticalAlignment.Bottom;
         }
 
-        public static System.Windows.Media.AlignmentX ConvertTo(this PositionH source)
+        public static AlignmentX ConvertTo(this PositionH source)
         {
             switch (source)
             {
                 case PositionH.Left:
-                    return System.Windows.Media.AlignmentX.Left;
+                    return AlignmentX.Left;
                 case PositionH.Center:
-                    return System.Windows.Media.AlignmentX.Center;
+                    return AlignmentX.Center;
                 case PositionH.Right:
-                    return System.Windows.Media.AlignmentX.Right;
+                    return AlignmentX.Right;
             }
-            return System.Windows.Media.AlignmentX.Right;
+
+            return AlignmentX.Right;
         }
 
-        public static System.Windows.HorizontalAlignment ConvertToHorizontalAlignment(this PositionH source)
+        public static HorizontalAlignment ConvertToHorizontalAlignment(this PositionH source)
         {
             switch (source)
             {
                 case PositionH.Left:
-                    return System.Windows.HorizontalAlignment.Left;
+                    return HorizontalAlignment.Left;
                 case PositionH.Center:
-                    return System.Windows.HorizontalAlignment.Center;
+                    return HorizontalAlignment.Center;
                 case PositionH.Right:
-                    return System.Windows.HorizontalAlignment.Right;
+                    return HorizontalAlignment.Right;
             }
-            return System.Windows.HorizontalAlignment.Right;
+
+            return HorizontalAlignment.Right;
         }
     }
 

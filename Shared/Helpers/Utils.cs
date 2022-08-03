@@ -1,61 +1,61 @@
-
 using System;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ClaudiaIDE.Helpers
 {
-    static class Utils
+    internal static class Utils
     {
+        private static byte[] pixelByteArray;
+
         public static BitmapImage EnsureMaxWidthHeight(BitmapImage original, int maxWidth, int maxHeight)
         {
             BitmapImage bitmap = null;
 
             if (maxWidth > 0 && maxHeight > 0
-                && original.PixelWidth > maxWidth && original.PixelHeight > maxHeight)
-            {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = original.UriSource;  
-                bitmap.StreamSource = original.StreamSource;
-                bitmap.DecodePixelWidth = maxWidth;
-                bitmap.DecodePixelHeight = maxHeight;
-                bitmap.EndInit();
-                bitmap.Freeze();
-                return bitmap;
-            }
-            else if (maxWidth > 0 && original.PixelWidth > maxWidth)
+                             && original.PixelWidth > maxWidth && original.PixelHeight > maxHeight)
             {
                 bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.CreateOptions = BitmapCreateOptions.None;
                 bitmap.UriSource = original.UriSource;
-                bitmap.StreamSource = original.StreamSource;
                 bitmap.DecodePixelWidth = maxWidth;
+                bitmap.DecodePixelHeight = maxHeight;
                 bitmap.EndInit();
                 bitmap.Freeze();
                 return bitmap;
             }
-            else if (maxHeight > 0 && original.PixelHeight > maxHeight)
+
+            if (maxWidth > 0 && original.PixelWidth > maxWidth)
             {
                 bitmap = new BitmapImage();
                 bitmap.BeginInit();
                 bitmap.CacheOption = BitmapCacheOption.OnLoad;
                 bitmap.CreateOptions = BitmapCreateOptions.None;
                 bitmap.UriSource = original.UriSource;
-                bitmap.StreamSource = original.StreamSource;
+                bitmap.DecodePixelWidth = maxWidth;
+                bitmap.EndInit();
+                bitmap.Freeze();
+                return bitmap;
+            }
+
+            if (maxHeight > 0 && original.PixelHeight > maxHeight)
+            {
+                bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                bitmap.CreateOptions = BitmapCreateOptions.None;
+                bitmap.UriSource = original.UriSource;
                 bitmap.DecodePixelHeight = maxHeight;
                 bitmap.EndInit();
                 bitmap.Freeze();
                 return bitmap;
             }
-            else
-            {
-                return original;
-            }
+
+            return original;
         }
 
         public static BitmapSource ConvertToDpi96(BitmapSource source)
@@ -71,7 +71,6 @@ namespace ClaudiaIDE.Helpers
             return BitmapSource.Create(width, height, dpi, dpi, PixelFormats.Bgra32, null, pixelData, stride);
         }
 
-        static byte[] pixelByteArray;
         public static BitmapSource SoftenEdges(BitmapSource original, int softedgex, int softedgey)
         {
             if (softedgex <= 0 && softedgey <= 0)
@@ -82,61 +81,58 @@ namespace ClaudiaIDE.Helpers
                 //System.Windows.Forms.MessageBox.Show(string.Format("SoftenEdges,soft={0},bpp={1}", softedge, original.Format.BitsPerPixel));
 
                 //32bit assumption
-                if (original.Format.BitsPerPixel != 32)
-                {
-                    return original;
-                }
+                if (original.Format.BitsPerPixel != 32) return original;
 
                 //limit softedge range by half image size
                 softedgex = Math.Min(softedgex, (int)(original.Width / 2));
                 softedgey = Math.Min(softedgey, (int)(original.Height / 2));
 
-                int height = original.PixelHeight;
-                int width = original.PixelWidth;
-                int bytesPerPixel = (original.Format.BitsPerPixel + 7) / 8;
-                int nStride = width * bytesPerPixel;
+                var height = original.PixelHeight;
+                var width = original.PixelWidth;
+                var bytesPerPixel = (original.Format.BitsPerPixel + 7) / 8;
+                var nStride = width * bytesPerPixel;
 
 
                 pixelByteArray = new byte[height * nStride];
                 original.CopyPixels(pixelByteArray, nStride, 0);
 
                 //alpha and color
-                for (int y = 0; y < height; y++)
+                for (var y = 0; y < height; y++)
                 {
-                    float fAlphaByY = 1f;
-                    int nDistToEdgeY = Math.Min(y, height - 1 - y);
+                    var fAlphaByY = 1f;
+                    var nDistToEdgeY = Math.Min(y, height - 1 - y);
                     fAlphaByY = (float)nDistToEdgeY / softedgey;
                     fAlphaByY = Math.Min(fAlphaByY, 1.0f);
 
-                    for (int x = 0; x < width; x++)
+                    for (var x = 0; x < width; x++)
                     {
-                        float fAlphaByX = 1f;
-                        int nDistToEdgeX = Math.Min(x, width - 1 - x);
+                        var fAlphaByX = 1f;
+                        var nDistToEdgeX = Math.Min(x, width - 1 - x);
                         fAlphaByX = (float)nDistToEdgeX / softedgex;
                         fAlphaByX = Math.Min(fAlphaByX, 1.0f);
 
-                        for (int iPix = 0; iPix < 4; iPix++)
+                        for (var iPix = 0; iPix < 4; iPix++)
                         {
-                            int alpha_offset_in_array = bytesPerPixel * (x + y * width) + iPix;
-                            int alphaOld = (int)pixelByteArray[alpha_offset_in_array];
-                            int alphaNew = (int)Math.Floor(alphaOld * fAlphaByX * fAlphaByY);
+                            var alpha_offset_in_array = bytesPerPixel * (x + y * width) + iPix;
+                            int alphaOld = pixelByteArray[alpha_offset_in_array];
+                            var alphaNew = (int)Math.Floor(alphaOld * fAlphaByX * fAlphaByY);
                             pixelByteArray[alpha_offset_in_array] = (byte)alphaNew;
                         }
                     }
                 }
 
-                WriteableBitmap newbm = new WriteableBitmap(width, height, original.DpiX, original.DpiY, PixelFormats.Pbgra32, null);
-                newbm.WritePixels(new System.Windows.Int32Rect(0, 0, width, height), pixelByteArray, nStride, 0);
+                var newbm = new WriteableBitmap(width, height, original.DpiX, original.DpiY, PixelFormats.Pbgra32,
+                    null);
+                newbm.WritePixels(new Int32Rect(0, 0, width, height), pixelByteArray, nStride, 0);
 
                 return newbm;
             }
-            catch (System.Exception exp)
+            catch (Exception exp)
             {
-                System.Windows.Forms.MessageBox.Show(exp.ToString() + exp.StackTrace);
+                MessageBox.Show(exp + exp.StackTrace);
             }
 
             return original;
         }
-
     }
 }

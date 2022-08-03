@@ -1,14 +1,14 @@
 using System;
 using System.ComponentModel;
+using System.Drawing.Design;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
+using System.Windows.Forms.Design;
+using ClaudiaIDE.Localized;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Shell;
-using System.Drawing.Design;
-using System.Windows.Forms.Design;
-using System.Windows.Forms;
-using System.IO;
-using ClaudiaIDE.Localized;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace ClaudiaIDE.Options
@@ -33,7 +33,7 @@ namespace ClaudiaIDE.Options
             MaxHeight = 0;
             SoftEdgeX = 0;
             SoftEdgeY = 0;
-			ImageStretch = ImageStretch.None;
+            ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
@@ -43,166 +43,187 @@ namespace ClaudiaIDE.Options
             ViewPortPointX = 0;
             ViewPortPointY = 0;
             TileMode = TileMode.None;
-            SingleWebUrl ="";
+            SingleWebUrl = "";
+            WebApiApiEndpoint = "";
+            WebApiJsonKey = "";
+            WebApiDownloadInterval = TimeSpan.FromMinutes(5);
         }
 
-        [LocalManager.LocalizedCategory("Image")]
-        [LocalManager.LocalizedDisplayName("BackgroundType")]
-        [LocalManager.LocalizedDescription("BackgroundTypeDes")]
+        [LocalManager.LocalizedCategoryAttribute("Image")]
+        [LocalManager.LocalizedDisplayNameAttribute("BackgroundType")]
+        [LocalManager.LocalizedDescriptionAttribute("BackgroundTypeDes")]
         [PropertyPageTypeConverter(typeof(ImageBackgroundTypeConverter))]
         [TypeConverter(typeof(ImageBackgroundTypeConverter))]
         public ImageBackgroundType ImageBackgroundType { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Image")]
-        [LocalManager.LocalizedDisplayName("OpacityType")]
-        [LocalManager.LocalizedDescription("OpacityTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("OpacityType")]
+        [LocalManager.LocalizedDescriptionAttribute("OpacityTypeDes")]
         public double Opacity { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("HorizontalAlignmentType")]
-        [LocalManager.LocalizedDescription("HorizontalAlignmentTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("HorizontalAlignmentType")]
+        [LocalManager.LocalizedDescriptionAttribute("HorizontalAlignmentTypeDes")]
         [PropertyPageTypeConverter(typeof(PositionHTypeConverter))]
         [TypeConverter(typeof(PositionHTypeConverter))]
         public PositionH PositionHorizon { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("VerticalAlignmentType")]
-        [LocalManager.LocalizedDescription("VerticalAlignmentTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("VerticalAlignmentType")]
+        [LocalManager.LocalizedDescriptionAttribute("VerticalAlignmentTypeDes")]
         [PropertyPageTypeConverter(typeof(PositionVTypeConverter))]
         [TypeConverter(typeof(PositionVTypeConverter))]
         public PositionV PositionVertical { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("DirectoryPathType")]
-        [LocalManager.LocalizedDescription("DirectoryPathTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("DirectoryPathType")]
+        [LocalManager.LocalizedDescriptionAttribute("DirectoryPathTypeDes")]
         [EditorAttribute(typeof(BrowseDirectory), typeof(UITypeEditor))]
         public string BackgroundImageDirectoryAbsolutePath { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("UpdateIntervalType")]
-        [LocalManager.LocalizedDescription("UpdateIntervalTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("UpdateIntervalType")]
+        [LocalManager.LocalizedDescriptionAttribute("UpdateIntervalTypeDes")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan UpdateImageInterval { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("ImageAnimationIntervalType")]
-        [LocalManager.LocalizedDescription("ImageAnimationIntervalTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ImageAnimationIntervalType")]
+        [LocalManager.LocalizedDescriptionAttribute("ImageAnimationIntervalTypeDes")]
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan ImageFadeAnimationInterval { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("ImageExtensionsType")]
-        [LocalManager.LocalizedDescription("ImageExtensionsTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ImageExtensionsType")]
+        [LocalManager.LocalizedDescriptionAttribute("ImageExtensionsTypeDes")]
         public string Extensions { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("SingleImage")]
-        [LocalManager.LocalizedDisplayName("FilePathType")]
-        [LocalManager.LocalizedDescription("FilePathTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("FilePathType")]
+        [LocalManager.LocalizedDescriptionAttribute("FilePathTypeDes")]
         [EditorAttribute(typeof(BrowseFile), typeof(UITypeEditor))]
         public string BackgroundImageAbsolutePath { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("LoopSlideshowType")]
-        [LocalManager.LocalizedDescription("LoopSlideshowTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("LoopSlideshowType")]
+        [LocalManager.LocalizedDescriptionAttribute("LoopSlideshowTypeDes")]
         public bool LoopSlideshow { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Slideshow")]
-        [LocalManager.LocalizedDisplayName("ShuffleSlideshowType")]
-        [LocalManager.LocalizedDescription("ShuffleSlideshowTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ShuffleSlideshowType")]
+        [LocalManager.LocalizedDescriptionAttribute("ShuffleSlideshowTypeDes")]
         public bool ShuffleSlideshow { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ExpandToIDEType")]
-        [LocalManager.LocalizedDescription("ExpandToIDETypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ExpandToIDEType")]
+        [LocalManager.LocalizedDescriptionAttribute("ExpandToIDETypeDes")]
         public bool ExpandToIDE { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("MaxWidthType")]
-        [LocalManager.LocalizedDescription("MaxWidthTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("MaxWidthType")]
+        [LocalManager.LocalizedDescriptionAttribute("MaxWidthTypeDes")]
         public int MaxWidth { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("MaxHeightType")]
-        [LocalManager.LocalizedDescription("MaxHeightTypeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("MaxHeightType")]
+        [LocalManager.LocalizedDescriptionAttribute("MaxHeightTypeDes")]
         public int MaxHeight { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("SoftEdgeX")]
-        [LocalManager.LocalizedDescription("SoftEdgeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("SoftEdgeX")]
+        [LocalManager.LocalizedDescriptionAttribute("SoftEdgeDes")]
         public int SoftEdgeX { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("SoftEdgeY")]
-        [LocalManager.LocalizedDescription("SoftEdgeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("SoftEdgeY")]
+        [LocalManager.LocalizedDescriptionAttribute("SoftEdgeDes")]
         public int SoftEdgeY { get; set; }
 
-		[LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ImageStretchType")]
-        [LocalManager.LocalizedDescription("ImageStretchTypeDes")]
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayNameAttribute("ImageStretchType")]
+        [LocalManager.LocalizedDescriptionAttribute("ImageStretchTypeDes")]
         [PropertyPageTypeConverter(typeof(ImageStretchTypeConverter))]
         [TypeConverter(typeof(ImageStretchTypeConverter))]
         public ImageStretch ImageStretch { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewBoxPointX")]
-        [LocalManager.LocalizedDescription("ViewBoxPointXDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewBoxPointX")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewBoxPointXDes")]
         public double ViewBoxPointX { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewBoxPointY")]
-        [LocalManager.LocalizedDescription("ViewBoxPointYDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewBoxPointY")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewBoxPointYDes")]
         public double ViewBoxPointY { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("IsLimitToMainlyEditorWindow")]
-        [LocalManager.LocalizedDescription("IsLimitToMainlyEditorWindowDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("IsLimitToMainlyEditorWindow")]
+        [LocalManager.LocalizedDescriptionAttribute("IsLimitToMainlyEditorWindowDes")]
         public bool IsLimitToMainlyEditorWindow { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewPortWidth")]
-        [LocalManager.LocalizedDescription("ViewPortWidthDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewPortWidth")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewPortWidthDes")]
         public double ViewPortWidth { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewPortHeight")]
-        [LocalManager.LocalizedDescription("ViewPortHeightDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewPortHeight")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewPortHeightDes")]
         public double ViewPortHeight { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewPortPointX")]
-        [LocalManager.LocalizedDescription("ViewPortPointXDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewPortPointX")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewPortPointXDes")]
         public double ViewPortPointX { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("ViewPortPointY")]
-        [LocalManager.LocalizedDescription("ViewPortPointYDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("ViewPortPointY")]
+        [LocalManager.LocalizedDescriptionAttribute("ViewPortPointYDes")]
         public double ViewPortPointY { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
-        [LocalManager.LocalizedDisplayName("TileMode")]
-        [LocalManager.LocalizedDescription("TileModeDes")]
+        [LocalManager.LocalizedDisplayNameAttribute("TileMode")]
+        [LocalManager.LocalizedDescriptionAttribute("TileModeDes")]
         [PropertyPageTypeConverter(typeof(TileModeConverter))]
         [TypeConverter(typeof(TileModeConverter))]
         public TileMode TileMode { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("WebImage")]
-        [LocalManager.LocalizedDisplayName("Url")]
-        [LocalManager.LocalizedDescription("UrlDescription")]
+        [LocalManager.LocalizedDisplayNameAttribute("Url")]
+        [LocalManager.LocalizedDescriptionAttribute("UrlDescription")]
         public string SingleWebUrl { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("WebApi")]
+        [LocalManager.LocalizedDisplayNameAttribute("ApiEndpoint")]
+        [LocalManager.LocalizedDescriptionAttribute("ApiEndpointDescription")]
+        public string WebApiApiEndpoint { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("WebApi")]
+        [LocalManager.LocalizedDisplayNameAttribute("JsonKey")]
+        [LocalManager.LocalizedDescriptionAttribute("JsonKeyDescription")]
+        public string WebApiJsonKey { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("WebApi")]
+        [LocalManager.LocalizedDisplayNameAttribute("WebApiDownloadInterval")]
+        [LocalManager.LocalizedDescriptionAttribute("WebApiDownloadIntervalDescpription")]
+        [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
+        [TypeConverter(typeof(TimeSpanConverter))]
+        public TimeSpan WebApiDownloadInterval { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
             try
             {
                 //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
-                Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+                ThreadHelper.ThrowIfNotOnUIThread();
                 Setting.DefaultInstance.OnApplyChanged();
             }
             catch
             {
             }
+
             base.OnApply(e);
         }
     }
@@ -212,7 +233,6 @@ namespace ClaudiaIDE.Options
         public ImageBackgroundTypeConverter()
             : base(typeof(ImageBackgroundType))
         {
-
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -227,36 +247,31 @@ namespace ClaudiaIDE.Options
             if (value is string str)
             {
                 if (str == "Single") return ImageBackgroundType.Single;
-                else if (str == "Slideshow") return ImageBackgroundType.Slideshow;
-                else if (str == "SingleEach") return ImageBackgroundType.SingleEach;
-                else if (str == "SingleWeb") return ImageBackgroundType.WebSingle;
-                else return ImageBackgroundType.Single;
+                if (str == "Slideshow") return ImageBackgroundType.Slideshow;
+                if (str == "SingleEach") return ImageBackgroundType.SingleEach;
+                if (str == "SingleWeb") return ImageBackgroundType.WebSingle;
+                if (str == "WebApi") return ImageBackgroundType.WebApi;
+                return ImageBackgroundType.Single;
             }
 
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {
                 string result = null;
                 if ((int)value == 0)
-                {
                     result = "Single";
-                }
                 else if ((int)value == 1)
-                {
                     result = "Slideshow";
-                }
                 else if ((int)value == 2)
-                {
                     result = "SingleEach";
-                }
-                else if((int)value == 3)
-                {
+                else if ((int)value == 3)
                     result = "SingleWeb";
-                }
+                else if ((int)value == 4) result = "WebApi";
                 if (result != null) return result;
             }
 
@@ -269,7 +284,6 @@ namespace ClaudiaIDE.Options
         public PositionHTypeConverter()
             : base(typeof(PositionH))
         {
-
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -290,19 +304,15 @@ namespace ClaudiaIDE.Options
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {
                 string result = null;
                 if ((int)value == 0)
-                {
                     result = "Left";
-                }
-                else if ((int)value == 1)
-                {
-                    result = "Right";
-                }
+                else if ((int)value == 1) result = "Right";
 
                 if (result != null) return result;
             }
@@ -316,7 +326,6 @@ namespace ClaudiaIDE.Options
         public PositionVTypeConverter()
             : base(typeof(PositionV))
         {
-
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -337,19 +346,15 @@ namespace ClaudiaIDE.Options
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {
                 string result = null;
                 if ((int)value == 0)
-                {
                     result = "Top";
-                }
-                else if ((int)value == 1)
-                {
-                    result = "Bottom";
-                }
+                else if ((int)value == 1) result = "Bottom";
 
                 if (result != null) return result;
             }
@@ -363,7 +368,6 @@ namespace ClaudiaIDE.Options
         public ImageStretchTypeConverter()
             : base(typeof(ImageStretch))
         {
-
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -386,27 +390,19 @@ namespace ClaudiaIDE.Options
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {
                 string result = null;
                 if ((int)value == 0)
-                {
                     result = "None";
-                }
                 else if ((int)value == 1)
-                {
                     result = "Uniform";
-                }
                 else if ((int)value == 2)
-                {
                     result = "UniformToFill";
-                }
-                else if ((int)value == 3)
-                {
-                    result = "Fill";
-                }
+                else if ((int)value == 3) result = "Fill";
 
                 if (result != null) return result;
             }
@@ -420,7 +416,6 @@ namespace ClaudiaIDE.Options
         public TileModeConverter()
             : base(typeof(TileMode))
         {
-
         }
 
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
@@ -435,41 +430,31 @@ namespace ClaudiaIDE.Options
             if (value is string str)
             {
                 if (str == "None") return TileMode.None;
-                else if (str == "Tile") return TileMode.Tile;
-                else if (str == "FlipX") return TileMode.FlipX;
-                else if (str == "FlipY") return TileMode.FlipY;
-                else if (str == "FlipXY") return TileMode.FlipXY;
-                else return TileMode.None;
+                if (str == "Tile") return TileMode.Tile;
+                if (str == "FlipX") return TileMode.FlipX;
+                if (str == "FlipY") return TileMode.FlipY;
+                if (str == "FlipXY") return TileMode.FlipXY;
+                return TileMode.None;
             }
 
             return base.ConvertFrom(context, culture, value);
         }
 
-        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
         {
             if (destinationType == typeof(string))
             {
                 string result = null;
                 if ((int)value == 0)
-                {
                     result = "None";
-                }
                 else if ((int)value == 1)
-                {
                     result = "FlipX";
-                }
                 else if ((int)value == 2)
-                {
                     result = "FlipY";
-                }
                 else if ((int)value == 3)
-                {
                     result = "FlipXY";
-                }
-                else if ((int)value == 4)
-                {
-                    result = "Tile";
-                }
+                else if ((int)value == 4) result = "Tile";
 
                 if (result != null) return result;
             }
@@ -484,20 +469,20 @@ namespace ClaudiaIDE.Options
         {
             return UITypeEditorEditStyle.Modal;
         }
+
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
                 var open = new CommonOpenFileDialog { IsFolderPicker = true };
-                if (open.ShowDialog() == CommonFileDialogResult.Ok)
-                {
-                    return open.FileName;
-                }
+                if (open.ShowDialog() == CommonFileDialogResult.Ok) return open.FileName;
             }
+
             return value;
         }
-        public override bool GetPaintValueSupported(System.ComponentModel.ITypeDescriptorContext context)
+
+        public override bool GetPaintValueSupported(ITypeDescriptorContext context)
         {
             return false;
         }
@@ -509,12 +494,13 @@ namespace ClaudiaIDE.Options
         {
             return UITypeEditorEditStyle.Modal;
         }
+
         public override object EditValue(ITypeDescriptorContext context, IServiceProvider provider, object value)
         {
-            IWindowsFormsEditorService edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
+            var edSvc = (IWindowsFormsEditorService)provider.GetService(typeof(IWindowsFormsEditorService));
             if (edSvc != null)
             {
-                OpenFileDialog open = new OpenFileDialog
+                var open = new OpenFileDialog
                 {
                     FileName = Path.GetFileName((string)value)
                 };
@@ -527,17 +513,15 @@ namespace ClaudiaIDE.Options
                 {
                 }
 
-                if (open.ShowDialog() == DialogResult.OK)
-                {
-                    return open.FileName;
-                }
+                if (open.ShowDialog() == DialogResult.OK) return open.FileName;
             }
+
             return value;
         }
+
         public override bool GetPaintValueSupported(ITypeDescriptorContext context)
         {
             return false;
         }
     }
-
 }

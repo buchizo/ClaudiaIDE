@@ -6,14 +6,11 @@ namespace ClaudiaIDE.Localized
 {
     internal class LocalManager
     {
-        internal static ResourceManager _rm = null;
+        internal static ResourceManager _rm;
 
         private static ResourceManager GetInstance()
         {
-            if (_rm == null)
-            {
-                _rm = ResLocalized.ResourceManager;
-            }
+            if (_rm == null) _rm = ResLocalized.ResourceManager;
 
             return _rm;
         }
@@ -35,26 +32,26 @@ namespace ClaudiaIDE.Localized
                         AttributeTargets.GenericParameter)]
         internal class LocalizedDescriptionAttribute : DescriptionAttribute
         {
+            internal LocalizedDescriptionAttribute(string _key) : base(Localize(_key))
+            {
+            }
+
             private static string Localize(string _key)
             {
                 return GetInstance().GetString(_key);
-            }
-
-            internal LocalizedDescriptionAttribute(string _key) : base(Localize(_key))
-            {
             }
         }
 
         [AttributeUsage(AttributeTargets.All)]
         internal class LocalizedCategoryAttribute : CategoryAttribute
         {
+            internal LocalizedCategoryAttribute(string _key) : base(Localize(_key))
+            {
+            }
+
             private static string Localize(string _key)
             {
                 return GetInstance().GetString(_key);
-            }
-
-            internal LocalizedCategoryAttribute(string _key) : base(Localize(_key))
-            {
             }
         }
 
@@ -64,13 +61,13 @@ namespace ClaudiaIDE.Localized
                         AttributeTargets.Event)]
         internal class LocalizedDisplayNameAttribute : DisplayNameAttribute
         {
+            internal LocalizedDisplayNameAttribute(string _key) : base(Localize(_key))
+            {
+            }
+
             private static string Localize(string _key)
             {
                 return GetInstance().GetString(_key);
-            }
-
-            internal LocalizedDisplayNameAttribute(string _key) : base(Localize(_key))
-            {
             }
         }
     }
