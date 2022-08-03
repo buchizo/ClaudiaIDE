@@ -13,16 +13,13 @@ namespace ClaudiaIDE.ImageProviders
 {
     public class SlideShowImageProvider : ImageProvider, IPausable, ISkipable
     {
-        private readonly PausableTimer _timer;
+        private PausableTimer _timer;
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
 
         public SlideShowImageProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.Slideshow)
         {
-            _timer = new PausableTimer(Setting.UpdateImageInterval.TotalMilliseconds);
-            _timer.Elapsed += OnTimerElapsed;
-            _timer.AutoReset = true;
             OnSettingChanged(null, null);
         }
 
@@ -96,6 +93,15 @@ namespace ClaudiaIDE.ImageProviders
 
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Elapsed -= OnTimerElapsed;
+                _timer.Dispose();
+            }
+            _timer = new PausableTimer(Setting.UpdateImageInterval.TotalMilliseconds);
+            _timer.Elapsed += OnTimerElapsed;
+
             if (Setting.ImageBackgroundType == ImageBackgroundType.Single ||
                 Setting.ImageBackgroundType == ImageBackgroundType.SingleEach)
             {

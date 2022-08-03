@@ -83,6 +83,13 @@ namespace ClaudiaIDE.ImageProviders
 
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
+            if (_timer != null)
+            {
+                _timer.Stop();
+                _timer.Elapsed -= OnTimerElapsed;
+                _timer.Dispose();
+            }
+
             _timer = new PausableTimer(Setting.WebApiDownloadInterval.TotalMilliseconds);
             _timer.Elapsed += OnTimerElapsed;
 
