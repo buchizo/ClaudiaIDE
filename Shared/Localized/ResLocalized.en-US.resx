@@ -289,19 +289,19 @@
     <value>Web Image</value>
   </data>
   <data name="WebApi" xml:space="preserve">
-    <value>Web API</value>
+    <value>Slideshow using Web API</value>
   </data>
   <data name="ApiEndpoint" xml:space="preserve">
     <value>API Endpoint</value>
   </data>
   <data name="ApiEndpointDescpripion" xml:space="preserve">
-    <value>The API Endpoint should point to a location that gives an ImagePath as Json string</value>
+    <value>The API Endpoint should point to a location that gives an ImagePath as JsonObject {jsonKey: UrlPointingToUrl}</value>
   </data>
   <data name="JsonKey" xml:space="preserve">
     <value>JSON-Key</value>
   </data>
   <data name="JsonKeyDescription" xml:space="preserve">
-    <value>The key which holds the value to the downloadpath</value>
+    <value>The key which holds the value to the downloadpath come common examples are §url§, §src§, §img§, §image§</value>
   </data>
   <data name="WebApiDownloadInterval" xml:space="preserve">
     <value>Download Interval</value>
