@@ -17,6 +17,7 @@ namespace ClaudiaIDE.ImageProviders
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
             ImageDownloader.ResetUrl();
+            Image = null;
         }
 
         public override BitmapSource GetBitmap()
