@@ -17,7 +17,7 @@ namespace ClaudiaIDE.Helpers
             if (count == 0)
                 yield break;
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 var child = VisualTreeHelper.GetChild(obj, i);
                 if (child != null)

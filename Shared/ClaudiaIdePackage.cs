@@ -1,19 +1,20 @@
-using System.Runtime.InteropServices;
-using ClaudiaIDE.Options;
-using Microsoft.VisualStudio.Shell;
-using System.Windows;
-using System.Windows.Media;
 using System;
-using System.Windows.Controls;
-using ClaudiaIDE.Settings;
 using System.Collections.Generic;
-using ClaudiaIDE.ImageProvider;
 using System.Linq;
-using ClaudiaIDE.Helpers;
-using Task = System.Threading.Tasks.Task;
-using ClaudiaIDE.MenuCommands;
-using EnvDTE;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using Task = System.Threading.Tasks.Task;
+using System.Windows.Media;
+using ClaudiaIDE.Helpers;
+using ClaudiaIDE.ImageProviders;
+using ClaudiaIDE.MenuCommands;
+using ClaudiaIDE.Options;
+using ClaudiaIDE.Settings;
+using EnvDTE;
+using Microsoft.VisualStudio.Shell;
+using Window = System.Windows.Window;
 
 namespace ClaudiaIDE
 {
@@ -21,107 +22,115 @@ namespace ClaudiaIDE
     [InstalledProductRegistration("#110", "#112", "3.0.9", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid(GuidList.PackageId)]
-    [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}", PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.EmptySolution
-    [ProvideAutoLoad("{ADFC4E64-0397-11D1-9F4E-00A0C911004F}", PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.NoSolution
-    [ProvideAutoLoad("{F1536EF8-92EC-443C-9ED7-FDADF150DA82}", PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.SolutionExists
+    [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}",
+        PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.EmptySolution
+    [ProvideAutoLoad("{ADFC4E64-0397-11D1-9F4E-00A0C911004F}",
+        PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.NoSolution
+    [ProvideAutoLoad("{F1536EF8-92EC-443C-9ED7-FDADF150DA82}",
+        PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.SolutionExists
     [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class ClaudiaIdePackage : AsyncPackage
     {
+        private Image _current;
+        private ImageProvider _imageProvider;
+        private List<ImageProvider> _imageProviders;
+        private Window _mainWindow;
         private Setting _settings;
-        private System.Windows.Window _mainWindow;
-        private List<IImageProvider> _imageProviders;
-        private IImageProvider _imageProvider;
-        private Image _current = null;
 
-        protected override async Task InitializeAsync(System.Threading.CancellationToken cancellationToken,
+        protected override async Task InitializeAsync(CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
         {
-            await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             Application.Current.MainWindow.Loaded += (s, e) =>
             {
-                Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-                _mainWindow = (System.Windows.Window) s;
-                _settings = Setting.Initialize((DTE)this.GetService(typeof(DTE)));
+                ThreadHelper.ThrowIfNotOnUIThread();
+                _mainWindow = (Window)s;
+                _settings = Setting.Initialize((DTE)GetService(typeof(DTE)));
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
                 if (ProvidersHolder.Instance.Providers == null)
-                {
-                    ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                    ProvidersHolder.Initialize(_settings, new List<ImageProvider>
                     {
                         new SingleImageEachProvider(_settings),
                         new SlideShowImageProvider(_settings),
-                        new SingleImageProvider(_settings)
+                        new SingleImageProvider(_settings),
+                        new SingleImageWebProvider(_settings),
+                        new WebApiImageProvider(_settings)
                     });
-                }
 
                 _imageProviders = ProvidersHolder.Instance.Providers;
                 _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
-                _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
-                
+                _imageProvider.IsActive = true;
+                _imageProviders.ForEach(x => x.NewImageAvailable += InvokeChangeImage);
+
                 NextImage.InitializeAsync(this)
                     .FileAndForget("claudiaide/nextimage/initializeasync");
                 PauseSlideshow.InitializeAsync(this).FileAndForget("claudiaide/pauseslideshow/initializeasync");
-                SaveSolutionSettings.InitializeAsync(this, _settings).FileAndForget("claudiaide/saveSolutionSettings/initializeasync"); ;
+                SaveSolutionSettings.InitializeAsync(this, _settings)
+                    .FileAndForget("claudiaide/saveSolutionSettings/initializeasync");
+                ;
                 ReloadSettings(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
             {
-                _imageProviders.ForEach(x => x.NewImageAvaliable -= InvokeChangeImage);
-                if (_settings != null)
-                {
-                    _settings.OnChanged.RemoveEventHandler(ReloadSettings);
-                }
+                _imageProviders.ForEach(x => x.NewImageAvailable -= InvokeChangeImage);
+                if (_settings != null) _settings.OnChanged.RemoveEventHandler(ReloadSettings);
             };
-            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
+            ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
                 try
                 {
-                    await this.JoinableTaskFactory.SwitchToMainThreadAsync(true, cancellationToken);
-                    _settings = Setting.Initialize((DTE)await this.GetServiceAsync(typeof(DTE)));
+                    await JoinableTaskFactory.SwitchToMainThreadAsync(true, cancellationToken);
+                    _settings = Setting.Initialize((DTE)await GetServiceAsync(typeof(DTE)));
                     if (_settings == null) return;
-                    _mainWindow = (System.Windows.Window)Application.Current.MainWindow;
+                    _mainWindow = Application.Current.MainWindow;
                     _settings.OnChanged.AddEventHandler(ReloadSettings);
                     if (ProvidersHolder.Instance.Providers == null)
-                    {
-                        ProvidersHolder.Initialize(_settings, new List<IImageProvider>
+                        ProvidersHolder.Initialize(_settings, new List<ImageProvider>
                         {
                             new SingleImageEachProvider(_settings),
                             new SlideShowImageProvider(_settings),
-                            new SingleImageProvider(_settings)
+                            new SingleImageProvider(_settings),
+                            new SingleImageWebProvider(_settings),
+                            new WebApiImageProvider(_settings)
                         });
-                    }
 
                     _imageProviders = ProvidersHolder.Instance.Providers;
                     _imageProvider =
                         _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
-                    _imageProviders.ForEach(x => x.NewImageAvaliable += InvokeChangeImage);
+                    _imageProvider.IsActive = true;
+                    _imageProviders.ForEach(x => x.NewImageAvailable += InvokeChangeImage);
 
                     await NextImage.InitializeAsync(this);
                     await PauseSlideshow.InitializeAsync(this);
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
                     ReloadSettings(null, null);
                 }
-                catch { }
+                catch
+                {
+                }
             }).FileAndForget("claudiaide/initializeasync");
         }
 
-        private void InvokeChangeImage(object sender, System.EventArgs e)
+        private void InvokeChangeImage(object sender, EventArgs e)
         {
             try
             {
-                Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+                ThreadHelper.JoinableTaskFactory.Run(async () =>
                 {
-                    await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                     ChangeImage();
                 });
             }
-            catch { }
+            catch
+            {
+            }
         }
 
         private void ChangeImage()
         {
             try
             {
-                var rRootGrid = (Grid) _mainWindow.Template.FindName("RootGrid", _mainWindow);
+                var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
                 if (rRootGrid != null)
                 {
                     foreach (UIElement el in rRootGrid.Children)
@@ -142,7 +151,7 @@ namespace ClaudiaIDE
                     var newimage = _imageProvider.GetBitmap();
                     if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
                     {
-                        var rImageControl = new Image()
+                        var rImageControl = new Image
                         {
                             Source = newimage,
                             Stretch = _settings.ImageStretch.ConvertTo(),
@@ -168,7 +177,7 @@ namespace ClaudiaIDE
                                 var prop = g.GetType().GetProperty("Background");
                                 if (!(prop.GetValue(g) is SolidColorBrush bg) || bg.Color.A == 0x00) continue;
 
-                                prop.SetValue(g, new SolidColorBrush(new Color()
+                                prop.SetValue(g, new SolidColorBrush(new Color
                                 {
                                     A = 0x00,
                                     B = bg.Color.B,
@@ -182,13 +191,13 @@ namespace ClaudiaIDE
                     {
                         _current.AnimateImageSourceChange(
                             newimage,
-                            (n) =>
+                            n =>
                             {
                                 n.Stretch = _settings.ImageStretch.ConvertTo();
                                 n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
                                 n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
                             },
-                            new Helpers.AnimateImageChangeParams
+                            new AnimateImageChangeParams
                             {
                                 FadeTime = _settings.ImageFadeAnimationInterval,
                                 TargetOpacity = _settings.Opacity
@@ -197,15 +206,17 @@ namespace ClaudiaIDE
                     }
                 }
             }
-            catch { }
+            catch
+            {
+            }
         }
 
-        private void ReloadSettings(object sender, System.EventArgs e)
+        private void ReloadSettings(object sender, EventArgs e)
         {
             _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
-            Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.Run(async () =>
+            ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
-                await Microsoft.VisualStudio.Shell.ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 ChangeImage();
             });
         }
