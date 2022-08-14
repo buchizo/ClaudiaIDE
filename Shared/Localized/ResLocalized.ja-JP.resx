@@ -121,7 +121,7 @@
     <value>背景の表示形式</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。 </value>
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。  SingleWeb: 指定されたURLの画像を表示します。 WebApi: 指定されたAPIの応答内に含まれる画像URLを使ってスライドショー表示します。切り替え毎にWeb APIを呼び出します。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>フォルダーパス</value>
@@ -278,5 +278,35 @@
   </data>
   <data name="ViewPortPointYDes" xml:space="preserve">
     <value>このプロパティは基本タイル画像のWPFのViewPortにおける垂直位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ApiEndpoint" xml:space="preserve">
+    <value>Web API エンドポイント</value>
+  </data>
+  <data name="ApiEndpointDescpripion" xml:space="preserve">
+    <value>背景画像のURLを含むJSONオブジェクトが返されるWeb APIのエンドポイントを指定します。JSONオブジェクト内のURLを表すキーはJsonキーで指定します。</value>
+  </data>
+  <data name="JsonKey" xml:space="preserve">
+    <value>JSONキー</value>
+  </data>
+  <data name="JsonKeyDescription" xml:space="preserve">
+    <value>Web API から返されるJSONオブジェクトのキーを指定します。指定されたキーの値のURLの画像を背景画像として使用します。</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>Web上の背景画像のURLを指定します。</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>Web API を使ったスライドショー</value>
+  </data>
+  <data name="WebApiDownloadInterval" xml:space="preserve">
+    <value>Web API の呼び出し間隔</value>
+  </data>
+  <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
+    <value>Web API の呼び出し間隔を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>Web画像</value>
   </data>
 </root>

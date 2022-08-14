@@ -121,7 +121,7 @@
     <value>背景图片展示方式类型</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>选择背景显示格式。Single：显示指定的图像。SlideShow：将指定文件夹中的图像显示为幻灯片。 SingleEach：为每个编辑器窗口显示指定文件夹的图像。</value>
+    <value>选择背景显示格式。Single：显示指定的图像。SlideShow：将指定文件夹中的图像显示为幻灯片。 SingleEach：为每个编辑器窗口显示指定文件夹的图像。 SingleWeb：显示指定 URL 的图像。 WebApi：使用包含在指定 API 响应中的图像 URL 显示幻灯片。 为每个交换机调用 Web API。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>幻灯片路径</value>
@@ -278,5 +278,35 @@
   </data>
   <data name="ViewPortPointYDes" xml:space="preserve">
     <value>此属性可以设置关于 WPF ViewPort 中基本平铺图像垂直位置的双值。</value>
+  </data>
+  <data name="ApiEndpoint" xml:space="preserve">
+    <value>Web API 端点</value>
+  </data>
+  <data name="ApiEndpointDescpripion" xml:space="preserve">
+    <value>指定将包含背景图像 URL 的 JSON 对象返回到的 Web API 端点。 JSON 对象中表示 URL 的键由 Json 键指定。</value>
+  </data>
+  <data name="JsonKey" xml:space="preserve">
+    <value>JSON 密钥</value>
+  </data>
+  <data name="JsonKeyDescription" xml:space="preserve">
+    <value>指定从 Web API 返回的 JSON 对象的键。 使用指定键值 URL 中的图片作为背景图片。</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>网址</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>指定 Web 上背景图像的 URL。</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>带有 Web API 的幻灯片</value>
+  </data>
+  <data name="WebApiDownloadInterval" xml:space="preserve">
+    <value>Web API 调用间隔</value>
+  </data>
+  <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
+    <value>指定 Web API 调用之间的间隔。 （指定小时、分钟和秒的格式：HH:mm:ss）</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>网络图片</value>
   </data>
 </root>

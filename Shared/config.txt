@@ -25,7 +25,8 @@
 	"ViewPortPointY": 0,
 	"TileMode": 0,
 	"SingleWebUrl": "",
-	WebApiEndpoint: "",
-	WepApiJsonKey : "",
-	WebApiDownloadInterval: "PT5M"
+    "WebApiDownloadInterval": "PT10S",
+    "WebApiEndpoint": "https://azure.moe/api/image",
+    "WebApiJsonKey": "url",
+    "WebSingleUrl": "https://azure.moe/img/topbackground.png"
 }
