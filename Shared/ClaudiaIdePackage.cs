@@ -19,7 +19,7 @@ using Window = System.Windows.Window;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.0.9", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.0", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid(GuidList.PackageId)]
     [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}",
@@ -148,7 +148,7 @@ namespace ClaudiaIDE
 
                     if (!_settings.ExpandToIDE) return;
 
-                    var newimage = _imageProvider.GetBitmap();
+                    var newimage = ProvidersHolder.Instance.ActiveProvider.GetBitmap();
                     if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
                     {
                         var rImageControl = new Image
@@ -213,7 +213,6 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, EventArgs e)
         {
-            _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();

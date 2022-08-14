@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Settings;
 
@@ -66,6 +67,28 @@ namespace ClaudiaIDE
         public static void Initialize(Setting settings, List<ImageProvider> providers)
         {
             if (_instance.Value.Providers == null) _instance.Value.Providers = providers;
+        }
+
+        public ImageProvider ChangeActive(ImageBackgroundType newType, string solution)
+        {
+            Providers.ForEach(x => x.IsActive = false);
+            var ret = Providers.FirstOrDefault(x => x.SolutionConfigFile == solution && x.ProviderType == newType);
+            if (!string.IsNullOrEmpty(solution))
+            {
+                ret = Providers.FirstOrDefault(x => x.SolutionConfigFile == solution);
+                if (ret == null)
+                {
+                    ret = Providers.FirstOrDefault(x =>
+                        x.SolutionConfigFile == null && x.ProviderType == newType);
+                }
+            }
+            else
+            {
+                ret = Providers.FirstOrDefault(x =>
+                    x.SolutionConfigFile == null && x.ProviderType == newType);
+            }
+            ret.IsActive = true;
+            return ret;
         }
     }
 }

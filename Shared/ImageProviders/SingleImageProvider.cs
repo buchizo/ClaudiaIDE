@@ -18,6 +18,7 @@ namespace ClaudiaIDE.ImageProviders
 
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
+            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.Single) return;
             LoadImage();
             FireImageAvailable();
         }

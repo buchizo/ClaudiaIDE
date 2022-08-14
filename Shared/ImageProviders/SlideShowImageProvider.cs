@@ -102,8 +102,7 @@ namespace ClaudiaIDE.ImageProviders
             _timer = new PausableTimer(Setting.UpdateImageInterval.TotalMilliseconds);
             _timer.Elapsed += OnTimerElapsed;
 
-            if (Setting.ImageBackgroundType == ImageBackgroundType.Single ||
-                Setting.ImageBackgroundType == ImageBackgroundType.SingleEach)
+            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.Slideshow)
             {
                 _timer.Stop();
             }

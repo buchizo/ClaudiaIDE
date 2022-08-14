@@ -71,7 +71,6 @@ namespace ClaudiaIDE.MenuCommands
         {
             var activePaused = GetActivePausable();
             cmd.Visible = activePaused != null && activePaused.IsPaused;
-            ;
             cmd.Enabled = activePaused != null;
         }
 

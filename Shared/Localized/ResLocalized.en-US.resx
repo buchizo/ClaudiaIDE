@@ -121,7 +121,7 @@
     <value>Image background type</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab.</value>
+    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab. SingleWeb: Displays the image of the specified URL. WebApi: Displays a slideshow using the image URLs contained in the specified API response. Call Web API for each switch.</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>Directory Path</value>
@@ -301,7 +301,7 @@
     <value>JSON-Key</value>
   </data>
   <data name="JsonKeyDescription" xml:space="preserve">
-    <value>The key which holds the value to the downloadpath come common examples are §url§, §src§, §img§, §image§</value>
+    <value>The key which holds the value to the downloadpath come common examples are "url", "src", "img", "image"</value>
   </data>
   <data name="WebApiDownloadInterval" xml:space="preserve">
     <value>Download Interval</value>
