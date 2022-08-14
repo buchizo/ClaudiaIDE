@@ -148,7 +148,7 @@ namespace ClaudiaIDE
 
                     if (!_settings.ExpandToIDE) return;
 
-                    var newimage = _imageProvider.GetBitmap();
+                    var newimage = ProvidersHolder.Instance.ActiveProvider.GetBitmap();
                     if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
                     {
                         var rImageControl = new Image
@@ -213,7 +213,6 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, EventArgs e)
         {
-            _imageProvider = _imageProviders.FirstOrDefault(x => x.ProviderType == _settings.ImageBackgroundType);
             ThreadHelper.JoinableTaskFactory.Run(async () =>
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();

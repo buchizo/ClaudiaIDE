@@ -100,27 +100,7 @@ namespace ClaudiaIDE
 
         private ImageProvider GetImageProvider()
         {
-            var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath();
-            if (_imageProvider != null)
-                _imageProvider.IsActive = false;
-            var ret = _imageProviders.FirstOrDefault(x =>
-                x.SolutionConfigFile == solution && x.ProviderType == _settings.ImageBackgroundType);
-
-            if (!string.IsNullOrEmpty(solution))
-            {
-                ret = _imageProviders.FirstOrDefault(x => x.SolutionConfigFile == solution);
-                if (ret == null)
-                {
-                    ret = _imageProviders.FirstOrDefault(x =>
-                        x.SolutionConfigFile == null && x.ProviderType == _settings.ImageBackgroundType);
-                }
-            }
-            else
-            {
-                ret = _imageProviders.FirstOrDefault(x =>
-                    x.SolutionConfigFile == null && x.ProviderType == _settings.ImageBackgroundType);
-            }
-
+            var ret = ProvidersHolder.Instance.ActiveProvider;
             if (ret == null)
             {
                 ret = new SingleImageProvider(Setting.Instance);
@@ -132,7 +112,6 @@ namespace ClaudiaIDE
         private void ReloadSettings(object sender, EventArgs e)
         {
             _imageProvider = GetImageProvider();
-            _imageProvider.IsActive = true;
             _hasImage = false;
             ChangeImage();
         }
@@ -146,7 +125,7 @@ namespace ClaudiaIDE
                 if (_wpfTextViewHost == null) return;
                 if (!_isTargetWindow) return;
 
-                var newimage = _imageProvider.GetBitmap();
+                var newimage = ProvidersHolder.Instance.ActiveProvider.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
 
                 ThreadHelper.JoinableTaskFactory.Run(async () =>

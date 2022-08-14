@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Helpers;
@@ -16,6 +15,7 @@ namespace ClaudiaIDE.ImageProviders
 
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
+            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.WebSingle) return;
             ImageDownloader.ResetUrl();
             Image = null;
         }
@@ -23,21 +23,17 @@ namespace ClaudiaIDE.ImageProviders
         public override BitmapSource GetBitmap()
         {
             if (Image != null) return Image;
-            var image = ImageDownloader.LoadImage(Setting.WebSingleUrl, Setting.ImageStretch, Setting.MaxWidth,
-                Setting.MaxHeight);
-            _ = image.ContinueWith(OnDownloadComplete, CancellationToken.None,
-                TaskContinuationOptions.OnlyOnRanToCompletion, TaskScheduler.Default);
+            Task.Run(async () =>
+            {
+                try
+                {
+                    Image = await ImageDownloader.LoadImage(Setting.WebSingleUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
+                    FireImageAvailable();
+                }
+                catch { }
+            });
 
             return null;
-        }
-
-        private void OnDownloadComplete(Task<BitmapImage> obj)
-        {
-            if (obj.IsCompleted)
-            {
-                Image = obj.Result;
-                FireImageAvailable();
-            }
         }
     }
 }
