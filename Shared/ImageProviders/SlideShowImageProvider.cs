@@ -56,6 +56,13 @@ namespace ClaudiaIDE.ImageProviders
 
         public override BitmapSource GetBitmap()
         {
+            if (_imageFiles == null)
+            {
+                _imageFiles = GetImagesFromDirectory();
+                _imageFilesPath = _imageFiles.GetEnumerator();
+                _imageFilesPath.MoveNext();
+                _timer.Restart();
+            }
             var current = _imageFilesPath?.Current;
             if (string.IsNullOrEmpty(current)) return null;
 
@@ -124,6 +131,11 @@ namespace ClaudiaIDE.ImageProviders
 
         protected void ChangeImage()
         {
+            if (_imageFiles == null)
+            {
+                _imageFiles = GetImagesFromDirectory();
+                _imageFilesPath = _imageFiles.GetEnumerator();
+            }
             if (_imageFilesPath.MoveNext())
             {
                 FireImageAvailable();
