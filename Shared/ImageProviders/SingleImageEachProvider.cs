@@ -29,6 +29,12 @@ namespace ClaudiaIDE.ImageProviders
 
         public override BitmapSource GetBitmap()
         {
+            if (_imageFiles == null)
+            {
+                _imageFiles = GetImagesFromDirectory();
+                _imageFilesPath = _imageFiles.GetEnumerator();
+                _imageFilesPath.MoveNext();
+            }
             var current = _imageFilesPath?.Current;
             if (string.IsNullOrEmpty(current)) return null;
 
@@ -68,6 +74,11 @@ namespace ClaudiaIDE.ImageProviders
 
         public void NextImage()
         {
+            if (_imageFiles == null)
+            {
+                _imageFiles = GetImagesFromDirectory();
+                _imageFilesPath = _imageFiles.GetEnumerator();
+            }
             if (!_imageFilesPath.MoveNext())
                 if (Setting.LoopSlideshow)
                 {
