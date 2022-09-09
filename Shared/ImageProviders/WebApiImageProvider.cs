@@ -6,6 +6,7 @@ using System.Timers;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
+using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json;
 
 namespace ClaudiaIDE.ImageProviders
@@ -34,7 +35,6 @@ namespace ClaudiaIDE.ImageProviders
 
         public void Skip()
         {
-            var paused = IsPaused;
             _timer.Stop();
             ChangeImage();
             if (IsPaused)
@@ -43,31 +43,33 @@ namespace ClaudiaIDE.ImageProviders
 
         private void ChangeImage()
         {
+            ChangeImageAsync().Forget();
+        }
+
+        private async Task ChangeImageAsync()
+        {
             if (Setting.ImageBackgroundType != ImageBackgroundType.WebApi) return;
             if (_timer.IsPaused) return;
-            Task.Run(async () =>
+            using (var client = new WebClient())
             {
-                using (var client = new WebClient())
+                try
                 {
-                    try
-                    {
-                        var endpointResult = await client.DownloadStringTaskAsync(new Uri(Setting.WebApiEndpoint));
-                        var reader = new JsonTextReader(new StringReader(endpointResult));
+                    var endpointResult = await client.DownloadStringTaskAsync(new Uri(Setting.WebApiEndpoint));
+                    var reader = new JsonTextReader(new StringReader(endpointResult));
 
-                        while (reader.Read())
-                            if (reader.Value != null && reader.TokenType == JsonToken.PropertyName &&
-                                reader.Value.ToString().Equals(Setting.WebApiJsonKey))
-                            {
-                                var imageUrl = reader.ReadAsString();
-                                Image = await ImageDownloader.LoadImage(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
-                                _timer.Restart();
-                                FireImageAvailable();
-                                return;
-                            }
-                    }
-                    catch {}
+                    while (reader.Read())
+                        if (reader.Value != null && reader.TokenType == JsonToken.PropertyName &&
+                            reader.Value.ToString().Equals(Setting.WebApiJsonKey))
+                        {
+                            var imageUrl = reader.ReadAsString();
+                            Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
+                            _timer.Restart();
+                            FireImageAvailable();
+                            return;
+                        }
                 }
-            });
+                catch {}
+            }
         }
 
         protected override void OnSettingChanged(object sender, EventArgs e)
