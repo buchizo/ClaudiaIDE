@@ -13,7 +13,7 @@ namespace ClaudiaIDE.Helpers
         private static BitmapImage _image;
         private static bool loading;
 
-        public static async Task<BitmapImage> LoadImage(string url, ImageStretch imageStretch, int maxWidth,
+        public static async Task<BitmapImage> LoadImageAsync(string url, ImageStretch imageStretch, int maxWidth,
             int maxHeight)
         {
             if (string.IsNullOrEmpty(url)) return null;
@@ -71,7 +71,7 @@ namespace ClaudiaIDE.Helpers
 
                     return null;
                 }
-                catch (Exception ex)
+                catch
                 {
                     return null;
                 }

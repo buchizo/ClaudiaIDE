@@ -15,6 +15,7 @@ using ClaudiaIDE.Settings;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Window = System.Windows.Window;
+using Microsoft.VisualStudio.Threading;
 
 namespace ClaudiaIDE
 {
@@ -46,7 +47,7 @@ namespace ClaudiaIDE
                 ThreadHelper.ThrowIfNotOnUIThread();
                 _mainWindow = (Window)s;
                 _settings = Setting.Initialize((DTE)GetService(typeof(DTE)));
-                _settings.OnChanged.AddEventHandler(ReloadSettings);
+                _settings.OnChanged.AddEventHandler(InvokeChangeImage);
                 if (ProvidersHolder.Instance.Providers == null)
                     ProvidersHolder.Initialize(_settings, new List<ImageProvider>
                     {
@@ -68,12 +69,12 @@ namespace ClaudiaIDE
                 SaveSolutionSettings.InitializeAsync(this, _settings)
                     .FileAndForget("claudiaide/saveSolutionSettings/initializeasync");
                 ;
-                ReloadSettings(null, null);
+                InvokeChangeImage(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
             {
                 _imageProviders.ForEach(x => x.NewImageAvailable -= InvokeChangeImage);
-                if (_settings != null) _settings.OnChanged.RemoveEventHandler(ReloadSettings);
+                if (_settings != null) _settings.OnChanged.RemoveEventHandler(InvokeChangeImage);
             };
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
@@ -83,7 +84,7 @@ namespace ClaudiaIDE
                     _settings = Setting.Initialize((DTE)await GetServiceAsync(typeof(DTE)));
                     if (_settings == null) return;
                     _mainWindow = Application.Current.MainWindow;
-                    _settings.OnChanged.AddEventHandler(ReloadSettings);
+                    _settings.OnChanged.AddEventHandler(InvokeChangeImage);
                     if (ProvidersHolder.Instance.Providers == null)
                         ProvidersHolder.Initialize(_settings, new List<ImageProvider>
                         {
@@ -103,7 +104,7 @@ namespace ClaudiaIDE
                     await NextImage.InitializeAsync(this);
                     await PauseSlideshow.InitializeAsync(this);
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
-                    ReloadSettings(null, null);
+                    InvokeChangeImage(null, null);
                 }
                 catch
                 {
@@ -113,13 +114,15 @@ namespace ClaudiaIDE
 
         private void InvokeChangeImage(object sender, EventArgs e)
         {
+            ChangeImageAsync().Forget();
+        }
+
+        private async Task ChangeImageAsync()
+        {
             try
             {
-                ThreadHelper.JoinableTaskFactory.Run(async () =>
-                {
-                    await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                    ChangeImage();
-                });
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                ChangeImage();
             }
             catch
             {
@@ -209,15 +212,6 @@ namespace ClaudiaIDE
             catch
             {
             }
-        }
-
-        private void ReloadSettings(object sender, EventArgs e)
-        {
-            ThreadHelper.JoinableTaskFactory.Run(async () =>
-            {
-                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-                ChangeImage();
-            });
         }
     }
 }
