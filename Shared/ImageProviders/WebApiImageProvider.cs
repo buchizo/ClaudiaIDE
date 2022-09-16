@@ -64,7 +64,7 @@ namespace ClaudiaIDE.ImageProviders
                             var imageUrl = reader.ReadAsString();
                             Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
                             _timer.Restart();
-                            FireImageAvailable();
+                            if (Image != null) FireImageAvailable();
                             return;
                         }
                 }
