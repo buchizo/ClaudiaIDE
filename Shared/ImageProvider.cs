@@ -67,6 +67,8 @@ namespace ClaudiaIDE
         public static void Initialize(Setting settings, List<ImageProvider> providers)
         {
             if (_instance.Value.Providers == null) _instance.Value.Providers = providers;
+            var tp = _instance.Value.Providers?.FirstOrDefault(x => x.ProviderType == settings?.ImageBackgroundType);
+            if (tp != null) tp.IsActive = true;
         }
 
         public ImageProvider ChangeActive(ImageBackgroundType newType, string solution)

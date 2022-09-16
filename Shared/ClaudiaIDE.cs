@@ -123,7 +123,7 @@ namespace ClaudiaIDE
                 if (_wpfTextViewHost == null) return;
                 if (!_isTargetWindow) return;
 
-                var newimage = ProvidersHolder.Instance.ActiveProvider.GetBitmap();
+                var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
 
                 if (_isRootWindow)
