@@ -131,6 +131,9 @@ namespace ClaudiaIDE.Settings
         public string WebApiJsonKey { get; set; }
         public TimeSpan WebApiDownloadInterval { get; set; }
 
+        [IgnoreDataMember]
+        public bool IsHidden { get; set; }
+
         public void Serialize()
         {
             var config = JsonSerializer<Setting>.Serialize(this);
@@ -213,6 +216,7 @@ namespace ClaudiaIDE.Settings
 
         private void Load(Properties props)
         {
+            if (props == null) return;
             ThreadHelper.ThrowIfNotOnUIThread();
             BackgroundImagesDirectoryAbsolutePath =
                 ToFullPath((string)props.Item("BackgroundImageDirectoryAbsolutePath").Value, DefaultBackgroundFolder);
@@ -251,7 +255,7 @@ namespace ClaudiaIDE.Settings
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var _DTE2 = (DTE2)ServiceProvider;
-            var props = _DTE2.Properties["ClaudiaIDE", "General"];
+            var props = _DTE2?.Properties["ClaudiaIDE", "General"];
 
             Load(props);
         }
@@ -301,12 +305,25 @@ namespace ClaudiaIDE.Settings
             try
             {
                 Load(SolutionConfigFilePath);
+                this.IsHidden = false;
                 ProvidersHolder.Instance.ChangeActive(Setting.DefaultInstance.ImageBackgroundType, SolutionConfigFilePath);
                 if (string.IsNullOrEmpty(SolutionConfigFilePath))
                 {
                     Load();
                     OnChanged?.RaiseEvent(this, EventArgs.Empty);
                 }
+            }
+            catch
+            {
+            }
+        }
+
+        public void OnToggleVisibility()
+        {
+            try
+            {
+                this.IsHidden = !this.IsHidden;
+                OnChanged?.RaiseEvent(this, EventArgs.Empty);
             }
             catch
             {
@@ -329,6 +346,7 @@ namespace ClaudiaIDE.Settings
             ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath, DefaultBackgroundImage);
             ret.BackgroundImagesDirectoryAbsolutePath =
                 ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
+            ret.IsHidden = false;
             return ret;
         }
 
@@ -346,6 +364,7 @@ namespace ClaudiaIDE.Settings
             ret.BackgroundImageAbsolutePath = ToFullPath(ret.BackgroundImageAbsolutePath, DefaultBackgroundImage);
             ret.BackgroundImagesDirectoryAbsolutePath =
                 ToFullPath(ret.BackgroundImagesDirectoryAbsolutePath, DefaultBackgroundFolder);
+            ret.IsHidden = false;
             return ret;
         }
 

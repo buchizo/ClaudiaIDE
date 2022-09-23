@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.Threading;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.5", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.6", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
     [Guid(GuidList.PackageId)]
     [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}",
@@ -68,7 +68,8 @@ namespace ClaudiaIDE
                 PauseSlideshow.InitializeAsync(this).FileAndForget("claudiaide/pauseslideshow/initializeasync");
                 SaveSolutionSettings.InitializeAsync(this, _settings)
                     .FileAndForget("claudiaide/saveSolutionSettings/initializeasync");
-                ;
+                ToggleHiddenImage.InitializeAsync(this)
+                    .FileAndForget("claudiaide/toggleHiddenImage/initializeasync");
                 InvokeChangeImage(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
@@ -104,6 +105,7 @@ namespace ClaudiaIDE
                     await NextImage.InitializeAsync(this);
                     await PauseSlideshow.InitializeAsync(this);
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
+                    await ToggleHiddenImage.InitializeAsync(this);
                     InvokeChangeImage(null, null);
                 }
                 catch
@@ -160,7 +162,7 @@ namespace ClaudiaIDE
                             Stretch = _settings.ImageStretch.ConvertTo(),
                             HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
                             VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                            Opacity = _settings.Opacity
+                            Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity
                         };
 
                         Grid.SetRowSpan(rImageControl, 4);
@@ -203,7 +205,7 @@ namespace ClaudiaIDE
                             new AnimateImageChangeParams
                             {
                                 FadeTime = _settings.ImageFadeAnimationInterval,
-                                TargetOpacity = _settings.Opacity
+                                TargetOpacity = _settings.IsHidden ? 0.0 : _settings.Opacity
                             }
                         );
                     }

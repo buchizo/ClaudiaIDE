@@ -119,8 +119,18 @@
               <Strings>
                 <ButtonText>Save settings for solution</ButtonText>
               </Strings>
-          </Button>
-        </Buttons>
+			</Button>
+			<Button guid="guidClaudiaIdePackageCmdSet"
+                    id="ToggleHiddenImageId"
+                    priority="0x0130"
+                    type="Button">
+				<Parent guid="guidClaudiaIdePackageCmdSet"
+						id="ClaudiaIdeMenuGroup" />
+				<Strings>
+					<ButtonText>Toggle Background Image Visibility</ButtonText>
+				</Strings>
+			</Button>
+		</Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
         <Bitmaps>
@@ -142,7 +152,14 @@
                     key1="I"
                     key2="N"
                     mod1="Control" />
-    </KeyBindings>
+		<KeyBinding guid="guidClaudiaIdePackageCmdSet"
+                    id="ToggleHiddenImageId"
+                    editor="guidVSStd97"
+                    key1="C"
+					mod1="Control Alt Shift"
+        />
+
+	</KeyBindings>
     <Symbols>
         <!-- This is the package guid. -->
         <GuidSymbol name="guidClaudiaIdePackage"
@@ -163,7 +180,9 @@
                       value="0x0120" />
             <IDSymbol name="SaveSolutionSettingsId"
                       value="0x0130" />
-        </GuidSymbol>
+			<IDSymbol name="ToggleHiddenImageId"
+                      value="0x0140" />
+		</GuidSymbol>
 
         <GuidSymbol name="guidImages"
                     value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">

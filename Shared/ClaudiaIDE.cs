@@ -124,7 +124,7 @@ namespace ClaudiaIDE
                 if (!_isTargetWindow) return;
 
                 var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
-                var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
+                var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : (_settings.IsHidden ? 0.0 : _settings.Opacity);
 
                 if (_isRootWindow)
                 {
@@ -215,7 +215,7 @@ namespace ClaudiaIDE
             await SetCanvasBackgroundAsync();
             await FindWpfTextViewAsync(_editorCanvas as DependencyObject);
             if (_wpfTextViewHost == null) return;
-            var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : _settings.Opacity;
+            var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : (_settings.IsHidden ? 0.0 : _settings.Opacity);
 
             var refd = _wpfTextViewHost.GetType();
             var prop = refd.GetProperty("Background");
