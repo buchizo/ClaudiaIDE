@@ -31,6 +31,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Localized\LocalManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\NextImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\PauseSlideshow.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\ToggleHiddenImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\SaveSolutionSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ClaudiaIdeOptionPageGrid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Settings\JsonSerializer.cs" />
