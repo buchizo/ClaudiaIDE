@@ -130,4 +130,7 @@
   <data name="116" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="117" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
 </root>

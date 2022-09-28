@@ -524,4 +524,28 @@ namespace ClaudiaIDE.Options
             return false;
         }
     }
+
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
+    [Guid(GuidList.DarkThemeOptionPageId)]
+    public class ClaudiaIdeDarkThemeOptionPageGrid : ClaudiaIdeOptionPageGrid
+    {
+        public ClaudiaIdeDarkThemeOptionPageGrid() : base()
+        {
+        }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                Setting.DefaultInstance.OnApplyChanged();
+            }
+            catch
+            {
+            }
+
+            base.OnApply(e);
+        }
+    }
 }
