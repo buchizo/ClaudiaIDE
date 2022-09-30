@@ -309,4 +309,13 @@
   <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
     <value>The time to wait until the next image get downloaded</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>Color theme to use</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>Specifies a color theme. If Dark is selected, the contents specified in Dark Theme will be used. If UseSystemSetting is specified, the color scheme to be used is determined based on the OS color scheme theme.</value>
+  </data>
 </root>

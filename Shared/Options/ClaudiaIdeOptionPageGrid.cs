@@ -211,21 +211,6 @@ namespace ClaudiaIDE.Options
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan WebApiDownloadInterval { get; set; }
-
-        protected override void OnApply(PageApplyEventArgs e)
-        {
-            try
-            {
-                //e.ApplyBehavior = ApplyKind.CancelNoNavigate;
-                ThreadHelper.ThrowIfNotOnUIThread();
-                Setting.DefaultInstance.OnApplyChanged();
-            }
-            catch
-            {
-            }
-
-            base.OnApply(e);
-        }
     }
 
     public class ImageBackgroundTypeConverter : EnumConverter
@@ -522,6 +507,109 @@ namespace ClaudiaIDE.Options
         public override bool GetPaintValueSupported(ITypeDescriptorContext context)
         {
             return false;
+        }
+    }
+
+    public class UseColorThemeTypeConverter : EnumConverter
+    {
+        public UseColorThemeTypeConverter()
+            : base(typeof(UseColorThemeType))
+        {
+        }
+
+        public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
+        {
+            if (sourceType == typeof(string)) return true;
+
+            return base.CanConvertFrom(context, sourceType);
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
+        {
+            if (value is string str)
+            {
+                if (str == "Light") return UseColorThemeType.Light;
+                if (str == "Dark") return UseColorThemeType.Dark;
+                if (str == "UseSystemSetting") return UseColorThemeType.UseSystemSetting;
+                else return UseColorThemeType.Light;
+            }
+
+            return base.ConvertFrom(context, culture, value);
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value,
+            Type destinationType)
+        {
+            if (destinationType == typeof(string))
+            {
+                string result = "Light";
+                if ((int)value == 0)
+                    result = "Light";
+                else if ((int)value == 1)
+                    result = "Dark";
+                else if ((int)value == 2)
+                    result = "UseSystemSetting";
+
+                if (result != null) return result;
+            }
+
+            return base.ConvertTo(context, culture, value, destinationType);
+        }
+    }
+
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
+    [Guid(GuidList.DarkThemeOptionPageId)]
+    public class ClaudiaIdeDarkThemeOptionPageGrid : ClaudiaIdeOptionPageGrid
+    {
+        public ClaudiaIdeDarkThemeOptionPageGrid() : base()
+        {
+        }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                Setting.DefaultInstance.OnApplyChanged();
+            }
+            catch
+            {
+            }
+
+            base.OnApply(e);
+        }
+    }
+
+    [ClassInterface(ClassInterfaceType.AutoDual)]
+    [ComVisible(true)]
+    [Guid(GuidList.GeneralOptionPageId)]
+    public class ClaudiaIdeGeneralOptionPageGrid : DialogPage
+    {
+        [LocalManager.LocalizedCategoryAttribute("General")]
+        [LocalManager.LocalizedDisplayNameAttribute("UseColorTheme")]
+        [LocalManager.LocalizedDescriptionAttribute("UseColorThemeDescription")]
+        [PropertyPageTypeConverter(typeof(UseColorThemeTypeConverter))]
+        [TypeConverter(typeof(UseColorThemeTypeConverter))]
+        public UseColorThemeType UseColorTheme { get; set; }
+
+        public ClaudiaIdeGeneralOptionPageGrid()
+        {
+            UseColorTheme = UseColorThemeType.Light;
+        }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                Setting.DefaultInstance.OnApplyChanged();
+            }
+            catch
+            {
+            }
+
+            base.OnApply(e);
         }
     }
 }

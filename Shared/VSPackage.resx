@@ -128,6 +128,12 @@
     <value>Resources\400.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="116" xml:space="preserve">
+    <value>Light theme</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
+  <data name="118" xml:space="preserve">
     <value>General</value>
   </data>
 </root>

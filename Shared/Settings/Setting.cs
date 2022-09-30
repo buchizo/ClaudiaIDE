@@ -11,6 +11,7 @@ using System.Windows;
 using System.Windows.Media;
 using EnvDTE;
 using EnvDTE80;
+using MetroRadiance.Platform;
 using Microsoft.VisualStudio.Shell;
 
 namespace ClaudiaIDE.Settings
@@ -257,7 +258,18 @@ namespace ClaudiaIDE.Settings
             var _DTE2 = (DTE2)ServiceProvider;
             var props = _DTE2?.Properties["ClaudiaIDE", "General"];
 
-            Load(props);
+            var useColorTheme = (UseColorThemeType)props?.Item("UseColorTheme").Value;
+            var optionPage = "Light theme";
+            switch (useColorTheme)
+            {
+                case UseColorThemeType.Dark:
+                    optionPage = "Dark theme";
+                    break;
+                case UseColorThemeType.UseSystemSetting:
+                    if (MetroRadiance.Platform.WindowsTheme.Theme.Current == Theme.Dark) optionPage = "Dark theme";
+                    break;
+            }
+            Load(_DTE2?.Properties["ClaudiaIDE", optionPage]);
         }
 
         public void Load(string solutionConfigFile)
@@ -328,6 +340,16 @@ namespace ClaudiaIDE.Settings
             catch
             {
             }
+        }
+
+        public void OnColorThemeChange()
+        {
+            try
+            {
+                Load();
+                OnChanged?.RaiseEvent(this, EventArgs.Empty);
+            }
+            catch { }
         }
 
         public static Setting Deserialize()
@@ -426,6 +448,15 @@ namespace ClaudiaIDE.Settings
         FlipY = 2,
         FlipXY = 3,
         Tile = 4
+    }
+
+    [ComVisible(true)]
+    [Guid("21987719-1230-47DD-B7DD-CF1650784B5A")]
+    public enum UseColorThemeType
+    {
+        Light = 0,
+        Dark = 1,
+        UseSystemSetting = 2
     }
 
     public static class ImageStretchConverter

@@ -309,4 +309,13 @@
   <data name="WebImage" xml:space="preserve">
     <value>网络图片</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>一般的</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>使用的颜色主题</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>指定颜色主题。 如果选择深色，将使用深色主题中指定的内容。 如果指定了 UseSystemSetting，则根据 OS 配色方案主题确定要使用的配色方案。</value>
+  </data>
 </root>
