@@ -5,6 +5,7 @@ This is a Visual Studio extension that lets you set a custom background image or
 
 ## What's new
 
+- Ver 3.1.7 Support OS color theme setting and dark theme setting.
 - Ver 3.1.6 Add `Toggle Background Image Visibility` menu. 
 - Ver 3.0.3 Support tiled image in editor window.
 - Ver 3.0.1 The ClaudiaIDE has been split into two Visual Studio versions, because the older version that needs to be resolved dependency of EnvDTE in Visual Studio 2022.

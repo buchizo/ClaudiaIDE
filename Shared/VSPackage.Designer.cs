@@ -79,7 +79,7 @@ namespace ClaudiaIDE {
         }
         
         /// <summary>
-        ///   General に類似しているローカライズされた文字列を検索します。
+        ///   Light theme に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string _116 {
             get {
@@ -93,6 +93,15 @@ namespace ClaudiaIDE {
         internal static string _117 {
             get {
                 return ResourceManager.GetString("117", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   General に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        internal static string _118 {
+            get {
+                return ResourceManager.GetString("118", resourceCulture);
             }
         }
         

@@ -309,4 +309,13 @@
   <data name="WebImage" xml:space="preserve">
     <value>Web画像</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>使用する配色テーマ</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>配色テーマを指定します。Darkを選択した場合、Dark Themeで指定した内容を使用します。UseSystemSettingを指定した場合、OSの配色テーマに基づき利用する配色テーマを決定します。</value>
+  </data>
 </root>

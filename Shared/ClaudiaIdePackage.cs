@@ -20,9 +20,10 @@ using Microsoft.VisualStudio.Threading;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.6", IconResourceID = 400)]
-    [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "General", 110, 116, true)]
+    [InstalledProductRegistration("#110", "#112", "3.1.7", IconResourceID = 400)]
+    [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
+    [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
     [Guid(GuidList.PackageId)]
     [ProvideAutoLoad("{ADFC4E65-0397-11D1-9F4E-00A0C911004F}",
         PackageAutoLoadFlags.BackgroundLoad)] //UIContextGuids.EmptySolution
@@ -113,6 +114,11 @@ namespace ClaudiaIDE
                 {
                 }
             }).FileAndForget("claudiaide/initializeasync");
+
+            MetroRadiance.Platform.WindowsTheme.Theme.Changed += (sender, e) =>
+            {
+                Setting.DefaultInstance.OnColorThemeChange();
+            };
         }
 
         private void InvokeChangeImage(object sender, EventArgs e)
