@@ -211,6 +211,20 @@ namespace ClaudiaIDE.Options
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan WebApiDownloadInterval { get; set; }
+
+        protected override void OnApply(PageApplyEventArgs e)
+        {
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+                Setting.DefaultInstance.OnApplyChanged();
+            }
+            catch
+            {
+            }
+
+            base.OnApply(e);
+        }
     }
 
     public class ImageBackgroundTypeConverter : EnumConverter
