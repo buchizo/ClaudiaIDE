@@ -15,7 +15,7 @@ namespace ClaudiaIDE.ImageProviders
         public SingleImageEachProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.SingleEach)
         {
-            OnSettingChanged(null, null);
+            OnSettingChanged(setting, null);
         }
 
         private ImageFiles GetImagesFromDirectory()
