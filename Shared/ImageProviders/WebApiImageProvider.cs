@@ -18,7 +18,7 @@ namespace ClaudiaIDE.ImageProviders
         public WebApiImageProvider(Setting setting, string solutionConfigFile = null) : base(setting,
             solutionConfigFile, ImageBackgroundType.WebApi)
         {
-            OnSettingChanged(null, null);
+            OnSettingChanged(setting, null);
         }
 
         public bool IsPaused => _timer.IsPaused;

@@ -20,7 +20,7 @@ namespace ClaudiaIDE.ImageProviders
         public SlideShowImageProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.Slideshow)
         {
-            OnSettingChanged(null, null);
+            OnSettingChanged(setting, null);
         }
 
         public bool IsPaused => _timer.IsPaused;
