@@ -62,7 +62,7 @@ namespace ClaudiaIDE.ImageProviders
                             reader.Value.ToString().Equals(Setting.WebApiJsonKey))
                         {
                             var imageUrl = reader.ReadAsString();
-                            Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
+                            Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
                             _timer.Restart();
                             if (Image != null) FireImageAvailable();
                             return;

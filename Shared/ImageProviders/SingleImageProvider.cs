@@ -9,6 +9,7 @@ namespace ClaudiaIDE.ImageProviders
     public class SingleImageProvider : ImageProvider
     {
         private BitmapImage _bitmap;
+        private BitmapSource _bitmapSource;
 
         public SingleImageProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.Single)
@@ -26,16 +27,9 @@ namespace ClaudiaIDE.ImageProviders
 
         public override BitmapSource GetBitmap()
         {
-            BitmapSource ret_bitmap = _bitmap;
-            if (Setting.ImageStretch == ImageStretch.None &&
-                (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
-               )
-                ret_bitmap = Utils.ConvertToDpi96(_bitmap);
-
-            if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
-                ret_bitmap = Utils.SoftenEdges(ret_bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
-
-            return ret_bitmap;
+            if (_bitmap == null && _bitmapSource != null) return _bitmapSource;
+            if (_bitmap != null && _bitmapSource == null) return _bitmap;
+            return _bitmap;
         }
 
         private void LoadImage()
@@ -45,6 +39,7 @@ namespace ClaudiaIDE.ImageProviders
 
             if (fileInfo.Exists)
             {
+                _bitmapSource = null;
                 _bitmap = new BitmapImage();
                 _bitmap.BeginInit();
                 _bitmap.CacheOption = BitmapCacheOption.OnLoad;
@@ -55,10 +50,26 @@ namespace ClaudiaIDE.ImageProviders
 
                 if (Setting.ImageStretch == ImageStretch.None)
                     _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, Setting.MaxWidth, Setting.MaxHeight);
+
+                BitmapSource ret_bitmap = null;
+                if (Setting.ImageStretch == ImageStretch.None &&
+                    (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
+                   )
+                    ret_bitmap = Utils.ConvertToDpi96(_bitmap);
+
+                if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
+                    ret_bitmap = Utils.SoftenEdges(_bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
+
+                if (ret_bitmap != null)
+                {
+                    _bitmapSource = ret_bitmap;
+                    _bitmap = null;
+                }
             }
             else
             {
                 _bitmap = null;
+                _bitmapSource = null;
             }
         }
     }

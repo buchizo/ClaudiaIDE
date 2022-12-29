@@ -39,6 +39,7 @@ namespace ClaudiaIDE.ImageProviders
             if (string.IsNullOrEmpty(current)) return null;
 
             var bitmap = new BitmapImage();
+            BitmapSource ret_bitmap = null;
             var fileInfo = new FileInfo(current);
             if (fileInfo.Exists)
             {
@@ -49,11 +50,15 @@ namespace ClaudiaIDE.ImageProviders
                 bitmap.EndInit();
                 bitmap.Freeze();
                 if (Setting.ImageStretch == ImageStretch.None)
-                {
                     bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
-                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
-                        return Utils.ConvertToDpi96(bitmap);
-                }
+
+                if (Setting.ImageStretch == ImageStretch.None &&
+                    (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                )
+                    ret_bitmap = Utils.ConvertToDpi96(bitmap);
+
+                if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
+                    ret_bitmap = Utils.SoftenEdges(bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
             }
             else
             {
@@ -61,7 +66,8 @@ namespace ClaudiaIDE.ImageProviders
                 return GetBitmap();
             }
 
-            return bitmap;
+            if (ret_bitmap != null) return ret_bitmap;
+            else return bitmap;
         }
 
         protected override void OnSettingChanged(object sender, EventArgs e)

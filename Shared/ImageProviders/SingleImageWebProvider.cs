@@ -32,7 +32,7 @@ namespace ClaudiaIDE.ImageProviders
         {
             try
             {
-                Image = await ImageDownloader.LoadImageAsync(Setting.WebSingleUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight);
+                Image = await ImageDownloader.LoadImageAsync(Setting.WebSingleUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
                 if (Image != null) FireImageAvailable();
             }
             catch { }

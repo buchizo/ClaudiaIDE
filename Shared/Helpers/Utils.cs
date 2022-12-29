@@ -1,4 +1,6 @@
 using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -68,18 +70,17 @@ namespace ClaudiaIDE.Helpers
             var pixelData = new byte[stride * height];
             source.CopyPixels(pixelData, stride, 0);
 
-            return BitmapSource.Create(width, height, dpi, dpi, PixelFormats.Bgra32, null, pixelData, stride);
+            var ret = BitmapSource.Create(width, height, dpi, dpi, PixelFormats.Bgra32, null, pixelData, stride);
+            ret.Freeze();
+            return ret;
         }
 
         public static BitmapSource SoftenEdges(BitmapSource original, int softedgex, int softedgey)
         {
-            if (softedgex <= 0 && softedgey <= 0)
-                return original;
+            if (softedgex <= 0 && softedgey <= 0) return original;
 
             try
             {
-                //System.Windows.Forms.MessageBox.Show(string.Format("SoftenEdges,soft={0},bpp={1}", softedge, original.Format.BitsPerPixel));
-
                 //32bit assumption
                 if (original.Format.BitsPerPixel != 32) return original;
 
@@ -91,7 +92,6 @@ namespace ClaudiaIDE.Helpers
                 var width = original.PixelWidth;
                 var bytesPerPixel = (original.Format.BitsPerPixel + 7) / 8;
                 var nStride = width * bytesPerPixel;
-
 
                 pixelByteArray = new byte[height * nStride];
                 original.CopyPixels(pixelByteArray, nStride, 0);
@@ -121,11 +121,16 @@ namespace ClaudiaIDE.Helpers
                     }
                 }
 
-                var newbm = new WriteableBitmap(width, height, original.DpiX, original.DpiY, PixelFormats.Pbgra32,
-                    null);
-                newbm.WritePixels(new Int32Rect(0, 0, width, height), pixelByteArray, nStride, 0);
-
-                return newbm;
+                var bs = BitmapSource.Create(width,
+                                        height,
+                                        original.DpiX,
+                                        original.DpiY,
+                                        PixelFormats.Pbgra32,
+                                        original.Palette,
+                                        pixelByteArray,
+                                        nStride);
+                bs.Freeze();
+                return bs;
             }
             catch (Exception exp)
             {
