@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ClaudiaIDE.Helpers;
@@ -8,11 +10,13 @@ using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json;
+using StreamJsonRpc;
 
 namespace ClaudiaIDE.ImageProviders
 {
     internal class WebApiImageProvider : ImageProvider, IPausable, ISkipable
     {
+        private static HttpClient _client = new HttpClient();
         private PausableTimer _timer;
 
         public WebApiImageProvider(Setting setting, string solutionConfigFile = null) : base(setting,
@@ -50,26 +54,31 @@ namespace ClaudiaIDE.ImageProviders
         {
             if (Setting.ImageBackgroundType != ImageBackgroundType.WebApi) return;
             if (_timer.IsPaused) return;
-            using (var client = new WebClient())
-            {
-                try
-                {
-                    var endpointResult = await client.DownloadStringTaskAsync(new Uri(Setting.WebApiEndpoint));
-                    var reader = new JsonTextReader(new StringReader(endpointResult));
 
-                    while (reader.Read())
-                        if (reader.Value != null && reader.TokenType == JsonToken.PropertyName &&
-                            reader.Value.ToString().Equals(Setting.WebApiJsonKey))
-                        {
-                            var imageUrl = reader.ReadAsString();
-                            Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
-                            _timer.Restart();
-                            if (Image != null) FireImageAvailable();
-                            return;
-                        }
-                }
-                catch {}
+            try
+            {
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(Setting.WebApiDownloadInterval);
+                var request = new HttpRequestMessage(HttpMethod.Get, new Uri(Setting.WebApiEndpoint));
+                request.Headers.Add("ContentType", "application/json; charset=utf-8");
+                var httpres = await _client.SendAsync(request, cts.Token);
+                if (!httpres.IsSuccessStatusCode) return;
+                var response = await httpres.Content.ReadAsStringAsync();
+
+                var reader = new JsonTextReader(new StringReader(response));
+
+                while (reader.Read())
+                    if (reader.Value != null && reader.TokenType == JsonToken.PropertyName &&
+                        reader.Value.ToString().Equals(Setting.WebApiJsonKey))
+                    {
+                        var imageUrl = reader.ReadAsString();
+                        Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
+                        _timer.Restart();
+                        if (Image != null) FireImageAvailable();
+                        return;
+                    }
             }
+            catch {}
         }
 
         protected override void OnSettingChanged(object sender, EventArgs e)
