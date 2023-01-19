@@ -125,16 +125,15 @@ namespace ClaudiaIDE.Helpers
                                         height,
                                         original.DpiX,
                                         original.DpiY,
-                                        PixelFormats.Pbgra32,
+                                        PixelFormats.Bgra32,
                                         original.Palette,
                                         pixelByteArray,
                                         nStride);
                 bs.Freeze();
                 return bs;
             }
-            catch (Exception exp)
+            catch
             {
-                MessageBox.Show(exp + exp.StackTrace);
             }
 
             return original;
