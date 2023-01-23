@@ -125,7 +125,7 @@ namespace ClaudiaIDE.Helpers
                                         height,
                                         original.DpiX,
                                         original.DpiY,
-                                        PixelFormats.Bgra32,
+                                        PixelFormats.Pbgra32,
                                         original.Palette,
                                         pixelByteArray,
                                         nStride);
