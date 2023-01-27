@@ -61,7 +61,11 @@ namespace ClaudiaIDE
 
         public ImageProvider ActiveProvider
         {
-            get { return Providers.FirstOrDefault(provider => provider.IsActive); }
+            get
+            {
+                var solfile = VisualStudioUtility.GetSolutionSettingsFileFullPath();
+                return Providers.FirstOrDefault(provider => string.IsNullOrEmpty(solfile) ? provider.IsActive : provider.SolutionConfigFile == solfile);
+            }
         }
 
         public static void Initialize(Setting settings, List<ImageProvider> providers)

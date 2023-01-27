@@ -258,7 +258,7 @@ namespace ClaudiaIDE.Settings
             var _DTE2 = (DTE2)ServiceProvider;
             var props = _DTE2?.Properties["ClaudiaIDE", "General"];
 
-            var useColorTheme = (UseColorThemeType)props?.Item("UseColorTheme").Value;
+            var useColorTheme = (UseColorThemeType)props?.Item("UseColorTheme")?.Value;
             var optionPage = "Light theme";
             switch (useColorTheme)
             {

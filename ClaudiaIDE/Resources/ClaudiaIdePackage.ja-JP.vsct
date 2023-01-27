@@ -121,6 +121,16 @@
               </Strings>
             </Button>
 			<Button guid="guidClaudiaIdePackageCmdSet"
+                    id="ResetSolutionSettingsId"
+                    priority="0x0101"
+                    type="Button">
+				<Parent guid="guidClaudiaIdePackageCmdSet"
+						id="ClaudiaIdeMenuGroup" />
+				<Strings>
+					<ButtonText>ソリューション用設定ファイルを削除</ButtonText>
+				</Strings>
+			</Button>
+			<Button guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     priority="0x0130"
                     type="Button">
@@ -179,6 +189,8 @@
                       value="0x0120" />
             <IDSymbol name="SaveSolutionSettingsId"
                       value="0x0130" />
+			<IDSymbol name="ResetSolutionSettingsId"
+                      value="0x0150" />
 			<IDSymbol name="ToggleHiddenImageId"
                       value="0x0140" />
 		</GuidSymbol>

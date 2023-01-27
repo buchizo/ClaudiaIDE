@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.Threading;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.14", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.15", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
@@ -70,6 +70,8 @@ namespace ClaudiaIDE
                 PauseSlideshow.InitializeAsync(this).FileAndForget("claudiaide/pauseslideshow/initializeasync");
                 SaveSolutionSettings.InitializeAsync(this, _settings)
                     .FileAndForget("claudiaide/saveSolutionSettings/initializeasync");
+                ResetSolutionSettings.InitializeAsync(this, _settings)
+                    .FileAndForget("claudiaide/resetSolutionSettings/initializeasync");
                 ToggleHiddenImage.InitializeAsync(this)
                     .FileAndForget("claudiaide/toggleHiddenImage/initializeasync");
                 InvokeChangeImage(null, null);
@@ -107,6 +109,7 @@ namespace ClaudiaIDE
                     await NextImage.InitializeAsync(this);
                     await PauseSlideshow.InitializeAsync(this);
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
+                    await ResetSolutionSettings.InitializeAsync(this, _settings);
                     await ToggleHiddenImage.InitializeAsync(this);
                     InvokeChangeImage(null, null);
                 }
