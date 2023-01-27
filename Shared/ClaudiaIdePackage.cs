@@ -70,6 +70,8 @@ namespace ClaudiaIDE
                 PauseSlideshow.InitializeAsync(this).FileAndForget("claudiaide/pauseslideshow/initializeasync");
                 SaveSolutionSettings.InitializeAsync(this, _settings)
                     .FileAndForget("claudiaide/saveSolutionSettings/initializeasync");
+                ResetSolutionSettings.InitializeAsync(this, _settings)
+                    .FileAndForget("claudiaide/resetSolutionSettings/initializeasync");
                 ToggleHiddenImage.InitializeAsync(this)
                     .FileAndForget("claudiaide/toggleHiddenImage/initializeasync");
                 InvokeChangeImage(null, null);
@@ -107,6 +109,7 @@ namespace ClaudiaIDE
                     await NextImage.InitializeAsync(this);
                     await PauseSlideshow.InitializeAsync(this);
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
+                    await ResetSolutionSettings.InitializeAsync(this, _settings);
                     await ToggleHiddenImage.InitializeAsync(this);
                     InvokeChangeImage(null, null);
                 }
