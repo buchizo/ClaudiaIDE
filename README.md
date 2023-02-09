@@ -5,6 +5,7 @@ This is a Visual Studio extension that lets you set a custom background image or
 
 ## What's new
 
+- Ver 3.1.16 Experimental support about animation gif and mp4 video file play in background.
 - Ver 3.1.7 Support OS color theme setting and dark theme setting.
 - Ver 3.1.6 Add `Toggle Background Image Visibility` menu. 
 - Ver 3.0.3 Support tiled image in editor window.
