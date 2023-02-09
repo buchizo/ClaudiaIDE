@@ -31,6 +31,9 @@ namespace ClaudiaIDE
             return Image;
         }
 
+        public abstract bool IsStaticImage();
+        public abstract string GetCurrentImageUri();
+
         public event EventHandler NewImageAvailable;
 
         ~ImageProvider()

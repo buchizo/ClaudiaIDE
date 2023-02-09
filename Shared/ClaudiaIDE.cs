@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
@@ -32,6 +33,7 @@ namespace ClaudiaIDE
         private bool _isRootWindow = false;
         private bool _isTargetWindow = false;
         private DependencyObject _wpfTextViewHost = null;
+        private VisualBrush _visualBrush = null;
 
         /// <summary>
         ///     Creates a square image and attaches an event handler to the layout changed event that
@@ -135,19 +137,46 @@ namespace ClaudiaIDE
                         VerticalAlignment = VerticalAlignment.Stretch,
                         IsHitTestVisible = false
                     };
-                    var nib = new ImageBrush(newimage)
+                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
                     {
-                        Stretch = _settings.ImageStretch.ConvertTo(),
-                        AlignmentX = _settings.PositionHorizon.ConvertTo(),
-                        AlignmentY = _settings.PositionVertical.ConvertTo(),
-                        Opacity = opacity,
-                        Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY),
-                            new Size(1, 1)),
-                        TileMode = _settings.TileMode.ConvertTo(),
-                        Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
-                            _settings.ViewPortWidth, _settings.ViewPortHeight)
-                    };
-                    grid.Background = nib;
+                        var nib = new ImageBrush(newimage)
+                        {
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            AlignmentX = _settings.PositionHorizon.ConvertTo(),
+                            AlignmentY = _settings.PositionVertical.ConvertTo(),
+                            Opacity = opacity,
+                            Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY),
+                                new Size(1, 1)),
+                            TileMode = _settings.TileMode.ConvertTo(),
+                            Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
+                                _settings.ViewPortWidth, _settings.ViewPortHeight)
+                        };
+                        grid.Background = nib;
+                    }
+                    else
+                    {
+                        _visualBrush = null;
+                        _visualBrush = new VisualBrush();
+                        var me = new MediaElement
+                        {
+                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                            LoadedBehavior = MediaState.Play,
+                            UnloadedBehavior = MediaState.Manual,
+                            IsMuted = true,
+                        };
+                        me.MediaEnded += (s, e) =>
+                        {
+                            if (me == null) return;
+                            me.Position = TimeSpan.FromMilliseconds(1);
+                            me.Play();
+                        };
+                        _visualBrush.Visual = me;
+                        _visualBrush.Opacity = opacity;
+                        _visualBrush.AlignmentX = _settings.PositionHorizon.ConvertTo();
+                        _visualBrush.AlignmentY = _settings.PositionVertical.ConvertTo();
+                        _visualBrush.Stretch = _settings.ImageStretch.ConvertTo();
+                        grid.Background = _visualBrush;
+                    }
                     Grid.SetRowSpan(grid, 3);
                     Grid.SetColumnSpan(grid, 3);
                     if (VisualTreeHelper.GetParent(_wpfTextViewHost) is Grid p)
@@ -166,33 +195,60 @@ namespace ClaudiaIDE
                 }
                 else
                 {
-                    var nib = new ImageBrush(newimage)
+                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
                     {
-                        Stretch = _settings.ImageStretch.ConvertTo(),
-                        AlignmentX = _settings.PositionHorizon.ConvertTo(),
-                        AlignmentY = _settings.PositionVertical.ConvertTo(),
-                        Opacity = opacity,
-                        Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY),
-                            new Size(1, 1)),
-                        TileMode = _settings.TileMode.ConvertTo(),
-                        Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
-                            _settings.ViewPortWidth, _settings.ViewPortHeight)
-                    };
-                    if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow)
-                    {
-                        (_wpfTextViewHost as Panel).Background.AnimateImageSourceChange(
-                            nib,
-                            (n) => { (_wpfTextViewHost as Panel).Background = n; },
-                            new AnimateImageChangeParams
-                            {
-                                FadeTime = _settings.ImageFadeAnimationInterval,
-                                TargetOpacity = opacity
-                            }
-                        );
+                        var nib = new ImageBrush(newimage)
+                        {
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            AlignmentX = _settings.PositionHorizon.ConvertTo(),
+                            AlignmentY = _settings.PositionVertical.ConvertTo(),
+                            Opacity = opacity,
+                            Viewbox = new Rect(new Point(_settings.ViewBoxPointX, _settings.ViewBoxPointY),
+                                new Size(1, 1)),
+                            TileMode = _settings.TileMode.ConvertTo(),
+                            Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
+                                _settings.ViewPortWidth, _settings.ViewPortHeight)
+                        };
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow)
+                        {
+                            (_wpfTextViewHost as Panel).Background.AnimateImageSourceChange(
+                                nib,
+                                (n) => { (_wpfTextViewHost as Panel).Background = n; },
+                                new AnimateImageChangeParams
+                                {
+                                    FadeTime = _settings.ImageFadeAnimationInterval,
+                                    TargetOpacity = opacity
+                                }
+                            );
+                        }
+                        else
+                        {
+                            _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
+                        }
                     }
                     else
                     {
-                        _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
+                        _visualBrush = null;
+                        _visualBrush = new VisualBrush();
+                        var me = new MediaElement
+                        {
+                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                            LoadedBehavior = MediaState.Play,
+                            UnloadedBehavior = MediaState.Manual,
+                            IsMuted = true,
+                        };
+                        me.MediaEnded += (s, e) =>
+                        {
+                            if (me == null) return;
+                            me.Position = TimeSpan.FromMilliseconds(1);
+                            me.Play();
+                        };
+                        _visualBrush.Visual = me;
+                        _visualBrush.Opacity = opacity;
+                        _visualBrush.AlignmentX = _settings.PositionHorizon.ConvertTo();
+                        _visualBrush.AlignmentY = _settings.PositionVertical.ConvertTo();
+                        _visualBrush.Stretch = _settings.ImageStretch.ConvertTo();
+                        _wpfTextViewHost.SetValue(Panel.BackgroundProperty, _visualBrush);
                     }
                 }
 
@@ -238,8 +294,11 @@ namespace ClaudiaIDE
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 try
                 {
-                    background.Opacity = opacity < 0.01 ? 0.01 : opacity - 0.01;
-                    background.Opacity = opacity;
+                    if (background != null)
+                    {
+                        background.Opacity = opacity < 0.01 ? 0.01 : opacity - 0.01;
+                        background.Opacity = opacity;
+                    }
                 }
                 catch
                 {

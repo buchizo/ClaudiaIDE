@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -18,6 +19,7 @@ namespace ClaudiaIDE.ImageProviders
     {
         private static HttpClient _client = new HttpClient();
         private PausableTimer _timer;
+        private string _currentUrl;
 
         public WebApiImageProvider(Setting setting, string solutionConfigFile = null) : base(setting,
             solutionConfigFile, ImageBackgroundType.WebApi)
@@ -72,6 +74,12 @@ namespace ClaudiaIDE.ImageProviders
                         reader.Value.ToString().Equals(Setting.WebApiJsonKey))
                     {
                         var imageUrl = reader.ReadAsString();
+                        _currentUrl = imageUrl;
+                        if (!IsStaticImage())
+                        {
+                            FireImageAvailable();
+                            return;
+                        }
                         Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
                         _timer.Restart();
                         if (Image != null) FireImageAvailable();
@@ -106,6 +114,18 @@ namespace ClaudiaIDE.ImageProviders
         private void OnTimerElapsed(object sender, ElapsedEventArgs e)
         {
             ChangeImage();
+        }
+
+        public override bool IsStaticImage()
+        {
+            if (string.IsNullOrEmpty(_currentUrl)) return true;
+            var f = new FileInfo(new Uri(_currentUrl).LocalPath);
+            return !Setting.SupportVideoFileExtensions.Any(x => x == f.Extension.ToLower());
+        }
+
+        public override string GetCurrentImageUri()
+        {
+            return _currentUrl;
         }
     }
 }

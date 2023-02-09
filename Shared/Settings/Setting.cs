@@ -23,6 +23,8 @@ namespace ClaudiaIDE.Settings
         private static readonly List<Setting> _instance = new List<Setting>();
         private static readonly string CONFIGFILE = "config.txt";
 
+        public static string[] SupportVideoFileExtensions = new []{ ".gif", ".mp4" };
+
         [IgnoreDataMember] public WeakEvent<EventArgs> OnChanged = new WeakEvent<EventArgs>();
 
 
