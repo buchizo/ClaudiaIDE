@@ -35,6 +35,7 @@ namespace ClaudiaIDE
     public sealed class ClaudiaIdePackage : AsyncPackage
     {
         private Image _current;
+        private MediaElement _currentMediaElement;
         private ImageProvider _imageProvider;
         private List<ImageProvider> _imageProviders;
         private Window _mainWindow;
@@ -150,35 +151,105 @@ namespace ClaudiaIDE
                 {
                     foreach (UIElement el in rRootGrid.Children)
                     {
-                        if (el.GetType() != typeof(Image)) continue;
-                        if (_current == null) _current = el as Image;
-                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single || !_settings.ExpandToIDE)
+                        if (el.GetType() == typeof(Image))
                         {
                             rRootGrid.Children.Remove(el);
                             _current = null;
                         }
-
-                        break;
+                        if (el.GetType() == typeof(MediaElement))
+                        {
+                            rRootGrid.Children.Remove(el);
+                            _currentMediaElement = null;
+                        }
                     }
 
                     if (!_settings.ExpandToIDE) return;
 
-                    var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
-                    if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
+                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
                     {
-                        var rImageControl = new Image
+                        _currentMediaElement = null;
+                        var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
                         {
-                            Source = newimage,
-                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            var rImageControl = new Image
+                            {
+                                Source = newimage,
+                                Stretch = _settings.ImageStretch.ConvertTo(),
+                                HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
+                                VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                                Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity
+                            };
+
+                            Grid.SetRowSpan(rImageControl, 4);
+                            RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
+
+                            rRootGrid.Children.Insert(0, rImageControl);
+
+                            // mainwindow background set to transparent
+                            var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
+                                x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
+                            foreach (var docktarget in docktargets)
+                            {
+                                var grids = docktarget?.Descendants<Grid>();
+                                foreach (var g in grids)
+                                {
+                                    if (g == null) continue;
+                                    var prop = g.GetType().GetProperty("Background");
+                                    if (!(prop.GetValue(g) is SolidColorBrush bg) || bg.Color.A == 0x00) continue;
+
+                                    prop.SetValue(g, new SolidColorBrush(new Color
+                                    {
+                                        A = 0x00,
+                                        B = bg.Color.B,
+                                        G = bg.Color.G,
+                                        R = bg.Color.R
+                                    }));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            _current.AnimateImageSourceChange(
+                                newimage,
+                                n =>
+                                {
+                                    n.Stretch = _settings.ImageStretch.ConvertTo();
+                                    n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
+                                    n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
+                                },
+                                new AnimateImageChangeParams
+                                {
+                                    FadeTime = _settings.ImageFadeAnimationInterval,
+                                    TargetOpacity = _settings.IsHidden ? 0.0 : _settings.Opacity
+                                }
+                            );
+                        }
+                    }
+                    else
+                    {
+                        // movie, animation gif..
+                        _currentMediaElement = null;
+                        _currentMediaElement = new MediaElement
+                        {
+                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                            LoadedBehavior = MediaState.Play,
+                            UnloadedBehavior = MediaState.Manual,
+                            IsMuted = true,
                             HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
                             VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                            Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            Opacity = _settings.Opacity
                         };
+                        _currentMediaElement.MediaEnded += (s, e) =>
+                        {
+                            if (_currentMediaElement == null) return;
+                            _currentMediaElement.Position = TimeSpan.FromMilliseconds(1);
+                            _currentMediaElement.Play();
+                        };
+                        Grid.SetRowSpan(_currentMediaElement, 4);
+                        RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
 
-                        Grid.SetRowSpan(rImageControl, 4);
-                        RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
-
-                        rRootGrid.Children.Insert(0, rImageControl);
+                        rRootGrid.Children.Insert(0, _currentMediaElement);
 
                         // mainwindow background set to transparent
                         var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
@@ -201,23 +272,6 @@ namespace ClaudiaIDE
                                 }));
                             }
                         }
-                    }
-                    else
-                    {
-                        _current.AnimateImageSourceChange(
-                            newimage,
-                            n =>
-                            {
-                                n.Stretch = _settings.ImageStretch.ConvertTo();
-                                n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
-                                n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
-                            },
-                            new AnimateImageChangeParams
-                            {
-                                FadeTime = _settings.ImageFadeAnimationInterval,
-                                TargetOpacity = _settings.IsHidden ? 0.0 : _settings.Opacity
-                            }
-                        );
                     }
                 }
             }

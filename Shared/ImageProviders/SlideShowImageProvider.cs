@@ -56,46 +56,53 @@ namespace ClaudiaIDE.ImageProviders
 
         public override BitmapSource GetBitmap()
         {
-            if (_imageFiles == null)
+            try
             {
-                _imageFiles = GetImagesFromDirectory();
-                _imageFilesPath = _imageFiles.GetEnumerator();
-                _imageFilesPath.MoveNext();
-                _timer.Restart();
-            }
-            var current = _imageFilesPath?.Current;
-            if (string.IsNullOrEmpty(current)) return null;
+                if (_imageFiles == null)
+                {
+                    _imageFiles = GetImagesFromDirectory();
+                    _imageFilesPath = _imageFiles.GetEnumerator();
+                    _imageFilesPath.MoveNext();
+                    _timer.Restart();
+                }
+                var current = _imageFilesPath?.Current;
+                if (string.IsNullOrEmpty(current) || !IsStaticImage()) return null;
 
-            var bitmap = new BitmapImage();
-            var fileInfo = new FileInfo(current);
-            if (fileInfo.Exists)
+                var bitmap = new BitmapImage();
+                var fileInfo = new FileInfo(current);
+                if (fileInfo.Exists)
+                {
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.None;
+                    bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                else
+                {
+                    OnSettingChanged(null, null);
+                    return GetBitmap();
+                }
+
+
+                BitmapSource ret_bitmap = bitmap;
+                if (Setting.ImageStretch == ImageStretch.None)
+                {
+                    bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
+                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                        ret_bitmap = Utils.ConvertToDpi96(bitmap);
+                }
+
+                if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
+                    ret_bitmap = Utils.SoftenEdges(ret_bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
+
+                return ret_bitmap;
+            }
+            catch
             {
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
-                bitmap.EndInit();
-                bitmap.Freeze();
+                return null;
             }
-            else
-            {
-                OnSettingChanged(null, null);
-                return GetBitmap();
-            }
-
-
-            BitmapSource ret_bitmap = bitmap;
-            if (Setting.ImageStretch == ImageStretch.None)
-            {
-                bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
-                if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
-                    ret_bitmap = Utils.ConvertToDpi96(bitmap);
-            }
-
-            if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
-                ret_bitmap = Utils.SoftenEdges(ret_bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
-
-            return ret_bitmap;
         }
 
         protected override void OnSettingChanged(object sender, EventArgs e)
@@ -162,6 +169,18 @@ namespace ClaudiaIDE.ImageProviders
                     _timer.Stop();
                 }
             }
+        }
+
+        public override bool IsStaticImage()
+        {
+            if (string.IsNullOrEmpty(_imageFilesPath?.Current)) return true;
+            var fileInfo = new FileInfo(_imageFilesPath?.Current);
+            return !Setting.SupportVideoFileExtensions.Any(x => x == fileInfo.Extension.ToLower());
+        }
+
+        public override string GetCurrentImageUri()
+        {
+            return _imageFilesPath?.Current;
         }
     }
 

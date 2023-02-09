@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using ClaudiaIDE.Helpers;
@@ -9,6 +11,8 @@ namespace ClaudiaIDE.ImageProviders
 {
     internal class SingleImageWebProvider : ImageProvider
     {
+        private string _currentUrl;
+
         public SingleImageWebProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.WebSingle)
         {
@@ -32,10 +36,24 @@ namespace ClaudiaIDE.ImageProviders
         {
             try
             {
+                _currentUrl = Setting.WebSingleUrl;
+                if (!IsStaticImage()) return;
                 Image = await ImageDownloader.LoadImageAsync(Setting.WebSingleUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
                 if (Image != null) FireImageAvailable();
             }
             catch { }
+        }
+
+        public override bool IsStaticImage()
+        {
+            if (string.IsNullOrEmpty(_currentUrl)) return true;
+            var f = new FileInfo(new Uri(_currentUrl).LocalPath);
+            return !Setting.SupportVideoFileExtensions.Any(x => x == f.Extension.ToLower());
+        }
+
+        public override string GetCurrentImageUri()
+        {
+            return _currentUrl;
         }
     }
 }
