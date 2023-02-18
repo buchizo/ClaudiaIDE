@@ -20,7 +20,7 @@ using Microsoft.VisualStudio.Threading;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.16", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.17", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
@@ -149,19 +149,21 @@ namespace ClaudiaIDE
                 var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
                 if (rRootGrid != null)
                 {
+                    var removeTargets = new List<UIElement>();
                     foreach (UIElement el in rRootGrid.Children)
                     {
                         if (el.GetType() == typeof(Image))
                         {
-                            rRootGrid.Children.Remove(el);
+                            removeTargets.Add(el);
                             _current = null;
                         }
                         if (el.GetType() == typeof(MediaElement))
                         {
-                            rRootGrid.Children.Remove(el);
+                            removeTargets.Add(el);
                             _currentMediaElement = null;
                         }
                     }
+                    removeTargets.ForEach(x => rRootGrid.Children.Remove(x));
 
                     if (!_settings.ExpandToIDE) return;
 
@@ -184,28 +186,7 @@ namespace ClaudiaIDE
                             RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
 
                             rRootGrid.Children.Insert(0, rImageControl);
-
-                            // mainwindow background set to transparent
-                            var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
-                                x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-                            foreach (var docktarget in docktargets)
-                            {
-                                var grids = docktarget?.Descendants<Grid>();
-                                foreach (var g in grids)
-                                {
-                                    if (g == null) continue;
-                                    var prop = g.GetType().GetProperty("Background");
-                                    if (!(prop.GetValue(g) is SolidColorBrush bg) || bg.Color.A == 0x00) continue;
-
-                                    prop.SetValue(g, new SolidColorBrush(new Color
-                                    {
-                                        A = 0x00,
-                                        B = bg.Color.B,
-                                        G = bg.Color.G,
-                                        R = bg.Color.R
-                                    }));
-                                }
-                            }
+                            SetTransparentBackground(rRootGrid);
                         }
                         else
                         {
@@ -250,33 +231,52 @@ namespace ClaudiaIDE
                         RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
 
                         rRootGrid.Children.Insert(0, _currentMediaElement);
-
-                        // mainwindow background set to transparent
-                        var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
-                            x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-                        foreach (var docktarget in docktargets)
-                        {
-                            var grids = docktarget?.Descendants<Grid>();
-                            foreach (var g in grids)
-                            {
-                                if (g == null) continue;
-                                var prop = g.GetType().GetProperty("Background");
-                                if (!(prop.GetValue(g) is SolidColorBrush bg) || bg.Color.A == 0x00) continue;
-
-                                prop.SetValue(g, new SolidColorBrush(new Color
-                                {
-                                    A = 0x00,
-                                    B = bg.Color.B,
-                                    G = bg.Color.G,
-                                    R = bg.Color.R
-                                }));
-                            }
-                        }
+                        SetTransparentBackground(rRootGrid);
                     }
                 }
             }
             catch
             {
+            }
+        }
+
+        /// <summary>
+        /// mainwindow background set to transparent
+        /// </summary>
+        /// <param name="rRootGrid"></param>
+        public static void SetTransparentBackground(Grid rRootGrid)
+        {
+            var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
+                x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
+            foreach (var docktarget in docktargets)
+            {
+                var grids = docktarget?.Descendants<Grid>();
+                foreach (var g in grids)
+                {
+                    try
+                    {
+                        if (g == null) continue;
+                        var prop = g.GetType().GetProperty("Background");
+                        if (prop.GetValue(g) is LinearGradientBrush)
+                        {
+                            prop.SetValue(g, new SolidColorBrush(new Color
+                            {
+                                A = 0x00
+                            }));
+                            continue;
+                        }
+                        if (!(prop.GetValue(g) is SolidColorBrush bg) || bg.Color.A == 0x00) continue;
+
+                        prop.SetValue(g, new SolidColorBrush(new Color
+                        {
+                            A = 0x00,
+                            B = bg.Color.B,
+                            G = bg.Color.G,
+                            R = bg.Color.R
+                        }));
+                    }
+                    catch { }
+                }
             }
         }
     }
