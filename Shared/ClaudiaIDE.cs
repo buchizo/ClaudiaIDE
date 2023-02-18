@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -323,13 +325,11 @@ namespace ClaudiaIDE
 
             var isTransparent = true;
             var current = _editorCanvas as DependencyObject;
-
             while (current != null)
             {
                 var refd = current.GetType();
                 var nameprop = refd.GetProperty("Name");
                 var objname = nameprop?.GetValue(current) as string;
-
                 if (!string.IsNullOrEmpty(objname) && (objname.Equals("RootGrid", StringComparison.OrdinalIgnoreCase) ||
                                                        objname.Equals("MainWindow",
                                                            StringComparison.OrdinalIgnoreCase)))
@@ -348,6 +348,14 @@ namespace ClaudiaIDE
                         StringComparison.OrdinalIgnoreCase))
                 {
                     isTransparent = _settings.ExpandToIDE && _isMainWindow;
+                    if (isTransparent)
+                    {
+                        // set to transparent for chilren
+                        foreach(var c in current.Children())
+                        {
+                            await SetTransparentForChildAsync(c);
+                        }
+                    }
                 }
                 else if (refd.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView",
                              StringComparison.OrdinalIgnoreCase))
@@ -477,6 +485,16 @@ namespace ClaudiaIDE
             }
 
             return null;
+        }
+
+        private async Task SetTransparentForChildAsync(DependencyObject d)
+        {
+            if (d == null) return;
+            foreach (var c in d.Children())
+            {
+                await SetBackgroundToTransparentAsync(c, true);
+                await SetTransparentForChildAsync(c);
+            }
         }
 
         private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent)
