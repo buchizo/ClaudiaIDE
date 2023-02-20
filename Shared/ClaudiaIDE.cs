@@ -492,6 +492,7 @@ namespace ClaudiaIDE
             if (d == null) return;
             foreach (var c in d.Children())
             {
+                if (c?.GetType().FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
                 await SetBackgroundToTransparentAsync(c, true);
                 await SetTransparentForChildAsync(c);
             }
