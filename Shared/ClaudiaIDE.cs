@@ -500,6 +500,8 @@ namespace ClaudiaIDE
 
         private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent)
         {
+            var name = d.GetType().GetProperty("Name");
+            if (name?.GetValue(d).Equals("WhitePadding") == true) return;
             var property = d.GetType().GetProperty("Background");
             if (!(property?.GetValue(d) is Brush current)) return;
 
