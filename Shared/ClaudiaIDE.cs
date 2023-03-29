@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
+using System.Xml.Linq;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Settings;
@@ -492,7 +493,10 @@ namespace ClaudiaIDE
             if (d == null) return;
             foreach (var c in d.Children())
             {
-                if (c?.GetType().FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
+                if (c == null) continue;
+                var type = c.GetType();
+                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
+                if (type?.GetProperty("Name")?.GetValue(c)?.ToString() == "PinnedViewControl") return; // exception popup
                 await SetBackgroundToTransparentAsync(c, true);
                 await SetTransparentForChildAsync(c);
             }
@@ -500,9 +504,11 @@ namespace ClaudiaIDE
 
         private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent)
         {
-            var name = d.GetType().GetProperty("Name");
-            if (name?.GetValue(d).Equals("WhitePadding") == true) return;
-            var property = d.GetType().GetProperty("Background");
+            var type = d.GetType();
+            var name = type?.GetProperty("Name")?.GetValue(d)?.ToString();
+            if (name == "WhitePadding") return;
+            if (type?.Name == "TextBlock") return; // maybe caret
+            var property = type.GetProperty("Background");
             if (!(property?.GetValue(d) is Brush current)) return;
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
