@@ -496,8 +496,8 @@ namespace ClaudiaIDE
                 if (c == null) continue;
                 var type = c.GetType();
                 if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
-                if (type?.GetProperty("Name")?.GetValue(c)?.ToString() == "PinnedViewControl") return; // exception popup
                 await SetBackgroundToTransparentAsync(c, true);
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer") == true) continue; // stop for childs object
                 await SetTransparentForChildAsync(c);
             }
         }
