@@ -154,13 +154,33 @@ namespace ClaudiaIDE
                     {
                         if (el.GetType() == typeof(Image))
                         {
-                            removeTargets.Add(el);
-                            _current = null;
+                            if (_settings.ImageBackgroundType == ImageBackgroundType.Single
+                                || !_settings.ExpandToIDE
+                                || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == false)
+                            {
+                                removeTargets.Add(el);
+                                _current = null;
+                            }
+                            else
+                            {
+                                _currentMediaElement = null;
+                                _current = el as Image;
+                            }
                         }
                         if (el.GetType() == typeof(MediaElement))
                         {
-                            removeTargets.Add(el);
-                            _currentMediaElement = null;
+                            if (_settings.ImageBackgroundType == ImageBackgroundType.Single
+                                || !_settings.ExpandToIDE
+                                || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
+                            {
+                                removeTargets.Add(el);
+                                _currentMediaElement = null;
+                            }
+                            else
+                            {
+                                _current = null;
+                                _currentMediaElement = el as MediaElement;
+                            }
                         }
                     }
                     removeTargets.ForEach(x => rRootGrid.Children.Remove(x));
@@ -209,29 +229,34 @@ namespace ClaudiaIDE
                     else
                     {
                         // movie, animation gif..
-                        _currentMediaElement = null;
-                        _currentMediaElement = new MediaElement
+                        if (_currentMediaElement == null)
                         {
-                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
-                            LoadedBehavior = MediaState.Play,
-                            UnloadedBehavior = MediaState.Manual,
-                            IsMuted = true,
-                            HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
-                            VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                            Stretch = _settings.ImageStretch.ConvertTo(),
-                            Opacity = _settings.Opacity
-                        };
-                        _currentMediaElement.MediaEnded += (s, e) =>
+                            _currentMediaElement = new MediaElement
+                            {
+                                Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                                LoadedBehavior = MediaState.Play,
+                                UnloadedBehavior = MediaState.Manual,
+                                IsMuted = true,
+                                HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
+                                VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                                Stretch = _settings.ImageStretch.ConvertTo(),
+                                Opacity = _settings.Opacity
+                            };
+                            _currentMediaElement.MediaEnded += (s, e) =>
+                            {
+                                if (_currentMediaElement == null) return;
+                                _currentMediaElement.Position = TimeSpan.FromMilliseconds(1);
+                                _currentMediaElement.Play();
+                            };
+                            Grid.SetRowSpan(_currentMediaElement, 4);
+                            RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
+                            rRootGrid.Children.Insert(0, _currentMediaElement);
+                            SetTransparentBackground(rRootGrid);
+                        }
+                        else
                         {
-                            if (_currentMediaElement == null) return;
-                            _currentMediaElement.Position = TimeSpan.FromMilliseconds(1);
-                            _currentMediaElement.Play();
-                        };
-                        Grid.SetRowSpan(_currentMediaElement, 4);
-                        RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
-
-                        rRootGrid.Children.Insert(0, _currentMediaElement);
-                        SetTransparentBackground(rRootGrid);
+                            _currentMediaElement.Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri());
+                        }
                     }
                 }
             }
