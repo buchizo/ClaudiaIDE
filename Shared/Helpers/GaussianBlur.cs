@@ -27,7 +27,7 @@ namespace ClaudiaIDE.Helpers
             bytesPerPixel = (image.Format.BitsPerPixel + 7) / 8;
             stride = width * bytesPerPixel;
 
-            srcBytes = new byte[width * stride];
+            srcBytes = new byte[Math.Max(width, height) * stride];
             image.CopyPixels(srcBytes, stride, 0);
 
             red = new byte[width * height];
@@ -49,7 +49,7 @@ namespace ClaudiaIDE.Helpers
                 });
             });
 
-            byte[] srcResult = new byte[width * stride];
+            byte[] srcResult = new byte[Math.Max(width, height) * stride];
             byte[] nRed = new byte[width * height];
             byte[] nGreen = new byte[width * height];
             byte[] nBlue = new byte[width * height];
@@ -84,7 +84,7 @@ namespace ClaudiaIDE.Helpers
                                                     height,
                                                     image.DpiX,
                                                     image.DpiY,
-                                                    PixelFormats.Pbgra32,
+                                                    image.Format,
                                                     image.Palette,
                                                     srcResult,
                                                     stride);
