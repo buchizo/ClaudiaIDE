@@ -95,6 +95,9 @@
   <ItemGroup>
     <Compile Include="..\Shared\Localized\ResLocalized.Designer.cs">
       <Link>Localized\ResLocalized.Designer.cs</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ResLocalized.resx</DependentUpon>
     </Compile>
     <Compile Include="..\Shared\VSPackage.Designer.cs">
       <Link>VSPackage.Designer.cs</Link>
@@ -200,6 +203,7 @@
       <MergeWithCTO>true</MergeWithCTO>
       <LastGenOutput>ResLocalized.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="..\Shared\Localized\ResLocalized.zh-CN.resx">
       <Link>Localized\ResLocalized.zh-CN.resx</Link>
