@@ -318,4 +318,10 @@
   <data name="UseColorThemeDescription" xml:space="preserve">
     <value>Specifies a color theme. If Dark is selected, the contents specified in Dark Theme will be used. If UseSystemSetting is specified, the color scheme to be used is determined based on the OS color scheme theme.</value>
   </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>Image blur radius</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value>Apply Gaussian Blur on background images.</value>
+  </data>
 </root>
