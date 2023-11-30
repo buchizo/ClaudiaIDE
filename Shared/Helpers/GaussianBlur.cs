@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -34,9 +35,9 @@ namespace ClaudiaIDE.Helpers
             blue = new byte[width * height];
             alpha = new byte[width * height];
 
-            for (var y = 0; y < height; y++)
+            Parallel.For(0, height, y =>
             {
-                for (var x = 0; x < width; x++)
+                Parallel.For(0, width, x =>
                 {
                     int i = x + y * width;
                     var offset = GetPixelOffset(x, y);
@@ -45,8 +46,8 @@ namespace ClaudiaIDE.Helpers
                     green[i] = srcBytes[offset + 1];
                     blue[i] = srcBytes[offset + 2];
                     alpha[i] = srcBytes[offset + 3];
-                }
-            }
+                });
+            });
 
             byte[] srcResult = new byte[width * stride];
             byte[] nRed = new byte[width * height];
@@ -54,14 +55,16 @@ namespace ClaudiaIDE.Helpers
             byte[] nBlue = new byte[width * height];
             byte[] nAlpha = new byte[width * height];
 
-            gaussBlur_4(red, nRed, radius);
-            gaussBlur_4(green, nGreen, radius);
-            gaussBlur_4(blue, nBlue, radius);
-            gaussBlur_4(alpha, nAlpha, radius);
+            Parallel.Invoke(
+                () => gaussBlur_4(red, nRed, radius),
+                () => gaussBlur_4(green, nGreen, radius),
+                () => gaussBlur_4(blue, nBlue, radius),
+                () => gaussBlur_4(alpha, nAlpha, radius)
+            );
 
-            for (var y = 0; y < height; y++)
+            Parallel.For(0, height, y =>
             {
-                for(var x = 0; x < width; x++)
+                Parallel.For(0, width, x =>
                 {
                     int i = x + y * width;
                     nRed[i] = Math.Max((byte)0, Math.Min(nRed[i], (byte)0xff));
@@ -74,8 +77,8 @@ namespace ClaudiaIDE.Helpers
                     srcResult[offset + 1] = nGreen[i];
                     srcResult[offset + 2] = nBlue[i];
                     srcResult[offset + 3] = nAlpha[i];
-                }
-            }
+                });
+            });
 
             BitmapSource _res = BitmapSource.Create(width,
                                                     height,
@@ -127,7 +130,7 @@ namespace ClaudiaIDE.Helpers
         private void boxBlurH_4(byte[] source, byte[] dest, int w, int h, int r)
         {
             var iar = (double)1 / (r + r + 1);
-            for(var i = 0; i < h; i++)
+            Parallel.For(0, h, i =>
             {
                 var ti = i * w;
                 var li = ti;
@@ -151,13 +154,13 @@ namespace ClaudiaIDE.Helpers
                     val += lv - source[li++];
                     dest[ti++] = (byte)Math.Round(val * iar);
                 }
-            }
+            });
         }
 
         private void boxBlurT_4(byte[] source, byte[] dest, int w, int h, int r)
         {
             var iar = (double)1 / (r + r + 1);
-            for (var i = 0; i < w; i++)
+            Parallel.For(0, w, i =>
             {
                 var ti = i;
                 var li = ti;
@@ -188,7 +191,7 @@ namespace ClaudiaIDE.Helpers
                     li += w;
                     ti += w;
                 }
-            }
+            });
         }
     }
 }

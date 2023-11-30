@@ -106,7 +106,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply Gaussian Blur on background images..
+        ///   Looks up a localized string similar to Apply Gaussian Blur on background images.  This option does not support videos and GIFs. WebApi slideshow may have more delay, but it still works..
         /// </summary>
         public static string BlurRadiusDes {
             get {
