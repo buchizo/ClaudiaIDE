@@ -319,9 +319,9 @@
     <value>指定颜色主题。 如果选择深色，将使用深色主题中指定的内容。 如果指定了 UseSystemSetting，则根据 OS 配色方案主题确定要使用的配色方案。</value>
   </data>
   <data name="BlurRadius" xml:space="preserve">
-    <value>模糊强度</value>
+    <value>图像模糊半径</value>
   </data>
   <data name="BlurRadiusDes" xml:space="preserve">
-    <value />
+    <value>在背景图像上应用高斯模糊。 此选项不支持视频和 GIF。 WebApi 幻灯片可能有更多延迟，但它仍然有效。 如果该值设置为零，则没有模糊。 （0 &lt;= {图像 x 和 y 大小中较小者 / 2 - 1} 范围内的值）</value>
   </data>
 </root>
