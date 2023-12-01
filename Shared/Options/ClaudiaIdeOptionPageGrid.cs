@@ -33,6 +33,7 @@ namespace ClaudiaIDE.Options
             MaxHeight = 0;
             SoftEdgeX = 0;
             SoftEdgeY = 0;
+            BlurRadius = 0;
             ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
@@ -140,6 +141,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayNameAttribute("SoftEdgeY")]
         [LocalManager.LocalizedDescriptionAttribute("SoftEdgeDes")]
         public int SoftEdgeY { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayNameAttribute("BlurRadius")]
+        [LocalManager.LocalizedDescriptionAttribute("BlurRadiusDes")]
+        public int BlurRadius { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayNameAttribute("ImageStretchType")]

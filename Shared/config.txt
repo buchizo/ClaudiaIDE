@@ -15,6 +15,7 @@
 	"MaxHeight": 0,
 	"SoftEdgeX": 0,
 	"SoftEdgeY": 0,
+	"BlurRadius": 0,
 	"ExpandToIDE": false,
 	"ViewBoxPointX": 0,
 	"ViewBoxPointY": 0,

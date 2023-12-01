@@ -318,4 +318,10 @@
   <data name="UseColorThemeDescription" xml:space="preserve">
     <value>配色テーマを指定します。Darkを選択した場合、Dark Themeで指定した内容を使用します。UseSystemSettingを指定した場合、OSの配色テーマに基づき利用する配色テーマを決定します。</value>
   </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>ガウスぼかし</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value />
+  </data>
 </root>

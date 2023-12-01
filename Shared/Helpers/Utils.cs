@@ -125,7 +125,7 @@ namespace ClaudiaIDE.Helpers
                                         height,
                                         original.DpiX,
                                         original.DpiY,
-                                        PixelFormats.Pbgra32,
+                                        original.Format,
                                         original.Palette,
                                         pixelByteArray,
                                         nStride);
@@ -137,6 +137,18 @@ namespace ClaudiaIDE.Helpers
             }
 
             return original;
+        }
+
+        public static BitmapSource Blur(BitmapSource image, int radius)
+        {
+            if (radius <= 0) return image;
+
+            //32bit assumption
+            if (image.Format.BitsPerPixel != 32) return image;
+
+            //blur operation
+            GaussianBlur gblur = new GaussianBlur(image, radius);
+            return gblur.Result;
         }
     }
 }

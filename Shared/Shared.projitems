@@ -16,6 +16,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DependencyObjectExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\GaussianBlur.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageDownloader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\ImageSourceAnimator.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\PausableTimer.cs" />

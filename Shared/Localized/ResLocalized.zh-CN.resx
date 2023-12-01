@@ -318,4 +318,10 @@
   <data name="UseColorThemeDescription" xml:space="preserve">
     <value>指定颜色主题。 如果选择深色，将使用深色主题中指定的内容。 如果指定了 UseSystemSetting，则根据 OS 配色方案主题确定要使用的配色方案。</value>
   </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>模糊强度</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value />
+  </data>
 </root>

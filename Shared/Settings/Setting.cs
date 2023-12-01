@@ -49,6 +49,7 @@ namespace ClaudiaIDE.Settings
             MaxHeight = 0;
             SoftEdgeX = 0;
             SoftEdgeY = 0;
+            BlurRadius = 0;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
@@ -110,6 +111,7 @@ namespace ClaudiaIDE.Settings
         public int MaxHeight { get; set; }
         public int SoftEdgeX { get; set; }
         public int SoftEdgeY { get; set; }
+        public int BlurRadius { get; set; }
 
         public string BackgroundImageAbsolutePath { get; set; }
 
@@ -189,6 +191,7 @@ namespace ClaudiaIDE.Settings
                     settings.ShuffleSlideshow = solconf.ShuffleSlideshow;
                     settings.SoftEdgeX = solconf.SoftEdgeX;
                     settings.SoftEdgeY = solconf.SoftEdgeY;
+                    settings.BlurRadius = solconf.BlurRadius;
                     settings.UpdateImageInterval = solconf.UpdateImageInterval;
                     settings.ViewBoxPointX = solconf.ViewBoxPointX;
                     settings.ViewBoxPointY = solconf.ViewBoxPointY;
@@ -239,6 +242,7 @@ namespace ClaudiaIDE.Settings
             MaxHeight = (int)props.Item("MaxHeight").Value;
             SoftEdgeX = (int)props.Item("SoftEdgeX").Value;
             SoftEdgeY = (int)props.Item("SoftEdgeY").Value;
+            BlurRadius = (int)props.Item("BlurRadius").Value;
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
             ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
             ViewBoxPointY = (double)props.Item("ViewBoxPointY").Value;
@@ -299,6 +303,7 @@ namespace ClaudiaIDE.Settings
             ShuffleSlideshow = solconf.ShuffleSlideshow;
             SoftEdgeX = solconf.SoftEdgeX;
             SoftEdgeY = solconf.SoftEdgeY;
+            BlurRadius = solconf.BlurRadius;
             UpdateImageInterval = solconf.UpdateImageInterval;
             ViewBoxPointX = solconf.ViewBoxPointX;
             ViewBoxPointY = solconf.ViewBoxPointY;
