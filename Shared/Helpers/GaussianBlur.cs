@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace ClaudiaIDE.Helpers
@@ -56,10 +55,10 @@ namespace ClaudiaIDE.Helpers
             byte[] nAlpha = new byte[width * height];
 
             Parallel.Invoke(
-                () => gaussBlur_4(red, nRed, radius),
-                () => gaussBlur_4(green, nGreen, radius),
-                () => gaussBlur_4(blue, nBlue, radius),
-                () => gaussBlur_4(alpha, nAlpha, radius)
+                () => GaussBlur_4(red, nRed, radius),
+                () => GaussBlur_4(green, nGreen, radius),
+                () => GaussBlur_4(blue, nBlue, radius),
+                () => GaussBlur_4(alpha, nAlpha, radius)
             );
 
             Parallel.For(0, height, y =>
@@ -97,15 +96,15 @@ namespace ClaudiaIDE.Helpers
             return bytesPerPixel * (x + y * width);
         }
 
-        private void gaussBlur_4(byte[] source, byte[] dest, int r)
+        private void GaussBlur_4(byte[] source, byte[] dest, int r)
         {
-            var bxs = boxesForGauss(r, 3);
-            boxBlur_4(source, dest, width, height, (bxs[0] - 1) / 2);
-            boxBlur_4(dest, source, width, height, (bxs[1] - 1) / 2);
-            boxBlur_4(source, dest, width, height, (bxs[2] - 1) / 2);
+            var bxs = BoxesForGauss(r, 3);
+            BoxBlur_4(source, dest, width, height, (bxs[0] - 1) / 2);
+            BoxBlur_4(dest, source, width, height, (bxs[1] - 1) / 2);
+            BoxBlur_4(source, dest, width, height, (bxs[2] - 1) / 2);
         }
 
-        private int[] boxesForGauss(int sigma, int n)
+        private int[] BoxesForGauss(int sigma, int n)
         {
             var wIdeal = Math.Sqrt((12 * sigma * sigma / n) + 1);
             var wl = (int)Math.Floor(wIdeal);
@@ -120,14 +119,15 @@ namespace ClaudiaIDE.Helpers
             return sizes.ToArray();
         }
 
-        private void boxBlur_4(byte[] source, byte[] dest, int w, int h, int r)
+        private void BoxBlur_4(byte[] source, byte[] dest, int w, int h, int r)
         {
+            r = ((Math.Min(w, h) / 2) - 1) < r ? (Math.Min(w, h) / 2) - 1 : r;
             for (var i = 0; i < source.Length; i++) dest[i] = source[i];
-            boxBlurH_4(dest, source, w, h, r);
-            boxBlurT_4(source, dest, w, h, r);
+            BoxBlurH_4(dest, source, w, h, r);
+            BoxBlurT_4(source, dest, w, h, r);
         }
 
-        private void boxBlurH_4(byte[] source, byte[] dest, int w, int h, int r)
+        private void BoxBlurH_4(byte[] source, byte[] dest, int w, int h, int r)
         {
             var iar = (double)1 / (r + r + 1);
             Parallel.For(0, h, i =>
@@ -157,7 +157,7 @@ namespace ClaudiaIDE.Helpers
             });
         }
 
-        private void boxBlurT_4(byte[] source, byte[] dest, int w, int h, int r)
+        private void BoxBlurT_4(byte[] source, byte[] dest, int w, int h, int r)
         {
             var iar = (double)1 / (r + r + 1);
             Parallel.For(0, w, i =>
