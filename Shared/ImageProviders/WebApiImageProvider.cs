@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,7 +10,6 @@ using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Threading;
 using Newtonsoft.Json;
-using StreamJsonRpc;
 
 namespace ClaudiaIDE.ImageProviders
 {
