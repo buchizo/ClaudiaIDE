@@ -138,10 +138,5 @@ namespace ClaudiaIDE.Helpers
 
             return original;
         }
-
-        public static BitmapSource Blur(BitmapSource image, int radius)
-        {
-            return image;
-        }
     }
 }

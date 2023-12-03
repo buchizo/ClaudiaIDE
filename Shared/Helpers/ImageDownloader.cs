@@ -73,9 +73,6 @@ namespace ClaudiaIDE.Helpers
                     if ((_image.Width != _image.PixelWidth || _image.Height != _image.PixelHeight))
                         ret_bitmap = Utils.ConvertToDpi96(_image);
 
-                    if (setting.BlurRadius >= 0)
-                        ret_bitmap = Utils.Blur(ret_bitmap ?? _image, setting.BlurRadius);
-
                     if (setting.SoftEdgeX > 0 || setting.SoftEdgeY > 0)
                         ret_bitmap = Utils.SoftenEdges(ret_bitmap ?? _image, setting.SoftEdgeX, setting.SoftEdgeY);
 
