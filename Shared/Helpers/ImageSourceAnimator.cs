@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -34,6 +34,35 @@ namespace ClaudiaIDE.Helpers
             {
                 newImage.Opacity = animateImageChangeParams.TargetOpacity;
                 onChangeImage(newImage);
+            }
+        }
+
+        public static void AnimateImageSourceChange(this Brush background, VisualBrush newVisual,
+            Action<VisualBrush> onChangeVisual, AnimateImageChangeParams animateImageChangeParams = null)
+        {
+            var animationParameters = animateImageChangeParams ?? new AnimateImageChangeParams();
+
+            if (background != null)
+            {
+                var fadeOutAnimation = new DoubleAnimation(0d, animationParameters.FadeTime) { AutoReverse = false };
+                var fadeInAnimation =
+                    new DoubleAnimation(0d, animationParameters.TargetOpacity, animationParameters.FadeTime)
+                        { AutoReverse = false };
+
+                fadeOutAnimation.Completed += (o, e) =>
+                {
+                    newVisual.Opacity = 0d;
+                    onChangeVisual(newVisual);
+                    background.Opacity = animationParameters.TargetOpacity;
+                    newVisual.BeginAnimation(Brush.OpacityProperty, fadeInAnimation);
+                };
+
+                background.BeginAnimation(Brush.OpacityProperty, fadeOutAnimation);
+            }
+            else
+            {
+                newVisual.Opacity = animateImageChangeParams.TargetOpacity;
+                onChangeVisual(newVisual);
             }
         }
 
