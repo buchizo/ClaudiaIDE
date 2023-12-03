@@ -148,10 +148,10 @@ namespace ClaudiaIDE
                         var imageControl = new Image
                         {
                             Source = newimage,
-                            Effect = new BlurEffect()
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
                                 Radius = _settings.BlurRadius
-                            }
+                            } : null
                         };
                         _visualBrushStatic = null;
                         _visualBrushStatic = new VisualBrush(imageControl)
@@ -178,11 +178,11 @@ namespace ClaudiaIDE
                             LoadedBehavior = MediaState.Play,
                             UnloadedBehavior = MediaState.Manual,
                             IsMuted = true,
-                            Effect = new BlurEffect()
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
                                 Radius = _settings.BlurRadius,
                                 KernelType = KernelType.Box
-                            }
+                            } : null
                         };
                         me.MediaEnded += (s, e) =>
                         {
@@ -220,10 +220,10 @@ namespace ClaudiaIDE
                         var imageControl = new Image
                         {
                             Source = newimage,
-                            Effect = new BlurEffect()
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
                                 Radius = _settings.BlurRadius
-                            }
+                            } : null
                         };
                         _visualBrushStatic = null;
                         _visualBrushStatic = new VisualBrush(imageControl)
@@ -267,11 +267,11 @@ namespace ClaudiaIDE
                             LoadedBehavior = MediaState.Play,
                             UnloadedBehavior = MediaState.Manual,
                             IsMuted = true,
-                            Effect = new BlurEffect()
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
                                 Radius = _settings.BlurRadius,
                                 KernelType = KernelType.Box
-                            }
+                            } : null
                         };
                         me.MediaEnded += (s, e) =>
                         {

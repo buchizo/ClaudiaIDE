@@ -201,10 +201,10 @@ namespace ClaudiaIDE
                                 HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
                                 VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
                                 Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity,
-                                Effect = new BlurEffect()
+                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                                 {
                                     Radius = _settings.BlurRadius
-                                }
+                                } : null
                             };
 
                             Grid.SetRowSpan(rImageControl, 4);
@@ -246,11 +246,11 @@ namespace ClaudiaIDE
                                 VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
                                 Stretch = _settings.ImageStretch.ConvertTo(),
                                 Opacity = _settings.Opacity,
-                                Effect = new BlurEffect()
+                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                                 {
                                     Radius = _settings.BlurRadius,
                                     KernelType = KernelType.Box
-                                }
+                                } : null
                             };
                             _currentMediaElement.MediaEnded += (s, e) =>
                             {
