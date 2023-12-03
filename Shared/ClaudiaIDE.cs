@@ -311,7 +311,7 @@ namespace ClaudiaIDE
 
             var refd = _wpfTextViewHost.GetType();
             var prop = refd.GetProperty("Background");
-            var background = prop.GetValue(_wpfTextViewHost) as ImageBrush;
+            var background = prop.GetValue(_wpfTextViewHost) as VisualBrush;
             if (background == null && _isRootWindow)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
