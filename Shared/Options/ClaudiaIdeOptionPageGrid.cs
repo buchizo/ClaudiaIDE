@@ -34,6 +34,7 @@ namespace ClaudiaIDE.Options
             SoftEdgeX = 0;
             SoftEdgeY = 0;
             BlurRadius = 0;
+            BlurMethod = ImageBlurMethod.Gaussian;
             ImageStretch = ImageStretch.None;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
@@ -146,6 +147,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayNameAttribute("BlurRadius")]
         [LocalManager.LocalizedDescriptionAttribute("BlurRadiusDes")]
         public int BlurRadius { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedDisplayNameAttribute("BlurMethod")]
+        [LocalManager.LocalizedDescriptionAttribute("BlurMethodDes")]
+        public ImageBlurMethod BlurMethod { get; set; }
 
         [LocalManager.LocalizedCategoryAttribute("Layout")]
         [LocalManager.LocalizedDisplayNameAttribute("ImageStretchType")]
