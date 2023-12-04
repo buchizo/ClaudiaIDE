@@ -319,15 +319,15 @@
     <value>Specifies a color theme. If Dark is selected, the contents specified in Dark Theme will be used. If UseSystemSetting is specified, the color scheme to be used is determined based on the OS color scheme theme.</value>
   </data>
   <data name="BlurRadius" xml:space="preserve">
-    <value>Image blur radius</value>
+    <value>Blur radius</value>
   </data>
   <data name="BlurRadiusDes" xml:space="preserve">
-    <value>Apply blurring on background graphics. If this value is set to zero, no blur. (value within the range of 0 &lt;= {image the smaller of x and y size / 2 - 1} ).</value>
+    <value>Apply blurring on background graphics. If this value is set to zero, no blur. (value within the range of 0 &lt;= {image the smaller of x and y size / 2 - 1} ). GIFs and videos may give reduced performance if value is set too high.</value>
   </data>
   <data name="BlurMethod" xml:space="preserve">
-    <value>Image blur method</value>
+    <value>Blur method</value>
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
-    <value>Gaussian = Translucent Blur; Box = Linear Blur; Videos and GIFs does not use Gaussian blurring method.</value>
+    <value>For "Blur radius" property. Gaussian = Translucent Blur; Box = Linear Blur. Hardware acceleration is recommended.</value>
   </data>
 </root>

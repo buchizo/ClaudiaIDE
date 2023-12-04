@@ -250,7 +250,7 @@ namespace ClaudiaIDE
                                 Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                                 {
                                     Radius = _settings.BlurRadius,
-                                    KernelType = KernelType.Box
+                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
                                 } : null
                             };
                             _currentMediaElement.MediaEnded += (s, e) =>

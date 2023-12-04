@@ -97,7 +97,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image blur method.
+        ///   Looks up a localized string similar to Blur method.
         /// </summary>
         public static string BlurMethod {
             get {
@@ -106,7 +106,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gaussian = Translucent Blur; Box = Linear Blur; Videos and GIFs does not use Gaussian blurring method..
+        ///   Looks up a localized string similar to For &quot;Blur radius&quot; property. Gaussian = Translucent Blur; Box = Linear Blur. Hardware acceleration is recommended..
         /// </summary>
         public static string BlurMethodDes {
             get {
@@ -115,7 +115,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Image blur radius.
+        ///   Looks up a localized string similar to Blur radius.
         /// </summary>
         public static string BlurRadius {
             get {
@@ -124,7 +124,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply blurring on background graphics. If this value is set to zero, no blur. (value within the range of 0 &lt;= {image the smaller of x and y size / 2 - 1} )..
+        ///   Looks up a localized string similar to Apply blurring on background graphics. If this value is set to zero, no blur. (value within the range of 0 &lt;= {image the smaller of x and y size / 2 - 1} ). GIFs and videos may give reduced performance if value is set too high..
         /// </summary>
         public static string BlurRadiusDes {
             get {
