@@ -121,7 +121,7 @@
     <value>背景图片展示方式类型</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>选择背景显示格式。Single：显示指定的图像。SlideShow：将指定文件夹中的图像显示为幻灯片。 SingleEach：为每个编辑器窗口显示指定文件夹的图像。 SingleWeb：显示指定 URL 的图像。 WebApi：使用包含在指定 API 响应中的图像 URL 显示幻灯片。 为每个交换机调用 Web API。</value>
+    <value>选择背景显示格式。Single: 显示指定的图像。SlideShow: 将指定文件夹中的图像显示为幻灯片。 SingleEach: 为每个编辑器窗口显示指定文件夹的图像。 SingleWeb: 显示指定 URL 的图像。 WebApi: 使用包含在指定 API 响应中的图像 URL 显示幻灯片。 为每个交换机调用 Web API。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>幻灯片路径</value>
@@ -328,6 +328,6 @@
     <value>图像模糊技术</value>
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
-    <value />
+    <value>模糊方法。 如果“图像模糊半径”属性大于零，则使用此方法对图像进行模糊。 Gaussian: 半透明模糊，Box: 线性模糊。 建议使用硬件加速。</value>
   </data>
 </root>

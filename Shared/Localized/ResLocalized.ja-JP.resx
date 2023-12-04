@@ -319,15 +319,15 @@
     <value>配色テーマを指定します。Darkを選択した場合、Dark Themeで指定した内容を使用します。UseSystemSettingを指定した場合、OSの配色テーマに基づき利用する配色テーマを決定します。</value>
   </data>
   <data name="BlurRadius" xml:space="preserve">
-    <value>画像のガウスぼかし半径</value>
+    <value>画像のぼかし半径</value>
   </data>
   <data name="BlurRadiusDes" xml:space="preserve">
     <value>背景画像にガウスぼかしを適用します。 このオプションはビデオと GIF をサポートしていません。 WebApi スライドショーは遅延が増える可能性がありますが、それでも動作します。 この値を0に設定すると、ブラーはなくなります。 (0 &lt;= {画像の x と y の小さい方のサイズ / 2 - 1} の範囲内の値)</value>
   </data>
   <data name="BlurMethod" xml:space="preserve">
-    <value>画像のぼかし技術</value>
+    <value>画像のぼかし方法</value>
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
-    <value />
+    <value>ぼかし方法。 「画像のぼかし半径」プロパティがゼロより大きい場合、この方法を使用して画像がぼかされます。 Gaussian: 半透明のぼかし、Box: 線形のぼかし。 ハードウェアアクセラレーションをお勧めします。</value>
   </data>
 </root>
