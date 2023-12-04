@@ -106,7 +106,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gaussian = Accurate blur, less performance; Box = More performance, less blur quality; Videos and GIFs does not use Gaussian blurring method..
+        ///   Looks up a localized string similar to Gaussian = Translucent Blur; Box = Linear Blur; Videos and GIFs does not use Gaussian blurring method..
         /// </summary>
         public static string BlurMethodDes {
             get {

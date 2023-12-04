@@ -328,6 +328,6 @@
     <value>Image blur method</value>
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
-    <value>Gaussian = Accurate blur, less performance; Box = More performance, less blur quality; Videos and GIFs does not use Gaussian blurring method.</value>
+    <value>Gaussian = Translucent Blur; Box = Linear Blur; Videos and GIFs does not use Gaussian blurring method.</value>
   </data>
 </root>
