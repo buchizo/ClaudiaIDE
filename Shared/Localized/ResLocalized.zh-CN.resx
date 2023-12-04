@@ -324,4 +324,10 @@
   <data name="BlurRadiusDes" xml:space="preserve">
     <value>在背景图像上应用高斯模糊。 此选项不支持视频和 GIF。 WebApi 幻灯片可能有更多延迟，但它仍然有效。 如果该值设置为零，则没有模糊。 （0 &lt;= {图像 x 和 y 大小中较小者 / 2 - 1} 范围内的值）</value>
   </data>
+  <data name="BlurMethod" xml:space="preserve">
+    <value>图像模糊技术</value>
+  </data>
+  <data name="BlurMethodDes" xml:space="preserve">
+    <value />
+  </data>
 </root>

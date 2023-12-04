@@ -16,6 +16,7 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Window = System.Windows.Window;
 using Microsoft.VisualStudio.Threading;
+using System.Windows.Media.Effects;
 
 namespace ClaudiaIDE
 {
@@ -199,7 +200,12 @@ namespace ClaudiaIDE
                                 Stretch = _settings.ImageStretch.ConvertTo(),
                                 HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
                                 VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                                Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity
+                                Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity,
+                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                                {
+                                    Radius = _settings.BlurRadius,
+                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                                } : null
                             };
 
                             Grid.SetRowSpan(rImageControl, 4);
@@ -240,7 +246,12 @@ namespace ClaudiaIDE
                                 HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
                                 VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
                                 Stretch = _settings.ImageStretch.ConvertTo(),
-                                Opacity = _settings.Opacity
+                                Opacity = _settings.Opacity,
+                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                                {
+                                    Radius = _settings.BlurRadius,
+                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                                } : null
                             };
                             _currentMediaElement.MediaEnded += (s, e) =>
                             {

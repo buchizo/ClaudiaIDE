@@ -67,9 +67,6 @@ namespace ClaudiaIDE.ImageProviders
                        )
                         ret_bitmap = Utils.ConvertToDpi96(_bitmap);
 
-                    if (Setting.BlurRadius > 0)
-                        ret_bitmap = Utils.Blur(ret_bitmap ?? _bitmap, Setting.BlurRadius);
-
                     if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
                         ret_bitmap = Utils.SoftenEdges(ret_bitmap ?? _bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
 

@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
-using System.Xml.Linq;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Settings;
@@ -37,6 +34,7 @@ namespace ClaudiaIDE
         private bool _isTargetWindow = false;
         private DependencyObject _wpfTextViewHost = null;
         private VisualBrush _visualBrush = null;
+        private VisualBrush _visualBrushStatic = null;
 
         /// <summary>
         ///     Creates a square image and attaches an event handler to the layout changed event that
@@ -142,7 +140,17 @@ namespace ClaudiaIDE
                     };
                     if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
                     {
-                        var nib = new ImageBrush(newimage)
+                        var imageControl = new Image
+                        {
+                            Source = newimage,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
+                        };
+                        _visualBrushStatic = null;
+                        _visualBrushStatic = new VisualBrush(imageControl)
                         {
                             Stretch = _settings.ImageStretch.ConvertTo(),
                             AlignmentX = _settings.PositionHorizon.ConvertTo(),
@@ -154,7 +162,7 @@ namespace ClaudiaIDE
                             Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
                                 _settings.ViewPortWidth, _settings.ViewPortHeight)
                         };
-                        grid.Background = nib;
+                        grid.Background = _visualBrushStatic;
                     }
                     else
                     {
@@ -166,6 +174,11 @@ namespace ClaudiaIDE
                             LoadedBehavior = MediaState.Play,
                             UnloadedBehavior = MediaState.Manual,
                             IsMuted = true,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
                         };
                         me.MediaEnded += (s, e) =>
                         {
@@ -200,7 +213,17 @@ namespace ClaudiaIDE
                 {
                     if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
                     {
-                        var nib = new ImageBrush(newimage)
+                        var imageControl = new Image
+                        {
+                            Source = newimage,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
+                        };
+                        _visualBrushStatic = null;
+                        _visualBrushStatic = new VisualBrush(imageControl)
                         {
                             Stretch = _settings.ImageStretch.ConvertTo(),
                             AlignmentX = _settings.PositionHorizon.ConvertTo(),
@@ -212,11 +235,13 @@ namespace ClaudiaIDE
                             Viewport = new Rect(_settings.ViewPortPointX, _settings.ViewPortPointY,
                                 _settings.ViewPortWidth, _settings.ViewPortHeight)
                         };
-                        if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow)
+
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow ||
+                            _settings.ImageBackgroundType == ImageBackgroundType.WebApi)
                         {
                             (_wpfTextViewHost as Panel).Background.AnimateImageSourceChange(
-                                nib,
-                                (n) => { (_wpfTextViewHost as Panel).Background = n; },
+                                _visualBrushStatic,
+                                (n) => { /*(_wpfTextViewHost as Panel).Background = n;*/ _wpfTextViewHost.SetValue(Panel.BackgroundProperty, n); },
                                 new AnimateImageChangeParams
                                 {
                                     FadeTime = _settings.ImageFadeAnimationInterval,
@@ -226,7 +251,7 @@ namespace ClaudiaIDE
                         }
                         else
                         {
-                            _wpfTextViewHost.SetValue(Panel.BackgroundProperty, nib);
+                            _wpfTextViewHost.SetValue(Panel.BackgroundProperty, _visualBrushStatic);
                         }
                     }
                     else
@@ -239,6 +264,11 @@ namespace ClaudiaIDE
                             LoadedBehavior = MediaState.Play,
                             UnloadedBehavior = MediaState.Manual,
                             IsMuted = true,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
                         };
                         me.MediaEnded += (s, e) =>
                         {
@@ -278,7 +308,7 @@ namespace ClaudiaIDE
 
             var refd = _wpfTextViewHost.GetType();
             var prop = refd.GetProperty("Background");
-            var background = prop.GetValue(_wpfTextViewHost) as ImageBrush;
+            var background = prop.GetValue(_wpfTextViewHost) as VisualBrush;
             if (background == null && _isRootWindow)
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();

@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using EnvDTE;
 using EnvDTE80;
 using MetroRadiance.Platform;
@@ -50,6 +51,7 @@ namespace ClaudiaIDE.Settings
             SoftEdgeX = 0;
             SoftEdgeY = 0;
             BlurRadius = 0;
+            BlurMethod = ImageBlurMethod.Gaussian;
             ExpandToIDE = false;
             ViewBoxPointX = 0;
             ViewBoxPointY = 0;
@@ -112,6 +114,7 @@ namespace ClaudiaIDE.Settings
         public int SoftEdgeX { get; set; }
         public int SoftEdgeY { get; set; }
         public int BlurRadius { get; set; }
+        public ImageBlurMethod BlurMethod { get; set; }
 
         public string BackgroundImageAbsolutePath { get; set; }
 
@@ -192,6 +195,7 @@ namespace ClaudiaIDE.Settings
                     settings.SoftEdgeX = solconf.SoftEdgeX;
                     settings.SoftEdgeY = solconf.SoftEdgeY;
                     settings.BlurRadius = solconf.BlurRadius;
+                    settings.BlurMethod = solconf.BlurMethod;
                     settings.UpdateImageInterval = solconf.UpdateImageInterval;
                     settings.ViewBoxPointX = solconf.ViewBoxPointX;
                     settings.ViewBoxPointY = solconf.ViewBoxPointY;
@@ -243,6 +247,7 @@ namespace ClaudiaIDE.Settings
             SoftEdgeX = (int)props.Item("SoftEdgeX").Value;
             SoftEdgeY = (int)props.Item("SoftEdgeY").Value;
             BlurRadius = (int)props.Item("BlurRadius").Value;
+            BlurMethod = (ImageBlurMethod)props.Item("BlurMethod").Value;
             ExpandToIDE = (bool)props.Item("ExpandToIDE").Value;
             ViewBoxPointX = (double)props.Item("ViewBoxPointX").Value;
             ViewBoxPointY = (double)props.Item("ViewBoxPointY").Value;
@@ -304,6 +309,7 @@ namespace ClaudiaIDE.Settings
             SoftEdgeX = solconf.SoftEdgeX;
             SoftEdgeY = solconf.SoftEdgeY;
             BlurRadius = solconf.BlurRadius;
+            BlurMethod = solconf.BlurMethod;
             UpdateImageInterval = solconf.UpdateImageInterval;
             ViewBoxPointX = solconf.ViewBoxPointX;
             ViewBoxPointY = solconf.ViewBoxPointY;
@@ -466,6 +472,14 @@ namespace ClaudiaIDE.Settings
         UseSystemSetting = 2
     }
 
+    [ComVisible(true)]
+    [Guid("975050A7-2872-4559-BD55-C589ACB6E2B5")]
+    public enum ImageBlurMethod
+    {
+        Gaussian = 0,
+        Box = 1
+    }
+
     public static class ImageStretchConverter
     {
         public static Stretch ConvertTo(this ImageStretch source)
@@ -554,6 +568,14 @@ namespace ClaudiaIDE.Settings
         public static System.Windows.Media.TileMode ConvertTo(this TileMode source)
         {
             return (System.Windows.Media.TileMode)source;
+        }
+    }
+
+    public static class BlurMethodConverter
+    {
+        public static KernelType ConvertTo(this ImageBlurMethod source)
+        {
+            return (KernelType)source;
         }
     }
 }
