@@ -145,7 +145,8 @@ namespace ClaudiaIDE
                             Source = newimage,
                             Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
-                                Radius = _settings.BlurRadius
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
                             } : null
                         };
                         _visualBrushStatic = null;
@@ -217,7 +218,8 @@ namespace ClaudiaIDE
                             Source = newimage,
                             Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                             {
-                                Radius = _settings.BlurRadius
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
                             } : null
                         };
                         _visualBrushStatic = null;

@@ -203,7 +203,8 @@ namespace ClaudiaIDE
                                 Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity,
                                 Effect = _settings.BlurRadius > 0 ? new BlurEffect()
                                 {
-                                    Radius = _settings.BlurRadius
+                                    Radius = _settings.BlurRadius,
+                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
                                 } : null
                             };
 
