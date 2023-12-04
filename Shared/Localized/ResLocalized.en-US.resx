@@ -328,6 +328,6 @@
     <value>Blur method</value>
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
-    <value>For "Blur radius" property. Gaussian = Translucent Blur; Box = Linear Blur. Hardware acceleration is recommended.</value>
+    <value>Blur method. If "Blur radius" property is greater than zero, the image blur using this method. Gaussian: Translucent Blur, Box: Linear Blur. Hardware acceleration is recommended.</value>
   </data>
 </root>
