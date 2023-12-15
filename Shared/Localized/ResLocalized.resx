@@ -247,7 +247,7 @@
     <value>Background image limit to only editor window</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>If this option is True, background image limit to only editor window.</value>
+    <value>If this option is True, background image limit to only editor window. Also, the background of some controls such as sticky scroll area will not be transparent.</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>Image tile mode</value>
