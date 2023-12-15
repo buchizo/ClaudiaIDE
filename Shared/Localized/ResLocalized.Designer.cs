@@ -286,7 +286,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   If this option is True, background image limit to only editor window. に類似しているローカライズされた文字列を検索します。
+        ///   If this option is True, background image limit to only editor window. Also, the background of some controls such as sticky scroll area will not be transparent. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsLimitToMainlyEditorWindowDes {
             get {

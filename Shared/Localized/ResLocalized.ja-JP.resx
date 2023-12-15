@@ -247,7 +247,7 @@
     <value>背景画像をエディタウィンドウのみに制限する</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>もしこのオプションがTrueの場合、背景画像の表示をエディタウィンドウのみに制限します。</value>
+    <value>もしこのオプションがTrueの場合、背景画像の表示をエディタウィンドウのみに制限します。また固定スクロールなど一部のコントロールの背景を透過しません。</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>画像のタイル表示</value>

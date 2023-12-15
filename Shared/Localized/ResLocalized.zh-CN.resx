@@ -247,7 +247,7 @@
     <value>背景图像限制为仅编辑器窗口</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>如果此选项为True，则背景图片仅限于编辑器窗口。</value>
+    <value>如果此选项为True，则背景图片仅限于编辑器窗口。此外，某些控件（例如固定滚动）的背景不会是透明的。</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>图像平铺模式</value>

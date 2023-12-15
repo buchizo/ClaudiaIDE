@@ -525,6 +525,11 @@ namespace ClaudiaIDE
             {
                 if (c == null) continue;
                 var type = c.GetType();
+                if ((type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin") ?? false)
+                    || (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin") ?? false))
+                {
+                    if (_settings.IsLimitToMainlyEditorWindow) return;
+                }
                 if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
                 await SetBackgroundToTransparentAsync(c, true);
                 if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer") == true) continue; // stop for childs object
