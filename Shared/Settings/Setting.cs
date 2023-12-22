@@ -65,6 +65,8 @@ namespace ClaudiaIDE.Settings
             WebApiEndpoint = "";
             WebApiJsonKey = "";
             WebApiDownloadInterval = TimeSpan.FromMinutes(5);
+            IsTransparentToContentMargin = false;
+            IsTransparentToStickyScroll = false;
         }
 
         internal DTE ServiceProvider { get; set; }
@@ -138,6 +140,8 @@ namespace ClaudiaIDE.Settings
         public string WebApiEndpoint { get; set; }
         public string WebApiJsonKey { get; set; }
         public TimeSpan WebApiDownloadInterval { get; set; }
+        public bool IsTransparentToContentMargin { get; set; }
+        public bool IsTransparentToStickyScroll { get; set; }
 
         [IgnoreDataMember]
         public bool IsHidden { get; set; }
@@ -210,6 +214,8 @@ namespace ClaudiaIDE.Settings
                     settings.WebApiEndpoint = solconf.WebApiEndpoint;
                     settings.WebApiJsonKey = solconf.WebApiJsonKey;
                     settings.WebApiDownloadInterval = solconf.WebApiDownloadInterval;
+                    settings.IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
+                    settings.IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
                 }
                 else
                 {
@@ -261,6 +267,8 @@ namespace ClaudiaIDE.Settings
             WebApiEndpoint = (string)props.Item("WebApiApiEndpoint").Value;
             WebApiJsonKey = (string)props.Item("WebApiJsonKey").Value;
             WebApiDownloadInterval = (TimeSpan)props.Item("WebApiDownloadInterval").Value;
+            IsTransparentToContentMargin = (bool)props.Item("IsTransparentToContentMargin").Value;
+            IsTransparentToStickyScroll = (bool)props.Item("IsTransparentToStickyScroll").Value;
         }
 
         public void Load()
@@ -323,6 +331,8 @@ namespace ClaudiaIDE.Settings
             WebApiEndpoint = solconf.WebApiEndpoint;
             WebApiJsonKey = solconf.WebApiJsonKey;
             WebApiDownloadInterval = solconf.WebApiDownloadInterval;
+            IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
+            IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
         }
 
         public void OnApplyChanged()

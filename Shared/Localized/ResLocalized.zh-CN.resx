@@ -247,7 +247,7 @@
     <value>背景图像限制为仅编辑器窗口</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>如果此选项为True，则背景图片仅限于编辑器窗口。此外，某些控件（例如固定滚动）的背景不会是透明的。</value>
+    <value>如果此选项为True，则背景图像仅限于代码编辑器窗口。如果此选项为False，则带有代码的不同类型的控件也将具有背景图像。</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>图像平铺模式</value>
@@ -329,5 +329,20 @@
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
     <value>模糊方法。 如果“图像模糊半径”属性大于零，则使用此方法对图像进行模糊。 Gaussian: 半透明模糊，Box: 线性模糊。 建议使用硬件加速。</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>对内容边距透明</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>如果此选项为 true，内容边距可以显示背景图像。这意味着将默认背景更改为透明。 * 内容边距是导航栏、状态栏等。</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>对粘性滚动是透明的</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>如果此选项为 true，粘性滚动可以显示背景图像。这意味着将默认背景更改为透明。</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>范围</value>
   </data>
 </root>

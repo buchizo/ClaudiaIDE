@@ -22,7 +22,7 @@ namespace ClaudiaIDE
     public class ClaudiaIDE
     {
         private readonly IAdornmentLayer _adornmentLayer;
-        private readonly Dictionary<int, DependencyObject> _defaultThemeColor = new Dictionary<int, DependencyObject>();
+        private readonly Dictionary<string, DependencyObject> _defaultThemeColor = new Dictionary<string, DependencyObject>();
         private readonly Canvas _editorCanvas = new Canvas() { IsHitTestVisible = false };
         private readonly List<ImageProvider> _imageProviders;
         private readonly Setting _settings = Setting.Instance;
@@ -518,26 +518,53 @@ namespace ClaudiaIDE
             return null;
         }
 
-        private async Task SetTransparentForChildAsync(DependencyObject d)
+        private async Task SetTransparentForChildAsync(DependencyObject d, ParentControlInfo p = null)
+        {
+            if (d == null) return;
+            foreach (var c in d.Children())
+            {
+                var tp = new ParentControlInfo()
+                {
+                    StickyScroll = p?.StickyScroll ?? false
+                };
+                if (c == null) continue;
+                var type = c.GetType();
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    tp.StickyScroll = true;
+                }
+                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase) == true) return;
+                await SetBackgroundToTransparentAsync(c, true, tp);
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer", StringComparison.OrdinalIgnoreCase) == true) continue; // stop for childs object
+                await SetTransparentForChildAsync(c, tp);
+            }
+        }
+
+        public class ParentControlInfo
+        {
+            public bool StickyScroll;
+        }
+
+        private async Task SetTransparentForChildInTextEditorAsync(DependencyObject d)
         {
             if (d == null) return;
             foreach (var c in d.Children())
             {
                 if (c == null) continue;
                 var type = c.GetType();
-                if ((type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin") ?? false)
-                    || (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin") ?? false))
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase) ?? false)
                 {
-                    if (_settings.IsLimitToMainlyEditorWindow) return;
+                    if (!_settings.IsTransparentToContentMargin) return;
                 }
-                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb") == true) return;
-                await SetBackgroundToTransparentAsync(c, true);
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer") == true) continue; // stop for childs object
-                await SetTransparentForChildAsync(c);
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    if (!_settings.IsTransparentToStickyScroll) return;
+                }
+                await SetTransparentForChildInTextEditorAsync(c);
             }
         }
 
-        private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent)
+        private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent, ParentControlInfo p = null)
         {
             var type = d.GetType();
             var name = type?.GetProperty("Name")?.GetValue(d)?.ToString();
@@ -549,21 +576,27 @@ namespace ClaudiaIDE
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             try
             {
+                if (p?.StickyScroll ?? false)
+                {
+                    isTransparent = _settings.IsTransparentToStickyScroll;
+                }
+                var c = ((SolidColorBrush)current).Color;
+                var key = $"{type.FullName}_{name}_{p?.StickyScroll}";
                 if (isTransparent)
                 {
-                    if (!_defaultThemeColor.Any(x => x.Key == d.GetHashCode()))
+                    if (c.A != 0)
                     {
-                        _defaultThemeColor[d.GetHashCode()] = current as DependencyObject;
+                        _defaultThemeColor[key] = current;
+                        c.A = 0;
+                        var b = new SolidColorBrush(c);
+                        property.SetValue(d, (Brush)b);
                     }
-
-                    property.SetValue(d, (Brush)Brushes.Transparent);
                 }
                 else
                 {
-                    var d1 = _defaultThemeColor.FirstOrDefault(x => x.Key == current.GetHashCode());
-                    if (d1.Value != null)
+                    if (_defaultThemeColor.TryGetValue(key, out var d1))
                     {
-                        property.SetValue(d, (Brush)d1.Value);
+                        property.SetValue(d, (Brush)d1);
                     }
                 }
             }

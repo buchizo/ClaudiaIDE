@@ -286,11 +286,47 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   If this option is True, background image limit to only editor window. Also, the background of some controls such as sticky scroll area will not be transparent. に類似しているローカライズされた文字列を検索します。
+        ///   If this option is True, background image is limited only to code editor window. If this option is False, different kinds of controls with code will have background image as well. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsLimitToMainlyEditorWindowDes {
             get {
                 return ResourceManager.GetString("IsLimitToMainlyEditorWindowDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Is transparent to content margin に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string IsTransparentToContentMarginType {
+            get {
+                return ResourceManager.GetString("IsTransparentToContentMarginType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, status bar, e.t.c.. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string IsTransparentToContentMarginTypeDes {
+            get {
+                return ResourceManager.GetString("IsTransparentToContentMarginTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Is transparent to sticky scroll に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string IsTransparentToStickyScrollType {
+            get {
+                return ResourceManager.GetString("IsTransparentToStickyScrollType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   If this option is true, Sticky scroll can show background image. This mean is change default background to transparent. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string IsTransparentToStickyScrollTypeDes {
+            get {
+                return ResourceManager.GetString("IsTransparentToStickyScrollTypeDes", resourceCulture);
             }
         }
         
@@ -390,6 +426,15 @@ namespace ClaudiaIDE.Localized {
         public static string OpacityTypeDes {
             get {
                 return ResourceManager.GetString("OpacityTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Scope に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Scope {
+            get {
+                return ResourceManager.GetString("Scope", resourceCulture);
             }
         }
         

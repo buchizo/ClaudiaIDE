@@ -247,7 +247,7 @@
     <value>Background image limit to only editor window</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>If this option is True, background image limit to only editor window. Also, the background of some controls such as sticky scroll area will not be transparent.</value>
+    <value>If this option is True, background image is limited only to code editor window. If this option is False, different kinds of controls with code will have background image as well.</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>Image tile mode</value>
@@ -329,5 +329,20 @@
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
     <value>Blur method. If "Blur radius" property is greater than zero, the image blur using this method. Gaussian: Translucent Blur, Box: Linear Blur. Hardware acceleration is recommended.</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>Is transparent to content margin</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, status bar, e.t.c..</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>Is transparent to sticky scroll</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>If this option is true, Sticky scroll can show background image. This mean is change default background to transparent.</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>Scope</value>
   </data>
 </root>
