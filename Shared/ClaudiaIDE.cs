@@ -149,6 +149,7 @@ namespace ClaudiaIDE
                                 KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
                             } : null
                         };
+                        RenderOptions.SetBitmapScalingMode(imageControl, BitmapScalingMode.Fant);
                         _visualBrushStatic = null;
                         _visualBrushStatic = new VisualBrush(imageControl)
                         {
@@ -186,6 +187,7 @@ namespace ClaudiaIDE
                             me.Position = TimeSpan.FromMilliseconds(1);
                             me.Play();
                         };
+                        RenderOptions.SetBitmapScalingMode(me, BitmapScalingMode.Fant);
                         _visualBrush.Visual = me;
                         _visualBrush.Opacity = opacity;
                         _visualBrush.AlignmentX = _settings.PositionHorizon.ConvertTo();
@@ -220,8 +222,10 @@ namespace ClaudiaIDE
                             {
                                 Radius = _settings.BlurRadius,
                                 KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
-                            } : null
+                            } : null,
                         };
+                        RenderOptions.SetBitmapScalingMode(imageControl, BitmapScalingMode.Fant);
+
                         _visualBrushStatic = null;
                         _visualBrushStatic = new VisualBrush(imageControl)
                         {
@@ -276,6 +280,7 @@ namespace ClaudiaIDE
                             me.Position = TimeSpan.FromMilliseconds(1);
                             me.Play();
                         };
+                        RenderOptions.SetBitmapScalingMode(me, BitmapScalingMode.Fant);
                         _visualBrush.Visual = me;
                         _visualBrush.Opacity = opacity;
                         _visualBrush.AlignmentX = _settings.PositionHorizon.ConvertTo();
