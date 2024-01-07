@@ -334,7 +334,7 @@
     <value>コンテントマージンを透明にする</value>
   </data>
   <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
-    <value>このオプションが true の場合、コンテンツの余白に背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。 ※コンテンツの余白はナビゲーションバー、ステータスバーなどです。</value>
+    <value>このオプションが true の場合、コンテンツの余白に背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。 ※コンテンツの余白はナビゲーションバー、垂直および水平スクロールバーなどです。</value>
   </data>
   <data name="IsTransparentToStickyScrollType" xml:space="preserve">
     <value>固定スクロールを透明にする</value>

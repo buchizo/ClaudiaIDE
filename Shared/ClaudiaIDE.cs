@@ -65,10 +65,7 @@ namespace ClaudiaIDE
                 _view.Closed += (s, e) =>
                 {
                     _imageProviders.ForEach(x => x.NewImageAvailable -= InvokeChangeImage);
-                    if (_settings != null)
-                    {
-                        _settings.OnChanged.RemoveEventHandler(ReloadSettings);
-                    }
+                    _settings?.OnChanged.RemoveEventHandler(ReloadSettings);
                 };
                 _view.BackgroundBrushChanged += (s, e) =>
                 {
@@ -95,12 +92,7 @@ namespace ClaudiaIDE
 
         private ImageProvider GetImageProvider()
         {
-            var ret = ProvidersHolder.Instance.ActiveProvider;
-            if (ret == null)
-            {
-                ret = new SingleImageProvider(Setting.Instance);
-            }
-
+            var ret = ProvidersHolder.Instance.ActiveProvider ?? new SingleImageProvider(Setting.Instance);
             return ret;
         }
 
@@ -383,7 +375,7 @@ namespace ClaudiaIDE
                 if (refd.FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost",
                         StringComparison.OrdinalIgnoreCase))
                 {
-                    isTransparent = _settings.ExpandToIDE && _isMainWindow;
+                    isTransparent = (_settings.ExpandToIDE || _settings.IsTransparentToStickyScroll || _settings.IsTransparentToContentMargin) && _isMainWindow;
                     if (isTransparent)
                     {
                         // set to transparent for chilren
@@ -530,43 +522,30 @@ namespace ClaudiaIDE
             {
                 var tp = new ParentControlInfo()
                 {
-                    StickyScroll = p?.StickyScroll ?? false
+                    StickyScroll = p?.StickyScroll ?? false,
+                    ContentMargin = p?.ContentMargin ?? false
                 };
                 if (c == null) continue;
                 var type = c.GetType();
+                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase) == true) return;
+                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase) ?? false)
+                {
+                    tp.ContentMargin = true;
+                }
                 if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase) ?? false)
                 {
                     tp.StickyScroll = true;
                 }
-                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase) == true) return;
                 await SetBackgroundToTransparentAsync(c, true, tp);
                 if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer", StringComparison.OrdinalIgnoreCase) == true) continue; // stop for childs object
                 await SetTransparentForChildAsync(c, tp);
             }
         }
 
-        public class ParentControlInfo
+        internal class ParentControlInfo
         {
             public bool StickyScroll;
-        }
-
-        private async Task SetTransparentForChildInTextEditorAsync(DependencyObject d)
-        {
-            if (d == null) return;
-            foreach (var c in d.Children())
-            {
-                if (c == null) continue;
-                var type = c.GetType();
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase) ?? false)
-                {
-                    if (!_settings.IsTransparentToContentMargin) return;
-                }
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase) ?? false)
-                {
-                    if (!_settings.IsTransparentToStickyScroll) return;
-                }
-                await SetTransparentForChildInTextEditorAsync(c);
-            }
+            public bool ContentMargin;
         }
 
         private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent, ParentControlInfo p = null)
@@ -584,6 +563,10 @@ namespace ClaudiaIDE
                 if (p?.StickyScroll ?? false)
                 {
                     isTransparent = _settings.IsTransparentToStickyScroll;
+                }
+                else if (p?.ContentMargin ?? false)
+                {
+                    isTransparent = _settings.IsTransparentToContentMargin;
                 }
                 var c = ((SolidColorBrush)current).Color;
                 var key = $"{type.FullName}_{name}_{p?.StickyScroll}";

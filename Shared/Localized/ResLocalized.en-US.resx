@@ -334,7 +334,7 @@
     <value>Is transparent to content margin</value>
   </data>
   <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
-    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, status bar, e.t.c..</value>
+    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c..</value>
   </data>
   <data name="IsTransparentToStickyScrollType" xml:space="preserve">
     <value>Is transparent to sticky scroll</value>
