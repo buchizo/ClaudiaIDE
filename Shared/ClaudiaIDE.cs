@@ -9,6 +9,7 @@ using System.Windows.Media.Media3D;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Settings;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Threading;
@@ -35,6 +36,7 @@ namespace ClaudiaIDE
         private DependencyObject _wpfTextViewHost = null;
         private VisualBrush _visualBrush = null;
         private VisualBrush _visualBrushStatic = null;
+        private System.Drawing.Color _currentThemeColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey);
 
         /// <summary>
         ///     Creates a square image and attaches an event handler to the layout changed event that
@@ -75,6 +77,7 @@ namespace ClaudiaIDE
                 _settings.OnChanged.AddEventHandler(ReloadSettings);
 
                 _imageProviders.ForEach(x => x.NewImageAvailable += InvokeChangeImage);
+                VSColorTheme.ThemeChanged += VSColorTheme_ThemeChanged;
 
                 SetCanvasBackground();
                 InvokeChangeImage(null, null);
@@ -98,6 +101,7 @@ namespace ClaudiaIDE
 
         private void ReloadSettings(object sender, EventArgs e)
         {
+            _currentThemeColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey);
             _imageProvider = GetImageProvider();
             _hasImage = false;
             InvokeChangeImage(null, null);
@@ -357,10 +361,11 @@ namespace ClaudiaIDE
             {
                 var refd = current.GetType();
                 var nameprop = refd.GetProperty("Name");
-                var objname = nameprop?.GetValue(current) as string;
+                var objname = nameprop?.GetValue(current) as string ?? "";
+                if (objname.Equals("RootDockPanel", StringComparison.OrdinalIgnoreCase)) return; // stop for childs object
                 if (!string.IsNullOrEmpty(objname) && (objname.Equals("RootGrid", StringComparison.OrdinalIgnoreCase) ||
-                                                       objname.Equals("MainWindow",
-                                                           StringComparison.OrdinalIgnoreCase)))
+                                                        objname.Equals("MainWindow",
+                                                            StringComparison.OrdinalIgnoreCase)))
                 {
                     return;
                 }
@@ -375,30 +380,38 @@ namespace ClaudiaIDE
                 if (refd.FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost",
                         StringComparison.OrdinalIgnoreCase))
                 {
-                    isTransparent = (_settings.ExpandToIDE || _settings.IsTransparentToStickyScroll || _settings.IsTransparentToContentMargin) && _isMainWindow;
-                    if (isTransparent)
+                    if (_isMainWindow)
                     {
-                        // set to transparent for chilren
-                        foreach(var c in current.Children())
+                        // set to transparent or default brush for chilren
+                        foreach (var c in current.Children())
                         {
-                            await SetTransparentForChildAsync(c);
+                            await SetTransparentForChildAsync(c, parentName: $"{refd.Name}_{objname}");
                         }
                     }
                 }
                 else if (refd.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView",
-                             StringComparison.OrdinalIgnoreCase))
+                                StringComparison.OrdinalIgnoreCase))
                 {
                     // for visualize history(using Gource)
-                    if (FindUI(current, "Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost") == null)
+                    var wpmvh = FindUI(current, "Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost");
+                    if (wpmvh == null)
                     {
                         return;
+                    }
+                    else if (!_isMainWindow)
+                    {
+                        // maybe floating window
+                        foreach (var c in wpmvh.Children())
+                        {
+                            // set transparent to same level objects
+                            await SetTransparentForChildAsync(c, parentName: $"{refd.Name}_{objname}");
+                        }
                     }
                 }
                 else
                 {
-                    await SetBackgroundToTransparentAsync(current, isTransparent);
+                    await SetBackgroundToTransparentAsync(current, isTransparent, parentName: refd.FullName);
                 }
-
 
                 if (current is Visual || current is Visual3D)
                 {
@@ -515,7 +528,7 @@ namespace ClaudiaIDE
             return null;
         }
 
-        private async Task SetTransparentForChildAsync(DependencyObject d, ParentControlInfo p = null)
+        private async Task SetTransparentForChildAsync(DependencyObject d, ParentControlInfo p = null, string parentName = "")
         {
             if (d == null) return;
             foreach (var c in d.Children())
@@ -527,18 +540,19 @@ namespace ClaudiaIDE
                 };
                 if (c == null) continue;
                 var type = c.GetType();
-                if (type?.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase) == true) return;
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (type == null) continue;
+                if (type.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase)) return;
+                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase))
                 {
                     tp.ContentMargin = true;
                 }
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase) ?? false)
+                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase))
                 {
                     tp.StickyScroll = true;
                 }
-                await SetBackgroundToTransparentAsync(c, true, tp);
-                if (type?.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer", StringComparison.OrdinalIgnoreCase) == true) continue; // stop for childs object
-                await SetTransparentForChildAsync(c, tp);
+                await SetBackgroundToTransparentAsync(c, true, tp, parentName: parentName);
+                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer", StringComparison.OrdinalIgnoreCase)) continue; // stop for childs object
+                await SetTransparentForChildAsync(c, tp, parentName: $"{parentName}|{type.Name}_{type.GetProperty("Name")?.GetValue(c)}");
             }
         }
 
@@ -548,14 +562,15 @@ namespace ClaudiaIDE
             public bool ContentMargin;
         }
 
-        private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent, ParentControlInfo p = null)
+        private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent, ParentControlInfo p = null, string parentName = "")
         {
             var type = d.GetType();
             var name = type?.GetProperty("Name")?.GetValue(d)?.ToString();
             if (name == "WhitePadding") return;
             if (type?.Name == "TextBlock") return; // maybe caret
             var property = type.GetProperty("Background");
-            if (!(property?.GetValue(d) is Brush current)) return;
+            if (!(property?.GetValue(d) is SolidColorBrush current)) return;
+            var c = current.Color;
 
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             try
@@ -568,13 +583,15 @@ namespace ClaudiaIDE
                 {
                     isTransparent = _settings.IsTransparentToContentMargin;
                 }
-                var c = ((SolidColorBrush)current).Color;
-                var key = $"{type.FullName}_{name}_{p?.StickyScroll}";
+                var key = $"#{_currentThemeColor.Name}|{parentName}|{type.Name}_{name}_{p?.ContentMargin}";
                 if (isTransparent)
                 {
-                    if (c.A != 0)
+                    if (!_defaultThemeColor.TryGetValue(key, out var d1))
                     {
                         _defaultThemeColor[key] = current;
+                    }
+                    if (c.A != 0)
+                    {
                         c.A = 0;
                         var b = new SolidColorBrush(c);
                         property.SetValue(d, (Brush)b);
@@ -584,13 +601,27 @@ namespace ClaudiaIDE
                 {
                     if (_defaultThemeColor.TryGetValue(key, out var d1))
                     {
-                        property.SetValue(d, (Brush)d1);
+                        if (c.A == 0 && ((d1 as SolidColorBrush)?.Color.A ?? 0) != 0)
+                        {
+                            // transparent -> not transparent
+                            property.SetValue(d, (SolidColorBrush)d1);
+                        }
+                    }
+                    else
+                    {
+                        _defaultThemeColor[key] = current;
                     }
                 }
             }
             catch
             {
             }
+        }
+
+        private void VSColorTheme_ThemeChanged(ThemeChangedEventArgs e)
+        {
+            _currentThemeColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey);
+            _defaultThemeColor.Clear();
         }
     }
 }

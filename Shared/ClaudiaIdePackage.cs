@@ -81,7 +81,7 @@ namespace ClaudiaIDE
             Application.Current.MainWindow.Closing += (s, e) =>
             {
                 _imageProviders.ForEach(x => x.NewImageAvailable -= InvokeChangeImage);
-                if (_settings != null) _settings.OnChanged.RemoveEventHandler(InvokeChangeImage);
+                _settings?.OnChanged.RemoveEventHandler(InvokeChangeImage);
             };
             ThreadHelper.JoinableTaskFactory.RunAsync(async () =>
             {
