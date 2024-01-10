@@ -212,7 +212,7 @@ namespace ClaudiaIDE
                             RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
 
                             rRootGrid.Children.Insert(0, rImageControl);
-                            SetTransparentBackground(rRootGrid);
+                            SetTransparentBackground(rRootGrid, _settings);
                         }
                         else
                         {
@@ -262,7 +262,7 @@ namespace ClaudiaIDE
                             Grid.SetRowSpan(_currentMediaElement, 4);
                             RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
                             rRootGrid.Children.Insert(0, _currentMediaElement);
-                            SetTransparentBackground(rRootGrid);
+                            SetTransparentBackground(rRootGrid, _settings);
                         }
                         else
                         {
@@ -280,7 +280,7 @@ namespace ClaudiaIDE
         /// mainwindow background set to transparent
         /// </summary>
         /// <param name="rRootGrid"></param>
-        public static void SetTransparentBackground(Grid rRootGrid)
+        public static void SetTransparentBackground(Grid rRootGrid, Setting currentSettings)
         {
             var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
                 x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
@@ -292,7 +292,14 @@ namespace ClaudiaIDE
                     try
                     {
                         if (g == null) continue;
-                        var prop = g.GetType().GetProperty("Background");
+                        var type = g.GetType();
+                        if (type == null) continue;
+                        if (type.GetProperty("Name")?.GetValue(g)?.ToString() == "MainGrid"
+                            && !currentSettings.IsTransparentToContentMargin)
+                        {
+                            continue;
+                        }
+                        var prop = type.GetProperty("Background");
                         if (prop.GetValue(g) is LinearGradientBrush)
                         {
                             prop.SetValue(g, new SolidColorBrush(new Color
