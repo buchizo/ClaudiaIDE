@@ -304,7 +304,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c.. に類似しているローカライズされた文字列を検索します。
+        ///   If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c.. You may need to reopen the editor window for the settings to take effect. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsTransparentToContentMarginTypeDes {
             get {
@@ -322,7 +322,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   If this option is true, Sticky scroll can show background image. This mean is change default background to transparent. に類似しているローカライズされた文字列を検索します。
+        ///   If this option is true, Sticky scroll can show background image. This mean is change default background to transparent. You may need to reopen the editor window for the settings to take effect. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string IsTransparentToStickyScrollTypeDes {
             get {

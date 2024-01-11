@@ -334,13 +334,13 @@
     <value>Is transparent to content margin</value>
   </data>
   <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
-    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c..</value>
+    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c.. You may need to reopen the editor window for the settings to take effect.</value>
   </data>
   <data name="IsTransparentToStickyScrollType" xml:space="preserve">
     <value>Is transparent to sticky scroll</value>
   </data>
   <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
-    <value>If this option is true, Sticky scroll can show background image. This mean is change default background to transparent.</value>
+    <value>If this option is true, Sticky scroll can show background image. This mean is change default background to transparent. You may need to reopen the editor window for the settings to take effect.</value>
   </data>
   <data name="Scope" xml:space="preserve">
     <value>Scope</value>

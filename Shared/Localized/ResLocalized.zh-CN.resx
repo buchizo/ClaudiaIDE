@@ -334,13 +334,13 @@
     <value>对内容边距透明</value>
   </data>
   <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
-    <value>如果此选项为 true，内容边距可以显示背景图像。这意味着将默认背景更改为透明。 * 内容边距是导航栏、水平和垂直滚动条等。</value>
+    <value>如果此选项为 true，内容边距可以显示背景图像。这意味着将默认背景更改为透明。 * 内容边距是导航栏、水平和垂直滚动条等。 您可能需要重新打开编辑器窗口以使设置生效。</value>
   </data>
   <data name="IsTransparentToStickyScrollType" xml:space="preserve">
     <value>对粘性滚动是透明的</value>
   </data>
   <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
-    <value>如果此选项为 true，粘性滚动可以显示背景图像。这意味着将默认背景更改为透明。</value>
+    <value>如果此选项为 true，粘性滚动可以显示背景图像。这意味着将默认背景更改为透明。 您可能需要重新打开编辑器窗口以使设置生效。</value>
   </data>
   <data name="Scope" xml:space="preserve">
     <value>范围</value>
