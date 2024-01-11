@@ -247,7 +247,7 @@
     <value>背景画像をエディタウィンドウのみに制限する</value>
   </data>
   <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
-    <value>もしこのオプションがTrueの場合、背景画像の表示をエディタウィンドウのみに制限します。また固定スクロールなど一部のコントロールの背景を透過しません。</value>
+    <value>このオプションが True の場合、背景画像はコード エディタ ウィンドウにのみ制限されます。このオプションが False の場合、コードを含むさまざまな種類のコントロールにも背景画像が表示されます。</value>
   </data>
   <data name="TileMode" xml:space="preserve">
     <value>画像のタイル表示</value>
@@ -329,5 +329,20 @@
   </data>
   <data name="BlurMethodDes" xml:space="preserve">
     <value>ぼかし方法。 「画像のぼかし半径」プロパティがゼロより大きい場合、この方法を使用して画像がぼかされます。 Gaussian: 半透明のぼかし、Box: 線形のぼかし。 ハードウェアアクセラレーションをお勧めします。</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>コンテントマージンを透明にする</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>このオプションが true の場合、コンテンツの余白に背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。 ※コンテンツの余白はナビゲーションバー、垂直および水平スクロールバーなどです。設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>固定スクロールを透明にする</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>このオプションが true の場合、固定スクロールで背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>適用範囲</value>
   </data>
 </root>

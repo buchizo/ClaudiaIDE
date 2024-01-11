@@ -49,6 +49,8 @@ namespace ClaudiaIDE.Options
             WebApiApiEndpoint = "";
             WebApiJsonKey = "";
             WebApiDownloadInterval = TimeSpan.FromMinutes(5);
+            IsTransparentToContentMargin = false;
+            IsTransparentToStickyScroll = false;
         }
 
         [LocalManager.LocalizedCategoryAttribute("Image")]
@@ -118,7 +120,7 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescriptionAttribute("ShuffleSlideshowTypeDes")]
         public bool ShuffleSlideshow { get; set; }
 
-        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
         [LocalManager.LocalizedDisplayNameAttribute("ExpandToIDEType")]
         [LocalManager.LocalizedDescriptionAttribute("ExpandToIDETypeDes")]
         public bool ExpandToIDE { get; set; }
@@ -170,7 +172,7 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescriptionAttribute("ViewBoxPointYDes")]
         public double ViewBoxPointY { get; set; }
 
-        [LocalManager.LocalizedCategoryAttribute("Layout")]
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
         [LocalManager.LocalizedDisplayNameAttribute("IsLimitToMainlyEditorWindow")]
         [LocalManager.LocalizedDescriptionAttribute("IsLimitToMainlyEditorWindowDes")]
         public bool IsLimitToMainlyEditorWindow { get; set; }
@@ -223,6 +225,16 @@ namespace ClaudiaIDE.Options
         [PropertyPageTypeConverter(typeof(TimeSpanConverter))]
         [TypeConverter(typeof(TimeSpanConverter))]
         public TimeSpan WebApiDownloadInterval { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
+        [LocalManager.LocalizedDisplayNameAttribute("IsTransparentToContentMarginType")]
+        [LocalManager.LocalizedDescriptionAttribute("IsTransparentToContentMarginTypeDes")]
+        public bool IsTransparentToContentMargin { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
+        [LocalManager.LocalizedDisplayNameAttribute("IsTransparentToStickyScrollType")]
+        [LocalManager.LocalizedDescriptionAttribute("IsTransparentToStickyScrollTypeDes")]
+        public bool IsTransparentToStickyScroll { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {
