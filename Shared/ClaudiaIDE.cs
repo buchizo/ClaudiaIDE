@@ -409,6 +409,15 @@ namespace ClaudiaIDE
                         }
                     }
                 }
+                else if (refd.FullName.Equals("System.Windows.Controls.Border",
+                                StringComparison.OrdinalIgnoreCase)
+                    && objname.Equals("PART_ContentPanel",
+                                StringComparison.OrdinalIgnoreCase)
+                    && !(_isMainWindow && _settings.ExpandToIDE))
+                {
+                    // stop set to transparent (maybe reached to top of editor control)
+                    return;
+                }
                 else
                 {
                     await SetBackgroundToTransparentAsync(current, isTransparent, parentName: refd.FullName);
