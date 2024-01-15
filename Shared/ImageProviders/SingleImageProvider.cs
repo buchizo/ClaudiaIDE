@@ -50,13 +50,22 @@ namespace ClaudiaIDE.ImageProviders
                 if (fileInfo.Exists)
                 {
                     _bitmapSource = null;
-                    _bitmap = new BitmapImage();
-                    _bitmap.BeginInit();
-                    _bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    _bitmap.CreateOptions = BitmapCreateOptions.None;
-                    _bitmap.UriSource = fileUri;
-                    _bitmap.EndInit();
-                    _bitmap.Freeze();
+                    try
+                    {
+                        _bitmap = new BitmapImage();
+                        _bitmap.BeginInit();
+                        _bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        _bitmap.CreateOptions = BitmapCreateOptions.None;
+                        _bitmap.UriSource = fileUri;
+                        _bitmap.EndInit();
+                        _bitmap.Freeze();
+                    }
+                    catch
+                    {
+                        // maybe not supported exception
+                        _bitmap = new BitmapImage();
+                        _bitmap.Freeze();
+                    }
 
                     if (Setting.ImageStretch == ImageStretch.None)
                         _bitmap = Utils.EnsureMaxWidthHeight(_bitmap, Setting.MaxWidth, Setting.MaxHeight);

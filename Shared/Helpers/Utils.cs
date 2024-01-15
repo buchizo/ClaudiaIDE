@@ -19,41 +19,68 @@ namespace ClaudiaIDE.Helpers
             if (maxWidth > 0 && maxHeight > 0
                              && original.PixelWidth > maxWidth && original.PixelHeight > maxHeight)
             {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = original.UriSource;
-                bitmap.DecodePixelWidth = maxWidth;
-                bitmap.DecodePixelHeight = maxHeight;
-                bitmap.EndInit();
-                bitmap.Freeze();
+                try
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.None;
+                    bitmap.UriSource = original.UriSource;
+                    bitmap.DecodePixelWidth = maxWidth;
+                    bitmap.DecodePixelHeight = maxHeight;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                catch
+                {
+                    // maybe not supported exception
+                    bitmap = new BitmapImage();
+                    bitmap.Freeze();
+                }
                 return bitmap;
             }
 
             if (maxWidth > 0 && original.PixelWidth > maxWidth)
             {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = original.UriSource;
-                bitmap.DecodePixelWidth = maxWidth;
-                bitmap.EndInit();
-                bitmap.Freeze();
+                try
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.None;
+                    bitmap.UriSource = original.UriSource;
+                    bitmap.DecodePixelWidth = maxWidth;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                catch
+                {
+                    // maybe not supported exception
+                    bitmap = new BitmapImage();
+                    bitmap.Freeze();
+                }
                 return bitmap;
             }
 
             if (maxHeight > 0 && original.PixelHeight > maxHeight)
             {
-                bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                bitmap.CreateOptions = BitmapCreateOptions.None;
-                bitmap.UriSource = original.UriSource;
-                bitmap.DecodePixelHeight = maxHeight;
-                bitmap.EndInit();
-                bitmap.Freeze();
+                try
+                {
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.CreateOptions = BitmapCreateOptions.None;
+                    bitmap.UriSource = original.UriSource;
+                    bitmap.DecodePixelHeight = maxHeight;
+                    bitmap.EndInit();
+                    bitmap.Freeze();
+                }
+                catch
+                {
+                    // maybe not supported exception
+                    bitmap = new BitmapImage();
+                    bitmap.Freeze();
+                }
                 return bitmap;
             }
 

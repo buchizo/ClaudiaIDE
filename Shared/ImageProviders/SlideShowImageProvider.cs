@@ -72,12 +72,21 @@ namespace ClaudiaIDE.ImageProviders
                 var fileInfo = new FileInfo(current);
                 if (fileInfo.Exists)
                 {
-                    bitmap.BeginInit();
-                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmap.CreateOptions = BitmapCreateOptions.None;
-                    bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
-                    bitmap.EndInit();
-                    bitmap.Freeze();
+                    try
+                    {
+                        bitmap.BeginInit();
+                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                        bitmap.CreateOptions = BitmapCreateOptions.None;
+                        bitmap.UriSource = new Uri(current, UriKind.RelativeOrAbsolute);
+                        bitmap.EndInit();
+                        bitmap.Freeze();
+                    }
+                    catch
+                    {
+                        // maybe not supported exception
+                        bitmap = new BitmapImage();
+                        bitmap.Freeze();
+                    }
                 }
                 else
                 {
