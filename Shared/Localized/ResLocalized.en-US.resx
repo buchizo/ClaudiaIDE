@@ -133,7 +133,7 @@
     <value>Expand to IDE</value>
   </data>
   <data name="ExpandToIDETypeDes" xml:space="preserve">
-    <value>If true, background image expand to IDE. If false, background image set to text editor background. (false is default value)</value>
+    <value>If true, background image expand to IDE. If false, background image set to text editor background. (false is default value) You may need to reopen the editor window for the settings to take effect.</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>File Path</value>

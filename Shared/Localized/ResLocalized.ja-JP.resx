@@ -133,7 +133,7 @@
     <value>背景画像をIDEに拡張</value>
   </data>
   <data name="ExpandToIDETypeDes" xml:space="preserve">
-    <value>Trueの場合、背景画像をIDE全体に設定します。Falseの場合、背景画像はテキストエディターのみになります（既定）</value>
+    <value>Trueの場合、背景画像をIDE全体に設定します。Falseの場合、背景画像はテキストエディターのみになります（既定）設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>背景画像のファイルパス</value>

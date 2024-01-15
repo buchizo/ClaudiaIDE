@@ -363,7 +363,6 @@ namespace ClaudiaIDE
                 var refd = current.GetType();
                 var nameprop = refd.GetProperty("Name");
                 var objname = nameprop?.GetValue(current) as string ?? "";
-                if (objname.Equals("RootDockPanel", StringComparison.OrdinalIgnoreCase)) return; // stop for childs object
                 if (!string.IsNullOrEmpty(objname) && (objname.Equals("RootGrid", StringComparison.OrdinalIgnoreCase) ||
                                                         objname.Equals("MainWindow",
                                                             StringComparison.OrdinalIgnoreCase)))
@@ -579,52 +578,71 @@ namespace ClaudiaIDE
             if (name.Equals("WhitePadding", StringComparison.OrdinalIgnoreCase)) return;
             if (type?.Name == "TextBlock") return; // maybe caret
             var property = type.GetProperty("Background");
-            if (!(property?.GetValue(d) is SolidColorBrush current)) return;
-            var c = current.Color;
 
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-            try
+            if (p?.StickyScroll ?? false)
             {
-                if (p?.StickyScroll ?? false)
+                isTransparent = _settings.IsTransparentToStickyScroll;
+            }
+            else if (p?.ContentMargin ?? false)
+            {
+                isTransparent = _settings.IsTransparentToContentMargin;
+            }
+            var key = $"#{_currentThemeColor.Name}|{parentName}|{type.Name}|{name}|{isTransparent}|{_settings.ExpandToIDE}|{p?.StickyScroll}_{_settings.IsTransparentToStickyScroll}|{p?.ContentMargin}_{_settings.IsTransparentToContentMargin}";
+
+            if (!name.Equals("Border", StringComparison.OrdinalIgnoreCase)
+                && property?.GetValue(d) is LinearGradientBrush
+                && isTransparent)
+            {
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                try
                 {
-                    isTransparent = _settings.IsTransparentToStickyScroll;
-                }
-                else if (p?.ContentMargin ?? false)
-                {
-                    isTransparent = _settings.IsTransparentToContentMargin;
-                }
-                var key = $"#{_currentThemeColor.Name}|{parentName}|{type.Name}|{name}|{isTransparent}|{_settings.ExpandToIDE}|{p?.StickyScroll}_{_settings.IsTransparentToStickyScroll}|{p?.ContentMargin}_{_settings.IsTransparentToContentMargin}";
-                if (isTransparent)
-                {
-                    if (!_defaultThemeColor.TryGetValue(key, out var d1))
+                    property.SetValue(d, new SolidColorBrush(new Color
                     {
-                        _defaultThemeColor[key] = current;
-                    }
-                    if (c.A != 0)
-                    {
-                        c.A = 0;
-                        var b = new SolidColorBrush(c);
-                        property.SetValue(d, (Brush)b);
-                    }
+                        A = 0
+                    }));
                 }
-                else
+                catch { }
+            }
+            else
+            {
+                if (!(property?.GetValue(d) is SolidColorBrush current)) return;
+                var c = current.Color;
+
+                await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+                try
                 {
-                    if (_defaultThemeColor.TryGetValue(key, out var d1))
+                    if (isTransparent)
                     {
-                        if (c.A == 0 && ((d1 as SolidColorBrush)?.Color.A ?? 0) != 0)
+                        if (!_defaultThemeColor.TryGetValue(key, out var d1))
                         {
-                            // transparent -> not transparent
-                            property.SetValue(d, (SolidColorBrush)d1);
+                            _defaultThemeColor[key] = current;
+                        }
+                        if (c.A != 0)
+                        {
+                            c.A = 0;
+                            var b = new SolidColorBrush(c);
+                            property.SetValue(d, (Brush)b);
                         }
                     }
                     else
                     {
-                        _defaultThemeColor[key] = current;
+                        if (_defaultThemeColor.TryGetValue(key, out var d1))
+                        {
+                            if (c.A == 0 && ((d1 as SolidColorBrush)?.Color.A ?? 0) != 0)
+                            {
+                                // transparent -> not transparent
+                                property.SetValue(d, (SolidColorBrush)d1);
+                            }
+                        }
+                        else
+                        {
+                            _defaultThemeColor[key] = current;
+                        }
                     }
                 }
-            }
-            catch
-            {
+                catch
+                {
+                }
             }
         }
 
