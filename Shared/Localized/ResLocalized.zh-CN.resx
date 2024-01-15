@@ -133,7 +133,7 @@
     <value>扩展到IDE</value>
   </data>
   <data name="ExpandToIDETypeDes" xml:space="preserve">
-    <value>如果为true，背景图片展开隐藏。如果为false，背景图片设置为文本编辑器背景。</value>
+    <value>如果为true，背景图片展开隐藏。如果为false，背景图片设置为文本编辑器背景。 您可能需要重新打开编辑器窗口以使设置生效。</value>
   </data>
   <data name="FilePathType" xml:space="preserve">
     <value>图片路径</value>

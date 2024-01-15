@@ -160,7 +160,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   If true, background image expand to IDE. If false, background image set to text editor background. (false is default value) に類似しているローカライズされた文字列を検索します。
+        ///   If true, background image expand to IDE. If false, background image set to text editor background. (false is default value) You may need to reopen the editor window for the settings to take effect. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ExpandToIDETypeDes {
             get {
