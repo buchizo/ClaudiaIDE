@@ -375,6 +375,20 @@ namespace ClaudiaIDE
                         StringComparison.OrdinalIgnoreCase))
                 {
                     if (!_settings.IsTransparentToStickyScroll && !_settings.IsTransparentToContentMargin) return;
+                    else
+                    {
+                        // if stickey or content margin in clude same label visual tree
+                        var p = VisualTreeHelper.GetParent(current);
+                        if (p != null)
+                        {
+                            foreach(var st in p.Children())
+                            {
+                                if (st == current) continue;
+                                await SetTransparentForChildAsync(st, parentName: $"{refd.Name}|{objname}");
+                            }
+                        }
+                        return;
+                    }
                 }
 
                 if (refd.FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost",
