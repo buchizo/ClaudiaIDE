@@ -374,7 +374,7 @@ namespace ClaudiaIDE
                     refd.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextView",
                         StringComparison.OrdinalIgnoreCase))
                 {
-                    return;
+                    if (!_settings.IsTransparentToStickyScroll && !_settings.IsTransparentToContentMargin) return;
                 }
 
                 if (refd.FullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost",
