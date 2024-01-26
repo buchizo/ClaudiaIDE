@@ -12,6 +12,7 @@ namespace ClaudiaIDE.ImageProviders
     {
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
+        private FileSystemWatcher _fileWatcher;
 
         public SingleImageEachProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
             ImageBackgroundType.SingleEach)
@@ -23,7 +24,8 @@ namespace ClaudiaIDE.ImageProviders
         {
             return new ImageFiles
             {
-                Extensions = Setting.Extensions, ImageDirectoryPath = Setting.BackgroundImagesDirectoryAbsolutePath,
+                Extensions = Setting.Extensions,
+                ImageDirectoryPath = Setting.BackgroundImagesDirectoryAbsolutePath,
                 Shuffle = Setting.ShuffleSlideshow
             };
         }
@@ -34,8 +36,7 @@ namespace ClaudiaIDE.ImageProviders
             {
                 if (_imageFiles == null)
                 {
-                    _imageFiles = GetImagesFromDirectory();
-                    _imageFilesPath = _imageFiles.GetEnumerator();
+                    ReEnumerationFiles();
                     _imageFilesPath.MoveNext();
                 }
                 var current = _imageFilesPath?.Current;
@@ -74,12 +75,25 @@ namespace ClaudiaIDE.ImageProviders
                 }
                 else
                 {
-                    OnSettingChanged(null, null);
+                    ReEnumerationFiles();
+                    _imageFilesPath.MoveNext();
                     return GetBitmap();
                 }
 
                 if (ret_bitmap != null) return ret_bitmap;
                 else return bitmap;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                if (_imageFilesPath?.MoveNext() ?? false)
+                {
+                    return GetBitmap();
+                }
+                else
+                {
+                    _imageFilesPath?.Reset();
+                    return null;
+                }
             }
             catch
             {
@@ -87,20 +101,46 @@ namespace ClaudiaIDE.ImageProviders
             }
         }
 
-        protected override void OnSettingChanged(object sender, EventArgs e)
+        private void ReEnumerationFiles()
         {
-            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.SingleEach) return;
             _imageFiles = GetImagesFromDirectory();
             _imageFilesPath = _imageFiles.GetEnumerator();
+        }
+
+        protected override void OnSettingChanged(object sender, EventArgs e)
+        {
+            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.SingleEach)
+            {
+                _fileWatcher?.Dispose();
+                return;
+            }
+            ReEnumerationFiles();
             NextImage();
+
+            _fileWatcher?.Dispose();
+            if (File.Exists((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath))
+            {
+                _fileWatcher = new FileSystemWatcher((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath)
+                {
+                    IncludeSubdirectories = false,
+                    InternalBufferSize = 32 * 1024,
+                    NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size
+                };
+                _fileWatcher.Changed += new FileSystemEventHandler(OnDirectoryChanged);
+                _fileWatcher.EnableRaisingEvents = true;
+            }
+        }
+
+        private void OnDirectoryChanged(object source, FileSystemEventArgs e)
+        {
+            ReEnumerationFiles();
         }
 
         public void NextImage()
         {
             if (_imageFiles == null)
             {
-                _imageFiles = GetImagesFromDirectory();
-                _imageFilesPath = _imageFiles.GetEnumerator();
+                ReEnumerationFiles();
             }
             if (!_imageFilesPath.MoveNext())
                 if (Setting.LoopSlideshow)
