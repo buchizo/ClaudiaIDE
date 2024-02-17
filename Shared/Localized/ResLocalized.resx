@@ -345,4 +345,10 @@
   <data name="Scope" xml:space="preserve">
     <value>Scope</value>
   </data>
+  <data name="StickyScrollColorType" xml:space="preserve">
+    <value>Sticky scroll background color</value>
+  </data>
+  <data name="StickyScrollColorTypeDes" xml:space="preserve">
+    <value>If "Is transparent to sticky scroll" is true, ClaudiaIDE set this color value to sticky scroll background color. This value require HTML color code with alpha format. e.g. "#B0A6ACAF".</value>
+  </data>
 </root>
