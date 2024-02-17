@@ -51,6 +51,7 @@ namespace ClaudiaIDE.Options
             WebApiDownloadInterval = TimeSpan.FromMinutes(5);
             IsTransparentToContentMargin = false;
             IsTransparentToStickyScroll = false;
+            StickyScrollColor = "#00000000";
         }
 
         [LocalManager.LocalizedCategoryAttribute("Image")]
@@ -235,6 +236,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayNameAttribute("IsTransparentToStickyScrollType")]
         [LocalManager.LocalizedDescriptionAttribute("IsTransparentToStickyScrollTypeDes")]
         public bool IsTransparentToStickyScroll { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
+        [LocalManager.LocalizedDisplayNameAttribute("StickyScrollColorType")]
+        [LocalManager.LocalizedDescriptionAttribute("StickyScrollColorTypeDes")]
+        public string StickyScrollColor { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {

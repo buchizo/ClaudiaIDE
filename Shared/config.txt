@@ -32,5 +32,6 @@
     "WebApiJsonKey": "url",
     "WebSingleUrl": "https://azure.moe/img/topbackground.png",
 	"IsTransparentToContentMargin": false,
-	"IsTransparentToStickyScroll": false
+	"IsTransparentToStickyScroll": false,
+	"StickyScrollColor": "#00000000"
 }

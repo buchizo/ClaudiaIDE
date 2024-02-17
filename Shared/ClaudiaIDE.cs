@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
-using System.Xml.Linq;
 using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Settings;
@@ -610,10 +608,18 @@ namespace ClaudiaIDE
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 try
                 {
-                    property.SetValue(d, new SolidColorBrush(new Color
+                    if (p?.StickyScroll ?? false)
                     {
-                        A = 0
-                    }));
+                        var t = _settings.StickyScrollColor.ToColor();
+                        property.SetValue(d, new SolidColorBrush(t));
+                    }
+                    else
+                    {
+                        property.SetValue(d, new SolidColorBrush(new System.Windows.Media.Color
+                        {
+                            A = 0
+                        }));
+                    }
                 }
                 catch { }
             }
@@ -631,11 +637,20 @@ namespace ClaudiaIDE
                         {
                             _defaultThemeColor[key] = current;
                         }
-                        if (c.A != 0)
+                        if (p?.StickyScroll ?? false)
                         {
-                            c.A = 0;
-                            var b = new SolidColorBrush(c);
+                            var t = _settings.StickyScrollColor.ToColor();
+                            var b = new SolidColorBrush(t);
                             property.SetValue(d, (Brush)b);
+                        }
+                        else
+                        {
+                            if (c.A != 0)
+                            {
+                                c.A = 0;
+                                var b = new SolidColorBrush(c);
+                                property.SetValue(d, (Brush)b);
+                            }
                         }
                     }
                     else

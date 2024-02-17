@@ -345,4 +345,10 @@
   <data name="Scope" xml:space="preserve">
     <value>范围</value>
   </data>
+  <data name="StickyScrollColorType" xml:space="preserve">
+    <value>粘性滚动背景颜色</value>
+  </data>
+  <data name="StickyScrollColorTypeDes" xml:space="preserve">
+    <value>如果“对粘性滚动是透明的”为 true，ClaudiaIDE 会将此颜色值设置为粘性滚动背景颜色。 该值需要具有 alpha 格式的 HTML 颜色代码。 例如 “#B0A6ACAF”。</value>
+  </data>
 </root>

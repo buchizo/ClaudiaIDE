@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
@@ -67,6 +66,7 @@ namespace ClaudiaIDE.Settings
             WebApiDownloadInterval = TimeSpan.FromMinutes(5);
             IsTransparentToContentMargin = false;
             IsTransparentToStickyScroll = false;
+            StickyScrollColor = "#00000000";
         }
 
         internal DTE ServiceProvider { get; set; }
@@ -142,6 +142,7 @@ namespace ClaudiaIDE.Settings
         public TimeSpan WebApiDownloadInterval { get; set; }
         public bool IsTransparentToContentMargin { get; set; }
         public bool IsTransparentToStickyScroll { get; set; }
+        public string StickyScrollColor { get; set; }
 
         [IgnoreDataMember]
         public bool IsHidden { get; set; }
@@ -216,6 +217,7 @@ namespace ClaudiaIDE.Settings
                     settings.WebApiDownloadInterval = solconf.WebApiDownloadInterval;
                     settings.IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
                     settings.IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
+                    settings.StickyScrollColor = solconf.StickyScrollColor;
                 }
                 else
                 {
@@ -269,6 +271,7 @@ namespace ClaudiaIDE.Settings
             WebApiDownloadInterval = (TimeSpan)props.Item("WebApiDownloadInterval").Value;
             IsTransparentToContentMargin = (bool)props.Item("IsTransparentToContentMargin").Value;
             IsTransparentToStickyScroll = (bool)props.Item("IsTransparentToStickyScroll").Value;
+            StickyScrollColor = (string)props.Item("StickyScrollColor").Value;
         }
 
         public void Load()
@@ -333,6 +336,7 @@ namespace ClaudiaIDE.Settings
             WebApiDownloadInterval = solconf.WebApiDownloadInterval;
             IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
             IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
+            StickyScrollColor = solconf.StickyScrollColor;
         }
 
         public void OnApplyChanged()
@@ -586,6 +590,34 @@ namespace ClaudiaIDE.Settings
         public static KernelType ConvertTo(this ImageBlurMethod source)
         {
             return (KernelType)source;
+        }
+    }
+
+    public static class ColorConverter
+    {
+        public static System.Windows.Media.Color ToColor(this string value)
+        {
+            try
+            {
+                System.Drawing.Color t = System.Drawing.ColorTranslator.FromHtml(value);
+                return new System.Windows.Media.Color()
+                {
+                    A = t.A,
+                    B = t.B,
+                    G = t.G,
+                    R = t.R
+                };
+            }
+            catch
+            {
+                return new System.Windows.Media.Color()
+                {
+                    A = 0,
+                    B = 0,
+                    G = 0,
+                    R = 0
+                };
+            }
         }
     }
 }

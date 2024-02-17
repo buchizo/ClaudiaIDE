@@ -511,6 +511,24 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
+        ///   Sticky scroll background color に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StickyScrollColorType {
+            get {
+                return ResourceManager.GetString("StickyScrollColorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   If &quot;Is transparent to sticky scroll&quot; is true, ClaudiaIDE set this color value to sticky scroll background color. This value require HTML color code with alpha format. e.g. &quot;#B0A6ACAF&quot;. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string StickyScrollColorTypeDes {
+            get {
+                return ResourceManager.GetString("StickyScrollColorTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Image tile mode に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string TileMode {
