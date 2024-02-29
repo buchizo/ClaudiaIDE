@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Media.Imaging;
@@ -75,6 +76,8 @@ namespace ClaudiaIDE.ImageProviders
                         (_bitmap.Width != _bitmap.PixelWidth || _bitmap.Height != _bitmap.PixelHeight)
                        )
                         ret_bitmap = Utils.ConvertToDpi96(_bitmap);
+                    else
+                        ret_bitmap = _bitmap;
 
                     if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
                         ret_bitmap = Utils.SoftenEdges(ret_bitmap ?? _bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
