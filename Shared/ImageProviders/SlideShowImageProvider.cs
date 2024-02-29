@@ -96,13 +96,15 @@ namespace ClaudiaIDE.ImageProviders
                     return GetBitmap();
                 }
 
-
                 BitmapSource ret_bitmap = bitmap;
                 if (Setting.ImageStretch == ImageStretch.None)
                 {
                     bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
+
                     if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
                         ret_bitmap = Utils.ConvertToDpi96(bitmap);
+                    else
+                        ret_bitmap = bitmap;
                 }
 
                 if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
