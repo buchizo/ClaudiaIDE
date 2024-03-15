@@ -567,12 +567,17 @@ namespace ClaudiaIDE
                 {
                     tp.ContentMargin = true;
                 }
-                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase))
+                else if (type.FullName.Equals("Microsoft.VisualStudio.Text.Structure.StickyScroll.StickyScrollMargin", StringComparison.OrdinalIgnoreCase))
                 {
                     tp.StickyScroll = true;
                 }
+                else if (type.FullName.Equals("System.Windows.Controls.Viewbox", StringComparison.OrdinalIgnoreCase))
+                {
+                    tp.ExpandCollapseIcon = true;
+                }
                 await SetBackgroundToTransparentAsync(c, true, tp, parentName: parentName);
                 if (type.FullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.AdornmentLayer", StringComparison.OrdinalIgnoreCase)) continue; // stop for childs object
+                if (tp.ExpandCollapseIcon) continue;
                 await SetTransparentForChildAsync(c, tp, parentName: $"{parentName}|{type.Name}|{type.GetProperty("Name")?.GetValue(c)}");
             }
         }
@@ -581,6 +586,7 @@ namespace ClaudiaIDE
         {
             public bool StickyScroll;
             public bool ContentMargin;
+            public bool ExpandCollapseIcon;
         }
 
         private async Task SetBackgroundToTransparentAsync(DependencyObject d, bool isTransparent, ParentControlInfo p = null, string parentName = "")
@@ -598,6 +604,17 @@ namespace ClaudiaIDE
             else if (p?.ContentMargin ?? false)
             {
                 isTransparent = _settings.IsTransparentToContentMargin;
+            }
+            else if (p?.ExpandCollapseIcon ?? false)
+            {
+                if (name.Equals("ExpandCollapseIcon", StringComparison.OrdinalIgnoreCase))
+                {
+                    isTransparent = false;
+                }
+                else
+                {
+                    p.ExpandCollapseIcon = false;
+                }
             }
             var key = $"#{_currentThemeColor.Name}|{parentName}|{type.Name}|{name}|{isTransparent}|{_settings.ExpandToIDE}|{p?.StickyScroll}_{_settings.IsTransparentToStickyScroll}|{p?.ContentMargin}_{_settings.IsTransparentToContentMargin}";
 
