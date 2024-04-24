@@ -563,7 +563,8 @@ namespace ClaudiaIDE
                 var type = c.GetType();
                 if (type == null) continue;
                 if (type.FullName.Equals("System.Windows.Controls.Primitives.Thumb", StringComparison.OrdinalIgnoreCase)) return;
-                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase))
+                if (type.FullName.Equals("Microsoft.VisualStudio.Text.Utilities.ContainerMargin", StringComparison.OrdinalIgnoreCase)
+                    || type.FullName.EndsWith("Microsoft.VisualStudio.Text.Editor.Implementation.GlyphMarginGrid", StringComparison.OrdinalIgnoreCase))
                 {
                     tp.ContentMargin = true;
                 }
