@@ -9,8 +9,7 @@ namespace ClaudiaIDE.Helpers
 {
     internal class ImageDownloader
     {
-        private static HttpClient _client = new HttpClient();
-        private static string lastDownloaded = "";
+        private static readonly HttpClient _client = new HttpClient();
         private static BitmapImage _image;
         private static bool loading;
 
@@ -77,7 +76,7 @@ namespace ClaudiaIDE.Helpers
                         ret_bitmap = Utils.SoftenEdges(ret_bitmap ?? _image, setting.SoftEdgeX, setting.SoftEdgeY);
 
                     loading = false;
-                    return ret_bitmap != null ? ret_bitmap : _image;
+                    return ret_bitmap ?? _image;
                 }
             }
             catch
@@ -88,7 +87,6 @@ namespace ClaudiaIDE.Helpers
 
         internal static void ResetUrl()
         {
-            lastDownloaded = "";
         }
     }
 }

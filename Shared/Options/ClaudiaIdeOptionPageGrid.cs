@@ -52,6 +52,7 @@ namespace ClaudiaIDE.Options
             IsTransparentToContentMargin = false;
             IsTransparentToStickyScroll = false;
             StickyScrollColor = "#00000000";
+            EditorBackgroundColor = "";
         }
 
         [LocalManager.LocalizedCategoryAttribute("Image")]
@@ -241,6 +242,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDisplayNameAttribute("StickyScrollColorType")]
         [LocalManager.LocalizedDescriptionAttribute("StickyScrollColorTypeDes")]
         public string StickyScrollColor { get; set; }
+
+        [LocalManager.LocalizedCategoryAttribute("Scope")]
+        [LocalManager.LocalizedDisplayNameAttribute("EditorBackgroundColorType")]
+        [LocalManager.LocalizedDescriptionAttribute("EditorBackgroundColorTypeDes")]
+        public string EditorBackgroundColor { get; set; }
 
         protected override void OnApply(PageApplyEventArgs e)
         {

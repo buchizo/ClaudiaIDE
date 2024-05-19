@@ -351,4 +351,10 @@
   <data name="StickyScrollColorTypeDes" xml:space="preserve">
     <value>If "Is transparent to sticky scroll" is true, ClaudiaIDE set this color value to sticky scroll background color. This value require HTML color code with alpha format. e.g. "#B0A6ACAF".</value>
   </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>Editor background color</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>Specifies the background color of the editor part. This value requires an HTML color code in alpha format. For example, "#B0A6ACAF". If it is an empty string, ClaudiaIDE will not explicitly set the background color.</value>
+  </data>
 </root>

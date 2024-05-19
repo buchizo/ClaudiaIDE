@@ -151,6 +151,24 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
+        ///   Editor background color に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EditorBackgroundColorType {
+            get {
+                return ResourceManager.GetString("EditorBackgroundColorType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Specifies the background color of the editor part. This value requires an HTML color code in alpha format. For example, &quot;#B0A6ACAF&quot;. If it is an empty string, ClaudiaIDE will not explicitly set the background color. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string EditorBackgroundColorTypeDes {
+            get {
+                return ResourceManager.GetString("EditorBackgroundColorTypeDes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Expand to IDE に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ExpandToIDEType {

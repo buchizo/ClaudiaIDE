@@ -17,6 +17,7 @@ using Microsoft.VisualStudio.Shell;
 using Window = System.Windows.Window;
 using Microsoft.VisualStudio.Threading;
 using System.Windows.Media.Effects;
+using Microsoft.VisualStudio.PlatformUI;
 
 namespace ClaudiaIDE
 {
@@ -41,6 +42,7 @@ namespace ClaudiaIDE
         private List<ImageProvider> _imageProviders;
         private Window _mainWindow;
         private Setting _settings;
+        private readonly Dictionary<string, DependencyObject> _defaultThemeColor = new Dictionary<string, DependencyObject>();
 
         protected override async Task InitializeAsync(CancellationToken cancellationToken,
             IProgress<ServiceProgressData> progress)
@@ -148,126 +150,147 @@ namespace ClaudiaIDE
             try
             {
                 var rRootGrid = (Grid)_mainWindow.Template.FindName("RootGrid", _mainWindow);
-                if (rRootGrid != null)
+                if (rRootGrid == null) return;
+
+                var removeTargets = new List<UIElement>();
+                foreach (UIElement el in rRootGrid.Children)
                 {
-                    var removeTargets = new List<UIElement>();
-                    foreach (UIElement el in rRootGrid.Children)
+                    if (el.GetType() == typeof(Image))
                     {
-                        if (el.GetType() == typeof(Image))
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single
+                            || !_settings.ExpandToIDE
+                            || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == false)
                         {
-                            if (_settings.ImageBackgroundType == ImageBackgroundType.Single
-                                || !_settings.ExpandToIDE
-                                || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == false)
-                            {
-                                removeTargets.Add(el);
-                                _current = null;
-                            }
-                            else
-                            {
-                                _currentMediaElement = null;
-                                _current = el as Image;
-                            }
-                        }
-                        if (el.GetType() == typeof(MediaElement))
-                        {
-                            if (_settings.ImageBackgroundType == ImageBackgroundType.Single
-                                || !_settings.ExpandToIDE
-                                || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
-                            {
-                                removeTargets.Add(el);
-                                _currentMediaElement = null;
-                            }
-                            else
-                            {
-                                _current = null;
-                                _currentMediaElement = el as MediaElement;
-                            }
-                        }
-                    }
-                    removeTargets.ForEach(x => rRootGrid.Children.Remove(x));
-
-                    if (!_settings.ExpandToIDE) return;
-
-                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
-                    {
-                        _currentMediaElement = null;
-                        var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
-                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
-                        {
-                            var rImageControl = new Image
-                            {
-                                Source = newimage,
-                                Stretch = _settings.ImageStretch.ConvertTo(),
-                                HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
-                                VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                                Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity,
-                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
-                                {
-                                    Radius = _settings.BlurRadius,
-                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
-                                } : null
-                            };
-
-                            Grid.SetRowSpan(rImageControl, 4);
-                            RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
-
-                            rRootGrid.Children.Insert(0, rImageControl);
-                            SetTransparentBackground(rRootGrid, _settings);
+                            removeTargets.Add(el);
+                            _current = null;
                         }
                         else
                         {
-                            _current.AnimateImageSourceChange(
-                                newimage,
-                                n =>
-                                {
-                                    n.Stretch = _settings.ImageStretch.ConvertTo();
-                                    n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
-                                    n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
-                                },
-                                new AnimateImageChangeParams
-                                {
-                                    FadeTime = _settings.ImageFadeAnimationInterval,
-                                    TargetOpacity = _settings.IsHidden ? 0.0 : _settings.Opacity
-                                }
-                            );
+                            _currentMediaElement = null;
+                            _current = el as Image;
                         }
+                    }
+                    if (el.GetType() == typeof(MediaElement))
+                    {
+                        if (_settings.ImageBackgroundType == ImageBackgroundType.Single
+                            || !_settings.ExpandToIDE
+                            || ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
+                        {
+                            removeTargets.Add(el);
+                            _currentMediaElement = null;
+                        }
+                        else
+                        {
+                            _current = null;
+                            _currentMediaElement = el as MediaElement;
+                        }
+                    }
+                }
+                removeTargets.ForEach(x => rRootGrid.Children.Remove(x));
+
+                var key = $"#{VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey).Name}|RootGrid";
+                if (_settings.ExpandToIDE)
+                {
+                    if (rRootGrid.Background is SolidColorBrush sb)
+                    {
+                        if (!_defaultThemeColor.TryGetValue(key, out var d1))
+                        {
+                            _defaultThemeColor[key] = sb;
+                        }
+                        if (_settings.EditorBackgroundColor.TryGetColor(out var c))
+                        {
+                            rRootGrid.Background = new SolidColorBrush(c);
+                        }
+                    }
+                }
+                else
+                {
+                    if (_defaultThemeColor.TryGetValue(key, out var d1))
+                    {
+                        rRootGrid.Background = (SolidColorBrush)d1;
+                    }
+                    return;
+                }
+
+                if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
+                {
+                    _currentMediaElement = null;
+                    var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
+                    if (_settings.ImageBackgroundType == ImageBackgroundType.Single || _current == null)
+                    {
+                        var rImageControl = new Image
+                        {
+                            Source = newimage,
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
+                            VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                            Opacity = _settings.IsHidden ? 0.0 : _settings.Opacity,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
+                        };
+
+                        Grid.SetRowSpan(rImageControl, 4);
+                        RenderOptions.SetBitmapScalingMode(rImageControl, BitmapScalingMode.Fant);
+
+                        rRootGrid.Children.Insert(0, rImageControl);
+                        SetTransparentBackground(rRootGrid, _settings);
                     }
                     else
                     {
-                        // movie, animation gif..
-                        if (_currentMediaElement == null)
-                        {
-                            _currentMediaElement = new MediaElement
+                        _current.AnimateImageSourceChange(
+                            newimage,
+                            n =>
                             {
-                                Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
-                                LoadedBehavior = MediaState.Play,
-                                UnloadedBehavior = MediaState.Manual,
-                                IsMuted = true,
-                                HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
-                                VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
-                                Stretch = _settings.ImageStretch.ConvertTo(),
-                                Opacity = _settings.Opacity,
-                                Effect = _settings.BlurRadius > 0 ? new BlurEffect()
-                                {
-                                    Radius = _settings.BlurRadius,
-                                    KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
-                                } : null
-                            };
-                            _currentMediaElement.MediaEnded += (s, e) =>
+                                n.Stretch = _settings.ImageStretch.ConvertTo();
+                                n.HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment();
+                                n.VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment();
+                            },
+                            new AnimateImageChangeParams
                             {
-                                if (_currentMediaElement == null) return;
-                                _currentMediaElement.Position = TimeSpan.FromMilliseconds(1);
-                                _currentMediaElement.Play();
-                            };
-                            Grid.SetRowSpan(_currentMediaElement, 4);
-                            RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
-                            rRootGrid.Children.Insert(0, _currentMediaElement);
-                            SetTransparentBackground(rRootGrid, _settings);
-                        }
-                        else
+                                FadeTime = _settings.ImageFadeAnimationInterval,
+                                TargetOpacity = _settings.IsHidden ? 0.0 : _settings.Opacity
+                            }
+                        );
+                    }
+                }
+                else
+                {
+                    // movie, animation gif..
+                    if (_currentMediaElement == null)
+                    {
+                        _currentMediaElement = new MediaElement
                         {
-                            _currentMediaElement.Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri());
-                        }
+                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                            LoadedBehavior = MediaState.Play,
+                            UnloadedBehavior = MediaState.Manual,
+                            IsMuted = true,
+                            HorizontalAlignment = _settings.PositionHorizon.ConvertToHorizontalAlignment(),
+                            VerticalAlignment = _settings.PositionVertical.ConvertToVerticalAlignment(),
+                            Stretch = _settings.ImageStretch.ConvertTo(),
+                            Opacity = _settings.Opacity,
+                            Effect = _settings.BlurRadius > 0 ? new BlurEffect()
+                            {
+                                Radius = _settings.BlurRadius,
+                                KernelType = BlurMethodConverter.ConvertTo(_settings.BlurMethod)
+                            } : null
+                        };
+                        _currentMediaElement.MediaEnded += (s, e) =>
+                        {
+                            if (_currentMediaElement == null) return;
+                            _currentMediaElement.Position = TimeSpan.FromMilliseconds(1);
+                            _currentMediaElement.Play();
+                        };
+                        Grid.SetRowSpan(_currentMediaElement, 4);
+                        RenderOptions.SetBitmapScalingMode(_currentMediaElement, BitmapScalingMode.Fant);
+                        rRootGrid.Children.Insert(0, _currentMediaElement);
+                        SetTransparentBackground(rRootGrid, _settings);
+                    }
+                    else
+                    {
+                        _currentMediaElement.Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri());
                     }
                 }
             }
@@ -279,7 +302,6 @@ namespace ClaudiaIDE
         /// <summary>
         /// mainwindow background set to transparent
         /// </summary>
-        /// <param name="rRootGrid"></param>
         public static void SetTransparentBackground(Grid rRootGrid, Setting currentSettings)
         {
             var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>

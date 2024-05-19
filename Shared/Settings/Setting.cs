@@ -67,6 +67,7 @@ namespace ClaudiaIDE.Settings
             IsTransparentToContentMargin = false;
             IsTransparentToStickyScroll = false;
             StickyScrollColor = "#00000000";
+            EditorBackgroundColor = "";
         }
 
         internal DTE ServiceProvider { get; set; }
@@ -143,6 +144,7 @@ namespace ClaudiaIDE.Settings
         public bool IsTransparentToContentMargin { get; set; }
         public bool IsTransparentToStickyScroll { get; set; }
         public string StickyScrollColor { get; set; }
+        public string EditorBackgroundColor { get; set; }
 
         [IgnoreDataMember]
         public bool IsHidden { get; set; }
@@ -218,6 +220,7 @@ namespace ClaudiaIDE.Settings
                     settings.IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
                     settings.IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
                     settings.StickyScrollColor = solconf.StickyScrollColor;
+                    settings.EditorBackgroundColor = solconf.EditorBackgroundColor;
                 }
                 else
                 {
@@ -272,6 +275,7 @@ namespace ClaudiaIDE.Settings
             IsTransparentToContentMargin = (bool)props.Item("IsTransparentToContentMargin").Value;
             IsTransparentToStickyScroll = (bool)props.Item("IsTransparentToStickyScroll").Value;
             StickyScrollColor = (string)props.Item("StickyScrollColor").Value;
+            EditorBackgroundColor = (string)props.Item("EditorBackgroundColor").Value;
         }
 
         public void Load()
@@ -337,6 +341,7 @@ namespace ClaudiaIDE.Settings
             IsTransparentToStickyScroll = solconf.IsTransparentToStickyScroll;
             IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
             StickyScrollColor = solconf.StickyScrollColor;
+            EditorBackgroundColor = solconf.EditorBackgroundColor;
         }
 
         public void OnApplyChanged()
@@ -617,6 +622,33 @@ namespace ClaudiaIDE.Settings
                     G = 0,
                     R = 0
                 };
+            }
+        }
+
+        public static bool TryGetColor(this string value, out System.Windows.Media.Color color)
+        {
+            try
+            {
+                System.Drawing.Color t = System.Drawing.ColorTranslator.FromHtml(value);
+                color = new System.Windows.Media.Color()
+                {
+                    A = t.A,
+                    B = t.B,
+                    G = t.G,
+                    R = t.R
+                };
+                return true;
+            }
+            catch
+            {
+                color = new System.Windows.Media.Color()
+                {
+                    A = 0,
+                    B = 0,
+                    G = 0,
+                    R = 0
+                };
+                return false;
             }
         }
     }
