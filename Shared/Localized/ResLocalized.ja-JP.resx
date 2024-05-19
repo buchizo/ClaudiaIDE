@@ -351,4 +351,10 @@
   <data name="StickyScrollColorTypeDes" xml:space="preserve">
     <value>「固定スクロールを透明にする」が true の場合、ClaudiaIDE はこの色の値を固定スクロールの背景色に設定します。 この値には、アルファ形式の HTML カラー コードが必要です。 例えば 「#B0A6ACAF」</value>
   </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>エディター背景色</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>エディター部分の背景色を指定します。この値には、アルファ形式の HTML カラー コードが必要です。 例えば 「#B0A6ACAF」。空文字の場合、ClaudiaIDEは背景色を明示的に設定しません。</value>
+  </data>
 </root>

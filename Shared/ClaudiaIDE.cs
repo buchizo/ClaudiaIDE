@@ -427,6 +427,8 @@ namespace ClaudiaIDE
                     && !(_isMainWindow && _settings.ExpandToIDE))
                 {
                     // stop set to transparent (maybe reached to top of editor control)
+                    var key = $"#{_currentThemeColor.Name}|PART_ContentPanel";
+                    await SetSpecificColorForBackgroundAsync(current, key, _isMainWindow && _settings.ExpandToIDE);
                     return;
                 }
                 else
@@ -696,6 +698,33 @@ namespace ClaudiaIDE
         private void VSColorTheme_ThemeChanged(ThemeChangedEventArgs e)
         {
             _currentThemeColor = VSColorTheme.GetThemedColor(EnvironmentColors.ToolWindowBackgroundColorKey);
+        }
+
+        private async Task SetSpecificColorForBackgroundAsync(DependencyObject d, string key, bool isRecovery)
+        {
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
+            var refd = d.GetType();
+            var property = refd.GetProperty("Background");
+            if (!(property?.GetValue(d) is SolidColorBrush sb)) return;
+            if (isRecovery)
+            {
+                if (_defaultThemeColor.TryGetValue(key, out var d1))
+                {
+                    property.SetValue(d, (SolidColorBrush)d1);
+                }
+            }
+            else
+            {
+                if (!_defaultThemeColor.ContainsKey(key))
+                {
+                    _defaultThemeColor[key] = sb;
+                }
+                if (_settings.EditorBackgroundColor.TryGetColor(out var c))
+                {
+                    var b = new SolidColorBrush(c);
+                    property.SetValue(d, (Brush)b);
+                }
+            }
         }
     }
 }

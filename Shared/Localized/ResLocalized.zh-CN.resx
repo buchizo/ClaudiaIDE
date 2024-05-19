@@ -351,4 +351,10 @@
   <data name="StickyScrollColorTypeDes" xml:space="preserve">
     <value>如果“对粘性滚动是透明的”为 true，ClaudiaIDE 会将此颜色值设置为粘性滚动背景颜色。 该值需要具有 alpha 格式的 HTML 颜色代码。 例如 “#B0A6ACAF”。</value>
   </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>编辑器背景颜色</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>指定编辑器部分的背景颜色。 该值需要 alpha 格式的 HTML 颜色代码。 例如，“#B0A6ACAF”。 如果是空字符串，ClaudiaIDE将不会显式设置背景颜色。</value>
+  </data>
 </root>
