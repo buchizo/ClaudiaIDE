@@ -625,10 +625,17 @@ namespace ClaudiaIDE.Settings
             }
         }
 
+        private static readonly System.Windows.Media.Color DefaultBackgroundColor = new System.Windows.Media.Color();
+
         public static bool TryGetColor(this string value, out System.Windows.Media.Color color)
         {
             try
             {
+                if (string.IsNullOrEmpty(value))
+                {
+                    color = DefaultBackgroundColor;
+                    return false;
+                }
                 System.Drawing.Color t = System.Drawing.ColorTranslator.FromHtml(value);
                 color = new System.Windows.Media.Color()
                 {
@@ -641,13 +648,7 @@ namespace ClaudiaIDE.Settings
             }
             catch
             {
-                color = new System.Windows.Media.Color()
-                {
-                    A = 0,
-                    B = 0,
-                    G = 0,
-                    R = 0
-                };
+                color = DefaultBackgroundColor;
                 return false;
             }
         }
