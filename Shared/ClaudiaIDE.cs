@@ -630,8 +630,17 @@ namespace ClaudiaIDE
                 {
                     if (p?.StickyScroll ?? false)
                     {
-                        var t = _settings.StickyScrollColor.ToColor();
-                        property.SetValue(d, new SolidColorBrush(t));
+                        if (_settings.StickyScrollColorObject.HasValue)
+                        {
+                            property.SetValue(d, new SolidColorBrush(_settings.StickyScrollColorObject.Value));
+                        }
+                        else
+                        {
+                            if (_defaultThemeColor.TryGetValue(key, out var sdc))
+                            {
+                                property.SetValue(d, (SolidColorBrush)sdc);
+                            }
+                        }
                     }
                     else
                     {
@@ -659,9 +668,18 @@ namespace ClaudiaIDE
                         }
                         if (p?.StickyScroll ?? false)
                         {
-                            var t = _settings.StickyScrollColor.ToColor();
-                            var b = new SolidColorBrush(t);
-                            property.SetValue(d, (Brush)b);
+                            if (_settings.StickyScrollColorObject.HasValue)
+                            {
+                                var b = new SolidColorBrush(_settings.StickyScrollColorObject.Value);
+                                property.SetValue(d, (Brush)b);
+                            }
+                            else
+                            {
+                                if (_defaultThemeColor.TryGetValue(key, out var sdc))
+                                {
+                                    property.SetValue(d, (SolidColorBrush)sdc);
+                                }
+                            }
                         }
                         else
                         {
@@ -719,10 +737,17 @@ namespace ClaudiaIDE
                 {
                     _defaultThemeColor[key] = sb;
                 }
-                if (_settings.EditorBackgroundColor.TryGetColor(out var c))
+                if (_settings.EditorBackgroundColorObject.HasValue)
                 {
-                    var b = new SolidColorBrush(c);
+                    var b = new SolidColorBrush(_settings.EditorBackgroundColorObject.Value);
                     property.SetValue(d, (Brush)b);
+                }
+                else
+                {
+                    if (_defaultThemeColor.TryGetValue(key, out var d1))
+                    {
+                        property.SetValue(d, (SolidColorBrush)d1);
+                    }
                 }
             }
         }

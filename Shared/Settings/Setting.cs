@@ -146,6 +146,9 @@ namespace ClaudiaIDE.Settings
         public string StickyScrollColor { get; set; }
         public string EditorBackgroundColor { get; set; }
 
+        public Color? EditorBackgroundColorObject;
+        public Color? StickyScrollColorObject;
+
         [IgnoreDataMember]
         public bool IsHidden { get; set; }
 
@@ -221,6 +224,8 @@ namespace ClaudiaIDE.Settings
                     settings.IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
                     settings.StickyScrollColor = solconf.StickyScrollColor;
                     settings.EditorBackgroundColor = solconf.EditorBackgroundColor;
+                    settings.StickyScrollColorObject = settings.StickyScrollColor.TryGetColor(out var sc) ? sc : (Color?)null;
+                    settings.EditorBackgroundColorObject = settings.EditorBackgroundColor.TryGetColor(out var ec) ? ec : (Color?)null;
                 }
                 else
                 {
@@ -276,6 +281,9 @@ namespace ClaudiaIDE.Settings
             IsTransparentToStickyScroll = (bool)props.Item("IsTransparentToStickyScroll").Value;
             StickyScrollColor = (string)props.Item("StickyScrollColor").Value;
             EditorBackgroundColor = (string)props.Item("EditorBackgroundColor").Value;
+
+            StickyScrollColorObject = StickyScrollColor.TryGetColor(out var sc) ? sc : (Color?)null;
+            EditorBackgroundColorObject = EditorBackgroundColor.TryGetColor(out var ec) ? ec : (Color?)null;
         }
 
         public void Load()
@@ -342,6 +350,9 @@ namespace ClaudiaIDE.Settings
             IsTransparentToContentMargin = solconf.IsTransparentToContentMargin;
             StickyScrollColor = solconf.StickyScrollColor;
             EditorBackgroundColor = solconf.EditorBackgroundColor;
+
+            StickyScrollColorObject = StickyScrollColor.TryGetColor(out var sc) ? sc : (Color?)null;
+            EditorBackgroundColorObject = EditorBackgroundColor.TryGetColor(out var ec) ? ec : (Color?)null;
         }
 
         public void OnApplyChanged()
@@ -600,12 +611,12 @@ namespace ClaudiaIDE.Settings
 
     public static class ColorConverter
     {
-        public static System.Windows.Media.Color ToColor(this string value)
+        public static Color ToColor(this string value)
         {
             try
             {
                 System.Drawing.Color t = System.Drawing.ColorTranslator.FromHtml(value);
-                return new System.Windows.Media.Color()
+                return new Color()
                 {
                     A = t.A,
                     B = t.B,
@@ -615,29 +626,23 @@ namespace ClaudiaIDE.Settings
             }
             catch
             {
-                return new System.Windows.Media.Color()
-                {
-                    A = 0,
-                    B = 0,
-                    G = 0,
-                    R = 0
-                };
+                return DefaultTransparentColor;
             }
         }
 
-        private static readonly System.Windows.Media.Color DefaultBackgroundColor = new System.Windows.Media.Color();
+        private static readonly Color DefaultTransparentColor = new Color();
 
-        public static bool TryGetColor(this string value, out System.Windows.Media.Color color)
+        public static bool TryGetColor(this string value, out Color color)
         {
             try
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    color = DefaultBackgroundColor;
+                    color = DefaultTransparentColor;
                     return false;
                 }
                 System.Drawing.Color t = System.Drawing.ColorTranslator.FromHtml(value);
-                color = new System.Windows.Media.Color()
+                color = new Color()
                 {
                     A = t.A,
                     B = t.B,
@@ -648,7 +653,7 @@ namespace ClaudiaIDE.Settings
             }
             catch
             {
-                color = DefaultBackgroundColor;
+                color = DefaultTransparentColor;
                 return false;
             }
         }

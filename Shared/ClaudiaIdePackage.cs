@@ -22,7 +22,7 @@ using Microsoft.VisualStudio.PlatformUI;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.40", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.41", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
@@ -197,9 +197,16 @@ namespace ClaudiaIDE
                         {
                             _defaultThemeColor[key] = sb;
                         }
-                        if (_settings.EditorBackgroundColor.TryGetColor(out var c))
+                        if (_settings.EditorBackgroundColorObject.HasValue)
                         {
-                            rRootGrid.Background = new SolidColorBrush(c);
+                            rRootGrid.Background = new SolidColorBrush(_settings.EditorBackgroundColorObject.Value);
+                        }
+                        else
+                        {
+                            if (_defaultThemeColor.TryGetValue(key, out var rgdc))
+                            {
+                                rRootGrid.Background = (SolidColorBrush)(rgdc);
+                            }
                         }
                     }
                 }
