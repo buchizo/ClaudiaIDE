@@ -723,7 +723,6 @@ namespace ClaudiaIDE
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
             var refd = d.GetType();
             var property = refd.GetProperty("Background");
-            if (!(property?.GetValue(d) is SolidColorBrush sb)) return;
             if (isRecovery)
             {
                 if (_defaultThemeColor.TryGetValue(key, out var d1))
@@ -735,7 +734,13 @@ namespace ClaudiaIDE
             {
                 if (!_defaultThemeColor.ContainsKey(key))
                 {
-                    _defaultThemeColor[key] = sb;
+                    _defaultThemeColor[key] = new SolidColorBrush(
+                        Color.FromArgb(
+                            _currentThemeColor.A,
+                            _currentThemeColor.R,
+                            _currentThemeColor.G,
+                            _currentThemeColor.B)
+                        );
                 }
                 if (_settings.EditorBackgroundColorObject.HasValue)
                 {
