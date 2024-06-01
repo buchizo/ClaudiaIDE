@@ -9,9 +9,9 @@ namespace ClaudiaIDE.Helpers
         private readonly Stopwatch _stopwatch;
         private bool _resumed;
 
-        public PausableTimer(double interval) : base(interval)
+        public PausableTimer(double interval) : base(interval <= 0 ? 1 : interval)
         {
-            _initialInterval = interval;
+            _initialInterval = interval <= 0 ? 1 : interval;
             Elapsed += OnElapsed;
             IsPaused = false;
             _stopwatch = new Stopwatch();
