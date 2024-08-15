@@ -357,4 +357,19 @@
   <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
     <value>指定编辑器部分的背景颜色。 该值需要 alpha 格式的 HTML 颜色代码。 例如，“#B0A6ACAF”。 如果是空字符串，ClaudiaIDE将不会显式设置背景颜色。</value>
   </data>
+  <data name="110" xml:space="preserve">
+    <value>ClaudiaIDE</value>
+  </data>
+  <data name="112" xml:space="preserve">
+    <value>此扩展可以改变编辑器的背景图像。</value>
+  </data>
+  <data name="116" xml:space="preserve">
+    <value>浅色主题</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>深色主题</value>
+  </data>
+  <data name="118" xml:space="preserve">
+    <value>一般的</value>
+  </data>
 </root>

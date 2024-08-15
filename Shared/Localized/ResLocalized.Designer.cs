@@ -61,6 +61,51 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
+        ///   ClaudiaIDE に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string _110 {
+            get {
+                return ResourceManager.GetString("110", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   This extension change the background image of editor. に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string _112 {
+            get {
+                return ResourceManager.GetString("112", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Light theme に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string _116 {
+            get {
+                return ResourceManager.GetString("116", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Dark theme に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string _117 {
+            get {
+                return ResourceManager.GetString("117", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   General に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string _118 {
+            get {
+                return ResourceManager.GetString("118", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   API Endpoint に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ApiEndpoint {
