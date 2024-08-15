@@ -357,4 +357,19 @@
   <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
     <value>Specifies the background color of the editor part. This value requires an HTML color code in alpha format. For example, "#B0A6ACAF". If it is an empty string, ClaudiaIDE will not explicitly set the background color.</value>
   </data>
+  <data name="110" xml:space="preserve">
+    <value>ClaudiaIDE</value>
+  </data>
+  <data name="112" xml:space="preserve">
+    <value>This extension change the background image of editor.</value>
+  </data>
+  <data name="116" xml:space="preserve">
+    <value>Light theme</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
+  <data name="118" xml:space="preserve">
+    <value>General</value>
+  </data>
 </root>

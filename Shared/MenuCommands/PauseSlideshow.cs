@@ -99,6 +99,7 @@ namespace ClaudiaIDE.MenuCommands
         {
             // Switch to the main thread - the call to AddCommand in PauseSlideshow's constructor requires
             // the UI thread.
+            if (Instance != null) return;
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             var commandService =

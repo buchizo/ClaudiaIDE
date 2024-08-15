@@ -211,12 +211,6 @@
       <LastGenOutput>ResLocalized.zh-CN.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Shared\VSPackage.resx">
-      <Link>VSPackage.resx</Link>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>VSPackage.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="..\Shared\Shared.projitems" Label="Shared" />
   <PropertyGroup>
