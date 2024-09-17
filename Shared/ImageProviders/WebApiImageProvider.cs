@@ -9,7 +9,7 @@ using ClaudiaIDE.Helpers;
 using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
 using Microsoft.VisualStudio.Threading;
-using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ClaudiaIDE.ImageProviders
 {
@@ -65,26 +65,23 @@ namespace ClaudiaIDE.ImageProviders
                 if (!httpres.IsSuccessStatusCode) return;
                 var response = await httpres.Content.ReadAsStringAsync();
 
-                var reader = new JsonTextReader(new StringReader(response));
-
-                while (reader.Read())
-                    if (reader.Value != null && reader.TokenType == JsonToken.PropertyName &&
-                        reader.Value.ToString().Equals(Setting.WebApiJsonKey))
+                var jsonObject = JObject.Parse(response);
+                var imageUrl = jsonObject.SelectToken(Setting.WebApiJsonKey);
+                if (imageUrl != null)
+                {
+                    _currentUrl = imageUrl.ToString();
+                    if (!IsStaticImage())
                     {
-                        var imageUrl = reader.ReadAsString();
-                        _currentUrl = imageUrl;
-                        if (!IsStaticImage())
-                        {
-                            FireImageAvailable();
-                            return;
-                        }
-                        Image = await ImageDownloader.LoadImageAsync(imageUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
-                        _timer.Restart();
-                        if (Image != null) FireImageAvailable();
+                        FireImageAvailable();
                         return;
                     }
+                    Image = await ImageDownloader.LoadImageAsync(_currentUrl, Setting.ImageStretch, Setting.MaxWidth, Setting.MaxHeight, Setting);
+                    _timer.Restart();
+                    if (Image != null) FireImageAvailable();
+                    return;
+                }
             }
-            catch {}
+            catch { }
         }
 
         protected override void OnSettingChanged(object sender, EventArgs e)
