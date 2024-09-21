@@ -289,7 +289,7 @@
     <value>JSON 密钥</value>
   </data>
   <data name="JsonKeyDescription" xml:space="preserve">
-    <value>指定从 Web API 返回的 JSON 对象的键。 使用指定键值 URL 中的图片作为背景图片。</value>
+    <value>保存下载路径值的键，常见示例为“url”、“src”、“img”、“image”。或者 ClaudiaIDE 可以按如下方式解析 JSONPath：“$.images[0].url”</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>网址</value>

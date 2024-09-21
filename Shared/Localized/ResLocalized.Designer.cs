@@ -403,7 +403,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   The key which holds the value to the downloadpath come common examples are &quot;url&quot;, &quot;src&quot;, &quot;img&quot;, &quot;image&quot; に類似しているローカライズされた文字列を検索します。
+        ///   The key which holds the value to the downloadpath come common examples are &quot;url&quot;, &quot;src&quot;, &quot;img&quot;, &quot;image&quot;. Or ClaudiaIDE can parse JSONPath as follows: &quot;$.images[0].url&quot; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string JsonKeyDescription {
             get {
