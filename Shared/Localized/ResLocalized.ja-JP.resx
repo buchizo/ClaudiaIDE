@@ -289,7 +289,8 @@
     <value>JSONキー</value>
   </data>
   <data name="JsonKeyDescription" xml:space="preserve">
-    <value>Web API から返されるJSONオブジェクトのキーを指定します。指定されたキーの値のURLの画像を背景画像として使用します。</value>
+    <value>Web API から返されるJSONオブジェクトのキーを指定します。指定されたキーの値のURLの画像を背景画像として使用します。例："url"
+または次のように JSONPathを指定できます。: "$.images[0].url"</value>
   </data>
   <data name="Url" xml:space="preserve">
     <value>Url</value>
