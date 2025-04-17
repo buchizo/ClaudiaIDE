@@ -122,6 +122,11 @@ namespace ClaudiaIDE.Options
         [LocalManager.LocalizedDescriptionAttribute("ShuffleSlideshowTypeDes")]
         public bool ShuffleSlideshow { get; set; }
 
+        [LocalManager.LocalizedCategoryAttribute("Slideshow")]
+        [LocalManager.LocalizedDisplayNameAttribute("IncludeSubdirectoriesType")]
+        [LocalManager.LocalizedDescriptionAttribute("IncludeSubdirectoriesTypeDes")]
+        public bool IncludeSubdirectories { get; set; }
+
         [LocalManager.LocalizedCategoryAttribute("Scope")]
         [LocalManager.LocalizedDisplayNameAttribute("ExpandToIDEType")]
         [LocalManager.LocalizedDescriptionAttribute("ExpandToIDETypeDes")]

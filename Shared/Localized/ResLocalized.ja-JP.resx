@@ -373,4 +373,10 @@
   <data name="118" xml:space="preserve">
     <value>全般</value>
   </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>サブディレクトリを含める</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>サブディレクトリ内の画像が含まれるかどうかを指定します。</value>
+  </data>
 </root>

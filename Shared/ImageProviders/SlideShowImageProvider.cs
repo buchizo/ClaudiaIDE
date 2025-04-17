@@ -52,7 +52,8 @@ namespace ClaudiaIDE.ImageProviders
             {
                 Extensions = Setting.Extensions,
                 ImageDirectoryPath = Setting.BackgroundImagesDirectoryAbsolutePath,
-                Shuffle = Setting.ShuffleSlideshow
+                Shuffle = Setting.ShuffleSlideshow,
+                IncludeSubdirectories = Setting.IncludeSubdirectories,
             };
         }
 
@@ -159,11 +160,11 @@ namespace ClaudiaIDE.ImageProviders
             }
 
             _fileWatcher?.Dispose();
-            if (File.Exists((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath))
+            if (Directory.Exists((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath))
             {
                 _fileWatcher = new FileSystemWatcher((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath)
                 {
-                    IncludeSubdirectories = false,
+                    IncludeSubdirectories = Setting.IncludeSubdirectories,
                     InternalBufferSize = 32 * 1024,
                     NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size
                 };
@@ -235,22 +236,46 @@ namespace ClaudiaIDE.ImageProviders
         public string Extensions { get; set; }
         public string ImageDirectoryPath { get; set; }
         public bool Shuffle { get; set; }
+        public bool IncludeSubdirectories { get; set; }
+
+        private static DateTime LastEnumerationTime = DateTime.MinValue;
+        private static List<string> LastImages;
 
         public IEnumerator<string> GetEnumerator()
         {
-            if (string.IsNullOrEmpty(Extensions) || string.IsNullOrEmpty(ImageDirectoryPath) ||
-                !Directory.Exists(ImageDirectoryPath))
-                return new ImageFilesEnumerator(new List<string>());
+            // to avoid multiple, repeated enumerations of the images due to settings changes or other events, check
+            // whether this method has been called in the last 2 seconds
+            if (LastImages != null && DateTime.Now - LastEnumerationTime < TimeSpan.FromSeconds(2)) {
+                return new ImageFilesEnumerator(LastImages);
+            }
+            LastEnumerationTime = DateTime.Now;
 
-            var extensions = Extensions
-                .Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(x => x.ToUpper());
-            var imageFilePaths = Directory.GetFiles(new DirectoryInfo(ImageDirectoryPath).FullName)
-                .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper())).OrderBy(x => x).ToList();
-            if (Shuffle) imageFilePaths.Shuffle();
-            if (!imageFilePaths.Any())
-                return new ImageFilesEnumerator(new List<string>());
-            return new ImageFilesEnumerator(imageFilePaths);
+            List<string> imageFilePaths;
+
+            if (!string.IsNullOrEmpty(Extensions) && !string.IsNullOrEmpty(ImageDirectoryPath) && Directory.Exists(ImageDirectoryPath))
+            {
+                var extensions = Extensions
+                    .Split(new[] { ",", " " }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(x => x.ToUpper());
+
+                var searchOption = IncludeSubdirectories ? SearchOption.AllDirectories : SearchOption.TopDirectoryOnly;
+
+                imageFilePaths = Directory
+                    .EnumerateFiles(new DirectoryInfo(ImageDirectoryPath).FullName, "*.*", searchOption)
+                    .Where(x => extensions.Contains(Path.GetExtension(x).ToUpper())).OrderBy(x => x).ToList();
+
+                if (imageFilePaths.Any())
+                {
+                    if (Shuffle) imageFilePaths.Shuffle();
+                }
+            }
+            else
+            {
+                imageFilePaths = new List<string>();
+            }
+
+            LastImages = imageFilePaths;
+            return new ImageFilesEnumerator(LastImages);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
