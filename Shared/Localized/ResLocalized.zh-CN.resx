@@ -372,4 +372,10 @@
   <data name="118" xml:space="preserve">
     <value>一般的</value>
   </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>包括子目录</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>指定是否包含子目录中的图像。</value>
+  </data>
 </root>

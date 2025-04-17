@@ -45,6 +45,7 @@ namespace ClaudiaIDE.Settings
             ImageBackgroundType = ImageBackgroundType.Single;
             LoopSlideshow = true;
             ShuffleSlideshow = false;
+            IncludeSubdirectories = false;
             MaxWidth = 0;
             MaxHeight = 0;
             SoftEdgeX = 0;
@@ -127,6 +128,7 @@ namespace ClaudiaIDE.Settings
         public string Extensions { get; set; }
         public bool LoopSlideshow { get; set; }
         public bool ShuffleSlideshow { get; set; }
+        public bool IncludeSubdirectories { get; set; }
         public ImageStretch ImageStretch { get; set; }
         public bool ExpandToIDE { get; set; }
         public double ViewBoxPointX { get; set; }
@@ -202,6 +204,7 @@ namespace ClaudiaIDE.Settings
                     settings.PositionHorizon = solconf.PositionHorizon;
                     settings.PositionVertical = solconf.PositionVertical;
                     settings.ShuffleSlideshow = solconf.ShuffleSlideshow;
+                    settings.IncludeSubdirectories = solconf.IncludeSubdirectories;
                     settings.SoftEdgeX = solconf.SoftEdgeX;
                     settings.SoftEdgeY = solconf.SoftEdgeY;
                     settings.BlurRadius = solconf.BlurRadius;
@@ -258,6 +261,7 @@ namespace ClaudiaIDE.Settings
             ImageFadeAnimationInterval = (TimeSpan)props.Item("ImageFadeAnimationInterval").Value;
             LoopSlideshow = (bool)props.Item("LoopSlideshow").Value;
             ShuffleSlideshow = (bool)props.Item("ShuffleSlideshow").Value;
+            IncludeSubdirectories = (bool)props.Item("IncludeSubdirectories").Value;
             MaxWidth = (int)props.Item("MaxWidth").Value;
             MaxHeight = (int)props.Item("MaxHeight").Value;
             SoftEdgeX = (int)props.Item("SoftEdgeX").Value;
@@ -329,6 +333,7 @@ namespace ClaudiaIDE.Settings
             PositionHorizon = solconf.PositionHorizon;
             PositionVertical = solconf.PositionVertical;
             ShuffleSlideshow = solconf.ShuffleSlideshow;
+            IncludeSubdirectories = solconf.IncludeSubdirectories;
             SoftEdgeX = solconf.SoftEdgeX;
             SoftEdgeY = solconf.SoftEdgeY;
             BlurRadius = solconf.BlurRadius;

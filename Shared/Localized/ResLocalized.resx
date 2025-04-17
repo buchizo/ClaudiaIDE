@@ -372,4 +372,10 @@
   <data name="118" xml:space="preserve">
     <value>General</value>
   </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>Include Subdirectories</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>Specifies whether images within subdirectories will be included.</value>
+  </data>
 </root>
