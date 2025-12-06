@@ -56,6 +56,7 @@
                 <Strings>
                     <ButtonText>ClaudiaIDE</ButtonText>
                     <CommandName>ClaudiaIDE</CommandName>
+                    <CanonicalName>.ClaudiaIDE.ClaudiaIDEMenu</CanonicalName>
                 </Strings>
             </Menu>
         </Menus>
@@ -80,6 +81,7 @@
                       id="bmpNext" />
                 <Strings>
                     <ButtonText>Next Background Image</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.NextImageCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -93,6 +95,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>Pause Slideshow</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.PauseSlideshowCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -108,6 +111,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>Resume Slideshow</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ResumeSlideshowCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -118,29 +122,32 @@
                       id="ClaudiaIdeMenuGroup" />
               <Strings>
                 <ButtonText>Save settings for solution</ButtonText>
+                <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
               </Strings>
-			</Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ResetSolutionSettingsId"
                     priority="0x0101"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>Reset settings from solution</ButtonText>
-				</Strings>
-			</Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>Reset settings from solution</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ResetSettingsCommand</CanonicalName>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     priority="0x0130"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>Toggle Background Image Visibility</ButtonText>
-				</Strings>
-			</Button>
-		</Buttons>
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>Toggle Background Image Visibility</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ToggleImageVisibilityCommand</CanonicalName>
+                </Strings>
+            </Button>
+        </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
         <Bitmaps>
@@ -162,14 +169,14 @@
                     key1="I"
                     key2="N"
                     mod1="Control" />
-		<KeyBinding guid="guidClaudiaIdePackageCmdSet"
+        <KeyBinding guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     editor="guidVSStd97"
                     key1="C"
-					mod1="Control Alt Shift"
+                    mod1="Control Alt Shift"
         />
 
-	</KeyBindings>
+    </KeyBindings>
     <Symbols>
         <!-- This is the package guid. -->
         <GuidSymbol name="guidClaudiaIdePackage"
@@ -190,11 +197,11 @@
                       value="0x0120" />
             <IDSymbol name="SaveSolutionSettingsId"
                       value="0x0130" />
-			<IDSymbol name="ResetSolutionSettingsId"
+            <IDSymbol name="ResetSolutionSettingsId"
                       value="0x0150" />
-			<IDSymbol name="ToggleHiddenImageId"
+            <IDSymbol name="ToggleHiddenImageId"
                       value="0x0140" />
-		</GuidSymbol>
+        </GuidSymbol>
 
         <GuidSymbol name="guidImages"
                     value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">

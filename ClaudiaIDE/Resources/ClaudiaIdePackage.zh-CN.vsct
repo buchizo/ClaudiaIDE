@@ -62,6 +62,7 @@
                 <Strings>
                     <ButtonText>ClaudiaIDE</ButtonText>
                     <CommandName>ClaudiaIDE</CommandName>
+                    <CanonicalName>.ClaudiaIDE.ClaudiaIDEMenu</CanonicalName>
                 </Strings>
             </Menu>
         </Menus>
@@ -86,6 +87,7 @@
                       id="bmpNext" />
                 <Strings>
                     <ButtonText>下一个背景图片</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.NextImageCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -99,6 +101,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>暂停幻灯片放映</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.PauseSlideshowCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -114,6 +117,7 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>恢复幻灯片放映</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ResumeSlideshowCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -124,6 +128,7 @@
                       id="ClaudiaIdeMenuGroup" />
               <Strings>
                 <ButtonText>保存解决方案的设置</ButtonText>
+                  <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
               </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -134,6 +139,7 @@
                         id="ClaudiaIdeMenuGroup" />
                 <Strings>
                     <ButtonText>从解决方案重置设置</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ResetSettingsCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -144,6 +150,7 @@
                         id="ClaudiaIdeMenuGroup" />
                 <Strings>
                     <ButtonText>显示/隐藏背景图片</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ToggleImageVisibilityCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
