@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ClaudiaIDE2019.9ab800ef-0cff-4893-bf16-57d58ff53456" Version="3.1.47" Language="en-US" Publisher="k.buchi" />
+        <Identity Id="ClaudiaIDE2019.9ab800ef-0cff-4893-bf16-57d58ff53456" Version="3.1.48" Language="en-US" Publisher="k.buchi" />
         <DisplayName>ClaudiaIDE 2019</DisplayName>
-        <Description xml:space="preserve">This extension change the background image of editor.</Description>
+        <Description xml:space="preserve">This extension allows you to change the background image of the editor.</Description>
         <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
         <ReleaseNotes>https://github.com/buchizo/ClaudiaIDE/wiki/Release-notes</ReleaseNotes>
         <Icon>Resources\vsixicon.png</Icon>
