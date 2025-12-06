@@ -44,6 +44,12 @@
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="ClaudiaIdeMenu" />
             </Group>
+            <Group guid="guidClaudiaIdePackageCmdSet"
+                   id="ClaudiaIdeMenuGroup2"
+                   priority="0x0600">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenu" />
+            </Group>
         </Groups>
 
         <Menus>
@@ -120,27 +126,47 @@
                 <ButtonText>ソリューション用設定ファイルの保存</ButtonText>
               </Strings>
             </Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ResetSolutionSettingsId"
                     priority="0x0101"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>ソリューション用設定ファイルを削除</ButtonText>
-				</Strings>
-			</Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>ソリューション用設定ファイルを削除</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     priority="0x0130"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>背景画像の表示・非表示切り替え</ButtonText>
-				</Strings>
-			</Button>
-		</Buttons>
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>背景画像の表示・非表示切り替え</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="AboutImageId"
+                    priority="0x0130"
+                    type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup2" />
+                <Strings>
+                    <ButtonText>現在の画像について</ButtonText>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="OpenSettingsId"
+                    priority="0x0130"
+                    type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup2" />
+                <Strings>
+                    <ButtonText>打开设置</ButtonText>
+                </Strings>
+            </Button>
+        </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
         <Bitmaps>
@@ -162,14 +188,13 @@
                     key1="I"
                     key2="N"
                     mod1="Control" />
-		<KeyBinding guid="guidClaudiaIdePackageCmdSet"
+        <KeyBinding guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     editor="guidVSStd97"
                     key1="C"
-					mod1="Control Alt Shift"
-        />
+                    mod1="Control Alt Shift" />
+    </KeyBindings>
 
-	</KeyBindings>
     <Symbols>
         <!-- This is the package guid. -->
         <GuidSymbol name="guidClaudiaIdePackage"
@@ -190,11 +215,17 @@
                       value="0x0120" />
             <IDSymbol name="SaveSolutionSettingsId"
                       value="0x0130" />
-			<IDSymbol name="ResetSolutionSettingsId"
+            <IDSymbol name="ResetSolutionSettingsId"
                       value="0x0150" />
-			<IDSymbol name="ToggleHiddenImageId"
+            <IDSymbol name="ToggleHiddenImageId"
                       value="0x0140" />
-		</GuidSymbol>
+            <IDSymbol name="ClaudiaIdeMenuGroup2"
+                      value="0x1022" />
+            <IDSymbol name="AboutImageId"
+                      value="0x0160" />
+            <IDSymbol name="OpenSettingsId"
+                      value="0x0170" />
+        </GuidSymbol>
 
         <GuidSymbol name="guidImages"
                     value="{4c2bdd23-a166-4248-894a-f7195a9d1681}">

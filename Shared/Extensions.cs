@@ -30,24 +30,38 @@ namespace ClaudiaIDE
         {
             try
             {
-                var dte = Package.GetGlobalService(typeof(DTE)) as DTE2;
-                var path = dte?.Solution?.FileName;
-                if (string.IsNullOrEmpty(path)) return null;
+                if (!TryGetSolutionPath(out string path)) return null;
 
                 // CMake or other directory project (not .sln) `path` is directory
                 var dir = File.GetAttributes(path).HasFlag(FileAttributes.Directory)
                     ? path
                     : Path.GetDirectoryName(path);
-                if (string.IsNullOrEmpty(dir)) return null;
+                if (string.IsNullOrWhiteSpace(dir)) return null;
 
-                var configpath = Path.Combine(dir, ".claudiaideconfig");
-                if (checkExists)
-                    return File.Exists(configpath) ? configpath : null;
-                return configpath;
+                var configPath = Path.Combine(dir, ".claudiaideconfig");
+                return checkExists
+                    ? File.Exists(configPath) ? configPath : null
+                    : configPath;
             }
             catch
             {
                 return null;
+            }
+        }
+
+
+        public static bool TryGetSolutionPath(out string path)
+        {
+            try
+            {
+                var dte = Package.GetGlobalService(typeof(DTE)) as DTE2;
+                path = dte?.Solution?.FileName;
+                return !string.IsNullOrWhiteSpace(path);
+            }
+            catch
+            {
+                path = null;
+                return false;
             }
         }
     }

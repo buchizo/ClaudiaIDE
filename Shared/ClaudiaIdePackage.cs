@@ -78,6 +78,10 @@ namespace ClaudiaIDE
                     .FileAndForget("claudiaide/resetSolutionSettings/initializeasync");
                 ToggleHiddenImage.InitializeAsync(this)
                     .FileAndForget("claudiaide/toggleHiddenImage/initializeasync");
+                AboutImage.InitializeAsync(this)
+                    .FileAndForget("claudiaide/aboutImage/initializeasync");
+                OpenSettings.InitializeAsync(this)
+                    .FileAndForget("claudiaide/openSettings/initializeasync");
                 InvokeChangeImage(null, null);
             };
             Application.Current.MainWindow.Closing += (s, e) =>
@@ -115,6 +119,8 @@ namespace ClaudiaIDE
                     await SaveSolutionSettings.InitializeAsync(this, _settings);
                     await ResetSolutionSettings.InitializeAsync(this, _settings);
                     await ToggleHiddenImage.InitializeAsync(this);
+                    await AboutImage.InitializeAsync(this);
+                    await OpenSettings.InitializeAsync(this);
                     InvokeChangeImage(null, null);
                 }
                 catch

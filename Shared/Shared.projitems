@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIDEFactory.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ClaudiaIdePackage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Forms\AboutImageForm.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)GlobalSuppressions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\AnimateImageChangeParams.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\DependencyObjectExtensions.cs" />
@@ -29,9 +30,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IPausable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ISkipable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Localized\LocalManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\OpenSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\NextImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\PauseSlideshow.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\ResetSolutionSettings.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\AboutImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\ToggleHiddenImage.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)MenuCommands\SaveSolutionSettings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Options\ClaudiaIdeOptionPageGrid.cs" />
