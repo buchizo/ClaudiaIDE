@@ -139,7 +139,7 @@
     <value>File Path</value>
   </data>
   <data name="FilePathTypeDes" xml:space="preserve">
-    <value>Backgroud image file path.</value>
+    <value>Background image file path.</value>
   </data>
   <data name="HorizontalAlignmentType" xml:space="preserve">
     <value>Horizontal Alignment</value>
@@ -160,7 +160,7 @@
     <value>Image extensions</value>
   </data>
   <data name="ImageExtensionsTypeDes" xml:space="preserve">
-    <value>Only images with this extensions will be shown. (Comma separated)</value>
+    <value>Specify the file extensions of the images to display, comma separated.</value>
   </data>
   <data name="ImageStretchType" xml:space="preserve">
     <value>Image Stretch</value>
@@ -361,7 +361,7 @@
     <value>ClaudiaIDE</value>
   </data>
   <data name="112" xml:space="preserve">
-    <value>This extension change the background image of editor.</value>
+    <value>This extension allows you to change the background image of the editor.</value>
   </data>
   <data name="116" xml:space="preserve">
     <value>Light theme</value>

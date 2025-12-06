@@ -21,7 +21,7 @@ namespace ClaudiaIDE.MenuCommands
         /// </summary>
         public static readonly Guid CommandSet = new Guid(GuidList.MenuSetId);
 
-        private readonly MenuCommand _menuItem;
+        private readonly OleMenuCommand _menuItem;
 
         private readonly Setting _setting;
 
@@ -30,9 +30,11 @@ namespace ClaudiaIDE.MenuCommands
             _setting = setting;
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             var menuCommandID = new CommandID(CommandSet, CommandId);
-            _menuItem = new MenuCommand(Execute, menuCommandID)
+            _menuItem = new OleMenuCommand(Execute, menuCommandID);
+            _menuItem.BeforeQueryStatus += (s, e) =>
             {
-                Enabled = true
+                ThreadHelper.ThrowIfNotOnUIThread();
+                _menuItem.Enabled = VisualStudioUtility.TryGetSolutionPath(out _);
             };
             commandService.AddCommand(_menuItem);
         }
@@ -68,7 +70,13 @@ namespace ClaudiaIDE.MenuCommands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             var solution = VisualStudioUtility.GetSolutionSettingsFileFullPath(false);
-            if (!string.IsNullOrWhiteSpace(solution)) _setting.Serialize(solution);
+            if (!string.IsNullOrWhiteSpace(solution))
+            {
+                try {
+                    _setting.Serialize(solution);
+                }
+                catch { }
+            }
         }
     }
 }

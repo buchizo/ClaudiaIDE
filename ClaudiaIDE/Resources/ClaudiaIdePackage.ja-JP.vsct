@@ -44,6 +44,12 @@
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="ClaudiaIdeMenu" />
             </Group>
+            <Group guid="guidClaudiaIdePackageCmdSet"
+                   id="ClaudiaIdeMenuGroup2"
+                   priority="0x0601">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenu" />
+            </Group>
         </Groups>
 
         <Menus>
@@ -56,8 +62,8 @@
                 <Strings>
                     <ButtonText>ClaudiaIDE</ButtonText>
                     <CommandName>ClaudiaIDE</CommandName>
-					<CanonicalName>.ClaudiaIDE.ClaudiaIDEMenu</CanonicalName>
-				</Strings>
+                    <CanonicalName>.ClaudiaIDE.ClaudiaIDEMenu</CanonicalName>
+                </Strings>
             </Menu>
         </Menus>
         <!--Buttons section. -->
@@ -81,8 +87,8 @@
                       id="bmpNext" />
                 <Strings>
                     <ButtonText>次の背景画像</ButtonText>
-					<CanonicalName>.ClaudiaIDE.NextImageCommand</CanonicalName>
-				</Strings>
+                    <CanonicalName>.ClaudiaIDE.NextImageCommand</CanonicalName>
+                </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
                     id="PauseSlideshowId"
@@ -95,8 +101,8 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>スライドショーの一時停止</ButtonText>
-					<CanonicalName>.ClaudiaIDE.PauseSlideshowCommand</CanonicalName>
-				</Strings>
+                    <CanonicalName>.ClaudiaIDE.PauseSlideshowCommand</CanonicalName>
+                </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ResumeSlideshowId"
@@ -111,8 +117,8 @@
                 <CommandFlag>DynamicVisibility</CommandFlag>
                 <Strings>
                     <ButtonText>スライドショーの再開</ButtonText>
-					<CanonicalName>.ClaudiaIDE.ResumeSlideshowCommand</CanonicalName>
-				</Strings>
+                    <CanonicalName>.ClaudiaIDE.ResumeSlideshowCommand</CanonicalName>
+                </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
                     id="SaveSolutionSettingsId"
@@ -122,32 +128,54 @@
                       id="ClaudiaIdeMenuGroup" />
               <Strings>
                 <ButtonText>ソリューション用設定ファイルの保存</ButtonText>
-				  <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
-			  </Strings>
+                  <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
+              </Strings>
             </Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ResetSolutionSettingsId"
                     priority="0x0101"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>ソリューション用設定ファイルを削除</ButtonText>
-					<CanonicalName>.ClaudiaIDE.ResetSettingsCommand</CanonicalName>
-				</Strings>
-			</Button>
-			<Button guid="guidClaudiaIdePackageCmdSet"
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>ソリューション用設定ファイルを削除</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ResetSettingsCommand</CanonicalName>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     priority="0x0130"
                     type="Button">
-				<Parent guid="guidClaudiaIdePackageCmdSet"
-						id="ClaudiaIdeMenuGroup" />
-				<Strings>
-					<ButtonText>背景画像の表示・非表示切り替え</ButtonText>
-					<CanonicalName>.ClaudiaIDE.ToggleImageVisibilityCommand</CanonicalName>
-				</Strings>
-			</Button>
-		</Buttons>
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup" />
+                <Strings>
+                    <ButtonText>背景画像の表示・非表示切り替え</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.ToggleImageVisibilityCommand</CanonicalName>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="AboutImageId"
+                    priority="0x0130"
+                    type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup2" />
+                <Strings>
+                    <ButtonText>現在の画像について</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.AboutImageCommand</CanonicalName>
+                </Strings>
+            </Button>
+            <Button guid="guidClaudiaIdePackageCmdSet"
+                    id="OpenSettingsId"
+                    priority="0x0130"
+                    type="Button">
+                <Parent guid="guidClaudiaIdePackageCmdSet"
+                        id="ClaudiaIdeMenuGroup2" />
+                <Strings>
+                    <ButtonText>打开设置</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.OpenSettingsCommand</CanonicalName>
+                </Strings>
+            </Button>
+        </Buttons>
 
         <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
         <Bitmaps>
@@ -169,13 +197,13 @@
                     key1="I"
                     key2="N"
                     mod1="Control" />
-		<KeyBinding guid="guidClaudiaIdePackageCmdSet"
+        <KeyBinding guid="guidClaudiaIdePackageCmdSet"
                     id="ToggleHiddenImageId"
                     editor="guidVSStd97"
                     key1="C"
-					mod1="Control Alt Shift"
-        />
-	</KeyBindings>
+                    mod1="Control Alt Shift" />
+    </KeyBindings>
+
     <Symbols>
         <!-- This is the package guid. -->
         <GuidSymbol name="guidClaudiaIdePackage"
@@ -196,11 +224,17 @@
                       value="0x0120" />
             <IDSymbol name="SaveSolutionSettingsId"
                       value="0x0130" />
-			<IDSymbol name="ResetSolutionSettingsId"
+            <IDSymbol name="ResetSolutionSettingsId"
                       value="0x0150" />
-			<IDSymbol name="ToggleHiddenImageId"
+            <IDSymbol name="ToggleHiddenImageId"
                       value="0x0140" />
-		</GuidSymbol>
+            <IDSymbol name="ClaudiaIdeMenuGroup2"
+                      value="0x1022" />
+            <IDSymbol name="AboutImageId"
+                      value="0x0160" />
+            <IDSymbol name="OpenSettingsId"
+                      value="0x0170" />
+        </GuidSymbol>
 
         <GuidSymbol name="guidImages"
                     value="{a1f4d3ee-1626-45f3-b7dd-96cca319da2e}">
