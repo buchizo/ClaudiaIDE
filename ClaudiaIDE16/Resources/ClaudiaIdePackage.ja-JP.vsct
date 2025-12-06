@@ -46,7 +46,7 @@
             </Group>
             <Group guid="guidClaudiaIdePackageCmdSet"
                    id="ClaudiaIdeMenuGroup2"
-                   priority="0x0600">
+                   priority="0x0601">
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="ClaudiaIdeMenu" />
             </Group>
@@ -161,6 +161,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>現在の画像について</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.AboutImageCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -171,6 +172,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>打开设置</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.OpenSettingsCommand</CanonicalName>
                 </Strings>
             </Button>
         </Buttons>

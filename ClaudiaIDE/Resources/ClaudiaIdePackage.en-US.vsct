@@ -128,7 +128,7 @@
                       id="ClaudiaIdeMenuGroup" />
               <Strings>
                 <ButtonText>Save Settings for Solution</ButtonText>
-                  <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
+                <CanonicalName>.ClaudiaIDE.SaveSettingsCommand</CanonicalName>
               </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -161,6 +161,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>About Current Image</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.AboutImageCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -171,6 +172,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>Open Settings</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.OpenSettingsCommand</CanonicalName>
                 </Strings>
             </Button>
         </Buttons>

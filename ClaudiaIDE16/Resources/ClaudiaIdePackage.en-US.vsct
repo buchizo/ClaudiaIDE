@@ -46,7 +46,7 @@
             </Group>
             <Group guid="guidClaudiaIdePackageCmdSet"
                    id="ClaudiaIdeMenuGroup2"
-                   priority="0x0600">
+                   priority="0x0601">
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="ClaudiaIdeMenu" />
             </Group>
@@ -161,6 +161,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>About Current Image</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.AboutImageCommand</CanonicalName>
                 </Strings>
             </Button>
             <Button guid="guidClaudiaIdePackageCmdSet"
@@ -171,6 +172,7 @@
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
                     <ButtonText>Open Settings</ButtonText>
+                    <CanonicalName>.ClaudiaIDE.OpenSettingsCommand</CanonicalName>
                 </Strings>
             </Button>
         </Buttons>
@@ -199,7 +201,7 @@
                     id="ToggleHiddenImageId"
                     editor="guidVSStd97"
                     key1="C"
-                    mod1="Control Alt Shift"/>
+                    mod1="Control Alt Shift" />
     </KeyBindings>
 
     <Symbols>
