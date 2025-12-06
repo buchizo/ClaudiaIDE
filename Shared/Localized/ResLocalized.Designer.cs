@@ -70,7 +70,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   This extension change the background image of editor. に類似しているローカライズされた文字列を検索します。
+        ///   This extension allows you to change the background image of the editor. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string _112 {
             get {
@@ -241,7 +241,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Backgroud image file path. に類似しているローカライズされた文字列を検索します。
+        ///   Background image file path. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string FilePathTypeDes {
             get {
@@ -313,7 +313,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Only images with this extensions will be shown. (Comma separated) に類似しているローカライズされた文字列を検索します。
+        ///   Specify the file extneions of the images to display, comma separated. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string ImageExtensionsTypeDes {
             get {

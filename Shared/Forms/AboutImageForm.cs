@@ -157,6 +157,8 @@ namespace ClaudiaIDE.Forms
          // lblUri
          // 
          this.lblUri.AutoSize = true;
+         this.lblUri.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+         this.lblUri.ForeColor = System.Drawing.SystemColors.ControlLightLight;
          this.lblUri.Location = new System.Drawing.Point(12, 15);
          this.lblUri.Name = "lblUri";
          this.lblUri.Size = new System.Drawing.Size(28, 15);
@@ -167,12 +169,13 @@ namespace ClaudiaIDE.Forms
          // 
          this.txtUri.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-         this.txtUri.BackColor = System.Drawing.SystemColors.Control;
+         this.txtUri.BackColor = System.Drawing.SystemColors.ControlDarkDark;
          this.txtUri.BorderStyle = System.Windows.Forms.BorderStyle.None;
-         this.txtUri.Location = new System.Drawing.Point(130, 14);
+         this.txtUri.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+         this.txtUri.Location = new System.Drawing.Point(135, 14);
          this.txtUri.Name = "txtUri";
          this.txtUri.ReadOnly = true;
-         this.txtUri.Size = new System.Drawing.Size(592, 16);
+         this.txtUri.Size = new System.Drawing.Size(587, 16);
          this.txtUri.TabIndex = 3;
          this.txtUri.Text = "#";
          this.txtUri.Enter += new System.EventHandler(this.txt_Enter);
@@ -180,6 +183,8 @@ namespace ClaudiaIDE.Forms
          // lblDimensions
          // 
          this.lblDimensions.AutoSize = true;
+         this.lblDimensions.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+         this.lblDimensions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
          this.lblDimensions.Location = new System.Drawing.Point(12, 44);
          this.lblDimensions.Name = "lblDimensions";
          this.lblDimensions.Size = new System.Drawing.Size(112, 15);
@@ -188,26 +193,28 @@ namespace ClaudiaIDE.Forms
          // 
          // txtDimensions
          // 
-         this.txtDimensions.BackColor = System.Drawing.SystemColors.Control;
+         this.txtDimensions.BackColor = System.Drawing.SystemColors.ControlDarkDark;
          this.txtDimensions.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.txtDimensions.Font = new System.Drawing.Font("Segoe UI", 9F);
-         this.txtDimensions.Location = new System.Drawing.Point(130, 44);
+         this.txtDimensions.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+         this.txtDimensions.Location = new System.Drawing.Point(135, 44);
          this.txtDimensions.Name = "txtDimensions";
          this.txtDimensions.ReadOnly = true;
-         this.txtDimensions.Size = new System.Drawing.Size(150, 16);
+         this.txtDimensions.Size = new System.Drawing.Size(145, 16);
          this.txtDimensions.TabIndex = 5;
          this.txtDimensions.Text = "#";
          this.txtDimensions.Enter += new System.EventHandler(this.txt_Enter);
          // 
          // txtResolution
          // 
-         this.txtResolution.BackColor = System.Drawing.SystemColors.Control;
+         this.txtResolution.BackColor = System.Drawing.SystemColors.ControlDarkDark;
          this.txtResolution.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.txtResolution.Font = new System.Drawing.Font("Segoe UI", 9F);
-         this.txtResolution.Location = new System.Drawing.Point(130, 73);
+         this.txtResolution.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+         this.txtResolution.Location = new System.Drawing.Point(135, 73);
          this.txtResolution.Name = "txtResolution";
          this.txtResolution.ReadOnly = true;
-         this.txtResolution.Size = new System.Drawing.Size(150, 16);
+         this.txtResolution.Size = new System.Drawing.Size(145, 16);
          this.txtResolution.TabIndex = 7;
          this.txtResolution.Text = "#";
          this.txtResolution.Enter += new System.EventHandler(this.txt_Enter);
@@ -215,6 +222,8 @@ namespace ClaudiaIDE.Forms
          // lblResolution
          // 
          this.lblResolution.AutoSize = true;
+         this.lblResolution.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+         this.lblResolution.ForeColor = System.Drawing.SystemColors.ControlLightLight;
          this.lblResolution.Location = new System.Drawing.Point(12, 73);
          this.lblResolution.Name = "lblResolution";
          this.lblResolution.Size = new System.Drawing.Size(95, 15);
@@ -223,19 +232,23 @@ namespace ClaudiaIDE.Forms
          // 
          // txtFileSize
          // 
-         this.txtFileSize.BackColor = System.Drawing.SystemColors.Control;
+         this.txtFileSize.BackColor = System.Drawing.SystemColors.ControlDarkDark;
          this.txtFileSize.BorderStyle = System.Windows.Forms.BorderStyle.None;
          this.txtFileSize.Font = new System.Drawing.Font("Segoe UI", 9F);
-         this.txtFileSize.Location = new System.Drawing.Point(130, 102);
+         this.txtFileSize.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+         this.txtFileSize.Location = new System.Drawing.Point(135, 102);
          this.txtFileSize.Name = "txtFileSize";
          this.txtFileSize.ReadOnly = true;
-         this.txtFileSize.Size = new System.Drawing.Size(150, 16);
+         this.txtFileSize.Size = new System.Drawing.Size(145, 16);
          this.txtFileSize.TabIndex = 9;
          this.txtFileSize.Text = "#";
+         this.txtFileSize.Enter += new System.EventHandler(this.txt_Enter);
          // 
          // lblFileSize
          // 
          this.lblFileSize.AutoSize = true;
+         this.lblFileSize.Font = new System.Drawing.Font("Segoe UI", 9F, FontStyle.Bold);
+         this.lblFileSize.ForeColor = System.Drawing.SystemColors.ControlLightLight;
          this.lblFileSize.Location = new System.Drawing.Point(12, 102);
          this.lblFileSize.Name = "lblFileSize";
          this.lblFileSize.Size = new System.Drawing.Size(87, 15);
@@ -259,7 +272,7 @@ namespace ClaudiaIDE.Forms
          this.pic.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
-         this.pic.BackColor = System.Drawing.Color.White;
+         this.pic.BackColor = System.Drawing.Color.Black;
          this.pic.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
          this.pic.Location = new System.Drawing.Point(286, 41);
          this.pic.Name = "pic";
@@ -272,6 +285,7 @@ namespace ClaudiaIDE.Forms
          this.AcceptButton = this.btnOK;
          this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+         this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
          this.CancelButton = this.btnOK;
          this.ClientSize = new System.Drawing.Size(734, 361);
          this.Controls.Add(this.pic);
