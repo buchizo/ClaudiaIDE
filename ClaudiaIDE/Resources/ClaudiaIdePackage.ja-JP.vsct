@@ -171,7 +171,7 @@
                 <Parent guid="guidClaudiaIdePackageCmdSet"
                         id="ClaudiaIdeMenuGroup2" />
                 <Strings>
-                    <ButtonText>打开设置</ButtonText>
+                    <ButtonText>設定を開く</ButtonText>
                     <CanonicalName>.ClaudiaIDE.OpenSettingsCommand</CanonicalName>
                 </Strings>
             </Button>
