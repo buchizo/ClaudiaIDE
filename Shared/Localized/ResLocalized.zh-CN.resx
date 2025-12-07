@@ -228,11 +228,11 @@
   <data name="ViewBoxPointX" xml:space="preserve">
     <value>图像在ViewBox中的水平位置</value>
   </data>
-  <data name="ViewBoxPointY" xml:space="preserve">
-    <value>图像在ViewBox中的垂直位置</value>
-  </data>
   <data name="ViewBoxPointXDes" xml:space="preserve">
     <value>此属性可以为WPF ViewBox中的图像水平位置设置双精度值。</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>图像在ViewBox中的垂直位置</value>
   </data>
   <data name="ViewBoxPointYDes" xml:space="preserve">
     <value>此属性可以为WPF ViewBox中的图像垂直位置设置双精度值。</value>
@@ -279,6 +279,18 @@
   <data name="ViewPortPointYDes" xml:space="preserve">
     <value>此属性可以设置关于 WPF ViewPort 中基本平铺图像垂直位置的双值。</value>
   </data>
+  <data name="Url" xml:space="preserve">
+    <value>网址</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>指定 Web 上背景图像的 URL。</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>网络图片</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>带有 Web API 的幻灯片</value>
+  </data>
   <data name="ApiEndpoint" xml:space="preserve">
     <value>Web API 端点</value>
   </data>
@@ -291,23 +303,11 @@
   <data name="JsonKeyDescription" xml:space="preserve">
     <value>保存下载路径值的键，常见示例为“url”、“src”、“img”、“image”。或者 ClaudiaIDE 可以按如下方式解析 JSONPath：“$.images[0].url”</value>
   </data>
-  <data name="Url" xml:space="preserve">
-    <value>网址</value>
-  </data>
-  <data name="UrlDescription" xml:space="preserve">
-    <value>指定 Web 上背景图像的 URL。</value>
-  </data>
-  <data name="WebApi" xml:space="preserve">
-    <value>带有 Web API 的幻灯片</value>
-  </data>
   <data name="WebApiDownloadInterval" xml:space="preserve">
     <value>Web API 调用间隔</value>
   </data>
   <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
     <value>指定 Web API 调用之间的间隔。 （指定小时、分钟和秒的格式：HH:mm:ss）</value>
-  </data>
-  <data name="WebImage" xml:space="preserve">
-    <value>网络图片</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>一般的</value>
@@ -377,5 +377,26 @@
   </data>
   <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
     <value>指定是否包含子目录中的图像。</value>
+  </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>关于当前图像</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>关闭 (&amp;C)</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>在资源管理器中打开 (&amp;E)</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>文件大小 (字节)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>分辨率 (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>尺寸 (像素)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
   </data>
 </root>

@@ -378,4 +378,25 @@
   <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
     <value>Specifies whether images within subdirectories will be included.</value>
   </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>About Image</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>Open in &amp;Explorer</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>File Size (bytes)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>Resolution (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
+  </data>
 </root>

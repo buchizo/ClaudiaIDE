@@ -228,11 +228,11 @@
   <data name="ViewBoxPointX" xml:space="preserve">
     <value>エディター領域における画像の水平位置 (ViewBox)</value>
   </data>
-  <data name="ViewBoxPointY" xml:space="preserve">
-    <value>エディター領域における画像の垂直位置 (ViewBox)</value>
-  </data>
   <data name="ViewBoxPointXDes" xml:space="preserve">
     <value>このプロパティは画像のWPFのViewBoxにおける水平位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>エディター領域における画像の垂直位置 (ViewBox)</value>
   </data>
   <data name="ViewBoxPointYDes" xml:space="preserve">
     <value>このプロパティは画像のWPFのViewBoxにおける垂直位置をdouble型で指定できます。</value>
@@ -279,6 +279,18 @@
   <data name="ViewPortPointYDes" xml:space="preserve">
     <value>このプロパティは基本タイル画像のWPFのViewPortにおける垂直位置をdouble型で指定できます。</value>
   </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>Web上の背景画像のURLを指定します。</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>Web画像</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>Web API を使ったスライドショー</value>
+  </data>
   <data name="ApiEndpoint" xml:space="preserve">
     <value>Web API エンドポイント</value>
   </data>
@@ -292,23 +304,11 @@
     <value>Web API から返されるJSONオブジェクトのキーを指定します。指定されたキーの値のURLの画像を背景画像として使用します。例："url"
 または次のように JSONPathを指定できます。: "$.images[0].url"</value>
   </data>
-  <data name="Url" xml:space="preserve">
-    <value>Url</value>
-  </data>
-  <data name="UrlDescription" xml:space="preserve">
-    <value>Web上の背景画像のURLを指定します。</value>
-  </data>
-  <data name="WebApi" xml:space="preserve">
-    <value>Web API を使ったスライドショー</value>
-  </data>
   <data name="WebApiDownloadInterval" xml:space="preserve">
     <value>Web API の呼び出し間隔</value>
   </data>
   <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
     <value>Web API の呼び出し間隔を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
-  </data>
-  <data name="WebImage" xml:space="preserve">
-    <value>Web画像</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>全般</value>
@@ -378,5 +378,26 @@
   </data>
   <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
     <value>サブディレクトリ内の画像が含まれるかどうかを指定します。</value>
+  </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>現在の画像について</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>閉じる (&amp;C)</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>エクスプローラーで開く (&amp;E)</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>ファイルサイズ (バイト)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>解像度 (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>画像サイズ (ピクセル)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
   </data>
 </root>

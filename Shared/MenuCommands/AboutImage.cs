@@ -33,13 +33,9 @@ namespace ClaudiaIDE.MenuCommands
             _menuItem = new OleMenuCommand(Execute, menuCommandID);
             _menuItem.BeforeQueryStatus += (s, e) =>
             {
-                // The About Image menu item is currently unavailable when using the WebApi background type.
-                // The reason for this is not technical, apart from the fact that I don't know how to test it.
-                // Also, it is unavailable with the SingleEach image type as the provider does not track the image within each individual pane.
                 ImageProvider provider = ProvidersHolder.Instance.ActiveProvider;
-                _menuItem.Enabled = !(provider is WebApiImageProvider || provider is SingleImageEachProvider ||
-                                      !provider.IsStaticImage() ||
-                                      string.IsNullOrWhiteSpace(provider.GetCurrentImageUri()));
+                // It is unavailable with the SingleEach image type as the provider does not track the image within each individual pane.
+                _menuItem.Enabled = !(provider is SingleImageEachProvider);
             };
             commandService.AddCommand(_menuItem);
         }
