@@ -1,11 +1,9 @@
 using Shared.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
@@ -20,45 +18,39 @@ namespace ClaudiaIDE.Forms
             StartPosition = FormStartPosition.CenterScreen;
 
             BitmapSource bmp = imageProvider.GetBitmap();
+            txtUri.Text = imageProvider.GetCurrentImageUri();
+            var uri = new Uri(txtUri.Text);
 
-            if (bmp != null)
+            if (uri.Scheme != "file" || !File.Exists(txtUri.Text))
             {
-                txtUri.Text = imageProvider.GetCurrentImageUri();
-                txtDimensions.Text = $@"{bmp.PixelWidth} x {bmp.PixelHeight}";
-                txtResolution.Text = $@"{bmp.DpiX:#.#} x {bmp.DpiY:#.#}";
-
-                pic.SizeMode = PictureBoxSizeMode.Zoom;
-                pic.Image = ConvertBitmapImageToBitmap(bmp);
-
-                PropertyInfo prop = typeof(BitmapImage).GetProperty("UriSource",
-                    BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty);
-                if (prop == null || (prop.GetValue(bmp) as Uri)?.Scheme != "file" || !File.Exists(txtUri.Text))
-                {
-                    lblFileSize.Visible = txtFileSize.Visible = false;
-                    btnExplore.Visible = false;
-                }
-                else
-                {
-                    FileInfo fi = new FileInfo(txtUri.Text);
-                    txtFileSize.Text = fi.Length.ToString("N0");
-                }
+                lblFileSize.Visible = txtFileSize.Visible = false;
+                btnExplore.Visible = false;
             }
             else
             {
-                List<Control> controls = new List<Control>
-             {
-                 lblUri, txtUri,
-                 lblDimensions, txtDimensions,
-                 lblResolution, txtResolution,
-                 pic
-             };
-                foreach (Control control in controls)
-                {
-                    control.Enabled = false;
-                }
+                FileInfo fi = new FileInfo(txtUri.Text);
+                txtFileSize.Text = fi.Length.ToString("N0");
+            }
 
-                lblFileSize.Visible = txtFileSize.Visible = false;
-                btnExplore.Visible = false;
+            if (bmp != null)
+            {
+                txtDimensions.Text = $@"{bmp.PixelWidth} x {bmp.PixelHeight}";
+                txtResolution.Text = $@"{bmp.DpiX:#.#} x {bmp.DpiY:#.#}";
+
+                pic.Image = ConvertBitmapImageToBitmap(bmp);
+            }
+            else
+            {
+                try
+                {
+                    pic.Image = Image.FromFile(txtUri.Text);
+                }
+                catch
+                {
+                    // file is not supported (e.g. mp4)
+                }
+                txtDimensions.Text = pic.Image == null ? "N/A" : $@"{pic.Image.Size.Width} x {pic.Image.Size.Height}";
+                txtResolution.Text = pic.Image == null ? "N/A" : $@"{pic.Image.HorizontalResolution:#.#} x {pic.Image.VerticalResolution:#.#}";
             }
 
             btnOK.Focus();
@@ -294,6 +286,7 @@ namespace ClaudiaIDE.Forms
             this.pic.Size = new System.Drawing.Size(400, 300);
             this.pic.TabIndex = 12;
             this.pic.TabStop = false;
+            this.pic.SizeMode = PictureBoxSizeMode.Zoom;
             // 
             // frmAboutImage
             // 
