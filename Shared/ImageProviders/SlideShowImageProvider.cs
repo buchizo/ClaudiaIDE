@@ -295,7 +295,7 @@ namespace ClaudiaIDE.ImageProviders
             position = -1;
         }
 
-        public string Current => imageFilePaths[position];
+        public string Current => position < 0 || position > imageFilePaths.Count ? null : imageFilePaths[position];
 
         object IEnumerator.Current => Current;
 
