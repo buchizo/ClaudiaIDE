@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackgroundType" xml:space="preserve">
+    <value>背景图片展示方式类型</value>
+  </data>
+  <data name="BackgroundTypeDes" xml:space="preserve">
+    <value>选择背景显示格式。Single: 显示指定的图像。SlideShow: 将指定文件夹中的图像显示为幻灯片。 SingleEach: 为每个编辑器窗口显示指定文件夹的图像。 SingleWeb: 显示指定 URL 的图像。 WebApi: 使用包含在指定 API 响应中的图像 URL 显示幻灯片。 为每个交换机调用 Web API。</value>
+  </data>
+  <data name="DirectoryPathType" xml:space="preserve">
+    <value>幻灯片路径</value>
+  </data>
+  <data name="DirectoryPathTypeDes" xml:space="preserve">
+    <value>设置幻灯片图片路径</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>扩展到IDE</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>如果为true，背景图片展开隐藏。如果为false，背景图片设置为文本编辑器背景。 您可能需要重新打开编辑器窗口以使设置生效。</value>
+  </data>
+  <data name="FilePathType" xml:space="preserve">
+    <value>图片路径</value>
+  </data>
+  <data name="FilePathTypeDes" xml:space="preserve">
+    <value>设置背景图片路径</value>
+  </data>
+  <data name="HorizontalAlignmentType" xml:space="preserve">
+    <value>横向对齐方式</value>
+  </data>
+  <data name="HorizontalAlignmentTypeDes" xml:space="preserve">
+    <value>图片在横向相对位置</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>图片</value>
+  </data>
+  <data name="ImageAnimationIntervalType" xml:space="preserve">
+    <value>淡入淡出效果持续时间</value>
+  </data>
+  <data name="ImageAnimationIntervalTypeDes" xml:space="preserve">
+    <value>图片淡入淡出动画持续时间.(值格式:HH:mm:ss)</value>
+  </data>
+  <data name="ImageExtensionsType" xml:space="preserve">
+    <value>图片显示类型</value>
+  </data>
+  <data name="ImageExtensionsTypeDes" xml:space="preserve">
+    <value>只有选定的这些扩展名会被显示.格式:.png,.jpg(使用半角逗号分隔)</value>
+  </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>图像拉伸</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>指定此图像的内容如何拉伸以适应编辑器的值。图片拉伸属性接受以下值: None, Uniform, UniformToFill, Fill</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>布局</value>
+  </data>
+  <data name="LoopSlideshowType" xml:space="preserve">
+    <value>启用循环播放</value>
+  </data>
+  <data name="LoopSlideshowTypeDes" xml:space="preserve">
+    <value>启用后幻灯片将会循环播放.</value>
+  </data>
+  <data name="MaxHeightType" xml:space="preserve">
+    <value>图片高度</value>
+  </data>
+  <data name="MaxHeightTypeDes" xml:space="preserve">
+    <value>图片可以填充的最大高度(0为不限制) 仅当图像拉伸属性为 None 时才适用</value>
+  </data>
+  <data name="MaxWidthType" xml:space="preserve">
+    <value>图片宽度</value>
+  </data>
+  <data name="MaxWidthTypeDes" xml:space="preserve">
+    <value>图片可以填充的最大宽度(0为不限制) 仅当图像拉伸属性为 None 时才适用</value>
+  </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>图片边界羽化宽度X</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>图片边界羽化宽度Y</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>图片边界羽化宽度(0为不限制)</value>
+  </data>
+  <data name="OpacityType" xml:space="preserve">
+    <value>透明度</value>
+  </data>
+  <data name="OpacityTypeDes" xml:space="preserve">
+    <value>背景图片透明度.(值范围0.00至1.00)</value>
+  </data>
+  <data name="SingleImage" xml:space="preserve">
+    <value>单一背景</value>
+  </data>
+  <data name="Slideshow" xml:space="preserve">
+    <value>幻灯片播放</value>
+  </data>
+  <data name="SingleEach" xml:space="preserve">
+    <value>每个编辑器窗口单张图像</value>
+  </data>
+  <data name="UpdateIntervalType" xml:space="preserve">
+    <value>图片更换间隔</value>
+  </data>
+  <data name="UpdateIntervalTypeDes" xml:space="preserve">
+    <value>背景图片切换频率.(值格式:HH:mm:ss)</value>
+  </data>
+  <data name="VerticalAlignmentType" xml:space="preserve">
+    <value>纵向对齐方式</value>
+  </data>
+  <data name="VerticalAlignmentTypeDes" xml:space="preserve">
+    <value>图片在纵向相对位置</value>
+  </data>
+  <data name="ViewBoxPointX" xml:space="preserve">
+    <value>图像在ViewBox中的水平位置</value>
+  </data>
+  <data name="ViewBoxPointXDes" xml:space="preserve">
+    <value>此属性可以为WPF ViewBox中的图像水平位置设置双精度值。</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>图像在ViewBox中的垂直位置</value>
+  </data>
+  <data name="ViewBoxPointYDes" xml:space="preserve">
+    <value>此属性可以为WPF ViewBox中的图像垂直位置设置双精度值。</value>
+  </data>
+  <data name="ShuffleSlideshowType" xml:space="preserve">
+    <value>随机播放幻灯片</value>
+  </data>
+  <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
+    <value>随机化幻灯片顺序。</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>背景图像限制为仅编辑器窗口</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>如果此选项为True，则背景图像仅限于代码编辑器窗口。如果此选项为False，则带有代码的不同类型的控件也将具有背景图像。</value>
+  </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>图像平铺模式</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>指定图像如何填充编辑器窗口。 无：不重复。 平铺：通过重复填充。 FlipX：水平翻转。 FlipY：垂直翻转。 FlipXY：FlipX 和 FlipY 的组合。 此属性不影响 IDE 的背景图像。 如果此属性不是 None，则应更改为非零的 ViewPortWidth 和 ViewPortHeight 属性。</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>图像相对高度</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>编辑器窗口中的图像相对高度。 （0.00 &lt;= 1.00 范围内的值） 此属性不影响 IDE 的背景图像。</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>图像相对宽度</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>编辑器窗口中的图像相对宽度。 （0.00 &lt;= 1.00 范围内的值） 此属性不影响 IDE 的背景图像。</value>
+  </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>ViewPort 中的基本平铺图像水平位置</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>此属性可以为 WPF ViewPort 中的基础平铺图像水平位置设置双精度值。</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>ViewPort 中的基本平铺图像垂直位置</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>此属性可以设置关于 WPF ViewPort 中基本平铺图像垂直位置的双值。</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>网址</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>指定 Web 上背景图像的 URL。</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>网络图片</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>带有 Web API 的幻灯片</value>
+  </data>
+  <data name="ApiEndpoint" xml:space="preserve">
+    <value>Web API 端点</value>
+  </data>
+  <data name="ApiEndpointDescpripion" xml:space="preserve">
+    <value>指定将包含背景图像 URL 的 JSON 对象返回到的 Web API 端点。 JSON 对象中表示 URL 的键由 Json 键指定。</value>
+  </data>
+  <data name="JsonKey" xml:space="preserve">
+    <value>JSON 密钥</value>
+  </data>
+  <data name="JsonKeyDescription" xml:space="preserve">
+    <value>保存下载路径值的键，常见示例为“url”、“src”、“img”、“image”。或者 ClaudiaIDE 可以按如下方式解析 JSONPath：“$.images[0].url”</value>
+  </data>
+  <data name="WebApiDownloadInterval" xml:space="preserve">
+    <value>Web API 调用间隔</value>
+  </data>
+  <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
+    <value>指定 Web API 调用之间的间隔。 （指定小时、分钟和秒的格式：HH:mm:ss）</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>一般的</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>使用的颜色主题</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>指定颜色主题。 如果选择深色，将使用深色主题中指定的内容。 如果指定了 UseSystemSetting，则根据 OS 配色方案主题确定要使用的配色方案。</value>
+  </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>图像模糊半径</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value>在背景图像上应用高斯模糊。 此选项不支持视频和 GIF。 WebApi 幻灯片可能有更多延迟，但它仍然有效。 如果该值设置为零，则没有模糊。 （0 &lt;= {图像 x 和 y 大小中较小者 / 2 - 1} 范围内的值）</value>
+  </data>
+  <data name="BlurMethod" xml:space="preserve">
+    <value>图像模糊技术</value>
+  </data>
+  <data name="BlurMethodDes" xml:space="preserve">
+    <value>模糊方法。 如果“图像模糊半径”属性大于零，则使用此方法对图像进行模糊。 Gaussian: 半透明模糊，Box: 线性模糊。 建议使用硬件加速。</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>对内容边距透明</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>如果此选项为 true，内容边距可以显示背景图像。这意味着将默认背景更改为透明。 * 内容边距是导航栏、水平和垂直滚动条等。 您可能需要重新打开编辑器窗口以使设置生效。</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>对粘性滚动是透明的</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>如果此选项为 true，粘性滚动可以显示背景图像。这意味着将默认背景更改为透明。 您可能需要重新打开编辑器窗口以使设置生效。</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>范围</value>
+  </data>
+  <data name="StickyScrollColorType" xml:space="preserve">
+    <value>粘性滚动背景颜色</value>
+  </data>
+  <data name="StickyScrollColorTypeDes" xml:space="preserve">
+    <value>如果“对粘性滚动是透明的”为 true，ClaudiaIDE 会将此颜色值设置为粘性滚动背景颜色。 该值需要具有 alpha 格式的 HTML 颜色代码。 例如 “#B0A6ACAF”。</value>
+  </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>编辑器背景颜色</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>指定编辑器部分的背景颜色。 该值需要 alpha 格式的 HTML 颜色代码。 例如，“#B0A6ACAF”。 如果是空字符串，ClaudiaIDE将不会显式设置背景颜色。</value>
+  </data>
+  <data name="110" xml:space="preserve">
+    <value>ClaudiaIDE</value>
+  </data>
+  <data name="112" xml:space="preserve">
+    <value>此扩展可以改变编辑器的背景图像。</value>
+  </data>
+  <data name="116" xml:space="preserve">
+    <value>浅色主题</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>深色主题</value>
+  </data>
+  <data name="118" xml:space="preserve">
+    <value>一般的</value>
+  </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>包括子目录</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>指定是否包含子目录中的图像。</value>
+  </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>关于当前图像</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>关闭 (&amp;C)</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>在资源管理器中打开 (&amp;E)</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>文件大小 (字节)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>分辨率 (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>尺寸 (像素)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
+  </data>
+</root>

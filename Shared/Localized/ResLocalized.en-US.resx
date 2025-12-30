@@ -1,0 +1,402 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackgroundType" xml:space="preserve">
+    <value>Image background type</value>
+  </data>
+  <data name="BackgroundTypeDes" xml:space="preserve">
+    <value>Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab. SingleWeb: Displays the image of the specified URL. WebApi: Displays a slideshow using the image URLs contained in the specified API response. Call Web API for each switch.</value>
+  </data>
+  <data name="DirectoryPathType" xml:space="preserve">
+    <value>Directory Path</value>
+  </data>
+  <data name="DirectoryPathTypeDes" xml:space="preserve">
+    <value>Background image directory path.</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>Expand to IDE</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>If true, background image expand to IDE. If false, background image set to text editor background. (false is default value) You may need to reopen the editor window for the settings to take effect.</value>
+  </data>
+  <data name="FilePathType" xml:space="preserve">
+    <value>File Path</value>
+  </data>
+  <data name="FilePathTypeDes" xml:space="preserve">
+    <value>Background image file path.</value>
+  </data>
+  <data name="HorizontalAlignmentType" xml:space="preserve">
+    <value>Horizontal Alignment</value>
+  </data>
+  <data name="HorizontalAlignmentTypeDes" xml:space="preserve">
+    <value>Image position in horizon.</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="ImageAnimationIntervalType" xml:space="preserve">
+    <value>Image animation interval</value>
+  </data>
+  <data name="ImageAnimationIntervalTypeDes" xml:space="preserve">
+    <value>Background image fade animation interval. (value in format: HH:mm:ss)</value>
+  </data>
+  <data name="ImageExtensionsType" xml:space="preserve">
+    <value>Image extensions</value>
+  </data>
+  <data name="ImageExtensionsTypeDes" xml:space="preserve">
+    <value>Specify the file extensions of the images to display, comma separated.</value>
+  </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>Image Stretch</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>A value that specifies how the content of this image stretches to fit the editor. The Image Stretch property accepts the following values: None, Uniform, UniformToFill, Fill</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="LoopSlideshowType" xml:space="preserve">
+    <value>Loop Slideshow</value>
+  </data>
+  <data name="LoopSlideshowTypeDes" xml:space="preserve">
+    <value>This will cause the slideshow to loop back to the beginning after the last image has been shown.</value>
+  </data>
+  <data name="MaxHeightType" xml:space="preserve">
+    <value>Max Height</value>
+  </data>
+  <data name="MaxHeightTypeDes" xml:space="preserve">
+    <value>Maximum height in pixels that the image can fill in the view. Applies only if the image stretch property is None.</value>
+  </data>
+  <data name="MaxWidthType" xml:space="preserve">
+    <value>Max Width</value>
+  </data>
+  <data name="MaxWidthTypeDes" xml:space="preserve">
+    <value>Maximum width in pixels that the image can fill in the view. Applies only if the image stretch property is None.</value>
+  </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>SoftEdge Width (X axis)</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>SoftEdge Width (Y axis)</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>How much soft edge applied to background image.</value>
+  </data>
+  <data name="OpacityType" xml:space="preserve">
+    <value>Opacity</value>
+  </data>
+  <data name="OpacityTypeDes" xml:space="preserve">
+    <value>Background image opacity. (value within the range of 0.00 &lt;= 1.00)</value>
+  </data>
+  <data name="SingleImage" xml:space="preserve">
+    <value>SingleImage</value>
+  </data>
+  <data name="Slideshow" xml:space="preserve">
+    <value>SlideShow</value>
+  </data>
+  <data name="SingleEach" xml:space="preserve">
+    <value>SingleEach</value>
+  </data>
+  <data name="UpdateIntervalType" xml:space="preserve">
+    <value>Update interval</value>
+  </data>
+  <data name="UpdateIntervalTypeDes" xml:space="preserve">
+    <value>Background image change interval. (value in format: HH:mm:ss)</value>
+  </data>
+  <data name="VerticalAlignmentType" xml:space="preserve">
+    <value>Vertical Alignment</value>
+  </data>
+  <data name="VerticalAlignmentTypeDes" xml:space="preserve">
+    <value>Image position in vertical.</value>
+  </data>
+  <data name="ViewBoxPointX" xml:space="preserve">
+    <value>Image horizontal position in ViewBox</value>
+  </data>
+  <data name="ViewBoxPointXDes" xml:space="preserve">
+    <value>This property can set a double value for the Image horizontal position in WPF ViewBox.</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>Image vertical position in ViewBox</value>
+  </data>
+  <data name="ViewBoxPointYDes" xml:space="preserve">
+    <value>This property can set double value about Image vertical position in WPF ViewBox.</value>
+  </data>
+  <data name="ShuffleSlideshowType" xml:space="preserve">
+    <value>Shuffle Slideshow</value>
+  </data>
+  <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
+    <value>Randomize the slideshow order.</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>Background image limit to only editor window</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>If this option is True, background image is limited only to code editor window. If this option is False, different kinds of controls with code will have background image as well.</value>
+  </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>Image tile mode</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>Specifies how an image fills the editor window. None: not repeated. Tile:  filled by repeating. FlipX: flipped horizontally. FlipY: flipped vertically. FlipXY: The combination of FlipX and FlipY. This property not affects background image of IDE. If this property other than None, should change to other than zero ViewPortWidth and ViewPortHeight properties.</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>Base tile image relative height</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>Base tile image relative height in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>Base tile image relative width</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>Base tile image relative width in editor window. (value within the range of 0.00 &lt;= 1.00) This property not affects background image of IDE.</value>
+  </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>Base tile image horizontal position in ViewPort</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>This property can set a double value for the base tile image horizontal position in WPF ViewPort.</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>Base tile image vertical position in ViewPort</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>This property can set double value about base tile image vertical position in WPF ViewPort.</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>The Url pointing to the image to show</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>Web Image</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>Slideshow using Web API</value>
+  </data>
+  <data name="ApiEndpoint" xml:space="preserve">
+    <value>API Endpoint</value>
+  </data>
+  <data name="ApiEndpointDescpripion" xml:space="preserve">
+    <value>The API Endpoint should point to a location that gives an ImagePath as JsonObject {jsonKey: UrlPointingToUrl}</value>
+  </data>
+  <data name="JsonKey" xml:space="preserve">
+    <value>JSON-Key</value>
+  </data>
+  <data name="JsonKeyDescription" xml:space="preserve">
+    <value>The key which holds the value to the downloadpath come common examples are "url", "src", "img", "image". Or ClaudiaIDE can parse JSONPath as follows: "$.images[0].url"</value>
+  </data>
+  <data name="WebApiDownloadInterval" xml:space="preserve">
+    <value>Download Interval</value>
+  </data>
+  <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
+    <value>The time to wait until the next image get downloaded</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>Color theme to use</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>Specifies a color theme. If Dark is selected, the contents specified in Dark Theme will be used. If UseSystemSetting is specified, the color scheme to be used is determined based on the OS color scheme theme.</value>
+  </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>Blur radius</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value>Apply blurring on background graphics. If this value is set to zero, no blur. (value within the range of 0 &lt;= {image the smaller of x and y size / 2 - 1} ). GIFs and videos may give reduced performance if value is set too high.</value>
+  </data>
+  <data name="BlurMethod" xml:space="preserve">
+    <value>Blur method</value>
+  </data>
+  <data name="BlurMethodDes" xml:space="preserve">
+    <value>Blur method. If "Blur radius" property is greater than zero, the image blur using this method. Gaussian: Translucent Blur, Box: Linear Blur. Hardware acceleration is recommended.</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>Is transparent to content margin</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>If this option is true, Content margin can show background image. This mean is change default background to transparent. * Content margin is navigation bar, horizontal and vertical scroll bar, e.t.c.. You may need to reopen the editor window for the settings to take effect.</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>Is transparent to sticky scroll</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>If this option is true, Sticky scroll can show background image. This mean is change default background to transparent. You may need to reopen the editor window for the settings to take effect.</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>Scope</value>
+  </data>
+  <data name="StickyScrollColorType" xml:space="preserve">
+    <value>Sticky scroll background color</value>
+  </data>
+  <data name="StickyScrollColorTypeDes" xml:space="preserve">
+    <value>If "Is transparent to sticky scroll" is true, ClaudiaIDE set this color value to sticky scroll background color. This value require HTML color code with alpha format. e.g. "#B0A6ACAF".</value>
+  </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>Editor background color</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>Specifies the background color of the editor part. This value requires an HTML color code in alpha format. For example, "#B0A6ACAF". If it is an empty string, ClaudiaIDE will not explicitly set the background color.</value>
+  </data>
+  <data name="110" xml:space="preserve">
+    <value>ClaudiaIDE</value>
+  </data>
+  <data name="112" xml:space="preserve">
+    <value>This extension allows you to change the background image of the editor.</value>
+  </data>
+  <data name="116" xml:space="preserve">
+    <value>Light theme</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>Dark theme</value>
+  </data>
+  <data name="118" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>Include Subdirectories</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>Specifies whether images within subdirectories will be included.</value>
+  </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>About Image</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>&amp;Close</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>Open in &amp;Explorer</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>File Size (bytes)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>Resolution (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>Dimensions (pixels)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
+  </data>
+</root>

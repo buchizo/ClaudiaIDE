@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BackgroundType" xml:space="preserve">
+    <value>背景の表示形式</value>
+  </data>
+  <data name="BackgroundTypeDes" xml:space="preserve">
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。  SingleWeb: 指定されたURLの画像を表示します。 WebApi: 指定されたAPIの応答内に含まれる画像URLを使ってスライドショー表示します。切り替え毎にWeb APIを呼び出します。</value>
+  </data>
+  <data name="DirectoryPathType" xml:space="preserve">
+    <value>フォルダーパス</value>
+  </data>
+  <data name="DirectoryPathTypeDes" xml:space="preserve">
+    <value>背景画像が含まれているフォルダーのパスを設定します。</value>
+  </data>
+  <data name="ExpandToIDEType" xml:space="preserve">
+    <value>背景画像をIDEに拡張</value>
+  </data>
+  <data name="ExpandToIDETypeDes" xml:space="preserve">
+    <value>Trueの場合、背景画像をIDE全体に設定します。Falseの場合、背景画像はテキストエディターのみになります（既定）設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
+  </data>
+  <data name="FilePathType" xml:space="preserve">
+    <value>背景画像のファイルパス</value>
+  </data>
+  <data name="FilePathTypeDes" xml:space="preserve">
+    <value>背景画像のファイルパスを指定します。</value>
+  </data>
+  <data name="HorizontalAlignmentType" xml:space="preserve">
+    <value>水平方向の基準位置</value>
+  </data>
+  <data name="HorizontalAlignmentTypeDes" xml:space="preserve">
+    <value>画像の水平方向の基準となる位置を設定します。 Left: 左端を基準とします Center: 中心を基準とします Right: 右端を基準とします</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>背景画像</value>
+  </data>
+  <data name="ImageAnimationIntervalType" xml:space="preserve">
+    <value>フェードアニメーションの時間</value>
+  </data>
+  <data name="ImageAnimationIntervalTypeDes" xml:space="preserve">
+    <value>背景画像切り替え時のフェードアニメーションの時間を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
+  </data>
+  <data name="ImageExtensionsType" xml:space="preserve">
+    <value>画像ファイルの拡張子</value>
+  </data>
+  <data name="ImageExtensionsTypeDes" xml:space="preserve">
+    <value>表示させる画像ファイルの拡張子を指定します。 (複数指定する場合はカンマ区切り)</value>
+  </data>
+  <data name="ImageStretchType" xml:space="preserve">
+    <value>画像のストレッチ</value>
+  </data>
+  <data name="ImageStretchTypeDes" xml:space="preserve">
+    <value>画像をエディタのサイズに合わせて伸縮させるかを次の値より指定します。: None, Uniform, UniformToFill, Fill</value>
+  </data>
+  <data name="Layout" xml:space="preserve">
+    <value>レイアウト</value>
+  </data>
+  <data name="LoopSlideshowType" xml:space="preserve">
+    <value>スライドショーのループ</value>
+  </data>
+  <data name="LoopSlideshowTypeDes" xml:space="preserve">
+    <value>Trueの場合、フォルダー内に含まれる画像のスライドショーが終了してもループして再度表示します。</value>
+  </data>
+  <data name="MaxHeightType" xml:space="preserve">
+    <value>最大縦幅</value>
+  </data>
+  <data name="MaxHeightTypeDes" xml:space="preserve">
+    <value>画像を表示する領域の最大縦幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。画像のストレッチ プロパティが None の場合のみ適用されます。</value>
+  </data>
+  <data name="MaxWidthType" xml:space="preserve">
+    <value>最大横幅</value>
+  </data>
+  <data name="MaxWidthTypeDes" xml:space="preserve">
+    <value>画像を表示する領域の最大横幅を指定します。 0を指定した場合、描画できる領域すべてを使用します。画像のストレッチ プロパティが None の場合のみ適用されます。</value>
+  </data>
+  <data name="SoftEdgeX" xml:space="preserve">
+    <value>ぼかし幅 (X軸)</value>
+  </data>
+  <data name="SoftEdgeY" xml:space="preserve">
+    <value>ぼかし幅 (Y軸)</value>
+  </data>
+  <data name="SoftEdgeDes" xml:space="preserve">
+    <value>背景画像のぼかし処理の幅を指定します。0の場合ぼかし処理は行いません。</value>
+  </data>
+  <data name="OpacityType" xml:space="preserve">
+    <value>透過率</value>
+  </data>
+  <data name="OpacityTypeDes" xml:space="preserve">
+    <value>背景画像の透過率を設定します。 (設定可能な値は 0.00 &lt;= 1.00 の範囲内の数値です)</value>
+  </data>
+  <data name="SingleImage" xml:space="preserve">
+    <value>単一画像</value>
+  </data>
+  <data name="Slideshow" xml:space="preserve">
+    <value>スライドショー</value>
+  </data>
+  <data name="SingleEach" xml:space="preserve">
+    <value>エディタウィンドウ毎に単一画像</value>
+  </data>
+  <data name="UpdateIntervalType" xml:space="preserve">
+    <value>切り替え間隔</value>
+  </data>
+  <data name="UpdateIntervalTypeDes" xml:space="preserve">
+    <value>背景画像を切り替える間隔を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
+  </data>
+  <data name="VerticalAlignmentType" xml:space="preserve">
+    <value>垂直方向の基準位置</value>
+  </data>
+  <data name="VerticalAlignmentTypeDes" xml:space="preserve">
+    <value>画像の垂直方向の基準となる位置を設定します。 Bottom: 下端を基準とします Center: 中心を基準とします Top: 上端を基準とします</value>
+  </data>
+  <data name="ViewBoxPointX" xml:space="preserve">
+    <value>エディター領域における画像の水平位置 (ViewBox)</value>
+  </data>
+  <data name="ViewBoxPointXDes" xml:space="preserve">
+    <value>このプロパティは画像のWPFのViewBoxにおける水平位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ViewBoxPointY" xml:space="preserve">
+    <value>エディター領域における画像の垂直位置 (ViewBox)</value>
+  </data>
+  <data name="ViewBoxPointYDes" xml:space="preserve">
+    <value>このプロパティは画像のWPFのViewBoxにおける垂直位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ShuffleSlideshowType" xml:space="preserve">
+    <value>スライドショーをランダム再生</value>
+  </data>
+  <data name="ShuffleSlideshowTypeDes" xml:space="preserve">
+    <value>スライドショーをランダム再生します。</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindow" xml:space="preserve">
+    <value>背景画像をエディタウィンドウのみに制限する</value>
+  </data>
+  <data name="IsLimitToMainlyEditorWindowDes" xml:space="preserve">
+    <value>このオプションが True の場合、背景画像はコード エディタ ウィンドウにのみ制限されます。このオプションが False の場合、コードを含むさまざまな種類のコントロールにも背景画像が表示されます。</value>
+  </data>
+  <data name="TileMode" xml:space="preserve">
+    <value>画像のタイル表示</value>
+  </data>
+  <data name="TileModeDes" xml:space="preserve">
+    <value>画像がエディターウィンドウにどのように表示されるかを指定します。 None: 繰り返されません。 Tile: 画像を繰り返して塗りつぶします。 FlipX: 水平方向に反転しながら塗りつぶします。 FlipY: 垂直方向に反転しながら塗りつぶします。 FlipXY: FlipXとFlipYの組み合わせ。 このプロパティは、IDEの背景画像には影響しません。 このプロパティがNoneではない場合は、画像の相対的な横幅プロパティと画像の相対的な縦幅プロパティを0以外に変更する必要があります。</value>
+  </data>
+  <data name="ViewPortHeight" xml:space="preserve">
+    <value>基本タイル画像の相対的な縦幅</value>
+  </data>
+  <data name="ViewPortHeightDes" xml:space="preserve">
+    <value>エディターウィンドウ内における基本タイル画像の相対的な縦幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+  </data>
+  <data name="ViewPortWidth" xml:space="preserve">
+    <value>基本タイル画像の相対的な横幅</value>
+  </data>
+  <data name="ViewPortWidthDes" xml:space="preserve">
+    <value>エディターウィンドウ内における基本タイル画像の相対的な横幅をdouble型0.0～1.0の間で指定します。このプロパティはIDEの背景画像には影響しません。</value>
+  </data>
+  <data name="ViewPortPointX" xml:space="preserve">
+    <value>基本タイル画像の水平位置 (ViewPort)</value>
+  </data>
+  <data name="ViewPortPointXDes" xml:space="preserve">
+    <value>このプロパティは基本タイル画像のWPFのViewPortにおける水平位置をdouble型で指定できます。</value>
+  </data>
+  <data name="ViewPortPointY" xml:space="preserve">
+    <value>基本タイル画像の垂直位置 (ViewPort)</value>
+  </data>
+  <data name="ViewPortPointYDes" xml:space="preserve">
+    <value>このプロパティは基本タイル画像のWPFのViewPortにおける垂直位置をdouble型で指定できます。</value>
+  </data>
+  <data name="Url" xml:space="preserve">
+    <value>Url</value>
+  </data>
+  <data name="UrlDescription" xml:space="preserve">
+    <value>Web上の背景画像のURLを指定します。</value>
+  </data>
+  <data name="WebImage" xml:space="preserve">
+    <value>Web画像</value>
+  </data>
+  <data name="WebApi" xml:space="preserve">
+    <value>Web API を使ったスライドショー</value>
+  </data>
+  <data name="ApiEndpoint" xml:space="preserve">
+    <value>Web API エンドポイント</value>
+  </data>
+  <data name="ApiEndpointDescpripion" xml:space="preserve">
+    <value>背景画像のURLを含むJSONオブジェクトが返されるWeb APIのエンドポイントを指定します。JSONオブジェクト内のURLを表すキーはJsonキーで指定します。</value>
+  </data>
+  <data name="JsonKey" xml:space="preserve">
+    <value>JSONキー</value>
+  </data>
+  <data name="JsonKeyDescription" xml:space="preserve">
+    <value>Web API から返されるJSONオブジェクトのキーを指定します。指定されたキーの値のURLの画像を背景画像として使用します。例："url"
+または次のように JSONPathを指定できます。: "$.images[0].url"</value>
+  </data>
+  <data name="WebApiDownloadInterval" xml:space="preserve">
+    <value>Web API の呼び出し間隔</value>
+  </data>
+  <data name="WebApiDownloadIntervalDescpription" xml:space="preserve">
+    <value>Web API の呼び出し間隔を指定します。 (フォーマットは次の通り時、分、秒を指定します。 : HH:mm:ss)</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="UseColorTheme" xml:space="preserve">
+    <value>使用する配色テーマ</value>
+  </data>
+  <data name="UseColorThemeDescription" xml:space="preserve">
+    <value>配色テーマを指定します。Darkを選択した場合、Dark Themeで指定した内容を使用します。UseSystemSettingを指定した場合、OSの配色テーマに基づき利用する配色テーマを決定します。</value>
+  </data>
+  <data name="BlurRadius" xml:space="preserve">
+    <value>画像のぼかし半径</value>
+  </data>
+  <data name="BlurRadiusDes" xml:space="preserve">
+    <value>背景画像にガウスぼかしを適用します。 このオプションはビデオと GIF をサポートしていません。 WebApi スライドショーは遅延が増える可能性がありますが、それでも動作します。 この値を0に設定すると、ブラーはなくなります。 (0 &lt;= {画像の x と y の小さい方のサイズ / 2 - 1} の範囲内の値)</value>
+  </data>
+  <data name="BlurMethod" xml:space="preserve">
+    <value>画像のぼかし方法</value>
+  </data>
+  <data name="BlurMethodDes" xml:space="preserve">
+    <value>ぼかし方法。 「画像のぼかし半径」プロパティがゼロより大きい場合、この方法を使用して画像がぼかされます。 Gaussian: 半透明のぼかし、Box: 線形のぼかし。 ハードウェアアクセラレーションをお勧めします。</value>
+  </data>
+  <data name="IsTransparentToContentMarginType" xml:space="preserve">
+    <value>コンテントマージンを透明にする</value>
+  </data>
+  <data name="IsTransparentToContentMarginTypeDes" xml:space="preserve">
+    <value>このオプションが true の場合、コンテンツの余白に背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。 ※コンテンツの余白はナビゲーションバー、垂直および水平スクロールバーなどです。設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
+  </data>
+  <data name="IsTransparentToStickyScrollType" xml:space="preserve">
+    <value>固定スクロールを透明にする</value>
+  </data>
+  <data name="IsTransparentToStickyScrollTypeDes" xml:space="preserve">
+    <value>このオプションが true の場合、固定スクロールで背景画像を表示できます。 これは、デフォルトの背景を透明に変更することを意味します。設定を有効にするために、エディタウィンドウを開きなおす必要がある場合があります。</value>
+  </data>
+  <data name="Scope" xml:space="preserve">
+    <value>適用範囲</value>
+  </data>
+  <data name="StickyScrollColorType" xml:space="preserve">
+    <value>固定スクロールの背景色</value>
+  </data>
+  <data name="StickyScrollColorTypeDes" xml:space="preserve">
+    <value>「固定スクロールを透明にする」が true の場合、ClaudiaIDE はこの色の値を固定スクロールの背景色に設定します。 この値には、アルファ形式の HTML カラー コードが必要です。 例えば 「#B0A6ACAF」</value>
+  </data>
+  <data name="EditorBackgroundColorType" xml:space="preserve">
+    <value>エディター背景色</value>
+  </data>
+  <data name="EditorBackgroundColorTypeDes" xml:space="preserve">
+    <value>エディター部分の背景色を指定します。この値には、アルファ形式の HTML カラー コードが必要です。 例えば 「#B0A6ACAF」。空文字の場合、ClaudiaIDEは背景色を明示的に設定しません。</value>
+  </data>
+  <data name="110" xml:space="preserve">
+    <value>ClaudiaIDE</value>
+  </data>
+  <data name="112" xml:space="preserve">
+    <value>この拡張機能はエディターのバックグランド画像を変更することができます</value>
+  </data>
+  <data name="116" xml:space="preserve">
+    <value>ライトテーマ</value>
+  </data>
+  <data name="117" xml:space="preserve">
+    <value>ダークテーマ</value>
+  </data>
+  <data name="118" xml:space="preserve">
+    <value>全般</value>
+  </data>
+  <data name="IncludeSubdirectoriesType" xml:space="preserve">
+    <value>サブディレクトリを含める</value>
+  </data>
+  <data name="IncludeSubdirectoriesTypeDes" xml:space="preserve">
+    <value>サブディレクトリ内の画像が含まれるかどうかを指定します。</value>
+  </data>
+  <data name="AboutImageWindowTitle" xml:space="preserve">
+    <value>現在の画像について</value>
+  </data>
+  <data name="AboutImageOkbutton" xml:space="preserve">
+    <value>閉じる (&amp;C)</value>
+  </data>
+  <data name="AboutImageOpenInExplorer" xml:space="preserve">
+    <value>エクスプローラーで開く (&amp;E)</value>
+  </data>
+  <data name="AboutImageFileSizeLabel" xml:space="preserve">
+    <value>ファイルサイズ (バイト)</value>
+  </data>
+  <data name="AboutImageResolutionLabel" xml:space="preserve">
+    <value>解像度 (DPI)</value>
+  </data>
+  <data name="AboutImageDimensionsLabel" xml:space="preserve">
+    <value>画像サイズ (ピクセル)</value>
+  </data>
+  <data name="AboutImageURILabel" xml:space="preserve">
+    <value>URI</value>
+  </data>
+</root>

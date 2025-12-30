@@ -1,22 +1,43 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="1.28.6" Language="en-US" Publisher="buchizo" />
+        <Identity Id="ClaudiaIDE..7442ac19-889b-4699-a817-e6e054877ee3" Version="3.1.48" Language="en-US" Publisher="buchizo" />
         <DisplayName>ClaudiaIDE</DisplayName>
-        <Description xml:space="preserve">This extension change the background image of editor.</Description>
+        <Description xml:space="preserve">This extension allows you to change the background image of the editor.</Description>
         <MoreInfo>https://github.com/buchizo/ClaudiaIDE</MoreInfo>
-        <Icon>vsixicon.png</Icon>
-        <PreviewImage>ss.png</PreviewImage>
+        <ReleaseNotes>https://github.com/buchizo/ClaudiaIDE/wiki/Release-notes</ReleaseNotes>
+        <Icon>Resources\vsixicon.png</Icon>
+        <PreviewImage>Resources\ss.png</PreviewImage>
         <Tags>theme, Text Editor, 痛IDE拡張, Background, Claudia</Tags>
     </Metadata>
     <Installation InstalledByMsi="false">
-        <InstallationTarget Version="[11.0,17.0)" Id="Microsoft.VisualStudio.Community" />
-        <InstallationTarget Version="[11.0,17.0)" Id="Microsoft.VisualStudio.Pro" />
-        <InstallationTarget Version="[11.0,17.0)" Id="Microsoft.VisualStudio.Enterprise" />
-        <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[11.0,17.0)" />
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Pro" >
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Enterprise" >
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, )" >
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Pro" >
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Version="[17.0, )" Id="Microsoft.VisualStudio.Enterprise" >
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
+        <InstallationTarget Id="Microsoft.VisualStudio.Ultimate" Version="[17.0, )" >
+            <ProductArchitecture>arm64</ProductArchitecture>
+        </InstallationTarget>
     </Installation>
     <Dependencies>
-        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+        <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.7.2,)" />
     </Dependencies>
     <Assets>
         <Asset Type="Microsoft.VisualStudio.VsPackage" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%;PkgdefProjectOutputGroup|" />
