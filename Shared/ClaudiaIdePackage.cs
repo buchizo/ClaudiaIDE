@@ -61,7 +61,8 @@ namespace ClaudiaIDE
                         new SlideShowImageProvider(_settings),
                         new SingleImageProvider(_settings),
                         new SingleImageWebProvider(_settings),
-                        new WebApiImageProvider(_settings)
+                        new WebApiImageProvider(_settings),
+                        new SlideShowImageEachProvider(_settings)
                     });
 
                 _imageProviders = ProvidersHolder.Instance.Providers;
@@ -105,7 +106,8 @@ namespace ClaudiaIDE
                             new SlideShowImageProvider(_settings),
                             new SingleImageProvider(_settings),
                             new SingleImageWebProvider(_settings),
-                            new WebApiImageProvider(_settings)
+                            new WebApiImageProvider(_settings),
+                            new SlideShowImageEachProvider(_settings)
                         });
 
                     _imageProviders = ProvidersHolder.Instance.Providers;

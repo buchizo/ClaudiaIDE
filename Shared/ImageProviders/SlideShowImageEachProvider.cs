@@ -1,24 +1,50 @@
+using ClaudiaIDE;
 using ClaudiaIDE.Helpers;
+using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Timers;
 using System.Windows.Media.Imaging;
 
 namespace ClaudiaIDE.ImageProviders
 {
-    public class SingleImageEachProvider : ImageProvider, IMovable
+    public class SlideShowImageEachProvider : ImageProvider, IPausable, ISkipable, IMovable
     {
+        private PausableTimer _timer;
         private ImageFiles _imageFiles;
         private IEnumerator<string> _imageFilesPath;
         private FileSystemWatcher _fileWatcher;
 
-        public SingleImageEachProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
-            ImageBackgroundType.SingleEach)
+        public bool IsPaused => _timer.IsPaused;
+
+        public SlideShowImageEachProvider(Setting setting, string solutionfile = null) : base(setting, solutionfile,
+            ImageBackgroundType.SlideshowEach)
         {
             OnSettingChanged(setting, null);
+        }
+
+        public void Pause()
+        {
+            if (!IsPaused) _timer.Pause();
+        }
+
+        public void Resume()
+        {
+            if (IsPaused) _timer.Resume();
+        }
+
+        public void Skip()
+        {
+            ChangeImage();
+        }
+
+        private void OnTimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            NextImage();
         }
 
         private ImageFiles GetImagesFromDirectory()
@@ -40,12 +66,12 @@ namespace ClaudiaIDE.ImageProviders
                 {
                     ReEnumerationFiles();
                     _imageFilesPath.MoveNext();
+                    _timer.Restart();
                 }
                 var current = _imageFilesPath?.Current;
                 if (string.IsNullOrEmpty(current) || !IsStaticImage()) return null;
 
                 var bitmap = new BitmapImage();
-                BitmapSource ret_bitmap = null;
                 var fileInfo = new FileInfo(current);
                 if (fileInfo.Exists)
                 {
@@ -64,18 +90,6 @@ namespace ClaudiaIDE.ImageProviders
                         bitmap = new BitmapImage();
                         bitmap.Freeze();
                     }
-                    if (Setting.ImageStretch == ImageStretch.None)
-                        bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
-
-                    if (Setting.ImageStretch == ImageStretch.None &&
-                        (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
-                    )
-                        ret_bitmap = Utils.ConvertToDpi96(bitmap);
-                    else
-                        ret_bitmap = bitmap;
-
-                    if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
-                        ret_bitmap = Utils.SoftenEdges(ret_bitmap ?? bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
                 }
                 else
                 {
@@ -84,8 +98,21 @@ namespace ClaudiaIDE.ImageProviders
                     return GetBitmap();
                 }
 
-                if (ret_bitmap != null) return ret_bitmap;
-                else return bitmap;
+                BitmapSource ret_bitmap = bitmap;
+                if (Setting.ImageStretch == ImageStretch.None)
+                {
+                    bitmap = Utils.EnsureMaxWidthHeight(bitmap, Setting.MaxWidth, Setting.MaxHeight);
+
+                    if (bitmap.Width != bitmap.PixelWidth || bitmap.Height != bitmap.PixelHeight)
+                        ret_bitmap = Utils.ConvertToDpi96(bitmap);
+                    else
+                        ret_bitmap = bitmap;
+                }
+
+                if (Setting.SoftEdgeX > 0 || Setting.SoftEdgeY > 0)
+                    ret_bitmap = Utils.SoftenEdges(ret_bitmap, Setting.SoftEdgeX, Setting.SoftEdgeY);
+
+                return ret_bitmap;
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -113,20 +140,32 @@ namespace ClaudiaIDE.ImageProviders
 
         protected override void OnSettingChanged(object sender, EventArgs e)
         {
-            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.SingleEach)
+            if (_timer != null)
             {
-                _fileWatcher?.Dispose();
-                return;
+                _timer.Stop();
+                _timer.Elapsed -= OnTimerElapsed;
+                _timer.Dispose();
             }
-            ReEnumerationFiles();
-            NextImage();
+            _timer = new PausableTimer(Setting.UpdateImageInterval.TotalMilliseconds);
+            _timer.Elapsed += OnTimerElapsed;
+
+            if ((sender as Setting)?.ImageBackgroundType != ImageBackgroundType.Slideshow)
+            {
+                _timer.Stop();
+            }
+            else
+            {
+                ReEnumerationFiles();
+                ChangeImage();
+                _timer.Restart();
+            }
 
             _fileWatcher?.Dispose();
-            if (File.Exists((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath))
+            if (Directory.Exists((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath))
             {
                 _fileWatcher = new FileSystemWatcher((sender as Setting)?.BackgroundImagesDirectoryAbsolutePath)
                 {
-                    IncludeSubdirectories = false,
+                    IncludeSubdirectories = Setting.IncludeSubdirectories,
                     InternalBufferSize = 32 * 1024,
                     NotifyFilter = NotifyFilters.FileName | NotifyFilters.CreationTime | NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size
                 };
@@ -142,16 +181,42 @@ namespace ClaudiaIDE.ImageProviders
 
         public void NextImage()
         {
+            if (Setting.ImageBackgroundType != ImageBackgroundType.SlideshowEach) return;
+            ChangeImage();
+        }
+
+        protected void ChangeImage()
+        {
             if (_imageFiles == null)
             {
                 ReEnumerationFiles();
             }
-            if (!_imageFilesPath.MoveNext())
+            if (_imageFilesPath.MoveNext())
+            {
+                FireImageAvailable();
+                _timer.Restart();
+            }
+            else
+            {
+                // Reached the end of the images. Loop to beginning?
                 if (Setting.LoopSlideshow)
                 {
                     _imageFilesPath.Reset();
-                    _imageFilesPath.MoveNext();
+                    if (_imageFilesPath.MoveNext())
+                    {
+                        FireImageAvailable();
+                        _timer.Restart();
+                    }
+                    else
+                    {
+                        _timer.Stop();
+                    }
                 }
+                else
+                {
+                    _timer.Stop();
+                }
+            }
         }
 
         public override bool IsStaticImage()

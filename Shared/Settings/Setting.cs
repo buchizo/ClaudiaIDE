@@ -474,7 +474,8 @@ namespace ClaudiaIDE.Settings
         Slideshow = 1,
         SingleEach = 2,
         WebSingle = 3,
-        WebApi = 4
+        WebApi = 4,
+        SlideshowEach = 5,
     }
 
     [ComVisible(true)]

@@ -59,7 +59,8 @@ namespace ClaudiaIDE
                             new SlideShowImageProvider(settings),
                             new SingleImageProvider(settings),
                             new SingleImageWebProvider(settings),
-                            new WebApiImageProvider(settings)
+                            new WebApiImageProvider(settings),
+                            new SlideShowImageEachProvider(settings)
                         });
                     }
                     else
@@ -82,8 +83,11 @@ namespace ClaudiaIDE
                             case ImageBackgroundType.WebApi:
                                 ProvidersHolder.Instance.Providers.Add(new WebApiImageProvider(settings, solution));
                                 break;
+                            case ImageBackgroundType.SlideshowEach:
+                                ProvidersHolder.Instance.Providers.Add(new SlideShowImageEachProvider(settings, solution));
+                                break;
                             default:
-                                ProvidersHolder.Instance.Providers.Add(new SingleImageEachProvider(settings, solution));
+                                ProvidersHolder.Instance.Providers.Add(new SingleImageProvider(settings, solution));
                                 break;
                         }
                     }
@@ -109,10 +113,13 @@ namespace ClaudiaIDE
                             ImageProviders.Add(new SingleImageWebProvider(settings, solution));
                             break;
                         case ImageBackgroundType.WebApi:
-                            ProvidersHolder.Instance.Providers.Add(new WebApiImageProvider(settings, solution));
+                            ImageProviders.Add(new WebApiImageProvider(settings, solution));
+                            break;
+                        case ImageBackgroundType.SlideshowEach:
+                            ImageProviders.Add(new SlideShowImageEachProvider(settings, solution));
                             break;
                         default:
-                            ImageProviders.Add(new SingleImageEachProvider(settings, solution));
+                            ImageProviders.Add(new SingleImageProvider(settings, solution));
                             break;
                     }
 

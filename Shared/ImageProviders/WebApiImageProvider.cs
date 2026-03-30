@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace ClaudiaIDE.ImageProviders
 {
-    internal class WebApiImageProvider : ImageProvider, IPausable, ISkipable
+    internal class WebApiImageProvider : ImageProvider, IPausable, ISkipable, IMovable
     {
         private static HttpClient _client = new HttpClient();
         private PausableTimer _timer;
@@ -121,6 +121,12 @@ namespace ClaudiaIDE.ImageProviders
         public override string GetCurrentImageUri()
         {
             return _currentUrl;
+        }
+
+        public void NextImage()
+        {
+            if (Setting.ImageBackgroundType != ImageBackgroundType.WebApi) return;
+            ChangeImage();
         }
     }
 }
