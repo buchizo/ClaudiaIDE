@@ -35,7 +35,7 @@ namespace ClaudiaIDE.MenuCommands
             {
                 ImageProvider provider = ProvidersHolder.Instance.ActiveProvider;
                 // It is unavailable with the SingleEach image type as the provider does not track the image within each individual pane.
-                _menuItem.Enabled = !(provider is SingleImageEachProvider);
+                _menuItem.Enabled = !(provider is SingleImageEachProvider) && !(provider is SlideShowImageEachProvider);
             };
             commandService.AddCommand(_menuItem);
         }

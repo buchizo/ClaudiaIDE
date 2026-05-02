@@ -3,12 +3,14 @@ using ClaudiaIDE.Helpers;
 using ClaudiaIDE.ImageProviders;
 using ClaudiaIDE.Interfaces;
 using ClaudiaIDE.Settings;
+using Microsoft.VisualStudio.Text.Editor;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Timers;
 using System.Windows.Media.Imaging;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ClaudiaIDE.ImageProviders
 {
@@ -58,7 +60,7 @@ namespace ClaudiaIDE.ImageProviders
             };
         }
 
-        public override BitmapSource GetBitmap()
+        private BitmapSource GetImagePerView()
         {
             try
             {
@@ -68,6 +70,11 @@ namespace ClaudiaIDE.ImageProviders
                     _imageFilesPath.MoveNext();
                     _timer.Restart();
                 }
+                if (!MoveNext())
+                {
+                    _timer.Stop();
+                }
+
                 var current = _imageFilesPath?.Current;
                 if (string.IsNullOrEmpty(current) || !IsStaticImage()) return null;
 
@@ -132,6 +139,11 @@ namespace ClaudiaIDE.ImageProviders
             }
         }
 
+        public override BitmapSource GetBitmap()
+        {
+            return GetImagePerView();
+        }
+
         private void ReEnumerationFiles()
         {
             _imageFiles = GetImagesFromDirectory();
@@ -191,32 +203,23 @@ namespace ClaudiaIDE.ImageProviders
             {
                 ReEnumerationFiles();
             }
-            if (_imageFilesPath.MoveNext())
-            {
-                FireImageAvailable();
-                _timer.Restart();
-            }
+            FireImageAvailable();
+            _timer.Restart();
+        }
+
+        private bool MoveNext()
+        {
+            if (_imageFilesPath.MoveNext()) return true;
             else
             {
                 // Reached the end of the images. Loop to beginning?
                 if (Setting.LoopSlideshow)
                 {
                     _imageFilesPath.Reset();
-                    if (_imageFilesPath.MoveNext())
-                    {
-                        FireImageAvailable();
-                        _timer.Restart();
-                    }
-                    else
-                    {
-                        _timer.Stop();
-                    }
-                }
-                else
-                {
-                    _timer.Stop();
+                    if (_imageFilesPath.MoveNext()) return true;
                 }
             }
+            return false;
         }
 
         public override bool IsStaticImage()

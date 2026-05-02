@@ -62,7 +62,13 @@ namespace ClaudiaIDE
                     }
                     else
                     {
+                        var t = _isMainWindow;
                         RefreshBackground();
+                        if (t != _isMainWindow)
+                        {
+                            // maybe changed editor window (dock/undock...)
+                            InvokeChangeImage(null, null);
+                        }
                     }
                 };
                 _view.Closed += (s, e) =>
@@ -127,7 +133,8 @@ namespace ClaudiaIDE
                 var newimage = _imageProvider?.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : (_settings.IsHidden ? 0.0 : _settings.Opacity);
 
-                if (_isRootWindow)
+                var tempP = VisualTreeHelper.GetParent(_wpfTextViewHost);
+                if (_isRootWindow && tempP is Grid p)
                 {
                     var grid = new Grid()
                     {
@@ -195,19 +202,35 @@ namespace ClaudiaIDE
                     }
                     Grid.SetRowSpan(grid, 3);
                     Grid.SetColumnSpan(grid, 3);
-                    if (VisualTreeHelper.GetParent(_wpfTextViewHost) is Grid p)
+                    var hasGrid = false;
+                    foreach (var c in p.Children)
                     {
-                        foreach (var c in p.Children)
+                        var g = c as Grid;
+                        if (g?.Name == "ClaudiaIdeImage")
                         {
-                            if ((c as Grid)?.Name == "ClaudiaIdeImage")
+                            if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow ||
+                                _settings.ImageBackgroundType == ImageBackgroundType.WebApi ||
+                                _settings.ImageBackgroundType == ImageBackgroundType.SlideshowEach)
                             {
-                                p.Children.Remove(c as UIElement);
-                                break;
+                                g.Background.AnimateImageSourceChange(
+                                    _visualBrushStatic,
+                                    (n) => { g.Background = n; },
+                                    new AnimateImageChangeParams
+                                    {
+                                        FadeTime = _settings.ImageFadeAnimationInterval,
+                                        TargetOpacity = opacity
+                                    }
+                                );
                             }
+                            else
+                            {
+                                g.Background = _visualBrush;
+                            }
+                            hasGrid = true;
+                            break;
                         }
-
-                        p.Children.Insert(0, grid);
                     }
+                    if (!hasGrid) p.Children.Insert(0, grid);
                 }
                 else
                 {
