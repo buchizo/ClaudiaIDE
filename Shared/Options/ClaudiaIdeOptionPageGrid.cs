@@ -291,6 +291,7 @@ namespace ClaudiaIDE.Options
                 if (str == "SingleEach") return ImageBackgroundType.SingleEach;
                 if (str == "SingleWeb") return ImageBackgroundType.WebSingle;
                 if (str == "WebApi") return ImageBackgroundType.WebApi;
+                if (str == "SlideshowEach") return ImageBackgroundType.SlideshowEach;
                 return ImageBackgroundType.Single;
             }
 
@@ -311,7 +312,10 @@ namespace ClaudiaIDE.Options
                     result = "SingleEach";
                 else if ((int)value == 3)
                     result = "SingleWeb";
-                else if ((int)value == 4) result = "WebApi";
+                else if ((int)value == 4)
+                    result = "WebApi";
+                else if ((int)value == 5)
+                    result = "SlideshowEach";
                 if (result != null) return result;
             }
 

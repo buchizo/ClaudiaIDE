@@ -19,7 +19,7 @@ namespace ClaudiaIDE.Localized {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class ResLocalized {
@@ -196,7 +196,7 @@ namespace ClaudiaIDE.Localized {
         }
         
         /// <summary>
-        ///   Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab. SingleWeb: Displays the image of the specified URL. WebApi: Displays a slideshow using the image URLs contained in the specified API response. Call Web API for each switch. に類似しているローカライズされた文字列を検索します。
+        ///   Types of background image. Single: Displays the specified image. SlideShow: will the image of the specified folder to display slideshow. SingleEach: Displays one different image in the specified folder per opened tab. SingleWeb: Displays the image of the specified URL. WebApi: Displays a slideshow using the image URLs contained in the specified API response. Call Web API for each switch. SlideshowEach: Displays a slideshow of images from the specified folder for each editor. に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string BackgroundTypeDes {
             get {

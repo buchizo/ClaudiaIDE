@@ -1,3 +1,11 @@
+using ClaudiaIDE.Helpers;
+using ClaudiaIDE.ImageProviders;
+using ClaudiaIDE.Interfaces;
+using ClaudiaIDE.Settings;
+using Microsoft.VisualStudio.PlatformUI;
+using Microsoft.VisualStudio.Shell;
+using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Threading;
 using System;
 using System.Collections.Generic;
 using System.Windows;
@@ -5,13 +13,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
-using ClaudiaIDE.Helpers;
-using ClaudiaIDE.ImageProviders;
-using ClaudiaIDE.Settings;
-using Microsoft.VisualStudio.PlatformUI;
-using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Text.Editor;
-using Microsoft.VisualStudio.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 using Task = System.Threading.Tasks.Task;
 
 namespace ClaudiaIDE
@@ -60,7 +62,13 @@ namespace ClaudiaIDE
                     }
                     else
                     {
+                        var t = _isMainWindow;
                         RefreshBackground();
+                        if (t != _isMainWindow)
+                        {
+                            // maybe changed editor window (dock/undock...)
+                            InvokeChangeImage(null, null);
+                        }
                     }
                 };
                 _view.Closed += (s, e) =>
@@ -117,14 +125,16 @@ namespace ClaudiaIDE
             {
                 await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
                 await SetCanvasBackgroundAsync();
-                await FindWpfTextViewAsync(_editorCanvas as DependencyObject);
+                var ec = _editorCanvas as DependencyObject;
+                await FindWpfTextViewAsync(ec.GetVisualOrLogicalParent() == null ? _adornmentLayer as DependencyObject : ec);
                 if (_wpfTextViewHost == null) return;
                 if (!_isTargetWindow) return;
 
-                var newimage = ProvidersHolder.Instance.ActiveProvider?.GetBitmap();
+                var newimage = _imageProvider?.GetBitmap();
                 var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : (_settings.IsHidden ? 0.0 : _settings.Opacity);
 
-                if (_isRootWindow)
+                var tempP = VisualTreeHelper.GetParent(_wpfTextViewHost);
+                if (_isRootWindow && tempP is Grid p)
                 {
                     var grid = new Grid()
                     {
@@ -133,7 +143,7 @@ namespace ClaudiaIDE
                         VerticalAlignment = VerticalAlignment.Stretch,
                         IsHitTestVisible = false
                     };
-                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
+                    if (_imageProvider?.IsStaticImage() == true)
                     {
                         var imageControl = new Image
                         {
@@ -192,23 +202,39 @@ namespace ClaudiaIDE
                     }
                     Grid.SetRowSpan(grid, 3);
                     Grid.SetColumnSpan(grid, 3);
-                    if (VisualTreeHelper.GetParent(_wpfTextViewHost) is Grid p)
+                    var hasGrid = false;
+                    foreach (var c in p.Children)
                     {
-                        foreach (var c in p.Children)
+                        var g = c as Grid;
+                        if (g?.Name == "ClaudiaIdeImage")
                         {
-                            if ((c as Grid)?.Name == "ClaudiaIdeImage")
+                            if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow ||
+                                _settings.ImageBackgroundType == ImageBackgroundType.WebApi ||
+                                _settings.ImageBackgroundType == ImageBackgroundType.SlideshowEach)
                             {
-                                p.Children.Remove(c as UIElement);
-                                break;
+                                g.Background.AnimateImageSourceChange(
+                                    _visualBrushStatic,
+                                    (n) => { g.Background = n; },
+                                    new AnimateImageChangeParams
+                                    {
+                                        FadeTime = _settings.ImageFadeAnimationInterval,
+                                        TargetOpacity = opacity
+                                    }
+                                );
                             }
+                            else
+                            {
+                                g.Background = _visualBrush;
+                            }
+                            hasGrid = true;
+                            break;
                         }
-
-                        p.Children.Insert(0, grid);
                     }
+                    if (!hasGrid) p.Children.Insert(0, grid);
                 }
                 else
                 {
-                    if (ProvidersHolder.Instance.ActiveProvider?.IsStaticImage() == true)
+                    if (_imageProvider?.IsStaticImage() == true)
                     {
                         var imageControl = new Image
                         {
@@ -236,7 +262,8 @@ namespace ClaudiaIDE
                         };
 
                         if (_settings.ImageBackgroundType == ImageBackgroundType.Slideshow ||
-                            _settings.ImageBackgroundType == ImageBackgroundType.WebApi)
+                            _settings.ImageBackgroundType == ImageBackgroundType.WebApi ||
+                            _settings.ImageBackgroundType == ImageBackgroundType.SlideshowEach)
                         {
                             (_wpfTextViewHost as Panel).Background.AnimateImageSourceChange(
                                 _visualBrushStatic,
@@ -259,7 +286,7 @@ namespace ClaudiaIDE
                         _visualBrush = new VisualBrush();
                         var me = new MediaElement
                         {
-                            Source = new Uri(ProvidersHolder.Instance.ActiveProvider?.GetCurrentImageUri()),
+                            Source = new Uri(_imageProvider?.GetCurrentImageUri()),
                             LoadedBehavior = MediaState.Play,
                             UnloadedBehavior = MediaState.Manual,
                             IsMuted = true,
@@ -287,7 +314,7 @@ namespace ClaudiaIDE
 
                 _hasImage = true;
                 if (_settings.ImageBackgroundType == ImageBackgroundType.SingleEach)
-                    ((SingleImageEachProvider)_imageProvider).NextImage();
+                    ((IMovable)_imageProvider).NextImage();
             }
             catch
             {
@@ -302,7 +329,8 @@ namespace ClaudiaIDE
         private async Task RefreshBackgroundAsync()
         {
             await SetCanvasBackgroundAsync();
-            await FindWpfTextViewAsync(_editorCanvas as DependencyObject);
+            var ec = _editorCanvas as DependencyObject;
+            await FindWpfTextViewAsync(ec.GetVisualOrLogicalParent() == null ? _adornmentLayer as DependencyObject : ec);
             if (_wpfTextViewHost == null) return;
             var opacity = _settings.ExpandToIDE && _isMainWindow ? 0.0 : (_settings.IsHidden ? 0.0 : _settings.Opacity);
 
@@ -469,8 +497,10 @@ namespace ClaudiaIDE
             var fullName = result.GetType().FullName;
 
             if (fullName.Equals("Microsoft.VisualStudio.Editor.Implementation.WpfMultiViewHost",
-                    StringComparison.OrdinalIgnoreCase) ||
-                fullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextViewHost",
+                    StringComparison.OrdinalIgnoreCase)
+                || fullName.Equals("Microsoft.VisualStudio.Text.Editor.Implementation.WpfTextViewHost",
+                    StringComparison.OrdinalIgnoreCase)
+                || fullName.Equals("Microsoft.VisualStudio.PlatformUI.Shell.Controls.FloatingWindow",
                     StringComparison.OrdinalIgnoreCase))
             {
                 // maybe editor with designer area or other view window

@@ -22,7 +22,7 @@ using Microsoft.VisualStudio.PlatformUI;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.48", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.49", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
@@ -61,7 +61,8 @@ namespace ClaudiaIDE
                         new SlideShowImageProvider(_settings),
                         new SingleImageProvider(_settings),
                         new SingleImageWebProvider(_settings),
-                        new WebApiImageProvider(_settings)
+                        new WebApiImageProvider(_settings),
+                        new SlideShowImageEachProvider(_settings)
                     });
 
                 _imageProviders = ProvidersHolder.Instance.Providers;
@@ -105,7 +106,8 @@ namespace ClaudiaIDE
                             new SlideShowImageProvider(_settings),
                             new SingleImageProvider(_settings),
                             new SingleImageWebProvider(_settings),
-                            new WebApiImageProvider(_settings)
+                            new WebApiImageProvider(_settings),
+                            new SlideShowImageEachProvider(_settings)
                         });
 
                     _imageProviders = ProvidersHolder.Instance.Providers;

@@ -121,7 +121,7 @@
     <value>背景の表示形式</value>
   </data>
   <data name="BackgroundTypeDes" xml:space="preserve">
-    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。  SingleWeb: 指定されたURLの画像を表示します。 WebApi: 指定されたAPIの応答内に含まれる画像URLを使ってスライドショー表示します。切り替え毎にWeb APIを呼び出します。</value>
+    <value>背景の表示形式を選択します。 Single: 指定された画像を表示します。 SlideShow: 指定されたフォルダーの画像をスライドショー表示します。 SingleEach: エディタウィンドウ毎に指定されたフォルダーの画像を表示します。  SingleWeb: 指定されたURLの画像を表示します。 WebApi: 指定されたAPIの応答内に含まれる画像URLを使ってスライドショー表示します。切り替え毎にWeb APIを呼び出します。 SlideshowEach: エディタ毎に指定されたフォルダーの画像をスライドショー表示します。</value>
   </data>
   <data name="DirectoryPathType" xml:space="preserve">
     <value>フォルダーパス</value>
