@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="ClaudiaIDE\ClaudiaIDE.csproj">
+    <Deploy Solution="Debug|*" />
+  </Project>
+  <Project Path="ClaudiaIDE16\ClaudiaIDE16.csproj" />
+  <Project Path="Shared\Shared.shproj" Id="6d268f80-dd38-48bb-81e2-51805e5a4e17" />
+</Solution>

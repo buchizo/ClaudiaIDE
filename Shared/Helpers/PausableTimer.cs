@@ -3,7 +3,7 @@ using System.Timers;
 
 namespace ClaudiaIDE.Helpers
 {
-    internal class PausableTimer : Timer
+    internal class PausableTimer : System.Timers.Timer
     {
         private readonly double _initialInterval;
         private readonly Stopwatch _stopwatch;
