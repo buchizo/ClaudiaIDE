@@ -2,7 +2,7 @@ ClaudiaIDE
 ==========
 
 `ClaudiaIDE` is a Visual Studio extension for displaying images in the background of the editor.
-![claudiaide image](./images/home.png)
+![claudiaide image](./Images/home.png)
 
 ## Features
 
