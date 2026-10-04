@@ -22,7 +22,7 @@ using Microsoft.VisualStudio.PlatformUI;
 namespace ClaudiaIDE
 {
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
-    [InstalledProductRegistration("#110", "#112", "3.1.51", IconResourceID = 400)]
+    [InstalledProductRegistration("#110", "#112", "3.1.52", IconResourceID = 400)]
     [ProvideOptionPage(typeof(ClaudiaIdeOptionPageGrid), "ClaudiaIDE", "Light theme", 110, 116, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeDarkThemeOptionPageGrid), "ClaudiaIDE", "Dark theme", 110, 117, true)]
     [ProvideOptionPage(typeof(ClaudiaIdeGeneralOptionPageGrid), "ClaudiaIDE", "General", 110, 118, true)]
@@ -321,7 +321,9 @@ namespace ClaudiaIDE
         {
             var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
                 x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-            foreach (var docktarget in docktargets)
+            var rootControlGrids = rRootGrid.Descendants<DependencyObject>().Where(x =>
+                x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.AutoHideRootControl");
+            foreach (var docktarget in docktargets.Concat<DependencyObject>(rootControlGrids))
             {
                 var grids = docktarget?.Descendants<Grid>();
                 foreach (var g in grids)
