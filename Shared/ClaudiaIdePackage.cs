@@ -321,7 +321,9 @@ namespace ClaudiaIDE
         {
             var docktargets = rRootGrid.Descendants<DependencyObject>().Where(x =>
                 x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.DockTarget");
-            foreach (var docktarget in docktargets)
+            var rootControlGrids = rRootGrid.Descendants<DependencyObject>().Where(x =>
+                x.GetType().FullName == "Microsoft.VisualStudio.PlatformUI.Shell.Controls.AutoHideRootControl");
+            foreach (var docktarget in docktargets.Concat<DependencyObject>(rootControlGrids))
             {
                 var grids = docktarget?.Descendants<Grid>();
                 foreach (var g in grids)
